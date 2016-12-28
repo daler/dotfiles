@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# The following two lines are two ways of avoiding the warning "**
+# (gvim:20320): WARNING **: Unable to create Ubuntu Menu Proxy: Timeout was
+# reached".  For more details, see
+# http://askubuntu.com/questions/132977/how-to-get-global-application-menu-for-gvim
+alias gvim='UBUNTU_MENUPROXY= gvim'
+function gvim () { (/usr/bin/gvim -f "$@" &) }
+
+# start the ssh-agent
+SSH_ENV=$HOME/.ssh/environment
+function start_agent {
+    echo "Initializing new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}

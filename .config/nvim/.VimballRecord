@@ -1,0 +1,2 @@
+csv-0.31.vmb: call delete('/home/ryan/.vim/ftplugin/csv.vim')|call delete('/home/ryan/.vim/doc/ft-csv.txt')|call delete('/home/ryan/.vim/syntax/csv.vim')|call delete('/home/ryan/.vim/ftdetect/csv.vim')|call delete('/home/ryan/.vim/plugin/csv.vim')
+screen.vba: call delete('/home/ryan/.vim/autoload/screen.vim')|call delete('/home/ryan/.vim/doc/screen.txt')|call delete('/home/ryan/.vim/plugin/screen.vim')

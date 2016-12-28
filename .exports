@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+export EDITOR="vim"
+export TERM="screen-256color"
+export LANG="en_US.UTF8"
+export LC_ALL="C"
+
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+export HISTCONTROL='ignoreboth';
+
+# Highlight section titles in manual pages.
+yellow="\e[1;33m";
+export LESS_TERMCAP_md="${yellow}";
+
+# in tmux, highlight rather than italicize
+export LESS_TERMCAP_so=$'\E[30;43m'
+export LESS_TERMCAP_se=$'\E[39;49m'
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
