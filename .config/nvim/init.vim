@@ -165,7 +165,7 @@ nmap <leader>P "+P
 :autocmd InsertLeave * set nocul
 
 
-highlight cursorline ctermbg=gray cterm=NONE
+" highlight cursorline ctermbg=gray cterm=NONE
 
 
 let R_vsplit = 1
