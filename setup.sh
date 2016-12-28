@@ -85,6 +85,7 @@ elif [ $task == "--dotfiles" ]; then
         rsync --exclude ".git/" \
             --exclude "setup.sh" \
             --exclude "README.md" \
+            --exclude "Miniconda3-latest-Linux-x86_64.sh" \
             --exclude "LICENSE-MIT.txt" \
             -avh --no-perms . ~
         source ~/.bash_profile
