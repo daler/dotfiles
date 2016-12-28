@@ -11,6 +11,7 @@ function showHelp() {
     echo "  --download-miniconda  (downloads latest Miniconda to current directory)"
     echo "  --install-miniconda   (install downloaded Miniconda to ~/miniconda3)"
     echo "  --set-up-bioconda     (add channels for bioconda in proper order)"
+    echo "  --conda-env           (install requirements.txt into root conda env)"
     echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
     echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
     echo "  --set-up-nvim-plugins (manually add vim-plug)"
@@ -44,6 +45,8 @@ elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels r
     conda config --add channels bioconda
 
+elif [ $task == "--conda-env" ]; then
+    conda install --file requirements.txt
 
 elif [ $task == "--neovim-prereqs" ]; then
     sudo apt-get install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
