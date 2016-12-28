@@ -13,7 +13,7 @@ function showHelp() {
     echo "  --set-up-bioconda     (add channels for bioconda in proper order)"
     echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
     echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
-    echo "  --set-up-vim-plug     (manually add vim-plug)"
+    echo "  --set-up-nvim-plugins (manually add vim-plug)"
     echo "  --dotfiles            (update dotfiles)"
     echo
     echo "paths to miniconda and neovim will be prepended to PATH in the"
@@ -63,9 +63,19 @@ elif [ $task == "--compile-neovim" ]; then
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
 
-elif [ $task == "--set-up-vim-plug" ]; then
+elif [ $task == "--set-up-nvim-plugins" ]; then
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    curl -fLo /tmp/nvim-r.zip \
+        https://github.com/jalvesaq/Nvim-R/releases/download/v0.9.8/Nvim-R_0.9.8.zip
+
+    mkdir -p ~/.local/share/nvim/site/pack/R
+    (cd ~/.local/share/nvim/site/pack/R && unzip /tmp/nvim-r.zip)
+
+    echo
+    echo "Open nvim and run :PlugInstall"
+    echo
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
