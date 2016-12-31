@@ -92,7 +92,7 @@ set wildignore=*.swp,*.bak,*.pyc,*.class  " ignore these when autocompleting
 " autocmd settings to override in a filetype-specific manner
 autocmd filetype python,sh,bash,snakemake set expandtab " expand <Tab> key presses to spaces, but only for Python
 autocmd filetype html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
-
+autocmd filetype yaml,yml set shiftwidth=2 tabstop=2
 
 " R-specific. When writing R scripts to be converted via knitr::spin to
 " Rmd/HTML, comments start with #'
