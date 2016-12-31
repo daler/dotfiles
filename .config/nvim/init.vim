@@ -13,6 +13,7 @@ if has('nvim')
     Plug 'tpope/vim-surround'
     Plug 'Vim-R-plugin'
     Plug 'roxma/vim-tmux-clipboard'
+    Plug 'vim-scripts/indentpython.vim'
     Plug 'tmux-plugins/vim-tmux-focus-events'
     call plug#end()
 endif
