@@ -15,6 +15,7 @@ function showHelp() {
     echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
     echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
     echo "  --set-up-nvim-plugins (manually add vim-plug)"
+    echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
     echo
     echo "paths to miniconda and neovim will be prepended to PATH in the"
@@ -79,6 +80,14 @@ elif [ $task == "--set-up-nvim-plugins" ]; then
     echo
     echo "Open nvim and run :PlugInstall"
     echo
+
+elif [ $task == "--diffs" ]; then
+
+    cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
+    $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
+
+
+
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
