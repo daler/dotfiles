@@ -212,6 +212,8 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:bufferline_echo = 0
 
+set clipboard=unnamed
+
 " These might be useful later -- in case you're not using a powerline font
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
