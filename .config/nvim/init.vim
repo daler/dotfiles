@@ -24,6 +24,7 @@ endif
 
 let mapleader=","   " re-map mapleader from \ to ,
 
+autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
 
 " CtrlP shortcuts
 " open file menu
