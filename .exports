@@ -2,8 +2,9 @@
 
 export EDITOR="vim"
 export TERM="screen-256color"
-export LANG="en_US.UTF8"
-export LC_ALL="C"
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
 
 export HISTSIZE='32768';
 export HISTFILESIZE="${HISTSIZE}";
