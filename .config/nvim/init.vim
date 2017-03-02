@@ -7,14 +7,18 @@ if has('nvim')
     call plug#begin('~/.local/share/nvim/site/autoload')
     "Plug 'fholgado/minibufexpl.vim'
     Plug 'scrooloose/nerdtree'
+    Plug 'justincampbell/vim-eighties'
+    Plug 'godlygeek/tabular'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-surround'
-    Plug 'Vim-R-plugin'
+    Plug 'jalvesaq/Nvim-R'
     Plug 'roxma/vim-tmux-clipboard'
     Plug 'vim-scripts/indentpython.vim'
     Plug 'tmux-plugins/vim-tmux-focus-events'
+    Plug 'nvie/vim-flake8'
+    Plug 'kien/rainbow_parentheses.vim'
     call plug#end()
 endif
 
