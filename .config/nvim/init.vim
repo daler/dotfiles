@@ -19,6 +19,7 @@ if has('nvim')
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'nvie/vim-flake8'
     Plug 'kien/rainbow_parentheses.vim'
+    Plug 'julienr/vim-cellmode'
     call plug#end()
 endif
 
@@ -221,6 +222,11 @@ let g:airline_powerline_fonts = 1
 let g:bufferline_echo = 0
 
 set clipboard=unnamed
+
+
+let g:cellmode_tmux_sessionname = ''
+let g:cellmode_tmux_windowpagne=''
+let g:cellmode_tmux_panenumber='1'
 
 " These might be useful later -- in case you're not using a powerline font
 " let g:airline#extensions#tabline#left_sep = ' '
