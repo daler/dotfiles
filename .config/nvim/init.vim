@@ -19,7 +19,9 @@ if has('nvim')
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'nvie/vim-flake8'
     Plug 'kien/rainbow_parentheses.vim'
+    Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'julienr/vim-cellmode'
+    Plug 'ervandew/supertab'
     call plug#end()
 endif
 
