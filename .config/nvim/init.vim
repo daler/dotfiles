@@ -185,7 +185,7 @@ let R_min_editor_width = 80
 let rout_follow_colorscheme = 1
 let R_assign = 3  " nvim-r replaces ' __ ' with ' <- '
 let R_nvimpager = "horizontal"
-let R_objbr_place = "console,bottom"
+let R_objbr_place = "console"
 
 
 function! RMakeHTML_2(t)
