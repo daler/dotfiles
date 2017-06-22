@@ -6,6 +6,8 @@ endif
 if has('nvim')
     call plug#begin('~/.local/share/nvim/site/autoload')
     "Plug 'fholgado/minibufexpl.vim'
+    Plug 'itchyny/calendar.vim'
+    Plug 'vimwiki/vimwiki'
     Plug 'scrooloose/nerdtree'
     Plug 'justincampbell/vim-eighties'
     Plug 'godlygeek/tabular'
@@ -242,3 +244,15 @@ let g:cellmode_tmux_panenumber='1'
 " let g:airline_right_sep = ' '
 " let g:airline_right_alt_sep = '|'
 "let g:airline_theme= 'gruvbox'
+
+
+" vimwiki settings
+let g:vimwiki_list = [{'path': '~/notes/',
+                   \ 'syntax': 'markdown', 'ext': '.md'}]  " use markdown rather than vimwiki syntax
+
+let g:vimwiki_use_mouse = 1  " for vimwiki, allow double-clicking links
+
+" type 'dts' in insert mode to get a timestamp. Abbreviations need all
+" characters inserted in the same 'session' of insert mode, so `<ESC>A` in the
+" middle will do the trick.
+iab <expr> dts strftime("[ %H:%M ]")
