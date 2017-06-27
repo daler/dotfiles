@@ -1,2 +1,10 @@
 #!/usr/bin/env bash
+
 export PS1="\u@\h:\w\\$ "
+
+if [[ $HOSTNAME == "biowulf.nih.gov" ]] ; then
+    export PS1="\u@\[$(tput sgr0)\]\[\033[38;5;214m\]\h\[$(tput sgr0)\]:\w\\$ "
+fi
+if [[ $HOSTNAME == "helix.nih.gov" ]]; then
+    export PS1="\u@\[$(tput sgr0)\]\[\033[38;5;174m\]\h\[$(tput sgr0)\]:\w\\$ "
+fi
