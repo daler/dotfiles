@@ -22,8 +22,7 @@ TERM con80x30
 TERM con80x43
 TERM con80x50
 TERM con80x60
-TERM cons25
-TERM console
+TERM cons25 TERM console
 TERM cygwin
 TERM dtterm
 TERM dvtm
@@ -123,40 +122,40 @@ STICKY_OTHER_WRITABLE 48;5;64;38;5;230 # dir that is sticky and other-writable (
 OTHER_WRITABLE 48;5;235;38;5;33 # dir that is other-writable (o+w) and not sticky
 STICKY 48;5;33;38;5;230 # dir with the sticky bit set (+t) and not other-writable
 # This is for files with execute permission:
-EXEC 00;38;5;70
+EXEC 00;38;5;64
 
 ## Archives or compressed (violet + bold for compression)
-.tar    00;38;5;196
-.tgz    00;38;5;196
-.arj    00;38;5;196
-.taz    00;38;5;196
-.lzh    00;38;5;196
-.lzma   00;38;5;196
-.tlz    00;38;5;196
-.txz    00;38;5;196
-.zip    00;38;5;196
-.z      00;38;5;196
-.Z      00;38;5;196
-.dz     00;38;5;196
-.gz     00;38;5;196
-.lz     00;38;5;196
-.xz     00;38;5;196
-.bz2    00;38;5;196
-.bz     00;38;5;196
-.tbz    00;38;5;196
-.tbz2   00;38;5;196
-.tz     00;38;5;196
-.deb    00;38;5;196
-.rpm    00;38;5;196
-.jar    00;38;5;196
-.rar    00;38;5;196
-.ace    00;38;5;196
-.zoo    00;38;5;196
-.cpio   00;38;5;196
-.7z     00;38;5;196
-.rz     00;38;5;196
-.apk    00;38;5;196
-.gem    00;38;5;196
+.tar    00;38;5;166
+.tgz    00;38;5;166
+.arj    00;38;5;166
+.taz    00;38;5;166
+.lzh    00;38;5;166
+.lzma   00;38;5;166
+.tlz    00;38;5;166
+.txz    00;38;5;166
+.zip    00;38;5;166
+.z      00;38;5;166
+.Z      00;38;5;166
+.dz     00;38;5;166
+.gz     00;38;5;166
+.lz     00;38;5;166
+.xz     00;38;5;166
+.bz2    00;38;5;166
+.bz     00;38;5;166
+.tbz    00;38;5;166
+.tbz2   00;38;5;166
+.tz     00;38;5;166
+.deb    00;38;5;166
+.rpm    00;38;5;166
+.jar    00;38;5;166
+.rar    00;38;5;166
+.ace    00;38;5;166
+.zoo    00;38;5;166
+.cpio   00;38;5;166
+.7z     00;38;5;166
+.rz     00;38;5;166
+.apk    00;38;5;166
+.gem    00;38;5;166
 
 
 # useful
@@ -167,34 +166,34 @@ EXEC 00;38;5;70
 .bed    00;38;5;109
 
 # Image formats (yellow)
-.jpg    00;38;5;147
-.JPG    00;38;5;147 #stupid but needed
-.jpeg   00;38;5;147
-.gif    00;38;5;147
-.bmp    00;38;5;147
-.pbm    00;38;5;147
-.pgm    00;38;5;147
-.ppm    00;38;5;147
-.tga    00;38;5;147
-.xbm    00;38;5;147
-.xpm    00;38;5;147
-.tif    00;38;5;147
-.tiff   00;38;5;147
-.png    00;38;5;147
-.PNG    00;38;5;147
-.svg    00;38;5;147
-.svgz   00;38;5;147
-.mng    00;38;5;147
-.pcx    00;38;5;147
-.dl     00;38;5;147
-.xcf    00;38;5;147
-.xwd    00;38;5;147
-.yuv    00;38;5;147
-.cgm    00;38;5;147
-.emf    00;38;5;147
-.eps    00;38;5;147
-.CR2    00;38;5;147
-.ico    00;38;5;147
+.jpg    00;38;5;61
+.JPG    00;38;5;61 #stupid but needed
+.jpeg   00;38;5;61
+.gif    00;38;5;61
+.bmp    00;38;5;61
+.pbm    00;38;5;61
+.pgm    00;38;5;61
+.ppm    00;38;5;61
+.tga    00;38;5;61
+.xbm    00;38;5;61
+.xpm    00;38;5;61
+.tif    00;38;5;61
+.tiff   00;38;5;61
+.png    00;38;5;61
+.PNG    00;38;5;61
+.svg    00;38;5;61
+.svgz   00;38;5;61
+.mng    00;38;5;61
+.pcx    00;38;5;61
+.dl     00;38;5;61
+.xcf    00;38;5;61
+.xwd    00;38;5;61
+.yuv    00;38;5;61
+.cgm    00;38;5;61
+.emf    00;38;5;61
+.eps    00;38;5;61
+.CR2    00;38;5;61
+.ico    00;38;5;61
 
 # Files of special interest (base1)
 .tex             00;38;5;245
