@@ -109,6 +109,9 @@ autocmd filetype yaml,yml set shiftwidth=2 tabstop=2
 autocmd FileType r set comments=b:#
 
 
+au BufRead,BufNewFile Snakefile setfiletype python
+au BufRead,BufNewFile *.snakefile setfiletype python
+
 
 " Relative numbering
 function! NumberToggle()
