@@ -256,3 +256,41 @@ let g:vimwiki_use_mouse = 1  " for vimwiki, allow double-clicking links
 " characters inserted in the same 'session' of insert mode, so `<ESC>A` in the
 " middle will do the trick.
 iab <expr> dts strftime("[ %H:%M ]")
+
+noremap <silent> <LocalLeader>w :call ToggleWrap()<CR>
+function ToggleWrap()
+  if &wrap
+    echo "Wrap OFF"
+    setlocal nowrap
+    set virtualedit=all
+    silent! nunmap <buffer> <Up>
+    silent! nunmap <buffer> <Down>
+    silent! nunmap <buffer> <Home>
+    silent! nunmap <buffer> <End>
+    silent! iunmap <buffer> <Up>
+    silent! iunmap <buffer> <Down>
+    silent! iunmap <buffer> <Home>
+    silent! iunmap <buffer> <End>
+    silent! nunmap  <buffer> <silent> k
+    silent!  nunmap  <buffer> <silent> j
+    silent! nunmap  <buffer> <silent> 0
+    silent! nunmap  <buffer> <silent> $
+  else
+    echo "Wrap ON"
+    setlocal wrap linebreak nolist
+    set virtualedit=
+    setlocal display+=lastline
+    noremap  <buffer> <silent> <Up>   gk
+    noremap  <buffer> <silent> <Down> gj
+    noremap  <buffer> <silent> <Home> g<Home>
+    noremap  <buffer> <silent> <End>  g<End>
+    inoremap <buffer> <silent> <Up>   <C-o>gk
+    inoremap <buffer> <silent> <Down> <C-o>gj
+    inoremap <buffer> <silent> <Home> <C-o>g<Home>
+    inoremap <buffer> <silent> <End>  <C-o>g<End>
+    noremap  <buffer> <silent> k gk
+    noremap  <buffer> <silent> j gj
+    noremap  <buffer> <silent> 0 g0
+    noremap  <buffer> <silent> $ g$
+  endif
+endfunction
