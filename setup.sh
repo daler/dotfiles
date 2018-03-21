@@ -12,6 +12,7 @@ function showHelp() {
     echo "  --install-miniconda   (install downloaded Miniconda to ~/miniconda3)"
     echo "  --set-up-bioconda     (add channels for bioconda in proper order)"
     echo "  --conda-env           (install requirements.txt into root conda env)"
+    echo "  --download-neovim-appimage (download appimage instead of compiling)"
     echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
     echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
     echo "  --set-up-nvim-plugins (manually add vim-plug)"
@@ -60,10 +61,18 @@ elif [ $task == "--compile-neovim" ]; then
     cd neovim
     git checkout master
     git pull
-    git checkout v0.1.7
+    git checkout master
     rm -rf build
     make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/opt/neovim"
     make install
+    echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
+    source ~/.path
+
+elif [ $task == "--download-neovim-appimage" ]; then
+    curl -LO https://github.com/neovim/neovim/releases/download/v0.2.2/nvim.appimage
+    mkdir -p "$HOME/opt/neovim/bin"
+    chmod u+x nvim.appimage
+    mv nvim.appimage "$HOME/opt/neovim/bin/nvim"
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
 
