@@ -14,8 +14,12 @@ function showHelp() {
     echo "  --conda-env           (install requirements.txt into root conda env)"
     echo "  --download-neovim-appimage (download appimage instead of compiling)"
     echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
+    echo "  --powerline           (installs powerline fonts)"
     echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
     echo "  --set-up-nvim-plugins (manually add vim-plug)"
+    echo "  --nih-lablinux        (install repo for LabLinux and LabLinux itself)"
+    echo "  --set-up-lablinux     (print out recommended scripts to run from LabLinux)"
+    echo "  --centos7-installs    (compilers; recent tmux)"
     echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
     echo
@@ -52,6 +56,11 @@ elif [ $task == "--conda-env" ]; then
 
 elif [ $task == "--neovim-prereqs" ]; then
     sudo apt-get install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+
+elif [ $task == "--powerline" ]; then
+    git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
+    (cd /tmp/fonts && ./install.sh)
+    rm -rf /tmp/fonts
 
 elif [ $task == "--compile-neovim" ]; then
     cd /tmp
@@ -96,7 +105,50 @@ elif [ $task == "--diffs" ]; then
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 
+elif [ $task == "--nih-lablinux" ]; then
+    set -ex
+    sudo yum install redhat-lsb-core
+    sudo yum  install \
+        http://mirror.nih.gov/nih/extras/$(lsb_release -is)/$(lsb_release -rs|sed -e 's/\..*//')/$(uname -m)/nih-extras-release.rpm
+    sudo yum install nih-lablinux
+    set +ex
 
+elif [ $task == "--set-up-lablinux" ]; then
+    echo
+    echo "Run the following commands:"
+    echo "---------------------------"
+    echo
+    echo "sudo lablinux install-packages"
+    echo "sudo lablinux configure-piv"
+    echo "sudo lablinux configure-piv-login"
+    echo "sudo lablinux configure-piv-gdm"
+    echo "sudo lablinux configure-sshd"
+    echo
+
+elif [ $task == "--centos7-installs" ]; then
+    set -ex
+    sudo yum groupinstall 'Development Tools'
+    sudo yum install \
+        git \
+        libevent \
+        libevent-devel \
+        ncurses-devel \
+        glibc-static \
+        xclip \
+        htop
+
+    TMUX_VERSION=2.7
+
+    (
+
+        cd /tmp
+        wget https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz
+        tar xzf tmux-${TMUX_VERSION}.tar.gz
+        cd tmux-${TMUX_VERSION}
+        ./configure && make -j8
+        sudo make install
+    )
+    set +ex
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
