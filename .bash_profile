@@ -16,13 +16,20 @@ for option in autocd globstar; do
     shopt -s "$option" 2> /dev/null;
 done;
 
-source /etc/bash_completion;
+if [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion;
+fi
 
 # makes less work on things like tarballs and images
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [ `command -v dircolors` ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+else
+    if [[ $OSTYPE == darwin* ]]; then
+        echo "Looks like you're on MacOS. Might want to 'conda install dircolors'"
+        echo "and re-run"
+    fi
 fi
 

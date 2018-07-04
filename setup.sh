@@ -13,6 +13,7 @@ function showHelp() {
     echo "  --set-up-bioconda     (add channels for bioconda in proper order)"
     echo "  --conda-env           (install requirements.txt into root conda env)"
     echo "  --download-neovim-appimage (download appimage instead of compiling)"
+    echo "  --download-macos-nvim (download binary nvim for MacOS)"
     echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
     echo "  --powerline           (installs powerline fonts)"
     echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
@@ -82,6 +83,14 @@ elif [ $task == "--download-neovim-appimage" ]; then
     mkdir -p "$HOME/opt/neovim/bin"
     chmod u+x nvim.appimage
     mv nvim.appimage "$HOME/opt/neovim/bin/nvim"
+    echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
+    source ~/.path
+
+elif [ $task == "--download-macos-nvim" ]; then
+    curl -LO https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-macos.tar.gz
+    tar -xzvf nvim-macos.tar.gz
+    mkdir -p "$HOME/opt"
+    mv nvim-osx64 "$HOME/opt/neovim"
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
 
