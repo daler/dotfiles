@@ -136,7 +136,7 @@ elif [ $task == "--set-up-lablinux" ]; then
 elif [ $task == "--centos7-installs" ]; then
     set -ex
     sudo yum install epel-release
-    sudo yum gropus install "GNOME Desktop"
+    sudo yum groupinstall "GNOME Desktop"
     sudo yum groupinstall 'Development Tools'
     sudo yum install \
         git \
