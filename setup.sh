@@ -47,9 +47,8 @@ elif [ $task == "--install-miniconda" ]; then
     source ~/.path
 
 elif [ $task == "--set-up-bioconda" ]; then
-    conda config --add channels conda-forge
     conda config --add channels defaults
-    conda config --add channels r
+    conda config --add channels conda-forge
     conda config --add channels bioconda
 
 elif [ $task == "--conda-env" ]; then
