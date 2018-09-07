@@ -24,6 +24,7 @@ if has('nvim')
     Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'julienr/vim-cellmode'
     Plug 'ervandew/supertab'
+    Plug 'tpope/vim-fugitive'
     call plug#end()
 endif
 
