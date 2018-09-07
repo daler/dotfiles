@@ -97,11 +97,12 @@ elif [ $task == "--set-up-nvim-plugins" ]; then
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-    curl -fLo /tmp/nvim-r.zip \
-        https://github.com/jalvesaq/Nvim-R/releases/download/v0.9.8/Nvim-R_0.9.8.zip
+    #curl -fLo /tmp/nvim-r.zip \
+    #    https://github.com/jalvesaq/Nvim-R/releases/download/v0.9.8/Nvim-R_0.9.8.zip
+    #
+    #mkdir -p ~/.local/share/nvim/site/pack/R
+    #(cd ~/.local/share/nvim/site/pack/R && unzip /tmp/nvim-r.zip)
 
-    mkdir -p ~/.local/share/nvim/site/pack/R
-    (cd ~/.local/share/nvim/site/pack/R && unzip /tmp/nvim-r.zip)
 
     echo
     echo "Open nvim and run :PlugInstall"
