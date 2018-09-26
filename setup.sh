@@ -8,6 +8,8 @@ function showHelp() {
     echo "Options are intended to be run one-at-a-time; they are listed here in "
     echo "recommended order."
     echo
+    echo "  --apt-get-installs    (installs a bunch of useful Ubuntu packages)"
+    echo "  --docker              (installs docker and adds current user to new docker group)"
     echo "  --download-miniconda  (downloads latest Miniconda to current directory)"
     echo "  --install-miniconda   (install downloaded Miniconda to ~/miniconda3)"
     echo "  --set-up-bioconda     (add channels for bioconda in proper order)"
@@ -37,7 +39,60 @@ fi
 set -eou pipefail
 task=$1
 
-if [ $task == "--download-miniconda" ]; then
+if [ $task == "--apt-get-installs" ]; then
+    sudo apt-get update && \
+    sudo apt-get install \
+        build-essential \
+        htop \
+        tmux \
+        iotop \
+        shutter \
+        inkscape \
+        gimp \
+        cifs-utils \
+        nfs-common \
+        tcllib \
+        gnome-tweak-tool \
+        indicator-multiload \
+        curl \
+        openssh-server \
+        zlib1g-dev \
+        default-jdk \
+        icedtea-netx \
+        git-cola \
+        texlive \
+        meld \
+        uuid \
+        gparted \
+        gnupg2 \
+        gnupg-agent \
+        pinentry-qt \
+        apt-transport-https \
+        ca-certificates \
+        software-properties-common
+
+elif [ $task == "--docker" ]; then
+    sudo apt-get update
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo apt-key fingerprint 0EBFCD88
+    echo
+    echo "should say:"
+    echo
+    echo "pub   4096R/0EBFCD88 2017-02-22"
+    echo "      Key fingerprint = 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88"
+    echo "uid                  Docker Release (CE deb) <docker@docker.com>"
+    echo "sub   4096R/F273FCD8 2017-02-22"
+
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    echo
+    echo
+    echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
+
+elif [ $task == "--download-miniconda" ]; then
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
 elif [ $task == "--install-miniconda" ]; then
