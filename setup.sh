@@ -23,6 +23,7 @@ function showHelp() {
     echo "  --nih-lablinux        (install repo for LabLinux and LabLinux itself)"
     echo "  --set-up-lablinux     (print out recommended scripts to run from LabLinux)"
     echo "  --centos7-installs    (compilers; recent tmux)"
+    echo "  --install-fzf         (installs fzf)"
     echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
     echo
@@ -69,7 +70,11 @@ if [ $task == "--apt-get-installs" ]; then
         pinentry-qt \
         apt-transport-https \
         ca-certificates \
-        software-properties-common
+        software-properties-common \
+        automake \
+        pkg-config \
+        libpcre3-dev \
+        liblzma-dev
 
 elif [ $task == "--docker" ]; then
     sudo apt-get update
@@ -215,6 +220,29 @@ elif [ $task == "--centos7-installs" ]; then
         sudo make install
     )
     set +ex
+
+elif [ $task == "--install-fzf" ]; then
+    (
+      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+      ~/.fzf/install --no-update-rc --completion --key-bindings
+      )
+
+elif [ $task == "--install-fasd" ]; then
+    mkdir -p ~/opt
+    (
+        wget -O- https://raw.githubusercontent.com/clvv/fasd/master/fasd \
+            > ~/opt/fasd
+        chmod +x ~/opt/fasd
+    )
+
+elif [ $task == "--install-ag" ]; then
+    (
+        rm -rf /tmp/ag
+        git clone git@github.com:ggreer/the_silver_searcher.git /tmp/ag
+        cd /tmp/ag
+        ./build.sh
+        sudo make install
+    )
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
