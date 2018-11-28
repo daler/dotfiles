@@ -262,12 +262,15 @@ elif [ $task == "--install-fasd" ]; then
 
 elif [ $task == "--install-ag" ]; then
     (
-        rm -rf /tmp/ag
-        git clone https://github.com/ggreer/the_silver_searcher.git /tmp/ag
-        cd /tmp/ag
-        ./build.sh
-        sudo make install
-        rm -rf /tmp/ag
+        agdir=$HOME/tmp/ag
+        rm -rf $agdir
+        git clone https://github.com/ggreer/the_silver_searcher.git $agdir
+        cd $agdir
+        sh ./autogen.sh
+        sh ./configure --prefix=$HOME/opt/
+        make
+        make install
+        rm -rf $agdir
     )
 
 elif [ $task == "--dotfiles" ]; then
