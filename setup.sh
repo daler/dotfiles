@@ -267,6 +267,7 @@ elif [ $task == "--install-ag" ]; then
         cd /tmp/ag
         ./build.sh
         sudo make install
+        rm -rf /tmp/ag
     )
 
 elif [ $task == "--dotfiles" ]; then
