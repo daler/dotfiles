@@ -195,8 +195,7 @@ let R_objbr_place = "console"
 function! RMakeHTML_2(t)
    update
    let rmddir = expand("%:p:h")
-   let rcmd = 'nvim.interlace.rmd("' . expand("%:t") . '", outform = "' . a:t .'", rmddir = "' . rmddir . '"'
-   let rcmd .= ", view = FALSE"
+   let rcmd = 'nvim.interlace.rmd("' . expand("%:t") . '", output_format = "' . a:t .'", rmddir = "' . rmddir . '"'
    let rcmd = rcmd . ', envir = ' . g:R_rmd_environment . ')'
    call g:SendCmdToR(rcmd)
 endfunction
@@ -204,8 +203,7 @@ endfunction
 function! RMakeHTML_3()
    update
    let rmddir = expand("%:p:h")
-   let rcmd = 'nvim.interlace.rmd("' . expand("%:t") . '", outform = "' . a:t .'", rmddir = "' . rmddir . '"'
-   let rcmd .= ", view = FALSE"
+   let rcmd = 'nvim.interlace.rmd("' . expand("%:t") . '", output_format = "' . a:t .'", rmddir = "' . rmddir . '"'
    let rcmd = rcmd . ', envir = ' . g:R_rmd_environment . ')'
    call g:SendCmdToR(rcmd)
 endfunction

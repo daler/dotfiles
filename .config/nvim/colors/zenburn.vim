@@ -100,7 +100,7 @@ hi LineNr          guifg=#9fafaf guibg=#262626
 hi Macro           guifg=#ffcfaf gui=bold
 hi ModeMsg         guifg=#ffcfaf gui=none
 hi MoreMsg         guifg=#ffffff gui=bold
-hi NonText         guifg=#404040
+hi NonText         guifg=#8f8f8f
 hi Number          guifg=#8cd0d3
 hi Operator        guifg=#f0efd0
 hi PreCondit       guifg=#dfaf8f gui=bold
@@ -164,7 +164,7 @@ if &t_Co > 255
     hi Macro           ctermfg=223   cterm=bold
     hi ModeMsg         ctermfg=223   cterm=none
     hi MoreMsg         ctermfg=15    cterm=bold
-    hi NonText         ctermfg=238  
+    hi NonText         ctermfg=245  
     hi Number          ctermfg=116  
     hi Operator        ctermfg=230  
     hi PreCondit       ctermfg=180   cterm=bold

@@ -25,3 +25,29 @@ function start_agent {
 function tre() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+eval "$(fasd --init auto)"
+
+# fuzzy grep open via ag with line number
+vg() {
+  local file
+  local line
+
+  read -r file line <<<"$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
+
+  if [[ -n $file ]]
+  then
+     vim $file +$line
+  fi
+}
+
+# Select a conda env to activate
+sa() {
+    local name=$(conda env list | grep -v "#" | fzf)
+    local env=$(echo $name | awk '{print $1}');
+    eval "source activate $env";
+}
+
+

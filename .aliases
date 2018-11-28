@@ -8,4 +8,11 @@ alias cols="column -s$'\t' -t"
 alias coms="column -s$',' -t"
 alias tmux="tmux -u"
 alias vim="nvim"
-alias j="vim -c 'execute \"normal ,w,wG\"' -c 'startinsert'"
+alias D="export DISPLAY=:0"
+alias ff="fzf-tmux"
+alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
+alias v='f -e nvim'
+alias dl='fasd -d'
+alias d='fasd_cd -d'
+alias z="fzf-tmux"
+_fasd_bash_hook_cmd_complete v
