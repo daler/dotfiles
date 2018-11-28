@@ -108,8 +108,8 @@ elif [ $task == "--install-miniconda" ]; then
 
 elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels defaults
-    conda config --add channels conda-forge
     conda config --add channels bioconda
+    conda config --add channels conda-forge
 
 elif [ $task == "--conda-env" ]; then
     conda install --file requirements.txt
