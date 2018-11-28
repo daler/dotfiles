@@ -24,6 +24,8 @@ function showHelp() {
     echo "  --set-up-lablinux     (print out recommended scripts to run from LabLinux)"
     echo "  --centos7-installs    (compilers; recent tmux)"
     echo "  --install-fzf         (installs fzf)"
+    echo "  --install-fasd        (installs fasd)"
+    echo "  --install-ag          (installs ag)"
     echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
     echo
