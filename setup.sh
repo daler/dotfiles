@@ -40,6 +40,29 @@ fi
 set -eou pipefail
 task=$1
 
+
+
+try_curl() {
+    url=$1
+    dest=$2
+    command -v curl > /dev/null && curl -fL $url > $dest
+}
+
+
+try_wget() {
+    url=$1
+    dest=$2
+    command -v wget > /dev/null && wget -O- $url > $dest
+}
+
+
+download() {
+    echo "Downloading $1 to $2"
+    if ! (try_curl $1 $2 || try_wget $1 $2); then
+        echo "Could not download $1"
+    fi
+}
+
 if [ $task == "--apt-get-installs" ]; then
     sudo apt-get update && \
     sudo apt-get install \
@@ -98,7 +121,7 @@ elif [ $task == "--docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--download-miniconda" ]; then
-    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
 elif [ $task == "--install-miniconda" ]; then
     bash Miniconda3-latest-Linux-x86_64.sh -b
@@ -138,15 +161,15 @@ elif [ $task == "--compile-neovim" ]; then
     source ~/.path
 
 elif [ $task == "--download-neovim-appimage" ]; then
-    curl -LO https://github.com/neovim/neovim/releases/download/v0.2.2/nvim.appimage
-    mkdir -p "$HOME/opt/neovim/bin"
-    chmod u+x nvim.appimage
-    mv nvim.appimage "$HOME/opt/neovim/bin/nvim"
+    dest="$HOME/opt/neovim/bin/nvim"
+    mkdir -p $(dirname $dest)
+    download https://github.com/neovim/neovim/releases/download/v0.2.2/nvim.appimage $dest
+    chmod u+x $dest
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
 
 elif [ $task == "--download-macos-nvim" ]; then
-    curl -LO https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-macos.tar.gz
+    download https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-macos.tar.gz nvim-macos.tar.gz
     tar -xzvf nvim-macos.tar.gz
     mkdir -p "$HOME/opt"
     mv nvim-osx64 "$HOME/opt/neovim"
@@ -154,8 +177,9 @@ elif [ $task == "--download-macos-nvim" ]; then
     source ~/.path
 
 elif [ $task == "--set-up-nvim-plugins" ]; then
-    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest=~/.local/share/nvim/site/autoload/plug.vim 
+    mkdir -p $(dirname $dest)
+    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
 
     #curl -fLo /tmp/nvim-r.zip \
     #    https://github.com/jalvesaq/Nvim-R/releases/download/v0.9.8/Nvim-R_0.9.8.zip
@@ -213,7 +237,7 @@ elif [ $task == "--centos7-installs" ]; then
     (
 
         cd /tmp
-        wget https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz
+        download https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz tmux-${TMUX_VERSION}.tar.gz
         tar xzf tmux-${TMUX_VERSION}.tar.gz
         cd tmux-${TMUX_VERSION}
         ./configure && make -j8
@@ -230,15 +254,14 @@ elif [ $task == "--install-fzf" ]; then
 elif [ $task == "--install-fasd" ]; then
     mkdir -p ~/opt
     (
-        wget -O- https://raw.githubusercontent.com/clvv/fasd/master/fasd \
-            > ~/opt/fasd
+        download https://raw.githubusercontent.com/clvv/fasd/master/fasd ~/opt/fasd
         chmod +x ~/opt/fasd
     )
 
 elif [ $task == "--install-ag" ]; then
     (
         rm -rf /tmp/ag
-        git clone git@github.com:ggreer/the_silver_searcher.git /tmp/ag
+        git clone https://github.com/ggreer/the_silver_searcher.git /tmp/ag
         cd /tmp/ag
         ./build.sh
         sudo make install
