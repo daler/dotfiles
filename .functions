@@ -26,9 +26,15 @@ function tre() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+
+# Set up fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# Set up fasd autocompletion
 eval "$(fasd --init auto)"
+
+# Set up autojump
+[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh 
 
 # fuzzy grep open via ag with line number
 vg() {
@@ -49,5 +55,4 @@ sa() {
     local env=$(echo $name | awk '{print $1}');
     eval "source activate $env";
 }
-
 

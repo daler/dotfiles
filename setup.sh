@@ -26,6 +26,7 @@ function showHelp() {
     echo "  --install-fzf         (installs fzf)"
     echo "  --install-fasd        (installs fasd)"
     echo "  --install-ag          (installs ag)"
+    echo "  --install-autojump    (installs autojump)"
     echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
     echo
@@ -269,6 +270,14 @@ elif [ $task == "--install-ag" ]; then
         sudo make install
         rm -rf /tmp/ag
     )
+
+elif [ $task == "--install-autojump" ]; then
+    (
+        git clone git://github.com/wting/autojump.git
+        cd autojump
+        python install.py
+    )
+    rm -rf autojump
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
