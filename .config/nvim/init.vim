@@ -15,7 +15,6 @@ if has('nvim')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-surround'
-    Plug 'jalvesaq/Nvim-R'
     Plug 'roxma/vim-tmux-clipboard'
     Plug 'vim-scripts/indentpython.vim'
     Plug 'tmux-plugins/vim-tmux-focus-events'
