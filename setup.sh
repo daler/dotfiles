@@ -16,15 +16,12 @@ function showHelp() {
     echo "  --conda-env           (install requirements.txt into root conda env)"
     echo "  --download-neovim-appimage (download appimage instead of compiling)"
     echo "  --download-macos-nvim (download binary nvim for MacOS)"
-    echo "  --neovim-prereqs      (apt-get install prereqs to compile neovim)"
     echo "  --powerline           (installs powerline fonts)"
-    echo "  --compile-neovim      (compile and install neovim to ~/opt/neovim)"
     echo "  --set-up-nvim-plugins (manually add vim-plug)"
     echo "  --nih-lablinux        (install repo for LabLinux and LabLinux itself)"
     echo "  --set-up-lablinux     (print out recommended scripts to run from LabLinux)"
     echo "  --centos7-installs    (compilers; recent tmux)"
     echo "  --install-fzf         (installs fzf)"
-    echo "  --install-fasd        (installs fasd)"
     echo "  --install-ag          (installs ag)"
     echo "  --install-autojump    (installs autojump)"
     echo "  --diffs               (inspect differences between repo and home)"
@@ -140,28 +137,10 @@ elif [ $task == "--set-up-bioconda" ]; then
 elif [ $task == "--conda-env" ]; then
     conda install --file requirements.txt
 
-elif [ $task == "--neovim-prereqs" ]; then
-    sudo apt-get install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
-
 elif [ $task == "--powerline" ]; then
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
-
-elif [ $task == "--compile-neovim" ]; then
-    cd /tmp
-    if [ ! -e neovim ]; then
-        git clone https://github.com/neovim/neovim.git
-    fi
-    cd neovim
-    git checkout master
-    git pull
-    git checkout master
-    rm -rf build
-    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/opt/neovim"
-    make install
-    echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
-    source ~/.path
 
 elif [ $task == "--download-neovim-appimage" ]; then
     dest="$HOME/opt/neovim/bin/nvim"
@@ -183,14 +162,6 @@ elif [ $task == "--set-up-nvim-plugins" ]; then
     dest=~/.local/share/nvim/site/autoload/plug.vim 
     mkdir -p $(dirname $dest)
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
-
-    #curl -fLo /tmp/nvim-r.zip \
-    #    https://github.com/jalvesaq/Nvim-R/releases/download/v0.9.8/Nvim-R_0.9.8.zip
-    #
-    #mkdir -p ~/.local/share/nvim/site/pack/R
-    #(cd ~/.local/share/nvim/site/pack/R && unzip /tmp/nvim-r.zip)
-
-
     echo
     echo "Open nvim and run :PlugInstall"
     echo
@@ -253,13 +224,6 @@ elif [ $task == "--install-fzf" ]; then
       git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
       ~/.fzf/install --no-update-rc --completion --key-bindings
       )
-
-elif [ $task == "--install-fasd" ]; then
-    mkdir -p ~/opt
-    (
-        download https://raw.githubusercontent.com/clvv/fasd/master/fasd ~/opt/fasd
-        chmod +x ~/opt/fasd
-    )
 
 elif [ $task == "--install-ag" ]; then
     (
