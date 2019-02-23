@@ -24,6 +24,8 @@ if has('nvim')
     Plug 'julienr/vim-cellmode'
     Plug 'ervandew/supertab'
     Plug 'tpope/vim-fugitive'
+    Plug 'chrisbra/vim-diff-enhanced'
+    Plug 'kassio/neoterm'
     call plug#end()
 endif
 
