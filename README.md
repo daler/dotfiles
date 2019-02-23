@@ -2,6 +2,9 @@ Starting with a fresh install of Ubuntu, CentOS, or macOS, with this repo I can
 be up and running with everything I need plus all my configurations and plugins
 in a couple of minutes.
 
+`setup.sh` does all the work. Run it with no options to see the help. Search
+for each option within the script to understand what each part does.
+
 Current options include (in approximate order in which they're typically run):
 
 ```
