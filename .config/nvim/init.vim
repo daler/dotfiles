@@ -31,6 +31,17 @@ endif
 
 let mapleader=","   " re-map mapleader from \ to ,
 
+
+nmap <Leader>t :vert rightb Tnew<CR>
+
+" Use gx{text-object} in normal mode
+nmap gx <Plug>(neoterm-repl-send)
+
+" Send selected contents in visual mode.
+xmap gx <Plug>(neoterm-repl-send)
+
+nmap gxx <Plug>(neoterm-repl-send-line)
+
 autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
 
 " CtrlP shortcuts
