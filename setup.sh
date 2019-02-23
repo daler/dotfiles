@@ -166,13 +166,13 @@ elif [ $task == "--compile-neovim" ]; then
 elif [ $task == "--download-neovim-appimage" ]; then
     dest="$HOME/opt/neovim/bin/nvim"
     mkdir -p $(dirname $dest)
-    download https://github.com/neovim/neovim/releases/download/v0.2.2/nvim.appimage $dest
+    download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim.appimage $dest
     chmod u+x $dest
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
 
 elif [ $task == "--download-macos-nvim" ]; then
-    download https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-macos.tar.gz nvim-macos.tar.gz
+    download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-macos.tar.gz nvim-macos.tar.gz
     tar -xzvf nvim-macos.tar.gz
     mkdir -p "$HOME/opt"
     mv nvim-osx64 "$HOME/opt/neovim"
