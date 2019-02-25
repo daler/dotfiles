@@ -5,162 +5,122 @@ endif
 
 if has('nvim')
     call plug#begin('~/.local/share/nvim/site/autoload')
-    "Plug 'fholgado/minibufexpl.vim'
-    Plug 'itchyny/calendar.vim'
-    Plug 'vimwiki/vimwiki'
-    Plug 'scrooloose/nerdtree'
-    Plug 'justincampbell/vim-eighties'
-    Plug 'godlygeek/tabular'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'tpope/vim-surround'
-    Plug 'roxma/vim-tmux-clipboard'
-    Plug 'vim-scripts/indentpython.vim'
-    Plug 'tmux-plugins/vim-tmux-focus-events'
-    Plug 'nvie/vim-flake8'
-    Plug 'kien/rainbow_parentheses.vim'
-    Plug 'Vimjas/vim-python-pep8-indent'
-    Plug 'julienr/vim-cellmode'
-    Plug 'ervandew/supertab'
-    Plug 'tpope/vim-fugitive'
-    Plug 'chrisbra/vim-diff-enhanced'
-    Plug 'kassio/neoterm'
+
+    " Note: where shortcuts are indicated, they're probably set below in the
+    " PLUGIN SETTINGS section.
+    "
+    Plug 'scrooloose/nerdtree'                " File browser for vim <Leader>n
+    Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
+    Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
+    Plug 'roxma/vim-tmux-clipboard'           " Copy yanked text from vim into tmux's clipboard and vice versa.
+    Plug 'tmux-plugins/vim-tmux-focus-events' " Makes tmux and vim play nicer together.
+    Plug 'nvie/vim-flake8'                    " Run flake8 (pip install flake8) on current buffer <Leader>8
+    Plug 'vim-python/python-syntax'           " Sophisticated python syntax highlighting.
+    Plug 'Vimjas/vim-python-pep8-indent'      " Indent python using pep8 recommendations
+    Plug 'ervandew/supertab'                  " Autocomplete most things
+    Plug 'tpope/vim-fugitive'                 " Run git from vim
+    Plug 'chrisbra/vim-diff-enhanced'         " Provides additional diff algorithms
+    Plug 'kassio/neoterm'                     " Provides a separate terminal in vim <Leader>t
+    Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
+    Plug 'felixhummel/setcolors.vim'
+
     call plug#end()
 endif
 
-let mapleader=","   " re-map mapleader from \ to ,
 
 
-nmap <Leader>t :vert rightb Tnew<CR>
-
-" Use gx{text-object} in normal mode
-nmap gx <Plug>(neoterm-repl-send)
-
-" Send selected contents in visual mode.
-xmap gx <Plug>(neoterm-repl-send)
-
-nmap gxx <Plug>(neoterm-repl-send-line)
-
-autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
-
-" CtrlP shortcuts
-" open file menu
-nnoremap <Leader>o :CtrlP<CR>
-" open buffer menu
-nnoremap <Leader>b :CtrlPBuffer<CR>
-" open most recently used files
-nnoremap <Leader>f :CtrlPMRUFiles<CR>
-
-
-" 'listify' -- surround line with quotes, add a trailing comma, and move to the
-" next line.
-let @l = "I'A',j"
-
-" Set the working directory to that of the opened file
-autocmd BufEnter * silent! lcd %:p:h
-
+" ============================================================================
+" SETTINGS
+" ============================================================================
+" ----------------------------------------------------------------------------
 " Syntax and file types
-syntax on                 " syntax highlighting; also does an implicit filetype on
-filetype plugin indent on " enable detection, plugin , and indent for filetype
-set backspace=indent,eol,start
+" ----------------------------------------------------------------------------
+syntax on                      " Syntax highlighting; also does an implicit filetype on
+filetype plugin indent on      " Enable detection, plugin , and indent for filetype
+set backspace=indent,eol,start " This gets backspace to work in some situations
 
+" ----------------------------------------------------------------------------
+" Python-specific indentation handling. Use these by default.
+" ----------------------------------------------------------------------------
+set foldlevel=99  " go deep
+set autoindent    " maintain indentation from prev line
+set tabstop=4     " number of spaces <Tab> represents.  For Python.
+set shiftwidth=4  " number of spaces for indentation.  Same as tabstop. For Python.
+set smarttab      " at the beginning of the line, insert spaces according to shiftwidth
+set expandtab     " <Tab> inserts spaces, not '\t'
 
-" Python-specific indentation handling
-set foldmethod=indent     " maybe 'syntax' would work for python?
-set foldlevel=99          " go deep
-set autoindent            " maintain indentation from prev line
-set tabstop=4             " number of spaces <Tab> represents.  For Python.
-set shiftwidth=4          " number of spaces for indentation.  Same as tabstop. For Python.
-set smarttab              " at the beginning of the line, insert spaces according to shiftwidth
-
-
+" ----------------------------------------------------------------------------
 " Visual display settings
-set scrolloff=3           " keep some lines above and below the cursor to keep context visible
-set list                  " show non-printing chars
+" ----------------------------------------------------------------------------
+colorscheme zenburn              " colorscheme to use
+set scrolloff=3                  " keep some lines above and below the cursor to keep context visible
+set list                         " show non-printing chars
+set showmatch                    " show matching parentheses
+set nu                           " display line numbers
+set wrap                         " wrap lines
+set noshowmode                   " for use with vim-airline, which has its own
+set mouse=a                      " allow mouse usage
+set encoding=utf-8               " default encoding
+:autocmd InsertEnter * set cul   " color the current line in insert mode
+:autocmd InsertLeave * set nocul " remove color when leaving insert mode
 set listchars=tab:>.,trail:.,extends:#,nbsp:.  " how to display nonprinting chars
-set showmatch             " show matching parentheses
-set nu                    " display line numbers
-set wrap                  " wrap lines
-set noshowmode            " for use with vim-airline, which has its own
-set mouse=a
-set encoding=utf-8
-colorscheme zenburn
 
-" Format options, with description
-set formatoptions=qrn1c   " q: gq formats comments
+" ----------------------------------------------------------------------------
+" Format options
+" ----------------------------------------------------------------------------
+set formatoptions=qrn1c   " q: gq also formats comments
                           " r: insert comment leader after <Enter> in insert mode
                           " n: recognize numbered lists
                           " 1: don't break a line after a 1-letter word
                           " c: autoformat comments
 
+" ----------------------------------------------------------------------------
 " General behavior
-set hidden                " open a new buffer without having to save first
-set history=1000          " remember more commands and search history
-set undolevels=1000       " use many levels of undo
-set noswapfile            " disable swap file creation.  Keep enabled for huge files
+" ----------------------------------------------------------------------------
+set hidden           " open a new buffer without having to save first
+set history=1000     " remember more commands and search history
+set undolevels=1000  " use many levels of undo
+set noswapfile       " disable swap file creation. Keep enabled for huge files
 
-
+" ----------------------------------------------------------------------------
 " Searching
-set ignorecase            " ignore case when searching
-set smartcase             " unless at least one character is uppercase
-set nohlsearch            " highlight search items
+" ----------------------------------------------------------------------------
+set ignorecase  " ignore case when searching...
+set smartcase   " ...unless at least one character is uppercase
+set nohlsearch  " don't highlight search items by default
 
-" tab completion settings
-set wildmenu              " make tab completion for files/buffers act like bash
-set wildmode=list:full    " show a list when pressing tab; complete first full match
+" ----------------------------------------------------------------------------
+" Tab completion settings
+" ----------------------------------------------------------------------------
+set wildmenu            " make tab completion for files/buffers act like bash
+set wildmode=list:full  " show a list when pressing tab; complete first full match
 set wildignore=*.swp,*.bak,*.pyc,*.class  " ignore these when autocompleting
 
+" ============================================================================
+" CUSTOM MAPPINGS
+" ============================================================================
+let mapleader=","   " re-map mapleader from \ to ,
 
-" autocmd settings to override in a filetype-specific manner
-autocmd filetype python,sh,bash,yaml,r,vim,snakemake set expandtab " expand <Tab> key presses to spaces, but only for Python
-autocmd filetype html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
-autocmd filetype yaml,yml set shiftwidth=2 tabstop=2
+" Toggle search highlight
+noremap <Leader>H :set hlsearch!<CR>
 
-" R-specific. When writing R scripts to be converted via knitr::spin to
-" Rmd/HTML, comments start with #'
-autocmd FileType r set comments=b:#
-
-
-au BufRead,BufNewFile Snakefile setfiletype python
-au BufRead,BufNewFile *.snakefile setfiletype python
-
-
-" Relative numbering
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set nornu
-    set number
-  else
-    set rnu
-  endif
-endfunc
-
-" Toggle between normal and relative numbering.
-nnoremap <leader>r :call NumberToggle()<cr>
-nnoremap <leader>n :NERDTreeToggle<cr>
-
-" plugin settings
-let python_highlight_all = 1 " for python.vim; syntax highlight all available/known syntax
-
-" =============================================================================
-" <leader> commands
-"
-
-" PEP8 pluging settings.  ,8 to run pep8 check
-let g:pep8_map='<leader>8'
-let g:pep8_ignore="E121"
-
-
-" Helper for pep8: ,W cleans up trailing whitespace
+" Helper for pep8: cleans up trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
+" Refresh syntax highlighting
+noremap <leader>R <Esc>:syntax sync fromstart<CR>
+inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
-" F12 to refresh syntax highlighting
-noremap <F12> <Esc>:syntax sync fromstart<CR>
-inoremap <F12> <C-o>:syntax sync fromstart<CR>
+" 'Listify': for easily making Python lists out of pasted text.
+let @l = "I'A',j"
 
-" buffer switching -- up to 8, cause PEP8 is <leader>8
+" Set the working directory to that of the opened file
+autocmd BufEnter * silent! lcd %:p:h
+
+" ----------------------------------------------------------------------------
+" Buffer switching
+" ----------------------------------------------------------------------------
+" buffer switching -- up to 8, because PEP8 is <leader>8
 " ,l       : list buffers
 " ,b ,f ,g : go back/forward/last-used
 " ,1 ,2 ,3 : go to buffer 1/2/3 etc
@@ -172,60 +132,20 @@ nnoremap <Leader>5 :5b<CR>
 nnoremap <Leader>6 :6b<CR>
 nnoremap <Leader>7 :7b<CR>
 
-
+" ----------------------------------------------------------------------------
+" Copy/paste
+" ----------------------------------------------------------------------------
 " Yank/paste to the OS clipboard with ,y and ,p
 nmap <leader>y "+y
 nmap <leader>Y "+yq
 nmap <leader>p "+p
 nmap <leader>P "+P
 
+set clipboard=unnamed
 
-
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
-
-
-
-" color line in insert mode
-:autocmd InsertEnter * set cul
-:autocmd InsertLeave * set nocul
-
-
-" highlight cursorline ctermbg=gray cterm=NONE
-
-
-" R_vsplit now deprecated.
-" let R_vsplit = 1  " nvim-r puts the console on the right with <LocalLeader>rf
-let R_min_editor_width = 80
-let rout_follow_colorscheme = 1
-let R_assign = 3  " nvim-r replaces ' __ ' with ' <- '
-let R_nvimpager = "horizontal"
-let R_objbr_place = "console"
-
-
-function! RMakeHTML_2(t)
-   update
-   let rmddir = expand("%:p:h")
-   let rcmd = 'nvim.interlace.rmd("' . expand("%:t") . '", output_format = "' . a:t .'", rmddir = "' . rmddir . '"'
-   let rcmd = rcmd . ', envir = ' . g:R_rmd_environment . ')'
-   call g:SendCmdToR(rcmd)
-endfunction
-
-function! RMakeHTML_3()
-   update
-   let rmddir = expand("%:p:h")
-   let rcmd = 'nvim.interlace.rmd("' . expand("%:t") . '", output_format = "' . a:t .'", rmddir = "' . rmddir . '"'
-   let rcmd = rcmd . ', envir = ' . g:R_rmd_environment . ')'
-   call g:SendCmdToR(rcmd)
-endfunction
-"bind RMakeHTML_2 to leader kk
-nnoremap <silent> <LocalLeader>kb :call RMakeHTML_2("knitrBootstrap::bootstrap_document")<CR>
-nnoremap <silent> <LocalLeader>kk :call RMakeHTML_2("html_document")<CR>
-nnoremap <silent> <LocalLeader>km :!mv %:r.html ../output/<CR>
-
-
-"Better window navigation
+" ----------------------------------------------------------------------------
+"  Window navigation
+" ----------------------------------------------------------------------------
 noremap <silent> ,h :wincmd h<cr>
 noremap <silent> ,j :wincmd j<cr>
 noremap <silent> ,k :wincmd k<cr>
@@ -234,20 +154,67 @@ noremap <silent> ,l :wincmd l<cr>
 noremap <silent> ,w :wincmd l<cr>A
 noremap <silent> ,q :wincmd h<cr>
 
+" ============================================================================
+" FILE-TYPE SPECIFIC SETTINGS
+" ============================================================================
+autocmd filetype html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
+autocmd filetype yaml,yml set shiftwidth=2 tabstop=2
+
+" Consider any files with these names to be Python
+au BufRead,BufNewFile Snakefile setfiletype python
+au BufRead,BufNewFile *.snakefile setfiletype python
+
+" ============================================================================
+" RELATIVE NUMBERING
+" ============================================================================
+" Relative numbering. Use <Leader>r to turn on relative line numbering --
+" useful for choosing how many lines to delete, for example.
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set nornu
+    set number
+  else
+    set rnu
+  endif
+endfunc
+nnoremap <leader>r :call NumberToggle()<cr>
+
+" ============================================================================
+" PLUGIN SETTINGS AND MAPPINGS
+" Settings that require particular plugins to be installed. Grouped by plugin.
+" ============================================================================
+" ----------------------------------------------------------------------------
+" NERDTree
+" ----------------------------------------------------------------------------
+" Toggle NERDTree window
+nnoremap <leader>n :NERDTreeToggle<cr>
+
+" ----------------------------------------------------------------------------
+" Flake8
+" ----------------------------------------------------------------------------
+let g:pep8_map='<leader>8'
+let g:pep8_ignore="E121"
+
+" ----------------------------------------------------------------------------
+" neoterm
+" ----------------------------------------------------------------------------
+" Open a terminal to the right (neoterm plugin)
+nmap <Leader>t :vert rightb Tnew<CR>
+
+" Send text to open neoterm terminal (neoterm plugin)
+nmap gx <Plug>(neoterm-repl-send)
+xmap gx <Plug>(neoterm-repl-send)
+nmap gxx <Plug>(neoterm-repl-send-line)
+
+" ----------------------------------------------------------------------------
+" powerline
+" ----------------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme = "powerlineish"
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:bufferline_echo = 0
-
-set clipboard=unnamed
-
-
-let g:cellmode_tmux_sessionname = ''
-let g:cellmode_tmux_windowpagne=''
-let g:cellmode_tmux_panenumber='1'
-
 " These might be useful later -- in case you're not using a powerline font
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -257,54 +224,37 @@ let g:cellmode_tmux_panenumber='1'
 " let g:airline_left_alt_sep = '|'
 " let g:airline_right_sep = ' '
 " let g:airline_right_alt_sep = '|'
-"let g:airline_theme= 'gruvbox'
+" let g:airline_theme= 'gruvbox'
 
 
-" vimwiki settings
-let g:vimwiki_list = [{'path': '~/notes/',
-                   \ 'syntax': 'markdown', 'ext': '.md'}]  " use markdown rather than vimwiki syntax
 
-let g:vimwiki_use_mouse = 1  " for vimwiki, allow double-clicking links
-
-" type 'dts' in insert mode to get a timestamp. Abbreviations need all
-" characters inserted in the same 'session' of insert mode, so `<ESC>A` in the
-" middle will do the trick.
-iab <expr> dts strftime("[ %H:%M ]")
-
-noremap <silent> <LocalLeader>w :call ToggleWrap()<CR>
-function ToggleWrap()
-  if &wrap
-    echo "Wrap OFF"
-    setlocal nowrap
-    set virtualedit=all
-    silent! nunmap <buffer> <Up>
-    silent! nunmap <buffer> <Down>
-    silent! nunmap <buffer> <Home>
-    silent! nunmap <buffer> <End>
-    silent! iunmap <buffer> <Up>
-    silent! iunmap <buffer> <Down>
-    silent! iunmap <buffer> <Home>
-    silent! iunmap <buffer> <End>
-    silent! nunmap  <buffer> <silent> k
-    silent!  nunmap  <buffer> <silent> j
-    silent! nunmap  <buffer> <silent> 0
-    silent! nunmap  <buffer> <silent> $
-  else
-    echo "Wrap ON"
-    setlocal wrap linebreak nolist
-    set virtualedit=
-    setlocal display+=lastline
-    noremap  <buffer> <silent> <Up>   gk
-    noremap  <buffer> <silent> <Down> gj
-    noremap  <buffer> <silent> <Home> g<Home>
-    noremap  <buffer> <silent> <End>  g<End>
-    inoremap <buffer> <silent> <Up>   <C-o>gk
-    inoremap <buffer> <silent> <Down> <C-o>gj
-    inoremap <buffer> <silent> <Home> <C-o>g<Home>
-    inoremap <buffer> <silent> <End>  <C-o>g<End>
-    noremap  <buffer> <silent> k gk
-    noremap  <buffer> <silent> j gj
-    noremap  <buffer> <silent> 0 g0
-    noremap  <buffer> <silent> $ g$
-  endif
-endfunction
+" ============================================================================
+" OLD PLUGINS
+" ============================================================================
+" Note: The following plugins have been useful in the past but are no
+" longer needed or not used enough to warrant keeping . . . but storing
+" here for future reference.
+"
+" Plug 'ctrlpvim/ctrlp.vim'
+" (Fuzzy-finder for opening files)
+" 
+" Plug 'justincampbell/vim-eighties'
+" (Smaller windows will temporarily resize to 80 chars when switched to)
+" 
+" Plug 'godlygeek/tabular'
+" (Nice features for aligning text)
+" 
+" Plug 'vimwiki/vimwiki'
+" (For editing markdown/wiki format. Creates a local wiki)
+" 
+" Plug 'jalvesaq/Nvim-R'
+" (Very nice interface for R and nvim, but puts nvimcom package into cached
+" R environments, so I've moved to neoterm (which works with IPython as
+" well as R))
+" 
+" Plug 'vim-scripts/indentpython.vim'
+" (Superceded by vim-python-pep8-indent)
+" 
+" Plug 'tpope/vim-surround'
+" (Quickly change surrounding characters (wrap in parentheses; change quotes
+" from ' to ", etc))
