@@ -12,8 +12,4 @@ alias D="export DISPLAY=:0"
 alias DD="export DISPLAY=localhost:11.0"
 alias ff="fzf-tmux"
 alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
-alias v='f -e nvim'
-alias dl='fasd -d'
-alias d='fasd_cd -d'
 alias z="fzf-tmux"
-_fasd_bash_hook_cmd_complete v
