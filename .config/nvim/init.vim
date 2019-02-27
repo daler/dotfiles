@@ -201,6 +201,10 @@ let g:pep8_ignore="E121"
 " Open a terminal to the right (neoterm plugin)
 nmap <Leader>t :vert rightb Tnew<CR>
 
+" When in a terminal, by default Esc does not go back to normal mode and
+" instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
+tnoremap <Esc> <C-\><C-n>
+
 " Send text to open neoterm terminal (neoterm plugin)
 nmap gx <Plug>(neoterm-repl-send)
 xmap gx <Plug>(neoterm-repl-send)
