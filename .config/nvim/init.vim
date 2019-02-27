@@ -23,7 +23,9 @@ if has('nvim')
     Plug 'kassio/neoterm'                     " Provides a separate terminal in vim <Leader>t
     Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
     Plug 'felixhummel/setcolors.vim'
-
+    Plug 'vim-pandoc/vim-rmarkdown'
+    Plug 'vim-pandoc/vim-pandoc'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
     call plug#end()
 endif
 
