@@ -185,6 +185,13 @@ nnoremap <leader>r :call NumberToggle()<cr>
 " PLUGIN SETTINGS AND MAPPINGS
 " Settings that require particular plugins to be installed. Grouped by plugin.
 " ============================================================================
+"
+" ----------------------------------------------------------------------------
+" python-syntax
+" ----------------------------------------------------------------------------
+let g:python_highlight_space_errors = 0
+let g:python_highlight_all = 1
+
 " ----------------------------------------------------------------------------
 " NERDTree
 " ----------------------------------------------------------------------------
