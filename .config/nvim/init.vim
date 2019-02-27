@@ -215,9 +215,9 @@ nmap <Leader>t :vert rightb Tnew<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " Send text to open neoterm terminal (neoterm plugin)
-nmap gx <Plug>(neoterm-repl-send)
-xmap gx <Plug>(neoterm-repl-send)
-nmap gxx <Plug>(neoterm-repl-send-line)
+nmap gx <Plug>(neoterm-repl-send)<CR>
+xmap gx <Plug>(neoterm-repl-send)`><CR>
+nmap gxx <Plug>(neoterm-repl-send-line)<CR>
 
 " ----------------------------------------------------------------------------
 " powerline
