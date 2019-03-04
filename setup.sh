@@ -12,7 +12,7 @@ function showHelp() {
     echo "  --docker              (installs docker and adds current user to new docker group)"
     echo "  --download-miniconda  (downloads latest Miniconda to current directory)"
     echo "  --install-miniconda   (install downloaded Miniconda to ~/miniconda3)"
-    echo "  --set-up-bioconda     (add channels for bioconda in proper order)"
+    echo "  --set-up-bioconda     (add channels for bioconda in proper order and make recommended speed-ups)"
     echo "  --conda-env           (install requirements.txt into root conda env)"
     echo "  --download-neovim-appimage (download appimage instead of compiling)"
     echo "  --download-macos-nvim (download binary nvim for MacOS)"
@@ -133,9 +133,12 @@ elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels defaults
     conda config --add channels bioconda
     conda config --add channels conda-forge
+    conda config --set channel_priority strict
+
 
 elif [ $task == "--conda-env" ]; then
     conda install --file requirements.txt
+
 
 elif [ $task == "--powerline" ]; then
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
