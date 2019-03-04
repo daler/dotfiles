@@ -32,3 +32,7 @@ else
         echo "and re-run"
     fi
 fi
+
+if [[ $OSTYPE == darwin* ]]; then
+    test -f ~/.git-completion.bash && source ~/.git-completion.bash
+fi
