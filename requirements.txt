@@ -1,13 +1,13 @@
 bedtools
 biopython
 gffutils
-ipython
+ipython>7.0
 matplotlib
 numpy
 pandas
 pandoc
 pybedtools
-r
+r==3.5.1
 r-dplyr
 r-ggplot2
 r-knitr
