@@ -276,6 +276,16 @@ let g:bufferline_echo = 0
 " let g:airline_right_alt_sep = '|'
 " let g:airline_theme= 'gruvbox'
 
+" ----------------------------------------------------------------------------
+" vim-pandoc and vim-pandoc-syntax
+" ----------------------------------------------------------------------------
+" By default, keep spell-check off. Turn on with `set spell`
+let g:pandoc#spell#enabled = 0
+
+" Disable the conversion of ``` to lambda and other fancy
+" concealment/conversion that ends up confusing me
+let g:pandoc#folding#enabled = 0
+let g:pandoc#syntax#conceal#use = 0
 
 
 " ============================================================================
