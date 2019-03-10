@@ -169,8 +169,8 @@ noremap <silent> ,q :wincmd h<cr>
 " ============================================================================
 " FILE-TYPE SPECIFIC SETTINGS
 " ============================================================================
-autocmd filetype html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
-autocmd filetype yaml,yml set shiftwidth=2 tabstop=2
+autocmd! FileType html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
+autocmd! FileType yaml,yml set shiftwidth=2 tabstop=2
 
 " Consider any files with these names to be Python
 au BufRead,BufNewFile Snakefile setfiletype python
@@ -226,7 +226,9 @@ tnoremap <Esc> <C-\><C-n>
 
 " Send text to open neoterm terminal (neoterm plugin)
 nmap gx <Plug>(neoterm-repl-send)<CR>
-xmap gx <Plug>(neoterm-repl-send)`><CR>
+
+" Send selection, and go to the terminal in insert mode
+xmap gx <Plug>(neoterm-repl-send)`><CR><Leader>w
 nmap gxx <Plug>(neoterm-repl-send-line)<CR>
 
 " ----------------------------------------------------------------------------
