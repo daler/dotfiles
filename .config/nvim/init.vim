@@ -291,25 +291,14 @@ let g:pandoc#syntax#conceal#use = 0
 " ============================================================================
 " OLD PLUGINS
 " ============================================================================
-" Note: The following plugins have been useful in the past but are no
-" longer needed or not used enough to warrant keeping . . . but storing
-" here for future reference.
+" The following plugins have been useful in the past but are no longer needed
+" or not used enough to warrant keeping . . . but storing here for future
+" reference.
 "
-" Plug 'ctrlpvim/ctrlp.vim' " (Fuzzy-finder for opening files)
-"
-" Plug 'justincampbell/vim-eighties' " (Smaller windows will temporarily
-" resize to 80 chars when switched to)
-"
-" Plug 'godlygeek/tabular' " (Nice features for aligning text)
-"
-" Plug 'vimwiki/vimwiki' " (For editing markdown/wiki format. Creates a local
-" wiki)
-"
-" Plug 'jalvesaq/Nvim-R' " (Very nice interface for R and nvim, but puts
-" nvimcom package into cached R environments, so I've moved to neoterm (which
-" works with IPython as well as R))
-"
+" Plug 'ctrlpvim/ctrlp.vim'           " (Fuzzy-finder for opening files)
+" Plug 'justincampbell/vim-eighties'  " (Smaller windows will temporarily resize to 80 chars when switched to)
+" Plug 'godlygeek/tabular'            " (Nice features for aligning text)
+" Plug 'vimwiki/vimwiki'              " (For editing markdown/wiki format. Creates a local wiki)
+" Plug 'jalvesaq/Nvim-R'              " (Superceded by neoterm)
 " Plug 'vim-scripts/indentpython.vim' " (Superceded by vim-python-pep8-indent)
-"
-" Plug 'tpope/vim-surround' " (Quickly change surrounding characters (wrap in
-" parentheses; change quotes from ' to ", etc))
+" Plug 'tpope/vim-surround'           " (Quickly change surrounding characters)
