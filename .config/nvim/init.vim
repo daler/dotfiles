@@ -26,6 +26,7 @@ if has('nvim')
     Plug 'vim-pandoc/vim-rmarkdown'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'dhruvasagar/vim-table-mode'
     call plug#end()
 endif
 
