@@ -66,8 +66,17 @@ set mouse=a                      " allow mouse usage
 set encoding=utf-8               " default encoding
 :autocmd InsertEnter * set cul   " color the current line in insert mode
 :autocmd InsertLeave * set nocul " remove color when leaving insert mode
-set listchars=tab:>.,trail:.,extends:#,nbsp:.  " how to display nonprinting chars
 
+" Display nonprinting characters
+" <TAB> characters become >...
+" Trailing spaces show up as dots
+" When wrap is off, extends and precedes indicate that there's text offscreen
+" The autocmds here only show the trailing spaces when we're outside of insert
+" mode, so that every space typed doesn't show up as trailing.
+:autocmd InsertEnter * set listchars=tab:>.
+:autocmd InsertLeave * set listchars=tab:>.,trail:∙,nbsp:•,extends:⟩,precedes:⟨
+"
+"
 " ----------------------------------------------------------------------------
 " Format options
 " ----------------------------------------------------------------------------
