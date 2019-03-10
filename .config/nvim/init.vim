@@ -75,8 +75,8 @@ set encoding=utf-8               " default encoding
 " mode, so that every space typed doesn't show up as trailing.
 :autocmd InsertEnter * set listchars=tab:>.
 :autocmd InsertLeave * set listchars=tab:>.,trail:∙,nbsp:•,extends:⟩,precedes:⟨
-"
-"
+
+
 " ----------------------------------------------------------------------------
 " Format options
 " ----------------------------------------------------------------------------
