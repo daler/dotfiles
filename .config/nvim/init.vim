@@ -27,6 +27,7 @@ if has('nvim')
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'dhruvasagar/vim-table-mode'
+    Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
     call plug#end()
 endif
 
