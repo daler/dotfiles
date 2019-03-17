@@ -127,10 +127,10 @@ elif [ $task == "--docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--download-miniconda" ]; then
-    download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
 
 elif [ $task == "--install-miniconda" ]; then
-    bash Miniconda3-latest-Linux-x86_64.sh -b
+    bash miniconda.sh -b
     echo "# Added `date`:"
     echo "export PATH=\"\$PATH:$HOME/miniconda3/bin\"" >> ~/.path
     source ~/.path
@@ -150,6 +150,9 @@ elif [ $task == "--powerline" ]; then
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
+    echo
+    echo "Change your terminal's config to use the new powerline patched fonts"
+    echo
 
 elif [ $task == "--download-neovim-appimage" ]; then
     dest="$HOME/opt/neovim/bin/nvim"
