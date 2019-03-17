@@ -75,8 +75,6 @@ set encoding=utf-8               " default encoding
 " mode, so that every space typed doesn't show up as trailing.
 :autocmd InsertEnter * set listchars=tab:>.
 :autocmd InsertLeave * set listchars=tab:>.,trail:∙,nbsp:•,extends:⟩,precedes:⟨
-
-
 " ----------------------------------------------------------------------------
 " Format options
 " ----------------------------------------------------------------------------
@@ -265,6 +263,7 @@ let g:airline_theme = "powerlineish"
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:bufferline_echo = 0
+
 " These might be useful later -- in case you're not using a powerline font
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -284,8 +283,10 @@ let g:pandoc#spell#enabled = 0
 
 " Disable the conversion of ``` to lambda and other fancy
 " concealment/conversion that ends up confusing me
-let g:pandoc#folding#enabled = 0
 let g:pandoc#syntax#conceal#use = 0
+
+" RMarkdown code blocks can be folded too
+let g:pandoc#folding#fold_fenced_codeblocks = 1
 
 
 " ============================================================================
