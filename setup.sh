@@ -24,6 +24,7 @@ function showHelp() {
     echo "  --install-fzf         (installs fzf)"
     echo "  --install-ag          (installs ag)"
     echo "  --install-autojump    (installs autojump)"
+    echo "  --alacritty           (installs alacritty, a GPU-accelerated terminal emulator)"
     echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
     echo
@@ -66,38 +67,43 @@ download() {
 if [ $task == "--apt-get-installs" ]; then
     sudo apt-get update && \
     sudo apt-get install \
+        apt-transport-https \
+        automake \
         build-essential \
-        htop \
-        tmux \
-        iotop \
-        shutter \
-        inkscape \
-        gimp \
+        ca-certificates \
         cifs-utils \
-        nfs-common \
-        tcllib \
-        gnome-tweak-tool \
-        indicator-multiload \
+        cmake \
         curl \
-        openssh-server \
-        zlib1g-dev \
         default-jdk \
-        icedtea-netx \
+        gimp \
         git-cola \
-        texlive \
-        meld \
-        uuid \
-        gparted \
+        gnome-tweak-tool \
         gnupg2 \
         gnupg-agent \
-        pinentry-qt \
-        apt-transport-https \
-        ca-certificates \
-        software-properties-common \
-        automake \
-        pkg-config \
+        gparted \
+        htop \
+        icedtea-netx \
+        indicator-multiload \
+        inkscape \
+        iotop \
+        libfontconfig1-dev \
+        libfreetype6-dev \
+        liblzma-dev \
         libpcre3-dev \
-        liblzma-dev
+        meld \
+        nfs-common \
+        openssh-server \
+        pinentry-qt \
+        pkg-config \
+        pkg-config \
+        shutter \
+        software-properties-common \
+        tcllib \
+        texlive \
+        tmux \
+        uuid \
+        xclip \
+        zlib1g-dev
 
 elif [ $task == "--docker" ]; then
     sudo apt-get update
@@ -162,7 +168,7 @@ elif [ $task == "--download-macos-nvim" ]; then
     source ~/.path
 
 elif [ $task == "--set-up-nvim-plugins" ]; then
-    dest=~/.local/share/nvim/site/autoload/plug.vim 
+    dest=~/.local/share/nvim/site/autoload/plug.vim
     mkdir -p $(dirname $dest)
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
     echo
@@ -273,6 +279,28 @@ elif [ $task == "--dotfiles" ]; then
         fi
     fi
     unset doIt
+
+elif [ $task == "--alacritty" ]; then
+    (
+        set -eoux
+        SRC=/tmp/alacritty
+        rm -rf $SRC
+        git clone https://github.com/jwilm/alacritty.git $SRC
+
+        if [ ! `test "cargo"` ]; then
+            curl https://sh.rustup.rs -sSf | sh
+            source ~/.cargo/env
+        fi
+        rustup override set stable
+        rustup update stable
+        (
+            cd $SRC;
+            cargo install cargo-deb
+            cargo deb --install
+        )
+    )
+
 else
     showHelp
+
 fi
