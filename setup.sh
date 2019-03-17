@@ -298,7 +298,7 @@ elif [ $task == "--alacritty" ]; then
         rustup update stable
         (
             cd $SRC;
-            cargo install cargo-deb
+            cargo install cargo-deb --force
             cargo deb --install
         )
     )
