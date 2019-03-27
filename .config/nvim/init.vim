@@ -235,6 +235,7 @@ tnoremap <Esc> <C-\><C-n>
 
 " Any time a terminal is entered, go directly into Insert mode.
 :au BufEnter,FocusGained,BufWinEnter,WinEnter * if &buftype == 'terminal' | :startinsert | endif
+:au BufLeave,FocusLost,BufWinLeave,WinLeave * if &buftype == 'terminal' | :stopinsert | endif
 
 " The above autocommand triggers a bug so we need a workaround.
 "
@@ -249,11 +250,11 @@ tmap <LeftRelease> <Nop>
 nmap gx <Plug>(neoterm-repl-send)<CR>
 
 " Send selection, and go to the terminal in insert mode
-xmap gx <Plug>(neoterm-repl-send)`><CR><Leader>w
+xmap gx <Plug>(neoterm-repl-send)`><CR>
 nmap gxx <Plug>(neoterm-repl-send-line)<CR>
 
 " Render the current RMarkdown file to HTML (named after the current file)
-nmap <Leader>k :T rmarkdown::render("%")<CR><Leader>w
+nmap <Leader>k :T rmarkdown::render("%")<CR>
 
 " Have Neoterm scroll to the end of its buffer after running a command
 let g:neoterm_autoscroll = 1
