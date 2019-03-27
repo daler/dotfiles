@@ -76,6 +76,7 @@ set encoding=utf-8               " default encoding
 " mode, so that every space typed doesn't show up as trailing.
 :autocmd InsertEnter * set listchars=tab:>.
 :autocmd InsertLeave * set listchars=tab:>.,trail:∙,nbsp:•,extends:⟩,precedes:⟨
+
 " ----------------------------------------------------------------------------
 " Format options
 " ----------------------------------------------------------------------------
@@ -110,7 +111,9 @@ set wildignore=*.swp,*.bak,*.pyc,*.class  " ignore these when autocompleting
 " ============================================================================
 " CUSTOM MAPPINGS
 " ============================================================================
-let mapleader=","   " re-map mapleader from \ to ,
+
+" re-map mapleader from \ to ,
+let mapleader=","
 
 " Toggle search highlight
 noremap <Leader>H :set hlsearch!<CR>
@@ -162,8 +165,15 @@ noremap <silent> ,j :wincmd j<cr>
 noremap <silent> ,k :wincmd k<cr>
 noremap <silent> ,l :wincmd l<cr>
 
-noremap <silent> ,w :wincmd l<cr>A
+noremap <silent> ,w :wincmd l<cr>
 noremap <silent> ,q :wincmd h<cr>
+
+" The above mppings for ,w and ,q to move between windows requires being in
+" Normal mode first. The following commands let you use Alt-w and Alt-q to
+" switch -- even while in Insert mode.
+noremap <M-w> <Esc>:wincmd l<CR>
+tnoremap <M-q> <C-\><C-n>:wincmd h<CR>
+
 
 " ============================================================================
 " FILE-TYPE SPECIFIC SETTINGS
@@ -223,6 +233,18 @@ nmap <Leader>t :vert rightb Tnew<CR>
 " instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
 tnoremap <Esc> <C-\><C-n>
 
+" Any time a terminal is entered, go directly into Insert mode.
+:au BufEnter,FocusGained,BufWinEnter,WinEnter * if &buftype == 'terminal' | :startinsert | endif
+
+" The above autocommand triggers a bug so we need a workaround.
+"
+" There's a Vim and NeoVim bug where terminal buffers don't respect the
+" autocmd when using the mouse to enter a buffer. Based on the following
+" comment in the neovim repo, the workaround is to disable left mouse release,
+" specifically in the terminal buffer (!)
+" https://github.com/neovim/neovim/issues/9483#issuecomment-461865773
+tmap <LeftRelease> <Nop>
+
 " Send text to open neoterm terminal (neoterm plugin)
 nmap gx <Plug>(neoterm-repl-send)<CR>
 
@@ -239,7 +261,7 @@ let g:neoterm_autoscroll = 1
 " Let the user determine what REPL to load
 let g:neoterm_auto_repl_cmd = 0
 
-" Send code chunk.
+" Send RMarkdown code chunk.
 "
 " When inside a code chunk, <Leader>cd selects the chunk and sends to neoterm.
 " Breaking this down...
