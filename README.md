@@ -11,7 +11,9 @@ for each option within the script to understand what each part does.
 Current options include (in approximate order in which they're typically run):
 
 | argument                    | description                                                                                         |
-| --------                    | -----------                                                                                         |
+| --------                    | -----------
+| `--dotfiles                 | update dotfiles in home directory with files in this repo (you'll be prompted)                      
+|
 | `--apt-get-installs`        | installs packages on Ubuntu (see `setup.sh` for which packages)                                     |
 | `--docker`                  | installs docker on Ubuntu and adds current user to new docker group                                 |
 | `--download-miniconda       | downloads latest Miniconda to current directory                                                     |
@@ -27,18 +29,18 @@ Current options include (in approximate order in which they're typically run):
 | `--install-ag               | installs [ag](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool            |
 | `--install-autojump         | installs [autojump](https://github.com/wting/autojump), for quickly navigating multiple directories |
 | `--diffs                    | show differences between repo and home directory                                                    |
-| `--dotfiles                 | update dotfiles in home directory with files in this repo (you'll be prompted)                      |
+
 
 # General workflow
 
 On a new machine:
 
 ```
+./setup.sh --dotfiles
 ./setup.sh --apt-get-installs
 ./setup.sh --download-neovim-appimage
 ./setup.sh --powerline
 ./setup.sh --set-up-nvim-plugins
-./setup.sh --dotfiles
 
 # exit and re-enter
 ```
@@ -83,6 +85,7 @@ In the [.config/nvim/init.vim](.config/nvim/init.vim) file in this repo:
 
 - `<Leader>` is set to `,`.
 - `<Localleader>` is set to `/`
+In the terminal itself, go to Preferences, select the "Custom Font" checkbox, and choose a font filtered with "Powerline" so it will be Powerline compatible.
 
 ## Plugins
 
