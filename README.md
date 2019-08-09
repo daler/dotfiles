@@ -10,25 +10,25 @@ for each option within the script to understand what each part does.
 
 Current options include (in approximate order in which they're typically run):
 
-| argument                    | description                                                                                         |
-| --------                    | -----------
-| `--dotfiles                 | update dotfiles in home directory with files in this repo (you'll be prompted)                      
-|
-| `--apt-get-installs`        | installs packages on Ubuntu (see `setup.sh` for which packages)                                     |
-| `--docker`                  | installs docker on Ubuntu and adds current user to new docker group                                 |
-| `--download-miniconda       | downloads latest Miniconda to current directory                                                     |
-| `--install-miniconda        | install downloaded Miniconda to ~/miniconda3                                                        |
-| `--set-up-bioconda          | add channels for bioconda in proper order                                                           |
-| `--conda-env                | install requirements.txt into root conda env                                                        |
-| `--download-neovim-appimage | download appimage instead of compiling                                                              |
-| `--download-macos-nvim      | download binary nvim for MacOS                                                                      |
-| `--powerline                | installs powerline fonts, used for the vim airline plugin                                           |
-| `--set-up-nvim-plugins      | download vim-plug for easy vim plugin installation                                                  |
-| `--centos7-installs         | installs packages on CentOs (compilers; recent tmux)                                                |
-| `--install-fzf              | installs [fzf](https://github.com/junegunn/fzf), command-line fuzzy finder                          |
-| `--install-ag               | installs [ag](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool            |
-| `--install-autojump         | installs [autojump](https://github.com/wting/autojump), for quickly navigating multiple directories |
-| `--diffs                    | show differences between repo and home directory                                                    |
+
+argument                    |  description   
+--------                    |  -----------
+--`dotfiles`                | update dotfiles in home directory with files in this repo (you'll be prompted)                  
+--`apt-get-installs`        | installs packages on Ubuntu (see `setup.sh` for which packages)                                     
+--`docker`                  | installs docker on Ubuntu and adds current user to new docker group                              
+--`download-miniconda`       | downloads latest Miniconda to current directory                                                    
+--`install-miniconda`        | install downloaded Miniconda to ~/miniconda3                                                        
+--`set-up-bioconda`          | add channels for bioconda in proper order                                                           
+--`conda-env`                | install requirements.txt into root conda env                                                        
+--`download-neovim-appimage` | download appimage instead of compiling                                                             
+--`download-macos-nvim`      | download binary nvim for MacOS                                                                     
+--`powerline`                | installs powerline fonts, used for the vim airline plugin                                           
+--`set-up-nvim-plugins`      | download vim-plug for easy vim plugin installation                                                  
+--`centos7-installs`         | installs packages on CentOs (compilers; recent tmux)                                              
+--`install-fzf`              | installs [fzf](https://github.com/junegunn/fzf), command-line fuzzy finder                          
+--`install-ag`               | installs [ag](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool          
+--`install-autojump`         | installs [autojump](https://github.com/wting/autojump), for quickly navigating multiple directories
+--`diffs`                    | show differences between repo and home directory                                                    
 
 
 # General workflow
