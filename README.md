@@ -1,7 +1,17 @@
+# Overview and rationale
+
 Starting with a fresh install of Ubuntu, CentOS, or macOS, with this repo I can
 be up and running with everything I need plus all my configurations and plugins
 in a couple of minutes.
 
+The end result is:
+
+- neovim with all plugins installed (see below section on plugins), and
+  powerline fonts to make it look nice
+- all the useful packages and libraries I use
+- full conda environment
+- fzf, ag, autojump installed
+- all my shortcuts
 
 # `setup.sh`
 
@@ -10,52 +20,75 @@ for each option within the script to understand what each part does.
 
 Current options include (in approximate order in which they're typically run):
 
-| argument                    | description                                                                                         |
-| --------                    | -----------                                                                                         |
-| `--apt-get-installs`        | installs packages on Ubuntu (see `setup.sh` for which packages)                                     |
-| `--docker`                  | installs docker on Ubuntu and adds current user to new docker group                                 |
-| `--download-miniconda       | downloads latest Miniconda to current directory                                                     |
-| `--install-miniconda        | install downloaded Miniconda to ~/miniconda3                                                        |
-| `--set-up-bioconda          | add channels for bioconda in proper order                                                           |
-| `--conda-env                | install requirements.txt into root conda env                                                        |
-| `--download-neovim-appimage | download appimage instead of compiling                                                              |
-| `--download-macos-nvim      | download binary nvim for MacOS                                                                      |
-| `--powerline                | installs powerline fonts, used for the vim airline plugin                                           |
-| `--set-up-nvim-plugins      | download vim-plug for easy vim plugin installation                                                  |
-| `--centos7-installs         | installs packages on CentOs (compilers; recent tmux)                                                |
-| `--install-fzf              | installs [fzf](https://github.com/junegunn/fzf), command-line fuzzy finder                          |
-| `--install-ag               | installs [ag](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool            |
-| `--install-autojump         | installs [autojump](https://github.com/wting/autojump), for quickly navigating multiple directories |
-| `--diffs                    | show differences between repo and home directory                                                    |
-| `--dotfiles                 | update dotfiles in home directory with files in this repo (you'll be prompted)                      |
+| argument                     | description                                                                                         |
+| --------                     | -----------                                                                                         |
+| `--apt-get-installs`         | installs packages on Ubuntu (see `setup.sh` for which packages)                                     |
+| `--docker`                   | installs docker on Ubuntu and adds current user to new docker group                                 |
+| `--download-miniconda`       | downloads latest Miniconda to current directory                                                     |
+| `--install-miniconda`        | install downloaded Miniconda to ~/miniconda3                                                        |
+| `--set-up-bioconda`          | add channels for bioconda in proper order                                                           |
+| `--conda-env`                | install requirements.txt into root conda env                                                        |
+| `--download-neovim-appimage` | download appimage instead of compiling                                                              |
+| `--download-macos-nvim`      | download binary nvim for MacOS                                                                      |
+| `--powerline`                | installs powerline fonts, used for the vim airline plugin                                           |
+| `--set-up-nvim-plugins`      | download vim-plug for easy vim plugin installation                                                  |
+| `--centos7-installs`         | installs packages on CentOs (compilers; recent tmux)                                                |
+| `--install-fzf`              | installs [fzf](https://github.com/junegunn/fzf), command-line fuzzy finder                          |
+| `--install-ag`               | installs [ag](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool            |
+| `--install-autojump`         | installs [autojump](https://github.com/wting/autojump), for quickly navigating multiple directories |
+| `--diffs`                    | show differences between repo and home directory                                                    |
+| `--dotfiles`                 | update dotfiles in home directory with files in this repo (you'll be prompted)                      |
 
 # General workflow
 
-On a new machine:
-
+On a new machine, this is the general workflow (comments show commands for an OS other than Ubuntu:
 ```
-./setup.sh --apt-get-installs
-./setup.sh --download-neovim-appimage
+# Ubuntu:
+./setup.sh --apt-get-installs          # CentOS 7: ./setup.sh --centos7-installs
+./setup.sh --download-neovim-appimage  # macOS: ./setup.sh --download-macos-nvim
+
 ./setup.sh --powerline
 ./setup.sh --set-up-nvim-plugins
 ./setup.sh --dotfiles
+```
 
-# exit and re-enter
+Then I'll exit and re-enter the system to load all the dotfiles. Then open vim
+(which is aliased to `nvim`, see the `.aliases` section below) and install
+plugins with the vim command `:PlugInstall`.
+
+After that I'll add some of the extras like:
+
+```
+./setup.sh --install-fzf
+./setup.sh --install-ag
+./setup.sh --install-autojump
+```
+
+And set up my conda environment with:
+
+```
+./setup.py --download-miniconda
+./setup.py --install-miniconda
+./setup.py --set-up-bioconda
+./setup.py --conda-env
 ```
 
 # Bash-related configuration
 
+The organization for bash-related configuration is inspired by [this
+repo](https://github.com/mathiasbynens/dotfiles).
+
 `.bashrc` sources `.bash_profile`, which in turn sources the following files if
 they're present. This keeps things a little more organized and modular.
 
-| file           | description                                                                                     |
-| --             | --                                                                                              |
-| `.aliases`     | defines bash aliases                                                                            |
-| `.functions`   | defines bash functions                                                                          |
-| `.path`        | sets `$PATH` entries                                                                            |
-| `.bash_prompt` | changes prompt colors depending on the host                                                     |
-| `.exports`     | global exports that can be public                                                               |
-| `.extra`       | put anything here that's not appropriate for storing in a public repository like IPs, keys, etc |
+| file           | description                                                                                       |
+|----------------|---------------------------------------------------------------------------------------------------|
+| `.aliases`     | defines bash aliases                                                                              |
+| `.functions`   | defines bash functions                                                                            |
+| `.path`        | sets `$PATH` entries                                                                              |
+| `.bash_prompt` | changes prompt colors depending on the host                                                       |
+| `.exports`     | global exports that can be public                                                                 |
+| `.extra`       | put anything here that's either not appropriate to store in a repo, or for host-specific settings |
 
 ## `.aliases`
 
