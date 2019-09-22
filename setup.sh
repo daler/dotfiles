@@ -24,6 +24,10 @@ function showHelp() {
     echo "  --install-fzf         (installs fzf)"
     echo "  --install-ag          (installs ag)"
     echo "  --install-autojump    (installs autojump)"
+    echo "  --install-hub         (installs hub and sets alias)"
+    echo "  --install-fd          (installs fd and sets alias)"
+    echo "  --install-vd          (installs visidata and sets alias)"
+    echo "  --install-tabview     (installs tabview and sets alias)"
     echo "  --alacritty           (installs alacritty, a GPU-accelerated terminal emulator)"
     echo "  --diffs               (inspect differences between repo and home)"
     echo "  --dotfiles            (update dotfiles)"
@@ -257,6 +261,43 @@ elif [ $task == "--install-autojump" ]; then
         python install.py
     )
     rm -rf autojump
+
+elif [ $task == "--install-hub" ]; then
+
+    HUB_VERSION=2.11.2
+    (
+        download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
+        cd /tmp
+        tar -xf hub.tar.gz
+        cd hub-linux-amd64-${HUB_VERSION}
+        prefix=$HOME/opt ./install
+    )
+    echo "export PATH=\"$HOME/opt/bin:\$PATH\"" >> ~/.path
+    source ~/.path
+
+elif [ $task == "--install-fd" ]; then
+    if conda env list | grep -q "fd"; then
+        echo "Conda env 'fd' already exists, skipping!"
+    else
+        conda create -n fd fd-find
+        echo 'alias fd=$HOME/miniconda3/envs/fd/bin/fd' >> ~/.aliases
+    fi
+
+elif [ $task == "--install-vd" ]; then
+    if conda env list | grep -q "vd"; then
+        echo "Conda env 'vd' already exists, skipping!"
+    else
+        conda create -n vd visidata
+        echo 'alias vd=$HOME/miniconda3/envs/vd/bin/vd' >> ~/.aliases
+    fi
+
+elif [ $task == "--install-tabview" ]; then
+    if conda env list | grep -q "tabview"; then
+        echo "Conda env 'tabview' already exists, skipping!"
+    else
+        conda create -n tabview tabview
+        echo 'alias tabview=$HOME/miniconda3/envs/tabview/bin/tabview' >> ~/.aliases
+    fi
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
