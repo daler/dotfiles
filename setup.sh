@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# All-in-one bash script to perform various setup activities
+
+
 function showHelp() {
     echo
     echo "Usage:"
@@ -47,6 +50,8 @@ set -eou pipefail
 task=$1
 
 
+# Depending on the system, we may have curl or wget but not both -- so try to
+# figure it out.
 
 try_curl() {
     url=$1
