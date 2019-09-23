@@ -27,6 +27,7 @@ function showHelp() {
     echo "  --install-hub         (installs hub and sets alias)"
     echo "  --install-fd          (installs fd and sets alias)"
     echo "  --install-vd          (installs visidata and sets alias)"
+    echo "  --install-black       (installs black and sets alias)"
     echo "  --install-tabview     (installs tabview and sets alias)"
     echo "  --alacritty           (installs alacritty, a GPU-accelerated terminal emulator)"
     echo "  --diffs               (inspect differences between repo and home)"
@@ -259,6 +260,15 @@ elif [ $task == "--install-tabview" ]; then
         conda create -n tabview tabview
         echo 'alias tabview=$HOME/miniconda3/envs/tabview/bin/tabview' >> ~/.aliases
     fi
+
+elif [ $task == "--install-black" ]; then
+    if conda env list | grep -q "black"; then
+        echo "Conda env 'black' already exists, skipping!"
+    else
+        conda create -n black black
+        echo 'alias black=$HOME/miniconda3/envs/black/bin/black' >> ~/.aliases
+    fi
+
 
 elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
