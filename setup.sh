@@ -107,12 +107,15 @@ ok () {
 
 
 if [ $task == "--apt-get-installs" ]; then
+    ok "Installs packages from the file apt-installs.txt"
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
 
 elif [ $task == "--docker" ]; then
+    ok "Adds the docker repo, installs docker-ce, adds user to the docker group"
     sudo apt-get update
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    echo "OK!"
     sudo apt-key fingerprint 0EBFCD88
     echo
     echo "should say:"
@@ -132,24 +135,29 @@ elif [ $task == "--docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--download-miniconda" ]; then
+    ok "Downloads (but does not install) the latest Miniconda"
     download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
 
 elif [ $task == "--install-miniconda" ]; then
+    ok "Install Miniconda to $HOME/miniconda3/bin and then add $HOME/miniconda3/bin to the \$PATH by adding it to the end of ~/.path"
     bash miniconda.sh -b
     echo "# Added `date`:"
     echo "export PATH=\"\$PATH:$HOME/miniconda3/bin\"" >> ~/.path
     source ~/.path
 
 elif [ $task == "--set-up-bioconda" ]; then
+    ok "Set up Bioconda by adding the dependent channels in the correct order"
     conda config --add channels defaults
     conda config --add channels bioconda
     conda config --add channels conda-forge
 
 elif [ $task == "--conda-env" ]; then
+    ok "Install dependencies in 'requirements.txt' into the base conda environment"
     conda install --file requirements.txt
 
 
 elif [ $task == "--powerline" ]; then
+    ok "Install patched powerline fonts from https://github.com/powerline/fonts"
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
@@ -158,6 +166,7 @@ elif [ $task == "--powerline" ]; then
     echo
 
 elif [ $task == "--download-neovim-appimage" ]; then
+    ok "Download AppImage for neovim, install into $HOME/opt/neovim/bin/nvim, and add that to the \$PATH via the ~/.path file"
     dest="$HOME/opt/neovim/bin/nvim"
     mkdir -p $(dirname $dest)
     download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim.appimage $dest
@@ -166,6 +175,8 @@ elif [ $task == "--download-neovim-appimage" ]; then
     source ~/.path
 
 elif [ $task == "--download-macos-nvim" ]; then
+    ok "Download neovim tarball from https://github.com/neovim/neovim, install
+    into $HOME/opt/neovim, and add that to the \$PATH via the ~/.path file"
     download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-macos.tar.gz nvim-macos.tar.gz
     tar -xzvf nvim-macos.tar.gz
     mkdir -p "$HOME/opt"
@@ -174,6 +185,7 @@ elif [ $task == "--download-macos-nvim" ]; then
     source ~/.path
 
 elif [ $task == "--set-up-nvim-plugins" ]; then
+    ok "Download plug.vim into ~/.local/share/nvim/site/autoload/plug.vim"
     dest=~/.local/share/nvim/site/autoload/plug.vim
     mkdir -p $(dirname $dest)
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
@@ -182,12 +194,13 @@ elif [ $task == "--set-up-nvim-plugins" ]; then
     echo
 
 elif [ $task == "--diffs" ]; then
-
+    ok "Show the diffs between this repo and what's in your home directory"
     cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 
 elif [ $task == "--nih-lablinux" ]; then
+    ok "Assumes CentOS 7. Install lablinux repo, but don't run any commands"
     set -ex
     sudo yum install redhat-lsb-core
     sudo yum  install \
@@ -196,6 +209,7 @@ elif [ $task == "--nih-lablinux" ]; then
     set +ex
 
 elif [ $task == "--set-up-lablinux" ]; then
+    ok "Just print the commands to run manually after installing lablinux"
     echo
     echo "Run the following commands:"
     echo "---------------------------"
@@ -208,6 +222,7 @@ elif [ $task == "--set-up-lablinux" ]; then
     echo
 
 elif [ $task == "--centos7-installs" ]; then
+    ok "Install packages on CentOS 7 (includes compiling a recent-ish tmux)"
     set -ex
     sudo yum install epel-release
     sudo yum groupinstall "GNOME Desktop"
@@ -235,12 +250,14 @@ elif [ $task == "--centos7-installs" ]; then
     set +ex
 
 elif [ $task == "--install-fzf" ]; then
+    ok "Install fzf (https://github.com/junegunn/fzf)"
     (
       git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
       ~/.fzf/install --no-update-rc --completion --key-bindings
       )
 
 elif [ $task == "--install-ag" ]; then
+    ok "Install ag into $HOME/opt (https://github.com/ggreer/the_silver_searcher)"
     (
         agdir=$HOME/tmp/ag
         rm -rf $agdir
@@ -254,6 +271,7 @@ elif [ $task == "--install-ag" ]; then
     )
 
 elif [ $task == "--install-autojump" ]; then
+    ok "Install autojump (https://github.com/wting/autojump)"
     (
         git clone git://github.com/wting/autojump.git
         cd autojump
@@ -263,6 +281,7 @@ elif [ $task == "--install-autojump" ]; then
 
 elif [ $task == "--install-hub" ]; then
 
+    ok "Install hub to $HOME/opt (https://github.com/github/hub)"
     HUB_VERSION=2.11.2
     (
         download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
@@ -280,7 +299,8 @@ elif [ $task == "--install-fd" ]; then
     else
         conda create -n fd fd-find
         echo 'alias fd=$HOME/miniconda3/envs/fd/bin/fd' >> ~/.aliases
-    fi
+    ok "Install fd (https://github.com/sharkdp/fd) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "fd" \
 
 elif [ $task == "--install-vd" ]; then
     if conda env list | grep -q "vd"; then
@@ -289,6 +309,7 @@ elif [ $task == "--install-vd" ]; then
         conda create -n vd visidata
         echo 'alias vd=$HOME/miniconda3/envs/vd/bin/vd' >> ~/.aliases
     fi
+    ok "Install visidata (https://visidata.org/) into a new conda env, and set the resulting binary as an alias"
 
 elif [ $task == "--install-tabview" ]; then
     if conda env list | grep -q "tabview"; then
@@ -297,6 +318,7 @@ elif [ $task == "--install-tabview" ]; then
         conda create -n tabview tabview
         echo 'alias tabview=$HOME/miniconda3/envs/tabview/bin/tabview' >> ~/.aliases
     fi
+    ok "Install tabview (https://github.com/TabViewer/tabview) into a new conda env, and set the resulting binary as an alias"
 
 elif [ $task == "--install-black" ]; then
     if conda env list | grep -q "black"; then
@@ -306,8 +328,10 @@ elif [ $task == "--install-black" ]; then
         echo 'alias black=$HOME/miniconda3/envs/black/bin/black' >> ~/.aliases
     fi
 
+    ok "Install black (https://black.readthedocs.io) into a new conda env, and set the resulting binary as an alias"
 
 elif [ $task == "--dotfiles" ]; then
+    ok "Copies over all the dotfiles here to your home directory. Prompts again before actually running to make sure!"
     cd "$(dirname "${BASH_SOURCE}")";
 
 
@@ -333,6 +357,7 @@ elif [ $task == "--dotfiles" ]; then
     unset doIt
 
 elif [ $task == "--alacritty" ]; then
+    ok "Install alacritty terminal. Also needs to install rust"
     (
         set -eoux
         SRC=/tmp/alacritty
