@@ -74,6 +74,38 @@ download() {
     fi
 }
 
+
+# Append a line to the end of a file, but only if the line isn't already there
+add_line_to_file () {
+    line=$1
+    file=$2
+    if grep -vq "$line" $file; then
+        echo "$line" >> $file
+    fi
+}
+
+
+# Only exits cleanly if the named conda env does not already exist
+can_make_conda_env () {
+    if conda env list | grep -q $1; then
+        echo "conda env $1 already exists!"
+        return 1
+    fi
+}
+
+
+ok () {
+    echo -e $1
+    read -p "Continue? (y/[n]) " -n 1 REPLY;
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        return 0
+    fi
+    return 1
+}
+
+
+
 if [ $task == "--apt-get-installs" ]; then
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
