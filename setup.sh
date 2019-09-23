@@ -70,44 +70,7 @@ download() {
 
 if [ $task == "--apt-get-installs" ]; then
     sudo apt-get update && \
-    sudo apt-get install \
-        apt-transport-https \
-        automake \
-        build-essential \
-        ca-certificates \
-        cifs-utils \
-        cmake \
-        curl \
-        default-jdk \
-        gimp \
-        git-cola \
-        gnome-tweak-tool \
-        gnupg2 \
-        gnupg-agent \
-        gparted \
-        htop \
-        icedtea-netx \
-        indicator-multiload \
-        inkscape \
-        iotop \
-        libfontconfig1-dev \
-        libfreetype6-dev \
-        liblzma-dev \
-        libpcre3-dev \
-        meld \
-        nfs-common \
-        openssh-server \
-        pinentry-qt \
-        pkg-config \
-        pkg-config \
-        shutter \
-        software-properties-common \
-        tcllib \
-        texlive \
-        tmux \
-        uuid \
-        xclip \
-        zlib1g-dev
+    sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
 
 elif [ $task == "--docker" ]; then
     sudo apt-get update
