@@ -280,7 +280,6 @@ elif [ $task == "--install-autojump" ]; then
     rm -rf autojump
 
 elif [ $task == "--install-hub" ]; then
-
     ok "Install hub to $HOME/opt (https://github.com/github/hub)"
     HUB_VERSION=2.11.2
     (
@@ -290,45 +289,32 @@ elif [ $task == "--install-hub" ]; then
         cd hub-linux-amd64-${HUB_VERSION}
         prefix=$HOME/opt ./install
     )
-    echo "export PATH=\"$HOME/opt/bin:\$PATH\"" >> ~/.path
+    add_line_to_file "export PATH=\"$HOME/opt/bin:\$PATH\"" ~/.path
     source ~/.path
 
 elif [ $task == "--install-fd" ]; then
-    if conda env list | grep -q "fd"; then
-        echo "Conda env 'fd' already exists, skipping!"
-    else
-        conda create -n fd fd-find
-        echo 'alias fd=$HOME/miniconda3/envs/fd/bin/fd' >> ~/.aliases
     ok "Install fd (https://github.com/sharkdp/fd) into a new conda env, and set the resulting binary as an alias"
     can_make_conda_env "fd" \
+        && conda create -n fd fd-find \
+        && add_line_to_file 'alias fd=$HOME/miniconda3/envs/fd/bin/fd' ~/.aliases
 
 elif [ $task == "--install-vd" ]; then
-    if conda env list | grep -q "vd"; then
-        echo "Conda env 'vd' already exists, skipping!"
-    else
-        conda create -n vd visidata
-        echo 'alias vd=$HOME/miniconda3/envs/vd/bin/vd' >> ~/.aliases
-    fi
     ok "Install visidata (https://visidata.org/) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "vd" \
+        && conda create -n vd visidata \
+        && add_line_to_file 'alias vd=$HOME/miniconda3/envs/vd/bin/vd' ~/.aliases
 
 elif [ $task == "--install-tabview" ]; then
-    if conda env list | grep -q "tabview"; then
-        echo "Conda env 'tabview' already exists, skipping!"
-    else
-        conda create -n tabview tabview
-        echo 'alias tabview=$HOME/miniconda3/envs/tabview/bin/tabview' >> ~/.aliases
-    fi
     ok "Install tabview (https://github.com/TabViewer/tabview) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "tabview" \
+        && conda create -n tabview tabview \
+        && add_line_to_file 'alias tabview=$HOME/miniconda3/envs/tabview/bin/tabview' ~/.aliases
 
 elif [ $task == "--install-black" ]; then
-    if conda env list | grep -q "black"; then
-        echo "Conda env 'black' already exists, skipping!"
-    else
-        conda create -n black black
-        echo 'alias black=$HOME/miniconda3/envs/black/bin/black' >> ~/.aliases
-    fi
-
     ok "Install black (https://black.readthedocs.io) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "black" \
+        && conda create -n black black \
+        && add_line_to_file 'alias black=$HOME/miniconda3/envs/black/bin/black' ~/.aliases
 
 elif [ $task == "--dotfiles" ]; then
     ok "Copies over all the dotfiles here to your home directory. Prompts again before actually running to make sure!"
