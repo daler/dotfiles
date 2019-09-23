@@ -273,7 +273,7 @@ elif [ $task == "--install-ag" ]; then
 elif [ $task == "--install-autojump" ]; then
     ok "Install autojump (https://github.com/wting/autojump)"
     (
-        git clone git://github.com/wting/autojump.git
+        git clone https://github.com/wting/autojump.git
         cd autojump
         python install.py
     )
