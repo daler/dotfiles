@@ -204,11 +204,16 @@ Here are the features (and fixes) you get when using this config file:
 - in some situations backspace does not work, this fixes it
 - can use mouse to click around
 - current line has a subtle coloring when in insert mode
-- TAB characters are rendered as `>...` which helps troubleshoot spaces vs tabs. This is disabled for files like HTML and XML where 
+- Hitting the TAB key enters spaces, not a literal tab character
+- TAB characters are rendered as `>...` which helps troubleshoot spaces vs
+  tabs. This is disabled for files like HTML and XML where tabs vs whitespace
+  is not important
+- set the tabstop to 2 for YAML format files
 - Trailing spaces are rendered as faded dots
-- Comments, numbered lists can be auto-wrapped after selecting and `gq`
-- In insert mode editing a comment, hitting enter will automatically add the
-  comment character to the beginning of the next line
+- In Python, space errors (primarily trailing spaces) are highlighted
+- Comments, numbered lists can be auto-wrapped after selecting and using `gq`
+- In insert mode while editing a comment, hitting enter will automatically add
+  the comment character to the beginning of the next line
 - Search highlighting is turned off, but toggle it with `<Leader>H`
 - Searches will be case-sensitive only if at least letter is a capital
 - `<Leader>W` will clean up all trailing spaces
@@ -216,14 +221,12 @@ Here are the features (and fixes) you get when using this config file:
 - `@l` macro will surround the line with quotes and add a trailing comma,
   making it easy to make Python lists out of pasted text.
 - When a file is opened, automatically set the working directory to that of the opened file
-- Switch between open buffers (listed along the top sort of like tabs in
-  a browser) with `<Leader>` and a number from 1-9, corresponding to up to
-  9 open buffers. E.g., `<Leader>3` switches to the 3rd buffer
-- set the tabstop to 2 for YAML format files
+- `<Leader><number>`, where `<number`> is between 1-9, will switch between open
+  buffers (listed along the top sort of like tabs in a browser) E.g.,
+  `<Leader>3` switches to the 3rd buffer
 - consider Snakefiles (`Snakefile` or `*.snakefile`) as Python syntax
 - `<Leader>r` toggle relative line numbering (makes it easier to jump around
   lines with motion operators)
-- In Python, space errors (primarily trailing spaces) are highlighted
 
 
 ## Plugins
