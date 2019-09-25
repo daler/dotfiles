@@ -13,9 +13,3 @@ alias DD="export DISPLAY=localhost:11.0"
 alias ff="fzf-tmux"
 alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
 alias z="fzf-tmux"
-
-# The following are only available if you've installed each tool using, e.g., setup.sh --install-vd
-alias vd="$HOME/miniconda3/envs/vd/bin/vd"
-alias fd="$HOME/miniconda3/envs/fd/bin/fd"
-alias tabview="$HOME/miniconda3/envs/tabview/bin/tabview"
-alias black=$HOME/miniconda3/envs/black/bin/black
