@@ -20,28 +20,33 @@ for each option within the script to understand what each part does.
 
 Current options include (in approximate order in which they're typically run):
 
-| argument                     | description                                                                                                                                        |
-|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--apt-get-installs`         | installs packages on Ubuntu (see `apt-installs.txt` for which packages)                                                                                    |
-| `--docker`                   | installs docker on Ubuntu and adds current user to new docker group                                                                                |
-| `--download-miniconda`       | downloads latest Miniconda to current directory                                                                                                    |
-| `--install-miniconda`        | install downloaded Miniconda to ~/miniconda3                                                                                                       |
-| `--set-up-bioconda`          | add channels for bioconda in proper order                                                                                                          |
-| `--conda-env`                | install requirements.txt into root conda env                                                                                                       |
-| `--download-neovim-appimage` | download appimage instead of compiling                                                                                                             |
-| `--download-macos-nvim`      | download binary nvim for MacOS                                                                                                                     |
-| `--powerline`                | installs powerline fonts, used for the vim airline plugin                                                                                          |
-| `--set-up-nvim-plugins`      | download vim-plug for easy vim plugin installation                                                                                                 |
-| `--centos7-installs`         | installs packages on CentOs (compilers; recent tmux)                                                                                               |
-| `--install-fzf`              | installs [fzf](https://github.com/junegunn/fzf), command-line fuzzy finder                                                                         |
-| `--install-ag`               | installs [ag](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool                                                           |
-| `--install-autojump`         | installs [autojump](https://github.com/wting/autojump), for quickly navigating multiple directories                                                |
-| `--install-fd`               | installs [fd](https://github.com/sharkdp/fd), a simple, fast, and user-friendly alternative to "find" (see note 1)                                 |
-| `--install-vd`               | installs [visidata](https://visidata.org), an interactive multitool for tabular data (see note 1)                                                  |
-| `--install-tabview`          | installs [tabview](https://github.com/TabViewer/tabview), a command-line CSV and tabular data viewer (see note 1)                                  |
-| `--install-black`          | installs [black](https://pypi.org/project/black/), "the uncompromising code formatter" for Python (see note 1)                                  |
-| `--diffs`                    | show differences between repo and home directory                                                                                                   |
-| `--dotfiles`                 | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
+The **local only** column indicates steps that should only be performed on
+a local machine (or one on which you have admin rights).
+
+| argument                   | local only | description                                                                                                                                        |
+|----------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--apt-get-installs`       | X          | installs packages on Ubuntu (see `apt-installs.txt` for which packages)                                                                            |
+| `--centos7-installs`       | X          | installs packages on CentOs (compilers; recent tmux)                                                                                               |
+| `--download-nvim-appimage` | X          | download appimage instead of compiling                                                                                                             |
+| `--download-macos-nvim`    | X          | download binary nvim for MacOS                                                                                                                     |
+| `--powerline`              | X          | installs powerline fonts, used for the vim airline plugin                                                                                          |
+| `--set-up-nvim-plugins`    |            | download vim-plug for easy vim plugin installation                                                                                                 |
+| `--diffs`                  |            | show differences between repo and home directory                                                                                                   |
+| `--dotfiles`               |            | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
+| `--download-miniconda`     |            | downloads latest Miniconda to current directory                                                                                                    |
+| `--install-miniconda`      |            | install downloaded Miniconda to ~/miniconda3                                                                                                       |
+| `--set-up-bioconda`        |            | add channels for bioconda in proper order                                                                                                          |
+| `--conda-env`              |            | install requirements.txt into root conda env                                                                                                       |
+| `--install-fzf`            |            | installs [`fzf`](https://github.com/junegunn/fzf), command-line fuzzy finder                                                                       |
+| `--install-ag`             |            | installs [`ag`](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool                                                         |
+| `--install-autojump`       |            | installs [`autojump`](https://github.com/wting/autojump), for quickly navigating multiple directories                                              |
+| `--install-fd`             |            | installs [`fd`](https://github.com/sharkdp/fd), a simple, fast, and user-friendly alternative to "find" **(see note 1)**                           |
+| `--install-vd`             |            | installs [`visidata`](https://visidata.org), an interactive multitool for tabular data **(see note 1)**                                            |
+| `--install-tabview`        |            | installs [`tabview`](https://github.com/TabViewer/tabview), a command-line CSV and tabular data viewer **(see note 1)**                            |
+| `--install-black`          |            | installs [`black`](https://pypi.org/project/black/), "the uncompromising code formatter" for Python **(see note 1)**                               |
+| `--install-radian`         |            | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
+| `--docker`                 | X          | installs docker on Ubuntu and adds current user to new docker group                                                                                |
+| `--install-alacritty       | X          | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
 
 
 **Note 1:** These tools are available in conda, so a standalone conda
@@ -107,8 +112,8 @@ The steps depend on the system:
 
 ## Round 2: set font; install nvim plugins
 
-In the terminal program you are using, change the font to match one of the
-"Powerline" fonts that have been installed. This will make vim look nicer with
+In the terminal program you are using, **change the font to match one of the
+"Powerline" fonts that have been installed.** This will make vim look nicer with
 fancy glyphs in the header and footer.
 
 Then exit and re-enter the system to load all the dotfiles.
@@ -143,6 +148,7 @@ See the table above for what these tools are.
 ./setup.sh --install-vd
 ./setup.sh --install-tabview
 ./setup.sh --install-black
+./setup.sh --install-radian
 ```
 
 # Bash-related configuration
