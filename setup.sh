@@ -363,6 +363,19 @@ elif [ $task == "--install-radian" ]; then
     source deactivate
     remind_alias
 
+elif [ $task == "--install-git-cola" ]; then
+    ok "Installs git-cola (https://git-cola.github.io/). Clone to ~/opt/git-cola, create a new conda env, and set the resulting binary as an alias"
+    # NOTE: git-cola has vendored-in PyQt. We may not actually need it in the
+    # conda env?
+    can_make_conda_env "git-cola"
+    conda create -n git-cola python=3 pyqt
+    if [ -e ~/opt/git-cola ]; then
+        echo -e "${RED}~/opt/git-cola already exists! Exiting.${UNSET}"
+    fi
+    git clone git://github.com/git-cola/git-cola.git ~/opt/git-cola
+    add_line_to_file "alias git-cola=\"$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola\"" ~/.aliases
+    remind_alias
+
 elif [ $task == "--dotfiles" ]; then
     ok "Copies over all the dotfiles here to your home directory. Prompts again before actually running to make sure!"
     cd "$(dirname "${BASH_SOURCE}")";
