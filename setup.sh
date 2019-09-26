@@ -100,6 +100,16 @@ can_make_conda_env () {
 }
 
 
+# Find the conda installation location
+CONDA_LOCATION=
+check_for_conda () {
+    if [ $(which conda) ]; then
+        CONDA_LOCATION=$(dirname $(dirname $(which conda)))
+    else
+        echo -e ${RED}cannot find conda${UNSET}
+        exit 1
+    fi
+}
 ok () {
     echo -e ${GREEN}$1${UNSET}
     read -p "Continue? (y/[n]) " -n 1 REPLY;
