@@ -326,41 +326,42 @@ elif [ $task == "--install-hub" ]; then
     source ~/.path
 
 elif [ $task == "--install-fd" ]; then
-    ok "Install fd (https://github.com/sharkdp/fd) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "fd" \
-        && conda create -n fd fd-find \
-        && add_line_to_file 'alias fd=$HOME/miniconda3/envs/fd/bin/fd' ~/.aliases \
-        && source ~/.aliases
+    ok "Installs fd (https://github.com/sharkdp/fd) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "fd"
+    conda create -n fd fd-find
+    add_line_to_file "alias fd=$CONDA_LOCATION/envs/fd/bin/fd" ~/.aliases
+    remind_alias
 
 elif [ $task == "--install-vd" ]; then
-    ok "Install visidata (https://visidata.org/) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "vd" \
-        && conda create -n vd visidata \
-        && add_line_to_file 'alias vd=$HOME/miniconda3/envs/vd/bin/vd' ~/.aliases \
-        && source ~/.aliases
+    ok "Installs visidata (https://visidata.org/) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "vd"
+    conda create -n vd visidata
+    add_line_to_file "alias vd=$CONDA_LOCATION/envs/vd/bin/vd" ~/.aliases
+    remind_alias
 
 elif [ $task == "--install-tabview" ]; then
-    ok "Install tabview (https://github.com/TabViewer/tabview) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "tabview" \
-        && conda create -n tabview tabview \
-        && add_line_to_file 'alias tabview=$HOME/miniconda3/envs/tabview/bin/tabview' ~/.aliases \
-        && source ~/.aliases
+    ok "Installs tabview (https://github.com/TabViewer/tabview) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "tabview"
+    conda create -n tabview tabview
+    add_line_to_file "alias tabview=$CONDA_LOCATION/envs/tabview/bin/tabview" ~/.aliases
+    remind_alias
 
 elif [ $task == "--install-black" ]; then
-    ok "Install black (https://black.readthedocs.io) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "black" \
-        && conda create -n black black \
-        && add_line_to_file 'alias black=$HOME/miniconda3/envs/black/bin/black' ~/.aliases \
-        && source ~/.aliases
+    ok "Installs black (https://black.readthedocs.io) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "black"
+    conda create -n black black
+    add_line_to_file "alias black=$CONDA_LOCATION/envs/black/bin/black" ~/.aliases
+    remind_alias
 
 elif [ $task == "--install-radian" ]; then
-    ok "Install radian (https://github.com/randy3k/radian) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "radian" \
-        && conda create -n radian python=3 \
-        && source activate radian \
-        && pip install radian \
-        && add_line_to_file 'alias radian=$HOME/miniconda3/envs/radian/bin/radian' ~/.aliases \
-        && source ~/.aliases
+    ok "Installs radian (https://github.com/randy3k/radian) into a new conda env, and set the resulting binary as an alias"
+    can_make_conda_env "radian"
+    conda create -n radian python=3
+    source activate radian
+    pip install radian
+    add_line_to_file "alias radian=$CONDA_LOCATION/envs/radian/bin/radian" ~/.aliases
+    source deactivate
+    remind_alias
 
 elif [ $task == "--dotfiles" ]; then
     ok "Copies over all the dotfiles here to your home directory. Prompts again before actually running to make sure!"
