@@ -2,6 +2,10 @@
 
 # All-in-one bash script to perform various setup activities
 
+GREEN="\e[32m"
+YELLOW="\e[33m"
+RED="\e[31m"
+UNSET="\e[0m"
 
 function showHelp() {
     echo
@@ -88,20 +92,22 @@ add_line_to_file () {
 
 # Only exits cleanly if the named conda env does not already exist
 can_make_conda_env () {
-    if conda env list | grep -q $1; then
-        echo "conda env $1 already exists!"
+    check_for_conda
+    if conda env list | grep -q "/$1\$"; then
+        echo -e "${RED}conda env $1 already exists! Exiting.${UNSET}"
         return 1
     fi
 }
 
 
 ok () {
-    echo -e $1
+    echo -e ${GREEN}$1${UNSET}
     read -p "Continue? (y/[n]) " -n 1 REPLY;
     echo ""
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         return 0
     fi
+    echo -e ${RED}exiting${UNSET}
     return 1
 }
 
