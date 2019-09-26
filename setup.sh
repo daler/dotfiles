@@ -121,6 +121,10 @@ ok () {
     return 1
 }
 
+# Reminder to source the ~/.aliases file.
+remind_alias () {
+    echo -e ${YELLOW}Please run${UNSET} source ~/.aliases ${YELLOW}to make the new alias available${UNSET}
+}
 
 
 if [ $task == "--apt-get-installs" ]; then
