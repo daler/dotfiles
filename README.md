@@ -6,10 +6,10 @@ in a couple of minutes.
 
 The end result is:
 
-- neovim with all plugins installed (see below section on plugins), and
+- neovim with all plugins installed (see below section on plugins)
   powerline fonts to make it look nice
 - all the useful packages and libraries I use
-- full conda environment
+- full conda environment with bioconda and conda-forge channels set up
 - fzf, ag, autojump, fd, vd, tabview installed
 - all my shortcuts
 
@@ -45,7 +45,8 @@ a local machine (or one on which you have admin rights).
 | `--install-tabview`        |            | installs [`tabview`](https://github.com/TabViewer/tabview), a command-line CSV and tabular data viewer **(see note 1)**                            |
 | `--install-black`          |            | installs [`black`](https://pypi.org/project/black/), "the uncompromising code formatter" for Python **(see note 1)**                               |
 | `--install-radian`         |            | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
-| `--docker`                 | X          | installs docker on Ubuntu and adds current user to new docker group                                                                                |
+| `--install-git-cola`       |            | installs [`git-cola`](https://git-cola.github.io), a graphical interface for adding incremental git commits  **(see note 1)**                      |
+| `--install-docker`         | X          | installs docker on Ubuntu and adds current user to new docker group                                                                                |
 | `--install-alacritty       | X          | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
 
 
