@@ -132,7 +132,7 @@ if [ $task == "--apt-get-installs" ]; then
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
 
-elif [ $task == "--docker" ]; then
+elif [ $task == "--install-docker" ]; then
     ok "Adds the docker repo, installs docker-ce, adds user to the docker group"
     sudo apt-get update
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
