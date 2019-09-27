@@ -263,31 +263,31 @@ These plugins have lots and lots of options. Here I'm only highlighting the
 options I use the most, but definitely check out each homepage to see all the
 other weird and wonderful ways they can be used.
 
-### [`scrooloose/nerdcommenter`](https://github.com/scrooloose/nerdcommenter)
+#### [`scrooloose/nerdcommenter`](https://github.com/scrooloose/nerdcommenter)
 
 | command | description                       |
 |---------|-----------------------------------|
 | `<leader>cc`   | Comment current or selected lines |
 
 
-### [`scrooloose/nerdtree`](https://github.com/scrooloose/nerdtree)
+#### [`scrooloose/nerdtree`](https://github.com/scrooloose/nerdtree)
 
 | command | description             |
 |---------|-------------------------|
 | `<leader>n`    | Open a new file browser |
 
-### [`vim-airline/vim-airline`](https://github.com/vim-airline/vim-airline) and [`vim-airline/vim-airline-themes`](https://github.com/vim-airline/vim-airline/wiki/Screenshots)
+#### [`vim-airline/vim-airline`](https://github.com/vim-airline/vim-airline) and [`vim-airline/vim-airline-themes`](https://github.com/vim-airline/vim-airline/wiki/Screenshots)
 
 Nice statusline. Install powerline fonts for full effect (with `./setup.py
 --powerline-fonts` using the setup script in this repository)
 
 
-### [`roxma/vim-tmux-clipboard`, `tmux-plugins/vim-tmux-focus-events`](https://github.com/roxma/vim-tmux-clipboard)
+#### [`roxma/vim-tmux-clipboard`, `tmux-plugins/vim-tmux-focus-events`](https://github.com/roxma/vim-tmux-clipboard)
 
 Copy yanked text from vim into tmux's clipboard and vice versa. The
 focus-events plugin is also needed for this to work.
 
-### [`nvie/vim-flake8`](https://github.com/nvie/vim-flake8)
+#### [`nvie/vim-flake8`](https://github.com/nvie/vim-flake8)
 
 You'll need to `pip install flake8` for this to work.
 [Flake8](http://flake8.pycqa.org/en/latest/) checks your Python code against
@@ -300,21 +300,21 @@ will jump to that place in the Python buffer so you can fix it.
 | `<leader>8` | Run flake8 on the file in the current buffer |
 
 
-### [`vim-python/python-syntax`](https://github.com/vim-python/python-syntax)
+#### [`vim-python/python-syntax`](https://github.com/vim-python/python-syntax)
 
 Sophisticated python syntax highlighting, for example within format strings.
 Happens automatically when editing Python files.
 
-### [`Vimjas/vim-python-pep8-indent`](https://github.com/Vimjas/vim-python-pep8-indent)
+#### [`Vimjas/vim-python-pep8-indent`](https://github.com/Vimjas/vim-python-pep8-indent)
 
 Auto-indent Python using pep8 recommendations. This happens as you're typing,
 or when you use `gq` on a selection.
 
-### [`ervandew/supertab`](https://github.com/ervandew/supertab)
+#### [`ervandew/supertab`](https://github.com/ervandew/supertab)
 
 Autocomplete most things with `TAB` in insert mode.
 
-### [`tpope/vim-fugitive`](https://github.com/tpope/vim-fugitive)
+#### [`tpope/vim-fugitive`](https://github.com/tpope/vim-fugitive)
 
 Run git from vim.
 
@@ -335,7 +335,7 @@ The following commands are built-in vim commands when in diff mode, but are used
 | `do`    | Use the **o**ther file's contents for the current diff |
 | `dp`    | **p**ut the contents of this diff into the other file  |
 
-### [`chrisbra/vim-diff-enhanced`](https://github.com/chrisbra/vim-diff-enhanced)
+#### [`chrisbra/vim-diff-enhanced`](https://github.com/chrisbra/vim-diff-enhanced)
 
 Provides additional diff algorithms that work better on certain kinds of files.
 
@@ -353,7 +353,7 @@ The following algorithms are available:
 | patience  | Use the patience diff algorithm                                            |
 | histogram | Use the histogram diff algorithm (similar to patience but slightly faster) |
 
-### [`kassio/neoterm`](https://github.com/kassio/neoterm)
+#### [`kassio/neoterm`](https://github.com/kassio/neoterm)
 
 Provides a separate terminal in vim.
 
@@ -367,13 +367,13 @@ The following commands are custom mappings set in
 | `gxx`       | Send the current line to the terminal                                               |
 | `,cd`       | Send the current RMarkdown chunk to the terminal (which is assumed to be running R) |
 
-### [`vim-pandoc/vim-rmarkdown`](https://github.com/vim-pandoc/vim-rmarkdown)
+#### [`vim-pandoc/vim-rmarkdown`](https://github.com/vim-pandoc/vim-rmarkdown)
 
 Syntax highlight R within RMarkdown code chunks. Requires both `vim-pandoc` and
 `vim-pandoc-syntax`, described below.
 
 
-### [`vim-pandoc/vim-pandoc`](https://github.com/vim-pandoc/vim-pandoc) and [`vim-pandoc/vim-pandoc-syntax`](https://github.com/vim-pandoc/vim-pandoc-syntax)
+#### [`vim-pandoc/vim-pandoc`](https://github.com/vim-pandoc/vim-pandoc) and [`vim-pandoc/vim-pandoc-syntax`](https://github.com/vim-pandoc/vim-pandoc-syntax)
 
 Integration with pandoc, including folding and formatting. Lots of shortcuts
 defined, see
@@ -386,7 +386,7 @@ help](https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390) 
 | `:TOC`  | Open a table contents for the current document that you can use to navigate the document |
 
 
-### [`dhruvasagar/vim-table-mode`](https://github.com/vim-pandoc/vim-pandoc-syntax)
+#### [`dhruvasagar/vim-table-mode`](https://github.com/vim-pandoc/vim-pandoc-syntax)
 
 Nice Markdown tables are a pain to format. This plugin makes it easy, by
 auto-padding table cells and adding the header lines as needed.
@@ -399,7 +399,7 @@ auto-padding table cells and adding the header lines as needed.
 
 See the homepage for, e.g., using `||` to auto-create header lines.
 
-### [`tmhedberg/SimpylFold`](https://github.com/tmhedberg/SimpylFold)
+#### [`tmhedberg/SimpylFold`](https://github.com/tmhedberg/SimpylFold)
 
 Nice folding for Python, using built-in vim commands for folding like `zc`,
 `zn`, `zM`.
