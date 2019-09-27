@@ -4,12 +4,10 @@ alias ls='ls --color=auto'
 alias ll='ls -lrth'
 alias la='ls -lrthA'
 alias l='ls -CF'
-alias cols="column -s$'\t' -t"
-alias coms="column -s$',' -t"
 alias tmux="tmux -u"
 alias vim="nvim"
 alias D="export DISPLAY=:0"
-alias DD="export DISPLAY=localhost:11.0"
 alias ff="fzf-tmux"
 alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
+alias v='fzf --preview "bat --color \"always\" {}"'
 alias z="fzf-tmux"
