@@ -163,7 +163,7 @@ nmap <leader>p "+p
 nmap <leader>P "+P
 
 " See https://stackoverflow.com/a/30691754
-set clipboard=^=unnamed,unnamedplus
+set clipboard^=unnamed,unnamedplus
 
 " ----------------------------------------------------------------------------
 "  Window navigation
