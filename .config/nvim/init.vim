@@ -125,6 +125,11 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 noremap <leader>R <Esc>:syntax sync fromstart<CR>
 inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
+" When editing RMarkdown, <leader>` creates a new fenced code block, ready to
+" type in. This works in insert or normal mode.
+noremap <leader>` i```{r}<CR>```<Esc>O
+inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
+
 " 'Listify': for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
