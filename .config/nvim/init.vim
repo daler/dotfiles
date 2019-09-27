@@ -9,6 +9,7 @@ if has('nvim')
     " Note: where shortcuts are indicated, they're probably set below in the
     " PLUGIN SETTINGS section.
     "
+    Plug 'scrooloose/nerdcommenter'           " Comment large blocks of text
     Plug 'scrooloose/nerdtree'                " File browser for vim <Leader>n
     Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
     Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
