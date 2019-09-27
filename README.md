@@ -228,42 +228,94 @@ and choose a font filtered with "Powerline" so it will be Powerline compatible.
 Here are the features (and fixes) you get when using this config file:
 
 - lots of nice plugins (see below)
-- syntax highlighting and proper Python formatting
-- in some situations backspace does not work, this fixes it
-- can use mouse to click around
-- current line has a subtle coloring when in insert mode
+- Syntax highlighting and proper Python formatting
+- In some situations backspace does not work, this fixes it
+- Use mouse to click around
+- Current line has a subtle coloring when in insert mode
 - Hitting the TAB key enters spaces, not a literal tab character
 - TAB characters are rendered as `>...` which helps troubleshoot spaces vs
   tabs. This is disabled for files like HTML and XML where tabs vs whitespace
   is not important
-- set the tabstop to 2 for YAML format files
+- Set the tabstop to 2 for YAML format files
 - Trailing spaces are rendered as faded dots
 - In Python, space errors (primarily trailing spaces) are highlighted
 - Comments, numbered lists can be auto-wrapped after selecting and using `gq`
 - In insert mode while editing a comment, hitting enter will automatically add
   the comment character to the beginning of the next line
-- Search highlighting is turned off, but toggle it with `<Leader>H`
 - Searches will be case-sensitive only if at least letter is a capital
-- `<Leader>W` will clean up all trailing spaces
-- `<Leader>R` will refresh syntax highlighting
-- `@l` macro will surround the line with quotes and add a trailing comma,
-  making it easy to make Python lists out of pasted text.
-- When a file is opened, automatically set the working directory to that of the opened file
-- `<Leader><number>`, where `<number`> is between 1-9, will switch between open
-  buffers (listed along the top sort of like tabs in a browser) E.g.,
-  `<Leader>3` switches to the 3rd buffer
-- consider Snakefiles (`Snakefile` or `*.snakefile`) as Python syntax
-- `<Leader>r` toggle relative line numbering (makes it easier to jump around
-  lines with motion operators)
+- Plugins for working more easily within tmux
+
+| command       | works in mode    | description                                                                                                                                  |
+|---------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `,`           |                  | Remapped leader. When you see `<leader>` below, it means `,`. E.g., `<leader>3` means `,3`                                                   |
+| `<leader>r`   | normal           | Toggle relative line numbering (makes it easier to jump around lines with motion operators)                                                  |
+| `<leader>H`   | normal           | Toggle higlighted search                                                                                                                     |
+| `<leader>\``  | normal or insert | When editing RMarkdown, creates a new code chunk and enters it, ready to type                                                                |
+| `<leader>W`   | normal           | clean up all trailing spaces                                                                                                                 |
+| `<leader>R`   | normal or insert | refresh syntax highlighting                                                                                                                  |
+| `@l`          | normal           | macro to surround the line with quotes and add a trailing comma, making it easy to make Python or R lists out of pasted text                 |
+| `<leader>t`   | normal           | Open neoterm terminal to the right.                                                                                                          |
+| `<leader>te`  | normal           | Open neoterm terminal to the right, and immediatly activate the conda environment in the `./env` directory                                   |
+| `<leader>t1e` | normal           | Same as above, but 1 dir above in  `../env`                                                                                                  |
+| `<leader>t2e` | normal           | Same as above, but 2 dir above in  `../../env`                                                                                               |
+| `<leader>t3e` | normal           | Same as above, but 2 dir above in  `../../../env`                                                                                            |
+| `Alt-w`       | normal or insert | Move to terminal on right and enter insert mode                                                                                              |
+| `<leader>w`   | normal           | Same as above, but normal mode only                                                                                                          |
+| `Alt-q`       | normal or insert | Move to buffer on left and enter normal mode                                                                                                 |
+| `<leader>q`   | normal           | Same as above, but normal mode only                                                                                                          |
+| `<leader>cd`  | normal           | Send the current RMarkdown code chunk to the neoterm buffer, and jump to the next chunk                                                      |
+| `gxx`         | normal           | Send the current line to the neoterm buffer                                                                                                        |
+| `gx`          | visual           | Send the selection to the neoterm buffer                                                                                                     |
+| `<leader>k`   | normal           | Render the current RMarkdown file to HTML using `knitr::render()`. Assumes you have knitr installed and you're running R in a neoterm buffer |
+
+
+## Working with R in nvim
+
+### Initial setup
+
+When first starting work on a file:
+
+1. Open or create a new RMarkdown file with nvim
+2. Open a neoterm terminal to the right (`,t`)
+3. Move to that terminal (`Alt-w`).
+4. In the terminal, source activate your environment
+5. Start R in the terminal
+6. Go back to the RMarkdown or R script, and use the commands above to send
+   lines over.
+
+### Working with R
+
+Once you have the terminal up and running:
+
+1. Write some R code.
+2. `gxx` to send the current line to R
+3. Highlight some lines (`Shift-V` in vim gets you to visual select mode), `gx`
+   sends them and then jumps to the terminal.
+4. Inside a code chunk, `,cd` sends the entire code chunk and then jumps to the
+   next one. This way you can `,cd` your way through an Rmd
+5. `,k` to render the current Rmd to HTML.
+
+### Troubleshooting
+
+Sometimes text gets garbled when using an interactive node on biowulf. This is
+due to a known bug in Slurm, but Biowulf is not intending on updating any time
+soon. The fix is `Ctrl-L` either in the Rmd buffer or in the terminal buffer.
+And maybe `,R` to refresh the syntax highlighting.
+
+Remember that the terminal is a vim window, so to enter commands you need to be
+in insert mode.
 
 
 ## Plugins
 
-These plugins have lots and lots of options. Here I'm only highlighting the
-options I use the most, but definitely check out each homepage to see all the
-other weird and wonderful ways they can be used.
+The plugins configured at the top of `.config/nvim/init.vim` have lots and lots
+of options. Here I'm only highlighting the options I use the most, but
+definitely check out each homepage to see all the other weird and wonderful
+ways they can be used.
 
 #### [`scrooloose/nerdcommenter`](https://github.com/scrooloose/nerdcommenter)
+
+Easily comment blocks of text
 
 | command | description                       |
 |---------|-----------------------------------|
@@ -272,9 +324,11 @@ other weird and wonderful ways they can be used.
 
 #### [`scrooloose/nerdtree`](https://github.com/scrooloose/nerdtree)
 
-| command | description             |
-|---------|-------------------------|
-| `<leader>n`    | Open a new file browser |
+Open up a file browser, navigate it with vim movement keys, and hit `Enter` to open the file in a new buffer.
+
+| command     | description         |
+|-------------|---------------------|
+| `<leader>n` | Toggle file browser |
 
 #### [`vim-airline/vim-airline`](https://github.com/vim-airline/vim-airline) and [`vim-airline/vim-airline-themes`](https://github.com/vim-airline/vim-airline/wiki/Screenshots)
 
@@ -403,3 +457,26 @@ See the homepage for, e.g., using `||` to auto-create header lines.
 
 Nice folding for Python, using built-in vim commands for folding like `zc`,
 `zn`, `zM`.
+
+
+# tmux configuration
+
+- Set the prefix to be `Ctl-j` (instead of the default `Ctrl-b`)
+- Use mouse
+- Reset escape key time to avoid conflicting with vim
+- Set a large history size
+- Use vim mode for navigating in copy mode
+- When creating a new window or pane, automatically change to the directory of
+  the current window or pane.
+
+Window and pane navigation:
+
+| command       | description               |
+|---------------|---------------------------|
+| `Alt-left`    | move to pane on the left  |
+| `Alt-right`   | move to pane on the right |
+| `Alt-up`      | move to pane above        |
+| `Alt-down`    | move to pane below        |
+| `Shift-left`  | move to next window       |
+| `Shift-right` | move to previous window   |
+
