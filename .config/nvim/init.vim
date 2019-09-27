@@ -233,6 +233,12 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 " Open a terminal to the right (neoterm plugin)
 nmap <Leader>t :vert rightb Tnew<CR>
 
+nmap <Leader>te :vert rightb Tnew<CR>:wincmd l<CR>source activate ./env<CR>
+nmap <Leader>t1e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../env<CR>
+nmap <Leader>t2e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../env<CR>
+nmap <Leader>t3e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../../env<CR>
+
+
 " When in a terminal, by default Esc does not go back to normal mode and
 " instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
 tnoremap <Esc> <C-\><C-n>
