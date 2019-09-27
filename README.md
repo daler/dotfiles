@@ -18,18 +18,18 @@ The end result is:
 `setup.sh` does all the work. Run it with no options to see the help. Search
 for each option within the script to understand what each part does.
 
-Current options include (in approximate order in which they're typically run):
+The table below summarizes the options.
 
 The **local only** column indicates steps that should only be performed on
 a local machine (or one on which you have admin rights).
 
 | argument                   | local only | description                                                                                                                                        |
 |----------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--apt-get-installs`       | X          | installs packages on Ubuntu (see `apt-installs.txt` for which packages)                                                                            |
-| `--centos7-installs`       | X          | installs packages on CentOs (compilers; recent tmux)                                                                                               |
-| `--download-nvim-appimage` | X          | download appimage instead of compiling                                                                                                             |
-| `--download-macos-nvim`    | X          | download binary nvim for MacOS                                                                                                                     |
-| `--powerline`              | X          | installs powerline fonts, used for the vim airline plugin                                                                                          |
+| `--apt-get-installs`       | `X`        | installs packages on Ubuntu (see `apt-installs.txt` for which packages)                                                                            |
+| `--centos7-installs`       | `X`        | installs packages on CentOs (compilers; recent tmux)                                                                                               |
+| `--download-nvim-appimage` | `X`        | download appimage instead of compiling                                                                                                             |
+| `--download-macos-nvim`    | `X`        | download binary nvim for MacOS                                                                                                                     |
+| `--powerline`              | `X`        | installs powerline fonts, used for the vim airline plugin                                                                                          |
 | `--set-up-nvim-plugins`    |            | download vim-plug for easy vim plugin installation                                                                                                 |
 | `--diffs`                  |            | show differences between repo and home directory                                                                                                   |
 | `--dotfiles`               |            | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
@@ -46,8 +46,9 @@ a local machine (or one on which you have admin rights).
 | `--install-black`          |            | installs [`black`](https://pypi.org/project/black/), "the uncompromising code formatter" for Python **(see note 1)**                               |
 | `--install-radian`         |            | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
 | `--install-git-cola`       |            | installs [`git-cola`](https://git-cola.github.io), a graphical interface for adding incremental git commits  **(see note 1)**                      |
-| `--install-docker`         | X          | installs docker on Ubuntu and adds current user to new docker group                                                                                |
-| `--install-alacritty       | X          | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
+| `--install-bat             |            | installs [`bat`](https://github.com/sharkdp/bat), which is like `cat` but with syntax highlighting, non-printing chars, and git diffs              |
+| `--install-docker`         | `X`        | installs docker on Ubuntu and adds current user to new docker group                                                                                |
+| `--install-alacritty       | `X`        | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
 
 
 **Note 1:** These tools are available in conda, so a standalone conda
@@ -150,6 +151,7 @@ See the table above for what these tools are.
 ./setup.sh --install-tabview
 ./setup.sh --install-black
 ./setup.sh --install-radian
+./setup.sh --install-git-cola
 ```
 
 # Bash-related configuration
@@ -162,16 +164,22 @@ they're present. This keeps things a little more organized and modular.
 
 | file           | description                                                                                       |
 |----------------|---------------------------------------------------------------------------------------------------|
+| `.path`        | set your `$PATH` entries here                                                                     |
 | `.aliases`     | define your bash aliases here                                                                     |
 | `.functions`   | define your bash functions here                                                                   |
-| `.path`        | set your `$PATH` entries here                                                                     |
 | `.bash_prompt` | changes prompt colors depending on the host                                                       |
-| `.exports`     | global exports that can be stored in a public repository                                                                |
+| `.exports`     | global exports that can be stored in a public repository                                          |
 | `.extra`       | put anything here that's either not appropriate to store in a repo, or for host-specific settings |
+
+## `.path`
+
+This file ends up being lots of `export PATH="$PATH:/some/other/path"` lines.
+It is not included in this repository, but will be created and appended to by
+the commands in `setup.sh`.
 
 ## `.aliases`
 
-Some notable aliases:
+This file keeps aliases separate. Some notable aliases that are included:
 
 | alias | command                  | description                                                                                                                                    |
 |-------|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -179,10 +187,17 @@ Some notable aliases:
 | `D`   | `export DISPLAY=:0`      | sometimes when using tmux the display is not set, causing GUI programs launched from the terminal to complain. This sets the display variable. |
 | `ll`  | `ls -lrth --color=auto`  | useful `ls` arguments (long format, human-readable sizes, sorted by time (latest at bottom), use color)                                        |
 | `la`  | `ls -lrthA --color=auto` | same as above, but also show hidden files                                                                                                      |
+| `v`   | (see .aliases file)      | Live, searchable, syntax-highlighted preview of files in a directory. Needs `--install-fzf` and `--install-bat`.                               |
+| `fv`  | (see .aliases file)      | Same as above, but after hitting enter the file will be opened in vim                                                                          |
+
+
+This file is also used to add aliases of packages installed using `setup.sh`
+that create a separate conda environment (see Note 1 above). 
+
 
 ## `.functions`
 
-Some notable functions:
+Separate file for bash functions. Some notable functions defined here:
 
 | function      | description                                                                                                                                                                       |
 |---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -191,6 +206,12 @@ Some notable functions:
 | `sa`          | Opens `fzf` to search across all conda environments, and activates the selected one                                                                                               |
 | `vg`          | Use `ag` to search for the provided text within the current directory, and send to `fzf` for fuzzy-finding. When you choose a line, open that file with vim and jump to that line |
 
+
+## `.bash_prompt`
+
+Currently, the prompt will change for Biowulf or Helix (NIH HPC), but here you
+can add any hosts or colors. See
+https://misc.flogisoft.com/bash/tip_colors_and_formatting for color options.
 
 # Neovim configuration
 
