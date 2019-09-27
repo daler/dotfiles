@@ -50,6 +50,7 @@ function showHelp() {
     echo
     echo "Dotfiles:"
     echo -e "  ${GREEN} --diffs                                   ${UNSET}(inspect differences between repo and home)"
+    echo -e "  ${GREEN} --graphical-diffs                         ${UNSET}(needs meld installed)"
     echo -e "  ${GREEN} --dotfiles                                ${UNSET}(update dotfiles)"
     echo
     echo "paths to miniconda and neovim will be prepended to PATH in the"
@@ -434,6 +435,10 @@ elif [ $task == "--install-alacritty" ]; then
             cargo deb --install
         )
     )
+
+elif [ $task == "--graphical-diffs" ]; then
+    ok "Opens up meld to display differences between files in this repo and your home directory"
+    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do meld $i ~/$i; done
 
 else
     showHelp
