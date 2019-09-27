@@ -461,7 +461,7 @@ Nice folding for Python, using built-in vim commands for folding like `zc`,
 
 # tmux configuration
 
-- Set the prefix to be `Ctl-j` (instead of the default `Ctrl-b`)
+- Set the prefix to be `Ctrl-j` (instead of the default `Ctrl-b`)
 - Use mouse
 - Reset escape key time to avoid conflicting with vim
 - Set a large history size
@@ -479,4 +479,26 @@ Window and pane navigation:
 | `Alt-down`    | move to pane below        |
 | `Shift-left`  | move to next window       |
 | `Shift-right` | move to previous window   |
+
+
+# Copy/paste in vim and tmux
+
+In general, if things seem strange, you may have to add Shift to copy/paste commands.
+
+This is by far the most annoying part about using tmux and vim together.
+
+| copy method                                                                      | where does it go    | how to paste       |
+|----------------------------------------------------------------------------------|---------------------|--------------------|
+| Shift-select text                                                                | middle-click buffer | shift-middle-click |
+| Shift-select text, then Ctrl-shift-C                                             | clipboard           | Ctrl-shift-V       |
+| tmux copy mode (`Ctrl-j`, `[`). You probably want to avoid using this inside vim | tmux clipboard      | `Ctrl-j`, `]`      |
+
+Another annoying situation is when copying text from the terminal into an
+email. In this case, we cannot use tmux copy mode, because X windows doesn't
+know about it. Instead:
+
+- if you're in a pane, make it full screen (`Ctrl-j`, `z`)
+- if you're in vim, turn off line numbers (`:set nonu`), or maybe quit out of vim and just cat the file
+- shift-select text in terminal
+- middle-click to paste into email
 
