@@ -180,6 +180,8 @@ noremap <silent> ,q :wincmd h<cr>
 " Normal mode first. The following commands let you use Alt-w and Alt-q to
 " switch -- even while in Insert mode.
 noremap <M-w> <Esc>:wincmd l<CR>
+inoremap <M-w> <Esc>:wincmd l<CR>
+
 tnoremap <M-q> <C-\><C-n>:wincmd h<CR>
 
 
