@@ -1,17 +1,13 @@
 # Overview and rationale
 
-Starting with a fresh install of Ubuntu, CentOS, or macOS, with this repo I can
-be up and running with everything I need plus all my configurations and plugins
-in a couple of minutes.
+This repo contains a "batteries included" set of configuration files for bash,
+neovim, and tmux, along with a setup script that helps identify the differences
+between these dotfiles and what you already have. The setup script also offers
+many options for installing various useful tools.
 
-The end result is:
-
-- neovim with all plugins installed (see below section on plugins)
-  powerline fonts to make it look nice
-- all the useful packages and libraries I use
-- full conda environment with bioconda and conda-forge channels set up
-- fzf, ag, autojump, fd, vd, tabview installed
-- all my shortcuts
+This is an opinionated set of configuration files and tools, but everything is
+documented here both in this readme as well as the files themselves so you can
+select only what will be most useful for you.
 
 # `setup.sh`
 
@@ -32,6 +28,8 @@ a local machine (or one on which you have admin rights).
 | `--powerline`              | `X`        | installs powerline fonts, used for the vim airline plugin                                                                                          |
 | `--set-up-nvim-plugins`    |            | download vim-plug for easy vim plugin installation                                                                                                 |
 | `--diffs`                  |            | show differences between repo and home directory                                                                                                   |
+| `--graphical-diffs`        |            | show differences between repo and home directory, using meld                                                                                       |
+| `--vim-diffs`              |            | show differences between repo and home directory, using `vim -d`                                                                                    |
 | `--dotfiles`               |            | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
 | `--download-miniconda`     |            | downloads latest Miniconda to current directory                                                                                                    |
 | `--install-miniconda`      |            | install downloaded Miniconda to ~/miniconda3                                                                                                       |
