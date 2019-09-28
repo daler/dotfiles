@@ -49,9 +49,10 @@ function showHelp() {
     echo -e "  ${GREEN} --install-alacritty       [local only]  ${UNSET}(installs alacritty, a GPU-accelerated terminal emulator)"
     echo
     echo "Dotfiles:"
-    echo -e "  ${GREEN} --diffs                                   ${UNSET}(inspect differences between repo and home)"
-    echo -e "  ${GREEN} --graphical-diffs                         ${UNSET}(needs meld installed)"
-    echo -e "  ${GREEN} --dotfiles                                ${UNSET}(update dotfiles)"
+    echo -e "  ${GREEN} --diffs                                 ${UNSET}(inspect diffs between repo and home)"
+    echo -e "  ${GREEN} --vim-diffs                             ${UNSET}(inspect diffs between repo and home, using vim -d)"
+    echo -e "  ${GREEN} --graphical-diffs                       ${UNSET}(inspect diffs between repo and home, using meld)"
+    echo -e "  ${GREEN} --dotfiles                              ${UNSET}(update dotfiles)"
     echo
     echo "paths to miniconda and neovim will be prepended to PATH in the"
     echo "~/.path file; that file will then be sourced"
@@ -440,6 +441,9 @@ elif [ $task == "--graphical-diffs" ]; then
     ok "Opens up meld to display differences between files in this repo and your home directory"
     for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do meld $i ~/$i; done
 
+elif [ $task == "--vim-diffs" ]; then
+    ok "Opens up vim -d to display differences between files in this repo and your home directory"
+    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do nvim -d $i ~/$i; done
 else
     showHelp
 
