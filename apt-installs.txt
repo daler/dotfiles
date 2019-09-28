@@ -1,0 +1,44 @@
+# tools for building software --------------------------------------
+automake             # for compiling tools requiring automake
+build-essential      # gcc and make are in here
+cmake                # for compiling tools requiring cmake
+liblzma-dev          # dev lib for compiling tools needing lzma
+libpcre3-dev         # for Perl-compatible regexes
+pkg-config           # for using the right compiler options
+zlib1g-dev           # dep lib for compiling tools needing zlib
+
+# general ----------------------------------------------------------
+cifs-utils           # mount SMB network shares
+curl                 # for downloading
+gnupg2               # for GPG keys
+gnupg-agent          # for GPG keys
+gparted              # GUI tool for formatting disks
+htop                 # top, but better
+iotop                # top, but for I/O
+nfs-common           # mount NFS network shares
+openssh-server       # so we can ssh into this machine
+tmux                 # for persistent sessions
+
+# GUI --------------------------------------------------------------
+gimp                 # image editing
+git-cola             # subset and stage git changes visually
+gnome-tweak-tool     # for configuring gnome
+indicator-multiload  # live readout in the top bar for CPU, RAM, network, disk
+inkscape             # vector images
+meld                 # multi-way graphical merge tool
+shutter              # screenshot tool
+xclip                # API to copy to X clipboard
+
+
+# libraries --------------------------------------------------------
+apt-transport-https  # allows apt over https from /etc/apt/sources.list
+ca-certificates      # needed for the above
+default-jdk          # java
+icedtea-netx         # java in firefox
+libfontconfig1-dev   # configuring fonts
+libfreetype6-dev     # for fonts
+pinentry-qt          # used for GPG
+software-properties-common  # for managing apt repositories
+tcllib               # for TCL guis
+texlive              # Latex installation
+uuid                 # for universally-unique identifier from CLI

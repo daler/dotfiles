@@ -9,12 +9,12 @@ if has('nvim')
     " Note: where shortcuts are indicated, they're probably set below in the
     " PLUGIN SETTINGS section.
     "
+    Plug 'scrooloose/nerdcommenter'           " Comment large blocks of text
     Plug 'scrooloose/nerdtree'                " File browser for vim <Leader>n
     Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
     Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
     Plug 'roxma/vim-tmux-clipboard'           " Copy yanked text from vim into tmux's clipboard and vice versa.
     Plug 'tmux-plugins/vim-tmux-focus-events' " Makes tmux and vim play nicer together.
-    Plug 'nvie/vim-flake8'                    " Run flake8 (pip install flake8) on current buffer <Leader>8
     Plug 'vim-python/python-syntax'           " Sophisticated python syntax highlighting.
     Plug 'Vimjas/vim-python-pep8-indent'      " Indent python using pep8 recommendations
     Plug 'ervandew/supertab'                  " Autocomplete most things
@@ -125,6 +125,11 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 noremap <leader>R <Esc>:syntax sync fromstart<CR>
 inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
+" When editing RMarkdown, <leader>` creates a new fenced code block, ready to
+" type in. This works in insert or normal mode.
+noremap <leader>` i```{r}<CR>```<Esc>O
+inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
+
 " 'Listify': for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
@@ -134,7 +139,7 @@ autocmd BufEnter * silent! lcd %:p:h
 " ----------------------------------------------------------------------------
 " Buffer switching
 " ----------------------------------------------------------------------------
-" buffer switching -- up to 8, because PEP8 is <leader>8
+" buffer switching
 " ,l       : list buffers
 " ,b ,f ,g : go back/forward/last-used
 " ,1 ,2 ,3 : go to buffer 1/2/3 etc
@@ -145,6 +150,8 @@ nnoremap <Leader>4 :4b<CR>
 nnoremap <Leader>5 :5b<CR>
 nnoremap <Leader>6 :6b<CR>
 nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
 
 " ----------------------------------------------------------------------------
 " Copy/paste
@@ -155,7 +162,8 @@ nmap <leader>Y "+yq
 nmap <leader>p "+p
 nmap <leader>P "+P
 
-set clipboard=unnamed
+" See https://stackoverflow.com/a/30691754
+set clipboard^=unnamed,unnamedplus
 
 " ----------------------------------------------------------------------------
 "  Window navigation
@@ -172,6 +180,8 @@ noremap <silent> ,q :wincmd h<cr>
 " Normal mode first. The following commands let you use Alt-w and Alt-q to
 " switch -- even while in Insert mode.
 noremap <M-w> <Esc>:wincmd l<CR>
+inoremap <M-w> <Esc>:wincmd l<CR>
+
 tnoremap <M-q> <C-\><C-n>:wincmd h<CR>
 
 
@@ -218,16 +228,16 @@ let g:python_highlight_all = 1
 nnoremap <leader>n :NERDTreeToggle<cr>
 
 " ----------------------------------------------------------------------------
-" Flake8
-" ----------------------------------------------------------------------------
-let g:pep8_map='<leader>8'
-let g:pep8_ignore="E121"
-
-" ----------------------------------------------------------------------------
 " neoterm
 " ----------------------------------------------------------------------------
 " Open a terminal to the right (neoterm plugin)
 nmap <Leader>t :vert rightb Tnew<CR>
+
+nmap <Leader>te :vert rightb Tnew<CR>:wincmd l<CR>source activate ./env<CR>
+nmap <Leader>t1e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../env<CR>
+nmap <Leader>t2e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../env<CR>
+nmap <Leader>t3e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../../env<CR>
+
 
 " When in a terminal, by default Esc does not go back to normal mode and
 " instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
