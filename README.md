@@ -311,13 +311,22 @@ of options. Here I'm only highlighting the options I use the most, but
 definitely check out each homepage to see all the other weird and wonderful
 ways they can be used.
 
+#### [`vis`](vim-scripts/vis)
+
+When selecting things in visual block mode, by default operations
+(substitutions, sorting) operate on the entire line, not just the block.
+
+| command                                       | description            |
+|-----------------------------------------------|------------------------|
+| Ctrl-v, then select, then `:B` instead of `:` | Operates on block only |
+
 #### [`scrooloose/nerdcommenter`](https://github.com/scrooloose/nerdcommenter)
 
 Easily comment blocks of text
 
-| command | description                       |
-|---------|-----------------------------------|
-| `<leader>cc`   | Comment current or selected lines |
+| command      | description                       |
+|--------------|-----------------------------------|
+| `<leader>cc` | Comment current or selected lines |
 
 
 #### [`scrooloose/nerdtree`](https://github.com/scrooloose/nerdtree)
@@ -338,19 +347,6 @@ Nice statusline. Install powerline fonts for full effect (with `./setup.py
 
 Copy yanked text from vim into tmux's clipboard and vice versa. The
 focus-events plugin is also needed for this to work.
-
-#### [`nvie/vim-flake8`](https://github.com/nvie/vim-flake8)
-
-You'll need to `pip install flake8` for this to work.
-[Flake8](http://flake8.pycqa.org/en/latest/) checks your Python code against
-the [PEP8 Python Style Guide](https://www.python.org/dev/peps/pep-0008/). After
-it runs, you'll get a quick-fix window. In that window, hitting Enter on a line
-will jump to that place in the Python buffer so you can fix it.
-
-| command     | description                                  |
-|-------------|----------------------------------------------|
-| `<leader>8` | Run flake8 on the file in the current buffer |
-
 
 #### [`vim-python/python-syntax`](https://github.com/vim-python/python-syntax)
 
@@ -412,12 +408,12 @@ Provides a separate terminal in vim.
 The following commands are custom mappings set in
 [.config/nvim/init.vim](.config/nvim/init.vim):
 
-| command     | description                                                                         |
-|-------------|-------------------------------------------------------------------------------------|
-| `<leader>t` | Open a terminal to the right                                                        |
-| `gx`        | Send the current selection to the terminal                                          |
-| `gxx`       | Send the current line to the terminal                                               |
-| `,cd`       | Send the current RMarkdown chunk to the terminal (which is assumed to be running R) |
+| command      | description                                                                         |
+|--------------|-------------------------------------------------------------------------------------|
+| `<leader>t`  | Open a terminal to the right                                                        |
+| `gx`         | Send the current selection to the terminal                                          |
+| `gxx`        | Send the current line to the terminal                                               |
+| `<leader>cd` | Send the current RMarkdown chunk to the terminal (which is assumed to be running R) |
 
 #### [`vim-pandoc/vim-rmarkdown`](https://github.com/vim-pandoc/vim-rmarkdown)
 
@@ -448,6 +444,7 @@ auto-padding table cells and adding the header lines as needed.
 | `:TableModeEnable`  | enables table mode                                        |
 | `:TableModeDisable` | disables table mode                                       |
 | `:Tableize          | creates a markdown or ReST table based on TSV or CSV text |
+| `:TableModeRealign` | realigns an existing table (adding padding as necessary)  |
 
 See the homepage for, e.g., using `||` to auto-create header lines.
 
@@ -456,6 +453,11 @@ See the homepage for, e.g., using `||` to auto-create header lines.
 Nice folding for Python, using built-in vim commands for folding like `zc`,
 `zn`, `zM`.
 
+| command | description                     |
+|---------|---------------------------------|
+| `zn`    | unfold everything               |
+| `zM`    | fold everything                 |
+| `zc`    | toggle folding of current block |
 
 # tmux configuration
 
