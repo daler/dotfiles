@@ -29,7 +29,7 @@ a local machine (or one on which you have admin rights).
 | `--set-up-nvim-plugins`    |            | download vim-plug for easy vim plugin installation                                                                                                 |
 | `--diffs`                  |            | show differences between repo and home directory                                                                                                   |
 | `--graphical-diffs`        |            | show differences between repo and home directory, using meld                                                                                       |
-| `--vim-diffs`              |            | show differences between repo and home directory, using `vim -d`                                                                                    |
+| `--vim-diffs`              |            | show differences between repo and home directory, using `vim -d`                                                                                   |
 | `--dotfiles`               |            | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
 | `--download-miniconda`     |            | downloads latest Miniconda to current directory                                                                                                    |
 | `--install-miniconda`      |            | install downloaded Miniconda to ~/miniconda3                                                                                                       |
@@ -37,6 +37,7 @@ a local machine (or one on which you have admin rights).
 | `--conda-env`              |            | install requirements.txt into root conda env                                                                                                       |
 | `--install-fzf`            |            | installs [`fzf`](https://github.com/junegunn/fzf), command-line fuzzy finder                                                                       |
 | `--install-ag`             |            | installs [`ag`](https://github.com/ggreer/the_silver_searcher), a fast code-searching tool                                                         |
+| `--install-gg`             |            | installs [`ripgrep`](https://github.com/BurntSushi/ripgrep), a fast code-searching tool with slightly different features from ag                   |
 | `--install-autojump`       |            | installs [`autojump`](https://github.com/wting/autojump), for quickly navigating multiple directories                                              |
 | `--install-fd`             |            | installs [`fd`](https://github.com/sharkdp/fd), a simple, fast, and user-friendly alternative to "find" **(see note 1)**                           |
 | `--install-vd`             |            | installs [`visidata`](https://visidata.org), an interactive multitool for tabular data **(see note 1)**                                            |
