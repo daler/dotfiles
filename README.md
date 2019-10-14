@@ -29,7 +29,7 @@ a local machine (or one on which you have admin rights).
 | `--set-up-nvim-plugins`    |            | download vim-plug for easy vim plugin installation                                                                                                 |
 | `--diffs`                  |            | show differences between repo and home directory                                                                                                   |
 | `--graphical-diffs`        |            | show differences between repo and home directory, using meld                                                                                       |
-| `--vim-diffs`              |            | show differences between repo and home directory, using `vim -d`                                                                                    |
+| `--vim-diffs`              |            | show differences between repo and home directory, using `vim -d`                                                                                   |
 | `--dotfiles`               |            | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
 | `--download-miniconda`     |            | downloads latest Miniconda to current directory                                                                                                    |
 | `--install-miniconda`      |            | install downloaded Miniconda to ~/miniconda3                                                                                                       |
@@ -44,14 +44,17 @@ a local machine (or one on which you have admin rights).
 | `--install-black`          |            | installs [`black`](https://pypi.org/project/black/), "the uncompromising code formatter" for Python **(see note 1)**                               |
 | `--install-radian`         |            | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
 | `--install-git-cola`       |            | installs [`git-cola`](https://git-cola.github.io), a graphical interface for adding incremental git commits  **(see note 1)**                      |
-| `--install-bat             |            | installs [`bat`](https://github.com/sharkdp/bat), which is like `cat` but with syntax highlighting, non-printing chars, and git diffs              |
+| `--install-bat`            |            | installs [`bat`](https://github.com/sharkdp/bat), which is like `cat` but with syntax highlighting, non-printing chars, and git diffs              |
 | `--install-docker`         | `X`        | installs docker on Ubuntu and adds current user to new docker group                                                                                |
-| `--install-alacritty       | `X`        | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
+| `--install-alacritty`      | `X`        | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
 
 
-**Note 1:** These tools are available in conda, so a standalone conda
-environment is created for each tool, and an alias is added to the `.aliases`
-file to point directly to just the installed binary file. That is,
+**Note 1:** These tools are either available in conda, or have Python
+dependencies. For each tool, a standalone conda environment is created, the
+tool is installed into that environment, and an alias is added to the
+`.aliases` file to point directly to just the installed binary file. For
+example, `fd` is available in the `fd-find` package in the conda-forge channel,
+but we would like to have it available in all environments.
 
 ```bash
 conda create -n fd fd-find
@@ -61,56 +64,90 @@ echo "alias fd=$HOME/miniconda3/envs/bin/fd"
 An environment will only be created if one of the same name does not already
 exist.
 
-# General workflow
+# Usage
+
+This section walks you through setting up a fresh environment.
 
 ## Round 1: basics, nvim, and dotfiles
 
-The first round sets up packages, neovim, and neovim plugin support. The last
-step of this round is to copy over all the dotfiles.
+The first round sets up packages, neovim, and neovim plugin support.
 
-The steps depend on the system:
+Why neovim? While the latest version of vim (version 8) is approaching feature
+parity with neovim especially with a terminal, vim 8 is just about as difficult
+to install as nvim. On biowulf, nvim (but not vim8) is installed. There are
+a couple of nice additions,and plugins that work only with nvim, but honestly
+the differences now are pretty subtle.
+
+The particular steps depend on the system, and whether you have root access:
 
 ### Ubuntu with root
 
-```
+```bash
 ./setup.sh --apt-get-installs
 ./setup.sh --download-neovim-appimage
 ./setup.sh --powerline
 ./setup.sh --set-up-nvim-plugins
-./setup.sh --diffs
-./setup.sh --dotfiles
 ```
 
 ### CentOS 7 with root
 
-```
+```bash
 ./setup.sh --centos7-installs
 ./setup.sh --download-neovim-appimage
 ./setup.sh --powerline
 ./setup.sh --set-up-nvim-plugins
-./setup.sh --diffs
-./setup.sh --dotfiles
 ```
 
 ### MacOS
 
-```
+```bash
 ./setup.sh --download-macos-nvim
 ./setup.sh --powerline
 ./setup.sh --set-up-nvim-plugins
-./setup.sh --diffs
-./setup.sh --dotfiles
 ```
 
 ### Biowulf/Helix
 
-```
+On Biowulf, `nvim` is available as a module so you should add `module load
+neovim` to your `.bashrc` there.
+
+```bash
 ./setup.sh --set-up-nvim-plugins
-./setup.sh --diffs
-./setup.sh --dotfiles
 ```
 
-## Round 2: set font; install nvim plugins
+## Round 2: inspect dotfiles and merge with existing
+
+The goal here is to pull over the dotfiles from this repo to your home
+directory on the target system.
+
+**If you've inpsected the files here and are OK with replacing your existing
+files**, you can simply use `./setup.sh --dotfiles`.
+
+**Otherwise**, we need to do a merge. The easiest way to do this is with
+a merge tool. [meld](http://meldmerge.org) is the best option for this. If you
+ran `./setup.sh --apt-get-installs` on Ubuntu, you already have it. On Biowulf,
+it is available and the best way to use it is to set an alias to ensure that
+the system-wide Python is used: `alias meld="/usr/bin/python /usr/bin/meld"`
+
+Once you have meld available, you can cycle through the proposed changes, and
+add things in as needed, using the following command:
+
+```bash
+./setup.sh --graphical-diffs
+```
+
+If you don't want to install meld, you can use `./setup.sh --vim-diffs` to open
+files up using vim's diff mode for merging, or `./setup.sh --diffs` to see the
+diffs and copy over relevant parts as needed.
+
+| component                           | why it's required                                                                                                |
+|-------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| `.aliases` exists, and gets sourced | some of the `--install-<tool>` commands below add aliases to this file                                           |
+| `alias vim=nvim`                    | the vim configuration described below expects `neovim`                                                           |
+| `.path` includes `~/opt/bin`        | some of the `--install-<tool>` commands add to this directory, and the appimage for neovim gets put here as well |
+
+
+## Round 3: set font; install nvim plugins
 
 In the terminal program you are using, **change the font to match one of the
 "Powerline" fonts that have been installed.** This will make vim look nicer with
@@ -123,7 +160,7 @@ Then exit and re-enter the system to load all the dotfiles.
 - quit the plugin installer like a normal vim buffer (`:q`)
 - exit vim (`:q`)
 
-## Round 3: set up conda
+## Round 4: set up conda
 
 The following commands will download and install miniconda to
 `$HOME/miniconda3`, set up the conda-forge and bioconda channels in the proper
@@ -136,7 +173,7 @@ order, and build a default environment with useful tools.
 ./setup.py --conda-env  # see requirements.txt for what is installed
 ```
 
-## Round 3: extras
+## Round 5: extras
 
 See the table above for what these tools are.
 
