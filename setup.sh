@@ -7,6 +7,8 @@ YELLOW="\e[33m"
 RED="\e[31m"
 UNSET="\e[0m"
 
+export PS1=
+
 function showHelp() {
     echo
     echo "Usage:"
