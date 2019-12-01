@@ -39,14 +39,15 @@ function showHelp() {
     echo -e "  ${GREEN} --install-fzf                           ${UNSET}(installs fzf)"
     echo -e "  ${GREEN} --install-ag                            ${UNSET}(installs ag)"
     echo -e "  ${GREEN} --install-autojump                      ${UNSET}(installs autojump)"
-    echo -e "  ${GREEN} --install-hub                           ${UNSET}(installs hub and sets alias)"
-    echo -e "  ${GREEN} --install-fd                            ${UNSET}(installs fd and sets alias)"
-    echo -e "  ${GREEN} --install-vd                            ${UNSET}(installs visidata and sets alias)"
-    echo -e "  ${GREEN} --install-black                         ${UNSET}(installs black and sets alias)"
-    echo -e "  ${GREEN} --install-tabview                       ${UNSET}(installs tabview and sets alias)"
-    echo -e "  ${GREEN} --install-radian                        ${UNSET}(installs radian and sets alias)"
-    echo -e "  ${GREEN} --install-git-cola                      ${UNSET}(installs git-cola and sets alias)"
-    echo -e "  ${GREEN} --install-bat                           ${UNSET}(installs bat and sets alias)"
+    echo -e "  ${GREEN} --install-hub                           ${UNSET}(installs hub and makes symlink)"
+    echo -e "  ${GREEN} --install-fd                            ${UNSET}(installs fd and makes symlink)"
+    echo -e "  ${GREEN} --install-vd                            ${UNSET}(installs visidata and makes symlink)"
+    echo -e "  ${GREEN} --install-black                         ${UNSET}(installs black and makes symlink)"
+    echo -e "  ${GREEN} --install-tabview                       ${UNSET}(installs tabview and makes symlink)"
+    echo -e "  ${GREEN} --install-rg                            ${UNSET}(installs ripgrep and makes symlink)"
+    echo -e "  ${GREEN} --install-radian                        ${UNSET}(installs radian and makes symlink)"
+    echo -e "  ${GREEN} --install-git-cola                      ${UNSET}(installs git-cola and makes symlink)"
+    echo -e "  ${GREEN} --install-bat                           ${UNSET}(installs bat and makes symlink)"
     echo -e "  ${GREEN} --install-docker          [local only]  ${UNSET}(installs docker and adds current user to new docker group)"
     echo -e "  ${GREEN} --install-alacritty       [local only]  ${UNSET}(installs alacritty, a GPU-accelerated terminal emulator)"
     echo
@@ -143,6 +144,27 @@ remind_alias () {
     echo -e ${YELLOW}Please run${UNSET} source ~/.aliases ${YELLOW}to make the new alias available${UNSET}
 }
 
+check_opt_bin_in_path () {
+    if ! echo $PATH | grep -q "$HOME/opt/bin"; then
+        echo -e "${YELLOW}Please add${UNSET} $HOME/opt/bin ${YELLOW} to your \$PATH${UNSET}"
+    fi
+}
+
+# For simple cases where you just want to have a separate conda env and symlink
+# the binary over, use this function.
+install_env_and_symlink () {
+    ENVNAME=$1
+    CONDAPKG=$2
+    EXECUTABLE=$3
+
+    can_make_conda_env $ENVNAME
+    conda create -n $ENVNAME $CONDAPKG
+    ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
+    echo -e "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}"
+    check_opt_bin_in_path
+}
+
+
 
 if [ $task == "--apt-get-installs" ]; then
     ok "Installs packages from the file apt-installs.txt"
@@ -200,7 +222,7 @@ elif [ $task == "--powerline" ]; then
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
     echo
-    echo "Change your terminal's config to use the new powerline patched fonts"
+    echo -e "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}"
     echo
 
 elif [ $task == "--download-nvim-appimage" ]; then
@@ -211,6 +233,8 @@ elif [ $task == "--download-nvim-appimage" ]; then
     chmod u+x $dest
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
+    echo -e "${YELLOW}Installed neovim to $HOME/opt/neovim/bin and symlinked to $HOME/opt/bin${UNSET}"
+    check_opt_bin_in_path
 
 elif [ $task == "--download-macos-nvim" ]; then
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install
@@ -327,60 +351,59 @@ elif [ $task == "--install-hub" ]; then
         cd hub-linux-amd64-${HUB_VERSION}
         prefix=$HOME/opt ./install
     )
-    add_line_to_file "export PATH=\"$HOME/opt/bin:\$PATH\"" ~/.path
-    source ~/.path
+    echo -e "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}"
 
 elif [ $task == "--install-fd" ]; then
-    ok "Installs fd (https://github.com/sharkdp/fd) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "fd"
-    conda create -n fd fd-find
-    add_line_to_file "alias fd=$CONDA_LOCATION/envs/fd/bin/fd" ~/.aliases
-    remind_alias
+    ok "Installs fd (https://github.com/sharkdp/fd) into a new conda env, and symlink to ~/opt/bin/fd"
+    install_env_and_symlink fd fd-find fd
 
 elif [ $task == "--install-vd" ]; then
-    ok "Installs visidata (https://visidata.org/) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "vd"
-    conda create -n vd visidata
-    add_line_to_file "alias vd=$CONDA_LOCATION/envs/vd/bin/vd" ~/.aliases
-    remind_alias
+    ok "Installs visidata (https://visidata.org/) into a new conda env, and symlink to ~/opt/bin/vd"
+    install_env_and_symlink visidata visidata vd
 
 elif [ $task == "--install-tabview" ]; then
-    ok "Installs tabview (https://github.com/TabViewer/tabview) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "tabview"
-    conda create -n tabview tabview
-    add_line_to_file "alias tabview=$CONDA_LOCATION/envs/tabview/bin/tabview" ~/.aliases
-    remind_alias
+    ok "Installs tabview (https://github.com/TabViewer/tabview) into a new conda env, and symlink to ~/opt/bin/tabview"
+    install_env_and_symlink tabview tabview tabview
+
+elif [ $task == "--install-rg" ]; then
+    ok "Installs ripgrep (https://github.com/BurntSushi/ripgrep) into a new conda env and symlink to ~/opt/bin/rg"
+    install_env_and_symlink ripgrep ripgrep rg
 
 elif [ $task == "--install-black" ]; then
-    ok "Installs black (https://black.readthedocs.io) into a new conda env, and set the resulting binary as an alias"
-    can_make_conda_env "black"
-    conda create -n black black
-    add_line_to_file "alias black=$CONDA_LOCATION/envs/black/bin/black" ~/.aliases
-    remind_alias
+    ok "Installs black (https://black.readthedocs.io) into a new conda env, and symlink to ~/opt/bin/black"
+    install_env_and_symlink black black black
 
 elif [ $task == "--install-radian" ]; then
-    ok "Installs radian (https://github.com/randy3k/radian) into a new conda env, and set the resulting binary as an alias"
+    ok "Installs radian (https://github.com/randy3k/radian) into a new conda env, and symlink to ~/opt/bin/radian"
     can_make_conda_env "radian"
-    conda create -n radian python=3
+    set +u
+    # Note: radian needs R installed to compile the rchitect dependency. It
+    # is unclear whether radian is dependent on a particular R version.
+    conda create -n radian python r
     source activate radian
     pip install radian
-    add_line_to_file "alias radian=$CONDA_LOCATION/envs/radian/bin/radian" ~/.aliases
+    ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
     source deactivate
-    remind_alias
+    set -u
+    echo -e "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}"
+    check_opt_bin_in_path
 
 elif [ $task == "--install-git-cola" ]; then
-    ok "Installs git-cola (https://git-cola.github.io/). Clone to ~/opt/git-cola, create a new conda env, and set the resulting binary as an alias"
+    ok "Installs git-cola (https://git-cola.github.io/). Clone to ~/opt/git-cola, create a new conda env, and symlink the binary to ~/opt/bin"
     # NOTE: git-cola has vendored-in PyQt. We may not actually need it in the
     # conda env?
     can_make_conda_env "git-cola"
-    conda create -n git-cola python=3 pyqt
     if [ -e ~/opt/git-cola ]; then
         echo -e "${RED}~/opt/git-cola already exists! Exiting.${UNSET}"
+        exit 1
     fi
+    conda create -n git-cola python=3 pyqt
     git clone git://github.com/git-cola/git-cola.git ~/opt/git-cola
-    add_line_to_file "alias git-cola=\"$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola\"" ~/.aliases
-    remind_alias
-
+    echo "#!/bin/bash" > ~/opt/bin/git-cola
+    echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola\"" >> ~/opt/bin/git-cola
+    chmod +x ~/opt/bin/git-cola
+    echo -e "${YELLOW}Installed $HOME/opt/bin/git-cola${UNSET}"
+    check_opt_bin_in_path
 
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
