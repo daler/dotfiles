@@ -10,4 +10,3 @@ alias D="export DISPLAY=:0"
 alias ff="fzf-tmux"
 alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
 alias v='fzf --preview "bat --color \"always\" {}"'
-alias z="fzf-tmux"
