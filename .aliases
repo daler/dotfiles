@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 alias grep='grep --color=auto'
-alias ls='ls --color=auto'
+
+if [[ $OSTYPE == darwin* ]]; then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
+
 alias ll='ls -lrth'
 alias la='ls -lrthA'
 alias l='ls -CF'
