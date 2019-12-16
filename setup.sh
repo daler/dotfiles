@@ -18,45 +18,46 @@ function showHelp() {
     echo "recommended order."
     echo
     echo "Initial setup:"
-    echo -e "  ${GREEN} --apt-get-installs        [local only]  ${UNSET}(installs a bunch of useful Ubuntu packages)"
-    echo -e "  ${GREEN} --download-nvim-appimage  [local only]  ${UNSET}(download nvim AppImage)"
-    echo -e "  ${GREEN} --download-macos-nvim     [local only]  ${UNSET}(download binary nvim for MacOS)"
-    echo -e "  ${GREEN} --powerline               [local only]  ${UNSET}(installs powerline fonts)"
-    echo -e "  ${GREEN} --set-up-nvim-plugins                   ${UNSET}(manually add vim-plug)"
+    printf "  ${GREEN} --apt-get-installs        [local only]  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
+    printf "  ${GREEN} --download-nvim-appimage  [local only]  ${UNSET}(download nvim AppImage)\n"
+    printf "  ${GREEN} --download-macos-nvim     [local only]  ${UNSET}(download binary nvim for MacOS)\n"
+    printf "  ${GREEN} --powerline               [local only]  ${UNSET}(installs powerline fonts)\n"
+    printf "  ${GREEN} --set-up-nvim-plugins                   ${UNSET}(manually add vim-plug)\n"
     echo
     echo "conda:"
-    echo -e "  ${GREEN} --download-miniconda                    ${UNSET}(downloads latest Miniconda to current directory)"
-    echo -e "  ${GREEN} --install-miniconda                     ${UNSET}(install downloaded Miniconda to ~/miniconda3)"
-    echo -e "  ${GREEN} --set-up-bioconda                       ${UNSET}(add channels for bioconda in proper order and make recommended speed-ups)"
-    echo -e "  ${GREEN} --conda-env                             ${UNSET}(install requirements.txt into root conda env)"
+    printf "  ${GREEN} --download-miniconda                    ${UNSET}(downloads latest Miniconda (autodetect Mac/Linux) to current directory)\n"
+    printf "  ${GREEN} --install-miniconda                     ${UNSET}(install downloaded Miniconda to ~/miniconda3)\n"
+    printf "  ${GREEN} --set-up-bioconda                       ${UNSET}(add channels for bioconda in proper order and make recommended speed-ups)\n"
+    printf "  ${GREEN} --conda-env                             ${UNSET}(install requirements.txt into root conda env)\n"
+    printf "  ${GREEN} --conda-env-mac                         ${UNSET}(install requirements-mac.txt into root conda env)\n"
     echo
     echo "CentOS 7:"
-    echo -e "  ${GREEN} --nih-lablinux            [local only]  ${UNSET}(install repo for LabLinux and LabLinux itself)"
-    echo -e "  ${GREEN} --set-up-lablinux         [local only]  ${UNSET}(print out recommended scripts to run from LabLinux)"
-    echo -e "  ${GREEN} --centos7-installs        [local only]  ${UNSET}(compilers; recent tmux)"
+    printf "  ${GREEN} --nih-lablinux            [local only]  ${UNSET}(install repo for LabLinux and LabLinux itself)\n"
+    printf "  ${GREEN} --set-up-lablinux         [local only]  ${UNSET}(print out recommended scripts to run from LabLinux)\n"
+    printf "  ${GREEN} --centos7-installs        [local only]  ${UNSET}(compilers; recent tmux)\n"
     echo
     echo "Installations:"
-    echo -e "  ${GREEN} --install-fzf                           ${UNSET}(installs fzf)"
-    echo -e "  ${GREEN} --install-ag                            ${UNSET}(installs ag)"
-    echo -e "  ${GREEN} --install-ripgrep                       ${UNSET}(installs ripgrep)"
-    echo -e "  ${GREEN} --install-autojump                      ${UNSET}(installs autojump)"
-    echo -e "  ${GREEN} --install-hub                           ${UNSET}(installs hub and makes symlink)"
-    echo -e "  ${GREEN} --install-fd                            ${UNSET}(installs fd and makes symlink)"
-    echo -e "  ${GREEN} --install-vd                            ${UNSET}(installs visidata and makes symlink)"
-    echo -e "  ${GREEN} --install-black                         ${UNSET}(installs black and makes symlink)"
-    echo -e "  ${GREEN} --install-tabview                       ${UNSET}(installs tabview and makes symlink)"
-    echo -e "  ${GREEN} --install-rg                            ${UNSET}(installs ripgrep and makes symlink)"
-    echo -e "  ${GREEN} --install-radian                        ${UNSET}(installs radian and makes symlink)"
-    echo -e "  ${GREEN} --install-git-cola                      ${UNSET}(installs git-cola and makes symlink)"
-    echo -e "  ${GREEN} --install-bat                           ${UNSET}(installs bat and makes symlink)"
-    echo -e "  ${GREEN} --install-docker          [local only]  ${UNSET}(installs docker and adds current user to new docker group)"
-    echo -e "  ${GREEN} --install-alacritty       [local only]  ${UNSET}(installs alacritty, a GPU-accelerated terminal emulator)"
+    printf "  ${GREEN} --install-fzf                           ${UNSET}(installs fzf)\n"
+    printf "  ${GREEN} --install-ag                            ${UNSET}(installs ag)\n"
+    printf "  ${GREEN} --install-ripgrep                       ${UNSET}(installs ripgrep)\n"
+    printf "  ${GREEN} --install-autojump                      ${UNSET}(installs autojump)\n"
+    printf "  ${GREEN} --install-hub                           ${UNSET}(installs hub and makes symlink)\n"
+    printf "  ${GREEN} --install-fd                            ${UNSET}(installs fd and makes symlink)\n"
+    printf "  ${GREEN} --install-vd                            ${UNSET}(installs visidata and makes symlink)\n"
+    printf "  ${GREEN} --install-black                         ${UNSET}(installs black and makes symlink)\n"
+    printf "  ${GREEN} --install-tabview                       ${UNSET}(installs tabview and makes symlink)\n"
+    printf "  ${GREEN} --install-rg                            ${UNSET}(installs ripgrep and makes symlink)\n"
+    printf "  ${GREEN} --install-radian                        ${UNSET}(installs radian and makes symlink)\n"
+    printf "  ${GREEN} --install-git-cola                      ${UNSET}(installs git-cola and makes symlink)\n"
+    printf "  ${GREEN} --install-bat                           ${UNSET}(installs bat and makes symlink)\n"
+    printf "  ${GREEN} --install-docker          [local only]  ${UNSET}(installs docker and adds current user to new docker group)\n"
+    printf "  ${GREEN} --install-alacritty       [local only]  ${UNSET}(installs alacritty, a GPU-accelerated terminal emulator)\n"
     echo
     echo "Dotfiles:"
-    echo -e "  ${GREEN} --diffs                                 ${UNSET}(inspect diffs between repo and home)"
-    echo -e "  ${GREEN} --vim-diffs                             ${UNSET}(inspect diffs between repo and home, using vim -d)"
-    echo -e "  ${GREEN} --graphical-diffs                       ${UNSET}(inspect diffs between repo and home, using meld)"
-    echo -e "  ${GREEN} --dotfiles                              ${UNSET}(update dotfiles)"
+    printf "  ${GREEN} --diffs                                 ${UNSET}(inspect diffs between repo and home)\n"
+    printf "  ${GREEN} --vim-diffs                             ${UNSET}(inspect diffs between repo and home, using vim -d)\n"
+    printf "  ${GREEN} --graphical-diffs                       ${UNSET}(inspect diffs between repo and home, using meld)\n"
+    printf "  ${GREEN} --dotfiles                              ${UNSET}(update dotfiles)\n"
     echo
     echo "paths to miniconda and neovim will be prepended to PATH in the"
     echo "~/.path file; that file will then be sourced"
@@ -111,7 +112,7 @@ add_line_to_file () {
 can_make_conda_env () {
     check_for_conda
     if conda env list | grep -q "/$1\$"; then
-        echo -e "${RED}conda env $1 already exists! Exiting.${UNSET}"
+        printf "${RED}conda env $1 already exists! Exiting.${UNSET}\n"
         return 1
     fi
 }
@@ -123,31 +124,31 @@ check_for_conda () {
     if [ $(which conda) ]; then
         CONDA_LOCATION=$(dirname $(dirname $(which conda)))
     else
-        echo -e ${RED}cannot find conda${UNSET}
+        printf "${RED}cannot find conda${UNSET}\n"
         exit 1
     fi
 }
 
 # Prompt user for info ($1 is text to provide)
 ok () {
-    echo -e ${GREEN}$1${UNSET}
+    printf "${GREEN}$1${UNSET}\n"
     read -p "Continue? (y/[n]) " -n 1 REPLY;
     echo ""
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         return 0
     fi
-    echo -e ${RED}exiting${UNSET}
+    printf "${RED}exiting${UNSET}\n"
     return 1
 }
 
 # Reminder to source the ~/.aliases file.
 remind_alias () {
-    echo -e ${YELLOW}Please run${UNSET} source ~/.aliases ${YELLOW}to make the new alias available${UNSET}
+    printf "${YELLOW}Please run${UNSET} source ~/.aliases ${YELLOW}to make the new alias available${UNSET}\n"
 }
 
 check_opt_bin_in_path () {
     if ! echo $PATH | grep -q "$HOME/opt/bin"; then
-        echo -e "${YELLOW}Please add${UNSET} $HOME/opt/bin ${YELLOW} to your \$PATH${UNSET}"
+        printf "${YELLOW}Please add${UNSET} $HOME/opt/bin ${YELLOW} to your \$PATH${UNSET}\n"
     fi
 }
 
@@ -160,8 +161,9 @@ install_env_and_symlink () {
 
     can_make_conda_env $ENVNAME
     conda create -n $ENVNAME $CONDAPKG
+    mkdir -p ~/opt/bin
     ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
-    echo -e "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}"
+    printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
 }
 
@@ -197,7 +199,12 @@ elif [ $task == "--install-docker" ]; then
 
 elif [ $task == "--download-miniconda" ]; then
     ok "Downloads (but does not install) the latest Miniconda"
-    download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
+
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
+    else
+        download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
+    fi
 
 elif [ $task == "--install-miniconda" ]; then
     ok "Installs Miniconda to $HOME/miniconda3/bin and then add $HOME/miniconda3/bin to the \$PATH by adding it to the end of ~/.path"
@@ -216,6 +223,10 @@ elif [ $task == "--conda-env" ]; then
     ok "Installs dependencies in 'requirements.txt' into the base conda environment"
     conda install --file requirements.txt
 
+elif [ $task == "--conda-env-mac" ]; then
+    ok "Installs dependencies in 'requirements-mac.txt' into the base conda environment"
+    conda install --file requirements-mac.txt
+
 
 elif [ $task == "--powerline" ]; then
     ok "Installs patched powerline fonts from https://github.com/powerline/fonts"
@@ -223,7 +234,7 @@ elif [ $task == "--powerline" ]; then
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
     echo
-    echo -e "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}"
+    printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
     echo
 
 elif [ $task == "--download-nvim-appimage" ]; then
@@ -234,7 +245,7 @@ elif [ $task == "--download-nvim-appimage" ]; then
     chmod u+x $dest
     echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
     source ~/.path
-    echo -e "${YELLOW}Installed neovim to $HOME/opt/neovim/bin and symlinked to $HOME/opt/bin${UNSET}"
+    printf "${YELLOW}Installed neovim to $HOME/opt/neovim/bin and symlinked to $HOME/opt/bin${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--download-macos-nvim" ]; then
@@ -242,10 +253,9 @@ elif [ $task == "--download-macos-nvim" ]; then
     into $HOME/opt/neovim, and add that to the \$PATH via the ~/.path file"
     download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-macos.tar.gz nvim-macos.tar.gz
     tar -xzvf nvim-macos.tar.gz
-    mkdir -p "$HOME/opt"
-    mv nvim-osx64 "$HOME/opt/neovim"
-    echo "export PATH=\"$HOME/opt/neovim/bin:\$PATH\"" >> ~/.path
-    source ~/.path
+    mkdir -p "$HOME/opt/bin"
+    mv nvim-osx64 "$HOME/opt/"
+    ln -s ~/opt/nvim-osx64/bin/nvim ~/opt/bin/nvim
 
 elif [ $task == "--set-up-nvim-plugins" ]; then
     ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim"
@@ -352,7 +362,7 @@ elif [ $task == "--install-hub" ]; then
         cd hub-linux-amd64-${HUB_VERSION}
         prefix=$HOME/opt ./install
     )
-    echo -e "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}"
+    printf "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}\n"
 
 elif [ $task == "--install-fd" ]; then
     ok "Installs fd (https://github.com/sharkdp/fd) into a new conda env, and symlink to ~/opt/bin/fd"
@@ -386,7 +396,7 @@ elif [ $task == "--install-radian" ]; then
     ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
     source deactivate
     set -u
-    echo -e "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}"
+    printf "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-git-cola" ]; then
@@ -395,7 +405,7 @@ elif [ $task == "--install-git-cola" ]; then
     # conda env?
     can_make_conda_env "git-cola"
     if [ -e ~/opt/git-cola ]; then
-        echo -e "${RED}~/opt/git-cola already exists! Exiting.${UNSET}"
+        printf "${RED}~/opt/git-cola already exists! Exiting.${UNSET}\n"
         exit 1
     fi
     conda create -n git-cola python=3 pyqt
@@ -403,13 +413,21 @@ elif [ $task == "--install-git-cola" ]; then
     echo "#!/bin/bash" > ~/opt/bin/git-cola
     echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola\"" >> ~/opt/bin/git-cola
     chmod +x ~/opt/bin/git-cola
-    echo -e "${YELLOW}Installed $HOME/opt/bin/git-cola${UNSET}"
+    printf "${YELLOW}Installed $HOME/opt/bin/git-cola${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
     BAT_VERSION=0.12.1
-    download "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-unknown-linux-musl.tar.gz" "/tmp/bat-${BAT_VERSION}.tar.gz"
+    if [[ $OSTYPE == darwin* ]]; then
+        download \
+            "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-apple-darwin.tar.gz" \
+            "/tmp/bat-${BAT_VERSION}.tar.gz"
+    elsae
+        download \
+            "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-unknown-linux-musl.tar.gz"\
+            "/tmp/bat-${BAT_VERSION}.tar.gz"
+    fi
     mkdir -p /tmp/bat
     tar -xf "/tmp/bat-${BAT_VERSION}.tar.gz" -C /tmp/bat/
     mkdir -p ~/opt/bin
