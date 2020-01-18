@@ -49,6 +49,7 @@ function showHelp() {
     printf "  ${GREEN} --install-radian                        ${UNSET}(installs radian and makes symlink)\n"
     printf "  ${GREEN} --install-git-cola                      ${UNSET}(installs git-cola and makes symlink)\n"
     printf "  ${GREEN} --install-bat                           ${UNSET}(installs bat and makes symlink)\n"
+    printf "  ${GREEN} --install-jq                            ${UNSET}(installs jq, 'like sed for JSON')\n"
     printf "  ${GREEN} --install-docker          [local only]  ${UNSET}(installs docker and adds current user to new docker group)\n"
     printf "  ${GREEN} --install-alacritty       [local only]  ${UNSET}(installs alacritty, a GPU-accelerated terminal emulator)\n"
     echo
@@ -475,6 +476,11 @@ elif [ $task == "--install-alacritty" ]; then
             cargo deb --install
         )
     )
+
+elif [ $task == "--install-jq" ]; then
+    ok "Installs jq to $HOME/opt/bin"
+    download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
+    chmod +x $HOME/opt/bin/jq
 
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"

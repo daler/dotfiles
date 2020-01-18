@@ -46,6 +46,7 @@ a local machine (or one on which you have admin rights).
 | `--install-radian`         |            | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
 | `--install-git-cola`       |            | installs [`git-cola`](https://git-cola.github.io), a graphical interface for adding incremental git commits  **(see note 1)**                      |
 | `--install-bat`            |            | installs [`bat`](https://github.com/sharkdp/bat), which is like `cat` but with syntax highlighting, non-printing chars, and git diffs              |
+| `--install-jq`             |            | installs [`jq`](https://stedolan.github.io/jq/), a command-line tool for operating on JSON                                                         |
 | `--install-docker`         | `X`        | installs docker on Ubuntu and adds current user to new docker group                                                                                |
 | `--install-alacritty`      | `X`        | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
 
