@@ -46,7 +46,6 @@ function showHelp() {
     printf "  ${GREEN} --install-vd                            ${UNSET}(installs visidata and makes symlink)\n"
     printf "  ${GREEN} --install-black                         ${UNSET}(installs black and makes symlink)\n"
     printf "  ${GREEN} --install-tabview                       ${UNSET}(installs tabview and makes symlink)\n"
-    printf "  ${GREEN} --install-rg                            ${UNSET}(installs ripgrep and makes symlink)\n"
     printf "  ${GREEN} --install-radian                        ${UNSET}(installs radian and makes symlink)\n"
     printf "  ${GREEN} --install-git-cola                      ${UNSET}(installs git-cola and makes symlink)\n"
     printf "  ${GREEN} --install-bat                           ${UNSET}(installs bat and makes symlink)\n"
@@ -375,10 +374,6 @@ elif [ $task == "--install-vd" ]; then
 elif [ $task == "--install-tabview" ]; then
     ok "Installs tabview (https://github.com/TabViewer/tabview) into a new conda env, and symlink to ~/opt/bin/tabview"
     install_env_and_symlink tabview tabview tabview
-
-elif [ $task == "--install-rg" ]; then
-    ok "Installs ripgrep (https://github.com/BurntSushi/ripgrep) into a new conda env and symlink to ~/opt/bin/rg"
-    install_env_and_symlink ripgrep ripgrep rg
 
 elif [ $task == "--install-black" ]; then
     ok "Installs black (https://black.readthedocs.io) into a new conda env, and symlink to ~/opt/bin/black"
