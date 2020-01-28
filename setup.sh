@@ -407,7 +407,7 @@ elif [ $task == "--install-git-cola" ]; then
     conda create -n git-cola python=3 pyqt
     git clone git://github.com/git-cola/git-cola.git ~/opt/git-cola
     echo "#!/bin/bash" > ~/opt/bin/git-cola
-    echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola\"" >> ~/opt/bin/git-cola
+    echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola" >> ~/opt/bin/git-cola
     chmod +x ~/opt/bin/git-cola
     printf "${YELLOW}Installed $HOME/opt/bin/git-cola${UNSET}\n"
     check_opt_bin_in_path
