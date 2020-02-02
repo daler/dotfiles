@@ -78,6 +78,7 @@ fi
 set -eou pipefail
 task=$1
 
+mkdir -p $HOME/opt/bin
 
 # Depending on the system, we may have curl or wget but not both -- so try to
 # figure it out.
