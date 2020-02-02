@@ -239,7 +239,7 @@ elif [ $task == "--powerline" ]; then
 
 elif [ $task == "--download-nvim-appimage" ]; then
     ok "Downloads AppImage for neovim, install into $HOME/opt/neovim/bin/nvim, and add that to the \$PATH via the ~/.path file"
-    dest="$HOME/opt/neovim/bin/nvim"
+    dest="$HOME/opt/bin/nvim"
     mkdir -p $(dirname $dest)
     download https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage $dest
     chmod u+x $dest
