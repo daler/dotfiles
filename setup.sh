@@ -7,6 +7,7 @@ YELLOW="\e[33m"
 RED="\e[31m"
 UNSET="\e[0m"
 
+
 export PS1=
 
 function showHelp() {
@@ -68,6 +69,10 @@ function showHelp() {
 
 if [ -z $1 ]; then
     showHelp
+fi
+
+if [ -z $DOTFILES_FORCE ]; then
+    DOTFILES_FORCE=false
 fi
 
 set -eou pipefail
@@ -132,6 +137,9 @@ check_for_conda () {
 
 # Prompt user for info ($1 is text to provide)
 ok () {
+    if [ $DOTFILES_FORCE = "true" ]; then
+        return 0
+    fi
     printf "${GREEN}$1${UNSET}\n"
     read -p "Continue? (y/[n]) " -n 1 REPLY;
     echo ""
@@ -175,7 +183,7 @@ if [ $task == "--apt-get-installs" ]; then
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
 
-if [ $task == "--apt-get-installs-minimal" ]; then
+elif [ $task == "--apt-get-installs-minimal" ]; then
     ok "Installs packages from the file apt-installs-minimal.txt"
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs-minimal.txt | grep -v "^#")
