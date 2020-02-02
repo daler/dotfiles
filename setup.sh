@@ -186,7 +186,7 @@ if [ $task == "--apt-get-installs" ]; then
 elif [ $task == "--apt-get-installs-minimal" ]; then
     ok "Installs packages from the file apt-installs-minimal.txt"
     sudo apt-get update && \
-    sudo apt-get install $(awk '{print $1}' apt-installs-minimal.txt | grep -v "^#")
+    sudo apt-get install -y $(awk '{print $1}' apt-installs-minimal.txt | grep -v "^#")
 
 elif [ $task == "--install-docker" ]; then
     ok "Adds the docker repo, installs docker-ce, adds user to the docker group"
