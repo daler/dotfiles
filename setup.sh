@@ -228,20 +228,16 @@ elif [ $task == "--install-docker" ]; then
     echo
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
-elif [ $task == "--download-miniconda" ]; then
-    ok "Downloads (but does not install) the latest Miniconda"
-
+elif [ $task == "--install-miniconda" ]; then
+    ok "Installs Miniconda to $HOME/miniconda3/bin and then add $HOME/miniconda3/bin to the
+    \$PATH by adding it to the end of ~/.path, and then source ~/.path"
     if [[ $OSTYPE == darwin* ]]; then
         download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
     else
         download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
     fi
-
-elif [ $task == "--install-miniconda" ]; then
-    ok "Installs Miniconda to $HOME/miniconda3/bin and then add $HOME/miniconda3/bin to the \$PATH by adding it to the end of ~/.path"
     bash miniconda.sh -b
-    echo "# Added `date`:"
-    echo "export PATH=\"\$PATH:$HOME/miniconda3/bin\"" >> ~/.path
+    add_line_to_file "export PATH=\"\$PATH:$HOME/miniconda3/bin\"" ~/.path
     source ~/.path
 
 elif [ $task == "--set-up-bioconda" ]; then
