@@ -451,20 +451,22 @@ elif [ $task == "--install-git-cola" ]; then
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
     BAT_VERSION=0.12.1
+    BAT_TARBALL="/tmp/bat-${BAT_VERSION}.tar.gz"
     if [[ $OSTYPE == darwin* ]]; then
         download \
             "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-apple-darwin.tar.gz" \
-            "/tmp/bat-${BAT_VERSION}.tar.gz"
+            $BAT_TARBALL
     else
         download \
             "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-unknown-linux-musl.tar.gz"\
-            "/tmp/bat-${BAT_VERSION}.tar.gz"
+            $BAT_TARBALL
     fi
     mkdir -p /tmp/bat
-    tar -xf "/tmp/bat-${BAT_VERSION}.tar.gz" -C /tmp/bat/
+    tar -xf $BAT_TARBALL -C /tmp/bat/
     mkdir -p ~/opt/bin
     cp /tmp/bat/bat*/bat ~/opt/bin
-    rm -r /tmp/bat "/tmp/bat-${BAT_VERSION}.tar.gz"
+    rm -r "/tmp/bat-${BAT_VERSION}.tar.gz"
+    check_opt_bin_in_path
 
 elif [ $task == "--dotfiles" ]; then
     ok "Copies over all the dotfiles here to your home directory.
