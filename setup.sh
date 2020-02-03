@@ -113,7 +113,9 @@ download() {
 add_line_to_file () {
     line=$1
     file=$2
-    if grep -vq "$line" $file; then
+    if [ ! -e "$file" ]; then
+        echo "$line" >> $file
+    elif grep -vq "$line" $file; then
         echo "$line" >> $file
     fi
 }
