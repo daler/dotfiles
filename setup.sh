@@ -434,7 +434,7 @@ elif [ $task == "--install-bat" ]; then
         download \
             "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-apple-darwin.tar.gz" \
             "/tmp/bat-${BAT_VERSION}.tar.gz"
-    elsae
+    else
         download \
             "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat-v${BAT_VERSION}-x86_64-unknown-linux-musl.tar.gz"\
             "/tmp/bat-${BAT_VERSION}.tar.gz"
