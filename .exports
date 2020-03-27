@@ -16,3 +16,8 @@ export LESS_TERMCAP_se=$'\E[39;49m'
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
+
+# By default, Mac uses /bin/sh as the shell
+if [[ $OSTYPE == darwin* ]]; then
+    export SHELL=/bin/bash
+fi
