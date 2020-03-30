@@ -350,6 +350,52 @@ of options. Here I'm only highlighting the options I use the most, but
 definitely check out each homepage to see all the other weird and wonderful
 ways they can be used.
 
+| Plugin                               | Description                                                              |
+|--------------------------------------|--------------------------------------------------------------------------|
+| `kassio/neoterm`                     | Provides a separate terminal in vim <Leader>t                            |
+| `vim-python/python-syntax`           | Sophisticated python syntax highlighting.                                |
+| `Vimjas/vim-python-pep8-indent`      | Indent python using pep8 recommendations                                 |
+| `ervandew/supertab`                  | Autocomplete most things                                                 |
+| `vim-pandoc/vim-rmarkdown`           | Nice RMarkdown syntax highlighting                                       |
+| `vim-pandoc/vim-pandoc`              | Required for vim-rmarkdown                                               |
+| `vim-pandoc/vim-pandoc-syntax`       | Required for vim-rmarkdown, lots of nice syntax highlighting             |
+| `dhruvasagar/vim-table-mode`         | Easily create markdown or ReST tables                                    |
+| `tmhedberg/SimpylFold`               | Nice folding for Python                                                  |
+| `vim-scripts/vis`                    | Operations in visual block mode respect selection                        |
+| `scrooloose/nerdcommenter`           | Comment large blocks of text                                             |
+| `scrooloose/nerdtree`                | File browser for vim <Leader>n                                           |
+| `vim-airline/vim-airline`            | Nice statusline. Install powerline fonts for full effect.                |
+| `vim-airline/vim-airline-themes`     | Themes for the statusline                                                |
+| `roxma/vim-tmux-clipboard`           | Copy yanked text from vim into tmux's clipboard and vice versa.          |
+| `tmux-plugins/vim-tmux-focus-events` | Makes tmux and vim play nicer together.                                  |
+| `tpope/vim-fugitive`                 | Run git from vim                                                         |
+| `chrisbra/vim-diff-enhanced`         | Provides additional diff algorithms                                      |
+| `flazz/vim-colorschemes`             | Pile 'o colorschemes                                                     |
+| `felixhummel/setcolors.vim`          | `:SetColors all` and then use F8 to change colorscheme                   |
+| `jremmen/vim-ripgrep`                | Search current directory for lines in files containing word under cursor |
+| `tpope/vim-surround`                 | Quickly change surrounding characters                                    |
+| `singularityware/singularity.lang`   | Syntax highlighting for Singularity                                      |
+
+
+#### [`kassio/neoterm`](https://github.com/kassio/neoterm)
+
+Provides a separate terminal in vim.
+
+The following commands are custom mappings set in
+[.config/nvim/init.vim](.config/nvim/init.vim):
+
+| command      | description                                                                         |
+|--------------|-------------------------------------------------------------------------------------|
+| `<leader>t`  | Open a terminal to the right                                                        |
+| `gx`         | Send the current selection to the terminal                                          |
+| `gxx`        | Send the current line to the terminal                                               |
+| `<leader>cd` | Send the current RMarkdown chunk to the terminal (which is assumed to be running R) |
+
+#### [`vim-python/python-syntax`](https://github.com/vim-python/python-syntax)
+
+Sophisticated python syntax highlighting, for example within format strings.
+Happens automatically when editing Python files.
+
 #### [`vis`](vim-scripts/vis)
 
 When selecting things in visual block mode, by default operations
@@ -387,10 +433,6 @@ Nice statusline. Install powerline fonts for full effect (with `./setup.py
 Copy yanked text from vim into tmux's clipboard and vice versa. The
 focus-events plugin is also needed for this to work.
 
-#### [`vim-python/python-syntax`](https://github.com/vim-python/python-syntax)
-
-Sophisticated python syntax highlighting, for example within format strings.
-Happens automatically when editing Python files.
 
 #### [`Vimjas/vim-python-pep8-indent`](https://github.com/Vimjas/vim-python-pep8-indent)
 
@@ -440,19 +482,6 @@ The following algorithms are available:
 | patience  | Use the patience diff algorithm                                            |
 | histogram | Use the histogram diff algorithm (similar to patience but slightly faster) |
 
-#### [`kassio/neoterm`](https://github.com/kassio/neoterm)
-
-Provides a separate terminal in vim.
-
-The following commands are custom mappings set in
-[.config/nvim/init.vim](.config/nvim/init.vim):
-
-| command      | description                                                                         |
-|--------------|-------------------------------------------------------------------------------------|
-| `<leader>t`  | Open a terminal to the right                                                        |
-| `gx`         | Send the current selection to the terminal                                          |
-| `gxx`        | Send the current line to the terminal                                               |
-| `<leader>cd` | Send the current RMarkdown chunk to the terminal (which is assumed to be running R) |
 
 #### [`vim-pandoc/vim-rmarkdown`](https://github.com/vim-pandoc/vim-rmarkdown)
 
