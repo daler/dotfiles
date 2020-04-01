@@ -79,15 +79,6 @@ The particular steps depend on the system, and whether you have root access:
 ./setup.sh --set-up-nvim-plugins
 ```
 
-### CentOS 7 with root
-
-```bash
-./setup.sh --centos7-installs
-./setup.sh --download-neovim-appimage
-./setup.sh --powerline
-./setup.sh --set-up-nvim-plugins
-```
-
 ### MacOS
 
 ```bash
