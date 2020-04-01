@@ -292,20 +292,14 @@ elif [ $task == "--install-fzf" ]; then
       ~/.fzf/install --no-update-rc --completion --key-bindings
       )
 
-elif [ $task == "--install-ag" ]; then
-    ok "Installs ag into $HOME/opt/bin (https://github.com/ggreer/the_silver_searcher)"
-    (
-        agdir=$HOME/tmp/ag
-        rm -rf $agdir
-        git clone https://github.com/ggreer/the_silver_searcher.git $agdir
-        cd $agdir
-        sh ./autogen.sh
-        sh ./configure --prefix=$HOME/opt/
-        make
-        make install
-        rm -rf $agdir
-    )
-    check_opt_bin_in_path
+elif [ $task == "--install-ripgrep" ]; then
+    ok "Installs ripgrep to $HOME/opt/bin"
+    mkdir -p /tmp/rg
+    RG_VERSION=11.0.2
+    download https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz /tmp/rg/ripgrep.tar.gz
+    cd /tmp/rg
+    tar -xf ripgrep.tar.gz
+    cp ripgrep*/rg ~/opt/bin
 
 elif [ $task == "--install-autojump" ]; then
     ok "Installs autojump (https://github.com/wting/autojump)"
