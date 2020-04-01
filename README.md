@@ -250,19 +250,23 @@ Currently, the prompt will change for Biowulf or Helix (NIH HPC), but here you
 can add any hosts or colors. See
 https://misc.flogisoft.com/bash/tip_colors_and_formatting for color options.
 
-# Neovim configuration
+# Neovim
 
 In the [.config/nvim/init.vim](.config/nvim/init.vim) file in this repo:
 
 - `<Leader>` is set to `,`.
 - `<Localleader>` is set to `/`
 
-In the terminal itself, go to Preferences, select the "Custom Font" checkbox,
-and choose a font filtered with "Powerline" so it will be Powerline compatible.
+**Setting up powerline fonts:** After running `./setup.sh --powerline`, which
+will install the fonts, you need to tell the terminal to use those fonts. In
+the terminal itself, go to Preferences, select the "Custom Font" checkbox, and
+choose a font that ends with "Powerline".
 
 ## General setup
 
-Here are the features (and fixes) you get when using this config file:
+Here are the features (and fixes) you get when using this config file. Note
+that the file itself is pretty heavily commented so you can pick-and-choose at
+will.
 
 - lots of nice plugins (see below)
 - Syntax highlighting and proper Python formatting
@@ -305,44 +309,6 @@ Here are the features (and fixes) you get when using this config file:
 | `gx`          | visual           | Send the selection to the neoterm buffer                                                                                                     |
 | `<leader>k`   | normal           | Render the current RMarkdown file to HTML using `knitr::render()`. Assumes you have knitr installed and you're running R in a neoterm buffer |
 
-
-## Working with R in nvim
-
-### Initial setup
-
-When first starting work on a file:
-
-1. Open or create a new RMarkdown file with nvim
-2. Open a neoterm terminal to the right (`,t`)
-3. Move to that terminal (`Alt-w`).
-4. In the terminal, source activate your environment
-5. Start R in the terminal
-6. Go back to the RMarkdown or R script, and use the commands above to send
-   lines over.
-
-### Working with R
-
-Once you have the terminal up and running:
-
-1. Write some R code.
-2. `gxx` to send the current line to R
-3. Highlight some lines (`Shift-V` in vim gets you to visual select mode), `gx`
-   sends them and then jumps to the terminal.
-4. Inside a code chunk, `,cd` sends the entire code chunk and then jumps to the
-   next one. This way you can `,cd` your way through an Rmd
-5. `,k` to render the current Rmd to HTML.
-
-### Troubleshooting
-
-Sometimes text gets garbled when using an interactive node on biowulf. This is
-due to a known bug in Slurm, but Biowulf is not intending on updating any time
-soon. The fix is `Ctrl-L` either in the Rmd buffer or in the terminal buffer.
-And maybe `,R` to refresh the syntax highlighting.
-
-Remember that the terminal is a vim window, so to enter commands you need to be
-in insert mode.
-
-
 ## Plugins
 
 The plugins configured at the top of `.config/nvim/init.vim` have lots and lots
@@ -350,51 +316,82 @@ of options. Here I'm only highlighting the options I use the most, but
 definitely check out each homepage to see all the other weird and wonderful
 ways they can be used.
 
-| Plugin                               | Description                                                              |
-|--------------------------------------|--------------------------------------------------------------------------|
-| `kassio/neoterm`                     | Provides a separate terminal in vim <Leader>t                            |
-| `vim-python/python-syntax`           | Sophisticated python syntax highlighting.                                |
-| `Vimjas/vim-python-pep8-indent`      | Indent python using pep8 recommendations                                 |
-| `ervandew/supertab`                  | Autocomplete most things                                                 |
-| `vim-pandoc/vim-rmarkdown`           | Nice RMarkdown syntax highlighting                                       |
-| `vim-pandoc/vim-pandoc`              | Required for vim-rmarkdown                                               |
-| `vim-pandoc/vim-pandoc-syntax`       | Required for vim-rmarkdown, lots of nice syntax highlighting             |
-| `dhruvasagar/vim-table-mode`         | Easily create markdown or ReST tables                                    |
-| `tmhedberg/SimpylFold`               | Nice folding for Python                                                  |
-| `vim-scripts/vis`                    | Operations in visual block mode respect selection                        |
-| `scrooloose/nerdcommenter`           | Comment large blocks of text                                             |
-| `scrooloose/nerdtree`                | File browser for vim <Leader>n                                           |
-| `vim-airline/vim-airline`            | Nice statusline. Install powerline fonts for full effect.                |
-| `vim-airline/vim-airline-themes`     | Themes for the statusline                                                |
-| `roxma/vim-tmux-clipboard`           | Copy yanked text from vim into tmux's clipboard and vice versa.          |
-| `tmux-plugins/vim-tmux-focus-events` | Makes tmux and vim play nicer together.                                  |
-| `tpope/vim-fugitive`                 | Run git from vim                                                         |
-| `chrisbra/vim-diff-enhanced`         | Provides additional diff algorithms                                      |
-| `flazz/vim-colorschemes`             | Pile 'o colorschemes                                                     |
-| `felixhummel/setcolors.vim`          | `:SetColors all` and then use F8 to change colorscheme                   |
-| `jremmen/vim-ripgrep`                | Search current directory for lines in files containing word under cursor |
-| `tpope/vim-surround`                 | Quickly change surrounding characters                                    |
-| `singularityware/singularity.lang`   | Syntax highlighting for Singularity                                      |
+| Plugin                                                                                            | Description                                                              |
+|---------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| `neoterm` [[section]](#neoterm) [[repo]](https://github.com/kassio/neoterm)                       | Provides a separate terminal in vim                                      |
+| `supertab`[[section]](#supertab) [[repo]](https://github.com/ervandew/supertab)                   | Autocomplete most things by hitting <TAB>                                |
+| `python-syntax` [[section]](#python-syntax) [[repo]](https://github.com/vim-python/python-syntax) | Sophisticated python syntax highlighting.                                |
+| `Vimjas/vim-python-pep8-indent`                                                                   | Indent python using pep8 recommendations                                 |
+| `vim-pandoc/vim-rmarkdown`                                                                        | Nice RMarkdown syntax highlighting                                       |
+| `vim-pandoc/vim-pandoc`                                                                           | Required for vim-rmarkdown                                               |
+| `vim-pandoc/vim-pandoc-syntax`                                                                    | Required for vim-rmarkdown, lots of other nice syntax highlighting, too  |
+| `dhruvasagar/vim-table-mode`                                                                      | Easily create Markdown or ReST tables                                    |
+| `tmhedberg/SimpylFold`                                                                            | Nice folding for Python                                                  |
+| `vim-scripts/vis`                                                                                 | Operations in visual block mode respect selection                        |
+| `scrooloose/nerdcommenter`                                                                        | Comment large blocks of text                                             |
+| `scrooloose/nerdtree`                                                                             | File browser for vim                                                     |
+| `roxma/vim-tmux-clipboard`                                                                        | Copy yanked text from vim into tmux's clipboard and vice versa.          |
+| `tmux-plugins/vim-tmux-focus-events`                                                              | Makes tmux and vim play nicer together.                                  |
+| `tpope/vim-fugitive`                                                                              | Run git from vim                                                         |
+| `tpope/vim-surround`                                                                              | Quickly change surrounding characters                                    |
+| `vim-airline/vim-airline`                                                                         | Nice statusline. Install powerline fonts for full effect.                |
+| `vim-airline/vim-airline-themes`                                                                  | Themes for the statusline                                                |
+| `chrisbra/vim-diff-enhanced`                                                                      | Provides additional diff algorithms                                      |
+| `flazz/vim-colorschemes`                                                                          | Pile 'o colorschemes                                                     |
+| `felixhummel/setcolors.vim`                                                                       | `:SetColors all` and then use F8 to change colorscheme                   |
+| `jremmen/vim-ripgrep`                                                                             | Search current directory for lines in files containing word under cursor |
+| `singularityware/singularity.lang`                                                                | Syntax highlighting for Singularity                                      |
 
 
 #### [`kassio/neoterm`](https://github.com/kassio/neoterm)
 
-Provides a separate terminal in vim.
+Provides a separate terminal in vim. That way you can send text between that
+terminal and a file you have open. As described in the "Using R with nvim"
+section, this lets you reproduce an RStudio-like environment purely from the
+terminal.
 
 The following commands are custom mappings set in
-[.config/nvim/init.vim](.config/nvim/init.vim):
+[.config/nvim/init.vim](.config/nvim/init.vim) that affect the terminal use:
 
 | command      | description                                                                         |
 |--------------|-------------------------------------------------------------------------------------|
-| `<leader>t`  | Open a terminal to the right                                                        |
+| `<leader>t`  | Open a terminal in a new window to the right                                        |
 | `gx`         | Send the current selection to the terminal                                          |
 | `gxx`        | Send the current line to the terminal                                               |
 | `<leader>cd` | Send the current RMarkdown chunk to the terminal (which is assumed to be running R) |
+
+#### [`ervandew/supertab`](https://github.com/ervandew/supertab)
+
+Autocomplete most things with `TAB` in insert mode.
 
 #### [`vim-python/python-syntax`](https://github.com/vim-python/python-syntax)
 
 Sophisticated python syntax highlighting, for example within format strings.
 Happens automatically when editing Python files.
+
+#### [`Vimjas/vim-python-pep8-indent`](https://github.com/Vimjas/vim-python-pep8-indent)
+
+Auto-indent Python using pep8 recommendations. This happens as you're typing,
+or when you use `gq` on a selection.
+
+#### [`vim-pandoc/vim-rmarkdown`](https://github.com/vim-pandoc/vim-rmarkdown)
+
+Syntax highlight R within RMarkdown code chunks. Requires both `vim-pandoc` and
+`vim-pandoc-syntax`, described below.
+
+
+#### [`vim-pandoc/vim-pandoc`](https://github.com/vim-pandoc/vim-pandoc) and [`vim-pandoc/vim-pandoc-syntax`](https://github.com/vim-pandoc/vim-pandoc-syntax)
+
+Integration with pandoc, including folding and formatting. Lots of shortcuts
+defined, see
+[this section of the
+help](https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390) for more.
+
+
+| command | description                                                                              |
+|---------|------------------------------------------------------------------------------------------|
+| `:TOC`  | Open a table contents for the current document that you can use to navigate the document |
+
 
 #### [`vis`](vim-scripts/vis)
 
@@ -434,14 +431,7 @@ Copy yanked text from vim into tmux's clipboard and vice versa. The
 focus-events plugin is also needed for this to work.
 
 
-#### [`Vimjas/vim-python-pep8-indent`](https://github.com/Vimjas/vim-python-pep8-indent)
 
-Auto-indent Python using pep8 recommendations. This happens as you're typing,
-or when you use `gq` on a selection.
-
-#### [`ervandew/supertab`](https://github.com/ervandew/supertab)
-
-Autocomplete most things with `TAB` in insert mode.
 
 #### [`tpope/vim-fugitive`](https://github.com/tpope/vim-fugitive)
 
@@ -483,24 +473,6 @@ The following algorithms are available:
 | histogram | Use the histogram diff algorithm (similar to patience but slightly faster) |
 
 
-#### [`vim-pandoc/vim-rmarkdown`](https://github.com/vim-pandoc/vim-rmarkdown)
-
-Syntax highlight R within RMarkdown code chunks. Requires both `vim-pandoc` and
-`vim-pandoc-syntax`, described below.
-
-
-#### [`vim-pandoc/vim-pandoc`](https://github.com/vim-pandoc/vim-pandoc) and [`vim-pandoc/vim-pandoc-syntax`](https://github.com/vim-pandoc/vim-pandoc-syntax)
-
-Integration with pandoc, including folding and formatting. Lots of shortcuts
-defined, see
-[this section of the
-help](https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390) for more.
-
-
-| command | description                                                                              |
-|---------|------------------------------------------------------------------------------------------|
-| `:TOC`  | Open a table contents for the current document that you can use to navigate the document |
-
 
 #### [`dhruvasagar/vim-table-mode`](https://github.com/vim-pandoc/vim-pandoc-syntax)
 
@@ -516,6 +488,7 @@ auto-padding table cells and adding the header lines as needed.
 
 See the homepage for, e.g., using `||` to auto-create header lines.
 
+
 #### [`tmhedberg/SimpylFold`](https://github.com/tmhedberg/SimpylFold)
 
 Nice folding for Python, using built-in vim commands for folding like `zc`,
@@ -526,6 +499,45 @@ Nice folding for Python, using built-in vim commands for folding like `zc`,
 | `zn`    | unfold everything               |
 | `zM`    | fold everything                 |
 | `zc`    | toggle folding of current block |
+
+
+## Working with R in nvim
+
+### Initial setup
+
+When first starting work on a file:
+
+1. Open or create a new RMarkdown file with nvim
+2. Open a neoterm terminal to the right (`,t`)
+3. Move to that terminal (`Alt-w`).
+4. In the terminal, source activate your environment
+5. Start R in the terminal
+6. Go back to the RMarkdown or R script, and use the commands above to send
+   lines over.
+
+### Working with R
+
+Once you have the terminal up and running:
+
+1. Write some R code.
+2. `gxx` to send the current line to R
+3. Highlight some lines (`Shift-V` in vim gets you to visual select mode), `gx`
+   sends them and then jumps to the terminal.
+4. Inside a code chunk, `,cd` sends the entire code chunk and then jumps to the
+   next one. This way you can `,cd` your way through an Rmd
+5. `,k` to render the current Rmd to HTML.
+
+### Troubleshooting
+
+Sometimes text gets garbled when using an interactive node on biowulf. This is
+due to a known bug in Slurm, but Biowulf is not intending on updating any time
+soon. The fix is `Ctrl-L` either in the Rmd buffer or in the terminal buffer.
+And maybe `,R` to refresh the syntax highlighting.
+
+Remember that the terminal is a vim window, so to enter commands you need to be
+in insert mode.
+
+
 
 # tmux configuration
 
