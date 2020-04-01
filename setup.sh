@@ -38,12 +38,7 @@ function showHelp() {
     printf "  ${GREEN} --install-miniconda        |x|x|x|  ${UNSET}(install downloaded Miniconda to ~/miniconda3)\n"
     printf "  ${GREEN} --set-up-bioconda          |x|x|x|  ${UNSET}(add channels for bioconda in proper order and make recommended speed-ups)\n"
     printf "  ${GREEN} --conda-env                |x|x| |  ${UNSET}(install requirements.txt into root conda env)\n"
-    printf "  ${GREEN} --conda-env-mac            |x| |x|  ${UNSET}(install requirements-mac.txt into root conda env)\n"
-    echo
-    echo "CentOS 7:"
-    printf "  ${GREEN} --nih-lablinux             | |x| |  ${UNSET}(install repo for LabLinux and LabLinux itself)\n"
-    printf "  ${GREEN} --set-up-lablinux          | |x| |  ${UNSET}(print out recommended scripts to run from LabLinux)\n"
-    printf "  ${GREEN} --centos7-installs         | |x| |  ${UNSET}(compilers; recent tmux)\n"
+    printf "  ${GREEN} --conda-env-mac            |x| |x|  ${UNSET}(install additional requirements-mac.txt into root conda env)\n"
     echo
     echo "Installations:"
     printf "  ${GREEN} --install-fzf              |x|x| |  ${UNSET}(installs fzf)\n"
@@ -299,56 +294,6 @@ elif [ $task == "--diffs" ]; then
     cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
-
-elif [ $task == "--nih-lablinux" ]; then
-    ok "Assumes CentOS 7. Install lablinux repo, but don't run any commands"
-    set -ex
-    sudo yum install redhat-lsb-core
-    sudo yum  install \
-        http://mirror.nih.gov/nih/extras/$(lsb_release -is)/$(lsb_release -rs|sed -e 's/\..*//')/$(uname -m)/nih-extras-release.rpm
-    sudo yum install nih-lablinux
-    set +ex
-
-elif [ $task == "--set-up-lablinux" ]; then
-    ok "Just print the commands to run manually after installing lablinux"
-    echo
-    echo "Run the following commands:"
-    echo "---------------------------"
-    echo
-    echo "sudo lablinux install-packages"
-    echo "sudo lablinux configure-piv"
-    echo "sudo lablinux configure-piv-login"
-    echo "sudo lablinux configure-piv-gdm"
-    echo "sudo lablinux configure-sshd"
-    echo
-
-elif [ $task == "--centos7-installs" ]; then
-    ok "Installs packages on CentOS 7 (includes compiling a recent-ish tmux)"
-    set -ex
-    sudo yum install epel-release
-    sudo yum groupinstall "GNOME Desktop"
-    sudo yum groupinstall 'Development Tools'
-    sudo yum install \
-        git \
-        libevent \
-        libevent-devel \
-        ncurses-devel \
-        glibc-static \
-        xclip \
-        htop
-
-    TMUX_VERSION=2.7
-
-    (
-
-        cd /tmp
-        download https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz tmux-${TMUX_VERSION}.tar.gz
-        tar xzf tmux-${TMUX_VERSION}.tar.gz
-        cd tmux-${TMUX_VERSION}
-        ./configure && make -j8
-        sudo make install
-    )
-    set +ex
 
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
