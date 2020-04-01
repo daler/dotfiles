@@ -52,18 +52,7 @@ where you do not have root privileges.
 
 **Note 1:** These tools are either available in conda, or have Python
 dependencies. For each tool, a standalone conda environment is created, the
-tool is installed into that environment, and an alias is added to the
-`.aliases` file to point directly to just the installed binary file. For
-example, `fd` is available in the `fd-find` package in the conda-forge channel,
-but we would like to have it available in all environments.
-
-```bash
-conda create -n fd fd-find
-echo "alias fd=$HOME/miniconda3/envs/bin/fd"
-```
-
-An environment will only be created if one of the same name does not already
-exist.
+tool is installed into that environment, and a symlink is added to `~/opt/bin`.
 
 # Usage
 
