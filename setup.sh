@@ -260,8 +260,7 @@ elif [ $task == "--powerline" ]; then
     echo
 
 elif [ $task == "--download-nvim-appimage" ]; then
-    ok "Download AppImage for neovim, install into $HOME/opt/neovim/bin/nvim, 
-    and add that to the \$PATH via the ~/.path file"
+    ok "Download AppImage for neovim, install into $HOME/opt/bin/nvim"
     dest="$HOME/opt/bin/nvim"
     mkdir -p $(dirname $dest)
     download https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage $dest
@@ -270,8 +269,7 @@ elif [ $task == "--download-nvim-appimage" ]; then
     check_opt_bin_in_path
 
 elif [ $task == "--download-macos-nvim" ]; then
-    ok "Downloads neovim tarball from https://github.com/neovim/neovim, install
-    into $HOME/opt/neovim, and add that to the \$PATH via the ~/.path file"
+    ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-macos.tar.gz nvim-macos.tar.gz
     tar -xzvf nvim-macos.tar.gz
     mkdir -p "$HOME/opt/bin"
@@ -279,7 +277,7 @@ elif [ $task == "--download-macos-nvim" ]; then
     ln -s ~/opt/nvim-osx64/bin/nvim ~/opt/bin/nvim
 
 elif [ $task == "--set-up-nvim-plugins" ]; then
-    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim"
+    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. Read the instructions after this command when done."
     dest=~/.local/share/nvim/site/autoload/plug.vim
     mkdir -p $(dirname $dest)
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
