@@ -19,35 +19,35 @@ The table below summarizes the options.
 Some are for Linux, some are for Mac, and some are OK to do on a remote server
 where you do not have root privileges.
 
-| argument                    | Linux | Mac | Remote OK | note | description                                                                                                                                        |
-|-----------------------------|-------|-----|-----------|------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--apt-get-installs`        | x     |     |           |      | installs packages on Ubuntu (see [`apt-installs.txt`](apt-installs.txt) for which packages)                                                        |
-| `--apt-get-install-minimal` | x     |     |           |      | installs a smaller set of packages on Ubuntu (see [`apt-installs-minimal.txt`](apt-installs-minimal.txt) for the list)                             |
-| `--download-nvim-appimage`  | x     |     |           |      | download appimage instead of compiling                                                                                                             |
-| `--download-macos-nvim`     |       | x   |           |      | download binary nvim for MacOS                                                                                                                     |
-| `--powerline`               | x     | x   | x         |      | installs powerline fonts, used for the vim airline plugin                                                                                          |
-| `--set-up-nvim-plugins`     | x     | x   | x         |      | download vim-plug for easy vim plugin installation                                                                                                 |
-| `--diffs`                   | x     | x   | x         |      | show differences between repo and home directory                                                                                                   |
-| `--graphical-diffs`         | x     |     |           |      | show differences between repo and home directory, using meld                                                                                       |
-| `--vim-diffs`               | x     | x   | x         |      | show differences between repo and home directory, using `vim -d`                                                                                   |
-| `--dotfiles`                | x     | x   | x         |      | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
-| `--download-miniconda`      | x     | x   | x         |      | downloads latest Miniconda to current directory                                                                                                    |
-| `--install-miniconda`       | x     | x   | x         |      | install downloaded Miniconda to ~/miniconda3                                                                                                       |
-| `--set-up-bioconda`         | x     | x   | x         |      | add channels for bioconda in proper order                                                                                                          |
-| `--conda-env`               | x     | x   | x         |      | install requirements.txt into root conda env                                                                                                       |
-| `--install-fzf`             | x     |     | x         |      | installs [`fzf`](https://github.com/junegunn/fzf), command-line fuzzy finder                                                                       |
-| `--install-ripgrep`         | x     | x   | x         |      | installs [`ripgrep`](https://github.com/BurntSushi/ripgrep), a fast code-searching tool with slightly different features from ag                   |
-| `--install-autojump`        | x     |     | x         |      | installs [`autojump`](https://github.com/wting/autojump), for quickly navigating multiple directories                                              |
-| `--install-fd`              | x     | x   | x         | 1    | installs [`fd`](https://github.com/sharkdp/fd), a simple, fast, and user-friendly alternative to "find" **(see note 1)**                           |
-| `--install-vd`              | x     | x   | x         | 1    | installs [`visidata`](https://visidata.org), an interactive multitool for tabular data **(see note 1)**                                            |
-| `--install-black`           | x     | x   | x         | 1    | installs [`black`](https://pypi.org/project/black/), "the uncompromising code formatter" for Python **(see note 1)**                               |
-| `--install-radian`          | x     | x   | x         | 1    | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
-| `--install-git-cola`        | x     | x   | x         | 1    | installs [`git-cola`](https://git-cola.github.io), a graphical interface for adding incremental git commits  **(see note 1)**                      |
-| `--install-bat`             | x     | x   | x         |      | installs [`bat`](https://github.com/sharkdp/bat), which is like `cat` but with syntax highlighting, non-printing chars, and git diffs              |
-| `--install-hub`             | x     | x   | x         |      | installs [`hub`](https://github.com/github/hub), for more easily working with pull requests                                                        |
-| `--install-jq`              | x     | x   | x         |      | installs [`jq`](https://stedolan.github.io/jq/), a command-line tool for operating on JSON                                                         |
-| `--install-docker`          | x     |     |           |      | installs docker on Ubuntu and adds current user to new docker group                                                                                |
-| `--install-alacritty`       | x     | x   |           |      | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
+| argument                    | Linux | Mac | Remote OK | description                                                                                                                                        |
+|-----------------------------|-------|-----|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--apt-get-installs`        | x     |     |           | installs packages on Ubuntu (see [`apt-installs.txt`](apt-installs.txt) for which packages)                                                        |
+| `--apt-get-install-minimal` | x     |     |           | installs a smaller set of packages on Ubuntu (see [`apt-installs-minimal.txt`](apt-installs-minimal.txt) for the list)                             |
+| `--download-nvim-appimage`  | x     |     |           | download appimage instead of compiling                                                                                                             |
+| `--download-macos-nvim`     |       | x   |           | download binary nvim for MacOS                                                                                                                     |
+| `--powerline`               | x     | x   | x         | installs powerline fonts, used for the vim airline plugin                                                                                          |
+| `--set-up-nvim-plugins`     | x     | x   | x         | download vim-plug for easy vim plugin installation                                                                                                 |
+| `--diffs`                   | x     | x   | x         | show differences between repo and home directory                                                                                                   |
+| `--graphical-diffs`         | x     |     |           | show differences between repo and home directory, using meld                                                                                       |
+| `--vim-diffs`               | x     | x   | x         | show differences between repo and home directory, using `vim -d`                                                                                   |
+| `--dotfiles`                | x     | x   | x         | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
+| `--download-miniconda`      | x     | x   | x         | downloads latest Miniconda to current directory                                                                                                    |
+| `--install-miniconda`       | x     | x   | x         | install downloaded Miniconda to ~/miniconda3                                                                                                       |
+| `--set-up-bioconda`         | x     | x   | x         | add channels for bioconda in proper order                                                                                                          |
+| `--conda-env`               | x     | x   | x         | install requirements.txt into root conda env                                                                                                       |
+| `--install-fzf`             | x     |     | x         | installs [`fzf`](https://github.com/junegunn/fzf), command-line fuzzy finder                                                                       |
+| `--install-ripgrep`         | x     | x   | x         | installs [`ripgrep`](https://github.com/BurntSushi/ripgrep), a fast code-searching tool with slightly different features from ag                   |
+| `--install-autojump`        | x     |     | x         | installs [`autojump`](https://github.com/wting/autojump), for quickly navigating multiple directories                                              |
+| `--install-fd`              | x     | x   | x         | installs [`fd`](https://github.com/sharkdp/fd), a simple, fast, and user-friendly alternative to "find" **(see note 1)**                           |
+| `--install-vd`              | x     | x   | x         | installs [`visidata`](https://visidata.org), an interactive multitool for tabular data **(see note 1)**                                            |
+| `--install-black`           | x     | x   | x         | installs [`black`](https://pypi.org/project/black/), "the uncompromising code formatter" for Python **(see note 1)**                               |
+| `--install-radian`          | x     | x   | x         | installs [`radian`](https://github.com/randy3k/radian), "a 21st century R console" **(see note 1)**                                                |
+| `--install-git-cola`        | x     | x   | x         | installs [`git-cola`](https://git-cola.github.io), a graphical interface for adding incremental git commits  **(see note 1)**                      |
+| `--install-bat`             | x     | x   | x         | installs [`bat`](https://github.com/sharkdp/bat), which is like `cat` but with syntax highlighting, non-printing chars, and git diffs              |
+| `--install-hub`             | x     | x   | x         | installs [`hub`](https://github.com/github/hub), for more easily working with pull requests                                                        |
+| `--install-jq`              | x     | x   | x         | installs [`jq`](https://stedolan.github.io/jq/), a command-line tool for operating on JSON                                                         |
+| `--install-docker`          | x     |     |           | installs docker on Ubuntu and adds current user to new docker group                                                                                |
+| `--install-alacritty`       | x     | x   |           | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
 
 
 **Note 1:** These tools are either available in conda, or have Python
