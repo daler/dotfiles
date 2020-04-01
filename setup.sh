@@ -41,16 +41,15 @@ function showHelp() {
     printf "  ${GREEN} --conda-env-mac            |x| |x|  ${UNSET}(install additional requirements-mac.txt into root conda env)\n"
     echo
     echo "Installations:"
-    printf "  ${GREEN} --install-fzf              |x|x| |  ${UNSET}(installs fzf)\n"
-    printf "  ${GREEN} --install-ag               |x|x| |  ${UNSET}(installs ag)\n"
-    printf "  ${GREEN} --install-ripgrep          |x|x| |  ${UNSET}(installs ripgrep)\n"
+    printf "  ${GREEN} --install-fzf              |x|x|x|  ${UNSET}(installs fzf)\n"
+    printf "  ${GREEN} --install-ag               |x|x|x|  ${UNSET}(installs ag)\n"
+    printf "  ${GREEN} --install-ripgrep          |x|x|x|  ${UNSET}(installs ripgrep)\n"
     printf "  ${GREEN} --install-autojump         |x|x| |  ${UNSET}(installs autojump)\n"
     printf "  ${GREEN} --install-hub              |x|x| |  ${UNSET}(installs hub and makes symlink)\n"
-    printf "  ${GREEN} --install-fd               |x|x| |  ${UNSET}(installs fd and makes symlink)\n"
+    printf "  ${GREEN} --install-fd               |x|x|x|  ${UNSET}(installs fd and makes symlink)\n"
     printf "  ${GREEN} --install-jq               |x|x| |  ${UNSET}(installs jq, 'like sed for JSON')\n"
     printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}(installs visidata and makes symlink)\n"
     printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}(installs black and makes symlink)\n"
-    printf "  ${GREEN} --install-tabview          |x|x|x|  ${UNSET}(installs tabview and makes symlink)\n"
     printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}(installs radian and makes symlink)\n"
     printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}(installs git-cola and makes symlink)\n"
     printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}(installs bat and makes symlink)\n"
@@ -251,7 +250,6 @@ elif [ $task == "--conda-env-mac" ]; then
     ok "Installs dependencies in 'requirements-mac.txt' into the base conda environment"
     conda install --file requirements-mac.txt
 
-
 elif [ $task == "--powerline" ]; then
     ok "Installs patched powerline fonts from https://github.com/powerline/fonts"
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
@@ -326,19 +324,6 @@ elif [ $task == "--install-autojump" ]; then
     )
     rm -rf /tmp/autojump-repo
 
-elif [ $task == "--install-hub" ]; then
-    ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
-    HUB_VERSION=2.11.2
-    (
-        download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
-        cd /tmp
-        tar -xf hub.tar.gz
-        cd hub-linux-amd64-${HUB_VERSION}
-        prefix=$HOME/opt ./install
-    )
-    printf "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}\n"
-    check_opt_bin_in_path
-
 elif [ $task == "--install-fd" ]; then
     ok "Install fd (https://github.com/sharkdp/fd) into a new conda env and symlink to ~/opt/bin/fd"
     install_env_and_symlink fd fd-find fd
@@ -349,9 +334,27 @@ elif [ $task == "--install-vd" ]; then
     install_env_and_symlink visidata visidata vd
     check_opt_bin_in_path
 
-elif [ $task == "--install-tabview" ]; then
-    ok "Install tabview (https://github.com/TabViewer/tabview) into a new conda env and symlink to ~/opt/bin/tabview"
-    install_env_and_symlink tabview tabview tabview
+elif [ $task == "--install-hub" ]; then
+    ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
+    HUB_VERSION=2.11.2
+    if [[ $OSTYPE == darwin* ]]; then
+        (
+            download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-darwin-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
+            cd /tmp
+            tar -xf hub.tar.gz
+            cd hub-darwin-amd64-${HUB_VERSION}
+            prefix=$HOME/opt ./install
+        )
+    else
+        (
+            download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
+            cd /tmp
+            tar -xf hub.tar.gz
+            cd hub-linux-amd64-${HUB_VERSION}
+            prefix=$HOME/opt ./install
+        )
+    fi
+    printf "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-black" ]; then
@@ -465,7 +468,11 @@ elif [ $task == "--install-alacritty" ]; then
 
 elif [ $task == "--install-jq" ]; then
     ok "Installs jq to $HOME/opt/bin"
-    download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64 $HOME/opt/bin/jq
+else
+        download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
+fi
     chmod +x $HOME/opt/bin/jq
 
 elif [ $task == "--install-ripgrep" ]; then
