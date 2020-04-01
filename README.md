@@ -11,7 +11,7 @@ select only what will be most useful for you.
 
 # `setup.sh`
 
-`setup.sh` does all the work. Run it with no options to see the help. Search
+`setup.sh` is the entry point. Run it with no options to see the help. Search
 for each option within the script to understand what each part does.
 
 The table below summarizes the options.
@@ -122,6 +122,10 @@ neovim` to your `.bashrc` there.
 The goal here is to pull over the dotfiles from this repo to your home
 directory on the target system.
 
+**The biggest assumption** made by the `setup.sh` script is that you have
+`$HOME/opt/bin` on your path. If you do nothing else, you should add this
+directory to your path.
+
 **If you've inpsected the files here and are OK with replacing your existing
 files**, you can simply use `./setup.sh --dotfiles`.
 
@@ -141,13 +145,6 @@ add things in as needed, using the following command:
 If you don't want to install meld, you can use `./setup.sh --vim-diffs` to open
 files up using vim's diff mode for merging, or `./setup.sh --diffs` to see the
 diffs and copy over relevant parts as needed.
-
-| component                           | why it's required                                                                                                |
-|-------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| `.aliases` exists, and gets sourced | some of the `--install-<tool>` commands below add aliases to this file                                           |
-| `alias vim=nvim`                    | the vim configuration described below expects `neovim`                                                           |
-| `.path` includes `~/opt/bin`        | some of the `--install-<tool>` commands add to this directory, and the appimage for neovim gets put here as well |
-
 
 ## Round 3: set font; install nvim plugins
 
