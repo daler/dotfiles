@@ -153,19 +153,21 @@ order, and build a default environment with useful tools.
 
 ## Round 5: extras
 
-See the table above for what these tools are.
+If you want "the works", you can run these:
 
-```
-./setup.sh --install-fzf
-./setup.sh --install-ag
-./setup.sh --install-autojump
-./setup.sh --install-fd
-./setup.sh --install-vd
-./setup.sh --install-tabview
-./setup.sh --install-black
-./setup.sh --install-radian
-./setup.sh --install-git-cola
-```
+| command                          | why it's nice                                                                                                                                                        |
+|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `./setup.sh --install-fzf`       | fzf makes Ctrl-R (reverse searching in bash) very nice. You can also pipe arbitrary input into it for nice interactive searching                                     |
+| `./setup.sh --install-autojump`  | autojump keeps track of recently or frequently-visited paths and lets you jump quickly to them. Similar to the address bar in modern web browsers                    |
+| `./setup.sh --install-fd`        | a much faster and ergonomic `find`                                                                                                                                   |
+| `./setup.sh --install-vd`        | VisiData. A powerful spreadsheet tool directly in the terminal                                                                                                       |
+| `./setup.sh --install-black`     | An opinionated Python formatter. Reformats Python code to match PEP8 style standards                                                                                 |
+| `./setup.sh --install-radian`    | Instead of calling `R`, call `radian`. Syntax highlighting and tab completion directly in the terminal.                                                              |
+| `./setup.sh --install-git-cola`  | A graphical tool for incrementally making git commits. Very useful at the end of a coding session and you want to make atomic commits from all the changes you made. |
+| `./setup.sh --install-bat`       | A replacement for `cat`, with syntax highlighting, line numbering, and auto-piping to `less`.                                                                        |
+| `./setup.sh --install-alacritty` | A replacment terminal. Faster performance, most noticeable when mistakenly running `cat` on a huge file in tmux                                                      |
+| `./setup.sh --install-jq`        | Used for manipulating JSON data on the command line. Uses its own minilanguage for this, but it's quite powerful.                                                    |
+| `./setup.sh --install-docker`    | Installs Docker. Only on Linux, and only if you have root                                                                                                            |
 
 # Bash-related configuration
 
