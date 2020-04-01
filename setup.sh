@@ -285,12 +285,6 @@ elif [ $task == "--set-up-nvim-plugins" ]; then
     echo "Open nvim and run :PlugInstall"
     echo
 
-elif [ $task == "--diffs" ]; then
-    ok "Shows the diffs between this repo and what's in your home directory"
-    cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
-    $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
-
-
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
     (
@@ -416,32 +410,6 @@ elif [ $task == "--install-bat" ]; then
     rm -r "/tmp/bat-${BAT_VERSION}.tar.gz"
     check_opt_bin_in_path
 
-elif [ $task == "--dotfiles" ]; then
-    ok "Copies over all the dotfiles here to your home directory.
-    Prompts again before actually running to make sure!"
-    cd "$(dirname "${BASH_SOURCE}")";
-
-    function doIt() {
-        rsync --exclude ".git/" \
-            --exclude "setup.sh" \
-            --exclude "README.md" \
-            --exclude "Miniconda3-latest-Linux-x86_64.sh" \
-            --exclude "LICENSE-MIT.txt" \
-            -avh --no-perms . ~
-        source ~/.bash_profile
-    }
-
-    if [ $DOTFILES_FORCE == "true" ]; then
-        doIt
-    else
-        read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
-        echo ""
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            doIt
-        fi
-    fi
-    unset doIt
-
 elif [ $task == "--install-alacritty" ]; then
     ok "Installs alacritty terminal. Also needs to install rust"
     (
@@ -473,14 +441,36 @@ else
 fi
     chmod +x $HOME/opt/bin/jq
 
-elif [ $task == "--install-ripgrep" ]; then
-    ok "Installs ripgrep to $HOME/opt/bin"
-    mkdir -p /tmp/rg
-    RG_VERSION=11.0.2
-    download https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz /tmp/rg/ripgrep.tar.gz
-    cd /tmp/rg
-    tar -xf ripgrep.tar.gz
-    cp ripgrep*/rg ~/opt/bin
+elif [ $task == "--dotfiles" ]; then
+    ok "Copies over all the dotfiles here to your home directory.
+    Prompts again before actually running to make sure!"
+    cd "$(dirname "${BASH_SOURCE}")";
+
+    function doIt() {
+        rsync --exclude ".git/" \
+            --exclude "setup.sh" \
+            --exclude "README.md" \
+            --exclude "Miniconda3-latest-Linux-x86_64.sh" \
+            --exclude "LICENSE-MIT.txt" \
+            -avh --no-perms . ~
+        source ~/.bash_profile
+    }
+
+    if [ $DOTFILES_FORCE == "true" ]; then
+        doIt
+    else
+        read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            doIt
+        fi
+    fi
+    unset doIt
+
+elif [ $task == "--diffs" ]; then
+    ok "Shows the diffs between this repo and what's in your home directory"
+    cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
+    $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--graphical-diffs" ]; then
     ok "Opens up meld to display differences between files in this repo and your home directory"
