@@ -23,8 +23,6 @@ alias vim="nvim"
 # Sometimes when you try to open an X window, especially running tmux, you can
 # get an error about the display variable not being set. This alias fixes that.
 alias D="export DISPLAY=:0"
-alias ff="fzf-tmux"
-alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
 
 # View syntax-highlighted files in the current directory, live-filtered by fzf.
 alias v='fzf --preview "bat --color \"always\" {}"'

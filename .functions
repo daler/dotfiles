@@ -26,18 +26,6 @@ function tre() {
 # Set up autojump, if it's installed
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh 
 
-# fuzzy grep open via ag with line number
-vg() {
-  local file
-  local line
-
-  read -r file line <<<"$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
-
-  if [[ -n $file ]]
-  then
-     nvim $file +$line
-  fi
-}
 
 # Select a conda env to activate
 sa() {
