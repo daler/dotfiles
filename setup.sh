@@ -31,7 +31,7 @@ function showHelp() {
     printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
     printf "  ${GREEN} --install-nvim             |x|x|x|  ${UNSET}(installs neovim)\n"
     printf "  ${GREEN} --powerline                | |x|x|  ${UNSET}(installs powerline fonts)\n"
-    printf "  ${GREEN} --set-up-nvim-plugins      |x|x|x|  ${UNSET}(manually add vim-plug)\n"
+    printf "  ${GREEN} --set-up-vim-plugins       |x|x|x|  ${UNSET}(set up vim-plug for vim and neovim)\n"
     echo
     echo "conda:"
     printf "  ${GREEN} --install-miniconda        |x|x|x|  ${UNSET}(install downloaded Miniconda to ~/miniconda3)\n"
@@ -96,6 +96,7 @@ try_wget() {
 # Generic download function
 download() {
     echo "Downloading $1 to $2"
+    [[ -e $(dirname $2) ]] || mkdir -p $(dirname $2)
     if ! (try_curl $1 $2 || try_wget $1 $2); then
         echo "Could not download $1"
     fi
