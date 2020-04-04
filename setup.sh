@@ -251,7 +251,7 @@ elif [ $task == "--conda-env-mac" ]; then
     conda install --file requirements-mac.txt
 
 elif [ $task == "--powerline" ]; then
-    ok "Installs patched powerline fonts from https://github.com/powerline/fonts"
+    ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
@@ -284,6 +284,9 @@ elif [ $task == "--set-up-nvim-plugins" ]; then
     echo
     echo "Open nvim and run :PlugInstall"
     echo
+
+# ----------------------------------------------------------------------------
+# Individual --install commands
 
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
@@ -460,6 +463,9 @@ elif [ $task == "--dotfiles" ]; then
         fi
     fi
     unset doIt
+
+# ----------------------------------------------------------------------------
+# Diffs section
 
 elif [ $task == "--diffs" ]; then
     ok "Shows the diffs between this repo and what's in your home directory"

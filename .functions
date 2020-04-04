@@ -20,11 +20,10 @@ function tre() {
 }
 
 
-# Set up fzf
+# Set up fzf, if it's installed
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-
-# Set up autojump
+# Set up autojump, if it's installed
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh 
 
 # fuzzy grep open via ag with line number
