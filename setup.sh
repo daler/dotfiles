@@ -36,7 +36,6 @@ function showHelp() {
     printf "  ${GREEN} --install-miniconda        |x|x|x|  ${UNSET}(install downloaded Miniconda to ~/miniconda3)\n"
     printf "  ${GREEN} --set-up-bioconda          |x|x|x|  ${UNSET}(add channels for bioconda in proper order and make recommended speed-ups)\n"
     printf "  ${GREEN} --conda-env                |x|x| |  ${UNSET}(install requirements.txt into root conda env)\n"
-    printf "  ${GREEN} --conda-env-mac            |x| |x|  ${UNSET}(install additional requirements-mac.txt into root conda env)\n"
     echo
     echo "Installations:"
     printf "  ${GREEN} --install-fzf              |x|x|x|  ${UNSET}(installs fzf)\n"
@@ -242,12 +241,13 @@ elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels conda-forge
 
 elif [ $task == "--conda-env" ]; then
-    ok "Installs dependencies in 'requirements.txt' into the base conda environment"
-    conda install --file requirements.txt
-
-elif [ $task == "--conda-env-mac" ]; then
-    ok "Installs dependencies in 'requirements-mac.txt' into the base conda environment"
-    conda install --file requirements-mac.txt
+    if [[ $OSTYPE == darwin* ]]; then
+        ok "Installs dependencies in 'requirements.txt' and 'requirements-mac.txt' into the base conda environment"
+        conda install --file requirements.txt --file requirements-mac.txt
+    else
+        ok "Installs dependencies in 'requirements.txt' into the base conda environment"
+        conda install --file requirements.txt
+    fi
 
 elif [ $task == "--powerline" ]; then
     ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
