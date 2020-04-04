@@ -38,6 +38,7 @@ function showHelp() {
     printf "  ${GREEN} --conda-env                |x|x| |  ${UNSET}(install requirements.txt into root conda env)\n"
     echo
     echo "Installations:"
+    printf "  ${GREEN} --install-meld             | | |x|  ${UNSET}(installs meld (currently Mac only)\n"
     printf "  ${GREEN} --install-fzf              |x|x|x|  ${UNSET}(installs fzf)\n"
     printf "  ${GREEN} --install-ripgrep          |x|x|x|  ${UNSET}(installs ripgrep)\n"
     printf "  ${GREEN} --install-autojump         |x|x| |  ${UNSET}(installs autojump)\n"
@@ -287,6 +288,22 @@ elif [ $task == "--set-up-vim-plugins" ]; then
 
 # ----------------------------------------------------------------------------
 # Individual --install commands
+
+elif [ $task == "--install-meld" ]; then
+    ok "Downloads .dmg for meld, install into ~/opt/meld and then writes ~/opt/bin/meld wrapper"
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/yousseb/meld/releases/download/osx-14/meldmerge.dmg /tmp/meldmerge.dmg
+        set -x
+        mounted=$(hdiutil attach /tmp/meldmerge.dmg | tail -1 | cut -f3)
+        cp -r "$mounted" ~/opt/meld
+        echo "~/opt/meld/Meld.app/Contents/MacOS/Meld \"\$@\"" > ~/opt/bin/meld
+        hdiutil detach "$mounted"
+        set +x
+    else
+        echo
+        printf "${RED}--install-meld currently only supported on Mac.\n"
+        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf\n${UNSET}"
+    fi
 
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
