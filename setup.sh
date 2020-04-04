@@ -29,8 +29,7 @@ function showHelp() {
     echo "Initial setup:"
     printf "  ${GREEN} --apt-get-installs         | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
     printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
-    printf "  ${GREEN} --download-nvim-appimage   | |x| |  ${UNSET}(download nvim AppImage)\n"
-    printf "  ${GREEN} --download-macos-nvim      | | |x|  ${UNSET}(download binary nvim for MacOS)\n"
+    printf "  ${GREEN} --install-nvim             |x|x|x|  ${UNSET}(installs neovim)\n"
     printf "  ${GREEN} --powerline                | |x|x|  ${UNSET}(installs powerline fonts)\n"
     printf "  ${GREEN} --set-up-nvim-plugins      |x|x|x|  ${UNSET}(manually add vim-plug)\n"
     echo
@@ -259,22 +258,23 @@ elif [ $task == "--powerline" ]; then
     printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
     echo
 
-elif [ $task == "--download-nvim-appimage" ]; then
-    ok "Download AppImage for neovim, install into $HOME/opt/bin/nvim"
-    dest="$HOME/opt/bin/nvim"
-    mkdir -p $(dirname $dest)
-    download https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage $dest
-    chmod u+x $dest
-    printf "${YELLOW}Installed neovim to $HOME/opt/bin/nvim${UNSET}\n"
-    check_opt_bin_in_path
-
-elif [ $task == "--download-macos-nvim" ]; then
+elif [ $task == "--install-nvim" ]; then
+    NVIM_VERSION=0.4.3
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
-    download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-macos.tar.gz nvim-macos.tar.gz
-    tar -xzvf nvim-macos.tar.gz
-    mkdir -p "$HOME/opt/bin"
-    mv nvim-osx64 "$HOME/opt/"
-    ln -s ~/opt/nvim-osx64/bin/nvim ~/opt/bin/nvim
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
+        tar -xzvf nvim-macos.tar.gz
+        mkdir -p "$HOME/opt/bin"
+        mv nvim-osx64 "$HOME/opt/"
+        ln -s ~/opt/nvim-osx64/bin/nvim ~/opt/bin/nvim
+    else
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
+        tar -xzvf nvim-linux64.tar.gz
+        mv nvim-linux64 "$HOME/opt/"
+        ln -s ~/opt/nvim-linux64/bin/nvim ~/opt/bin/nvim
+    fi
+        printf "${YELLOW}Installed neovim to $HOME/opt/bin/nvim${UNSET}\n"
+        check_opt_bin_in_path
 
 elif [ $task == "--set-up-nvim-plugins" ]; then
     ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. Read the instructions after this command when done."
