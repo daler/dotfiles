@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
-alias grep='grep --color=auto'
 
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+
+# Vanilla MacOS has a different `ls` for which we use -G instead of --color.
+# However if you've conda-installed coreutils, that `ls` will be used.
+#
+# So the following sets the color differently if we're on Mac and not using
+# coreutils from conda.
 if [[ $OSTYPE == darwin* ]]; then
-    alias ls='ls -G'
-else
-    alias ls='ls --color=auto'
+    if [[ ! which ls | grep -q "miniconda3" ]]; then
+        alias ls='ls -G'
+    fi
 fi
 
 alias ll='ls -lrth'
