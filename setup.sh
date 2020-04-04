@@ -276,13 +276,14 @@ elif [ $task == "--install-nvim" ]; then
         printf "${YELLOW}Installed neovim to $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
 
-elif [ $task == "--set-up-nvim-plugins" ]; then
-    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. Read the instructions after this command when done."
-    dest=~/.local/share/nvim/site/autoload/plug.vim
-    mkdir -p $(dirname $dest)
-    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
+elif [ $task == "--set-up-vim-plugins" ]; then
+    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. (for nvim) and ~/.vim/autoload/plug.vim (for vim). Read the instructions after this command when done."
+    nvim_dest=~/.local/share/nvim/site/autoload/plug.vim
+    vim_dest=~/.vim/autoload/plug.vim
+    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
+    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
     echo
-    echo "Open nvim and run :PlugInstall"
+    printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall{$UNSET}\n"
     echo
 
 # ----------------------------------------------------------------------------
