@@ -7,7 +7,6 @@ YELLOW="\e[33m"
 RED="\e[31m"
 UNSET="\e[0m"
 
-
 export PS1=
 
 function showHelp() {
@@ -28,7 +27,7 @@ function showHelp() {
     printf "${GREEN}                              |x|x|x|    ${UNSET} \n"
     echo "Initial setup:"
     printf "  ${GREEN} --apt-get-installs         | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
-    printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
+    printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}(installs a smaller set of useful Ubuntu packages)\n"
     printf "  ${GREEN} --install-nvim             |x|x|x|  ${UNSET}(installs neovim)\n"
     printf "  ${GREEN} --powerline                | |x|x|  ${UNSET}(installs powerline fonts)\n"
     printf "  ${GREEN} --set-up-vim-plugins       |x|x|x|  ${UNSET}(set up vim-plug for vim and neovim)\n"
