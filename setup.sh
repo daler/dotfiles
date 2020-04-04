@@ -39,7 +39,6 @@ function showHelp() {
     echo
     echo "Installations:"
     printf "  ${GREEN} --install-fzf              |x|x|x|  ${UNSET}(installs fzf)\n"
-    printf "  ${GREEN} --install-ag               |x|x|x|  ${UNSET}(installs ag)\n"
     printf "  ${GREEN} --install-ripgrep          |x|x|x|  ${UNSET}(installs ripgrep)\n"
     printf "  ${GREEN} --install-autojump         |x|x| |  ${UNSET}(installs autojump)\n"
     printf "  ${GREEN} --install-hub              |x|x| |  ${UNSET}(installs hub and makes symlink)\n"
