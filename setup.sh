@@ -456,24 +456,26 @@ fi
     chmod +x $HOME/opt/bin/jq
 
 elif [ $task == "--dotfiles" ]; then
-    ok "Copies over all the dotfiles here to your home directory.
-    Prompts again before actually running to make sure!"
+
+    # Unique backup directory based on the hash of the current time, all
+    # lowercase
+    BACKUP_DIR="$HOME/dotfiles-backup-$(date +%s | sha256sum | base64 | head -c 8 | tr [:upper:] [:lower:])"
+
+    ok "Copies over all the dotfiles here to your home directory. A backup will
+    be made in $BACKUP_DIR. Prompts again before actually running to make
+    sure!"
+
     cd "$(dirname "${BASH_SOURCE}")";
 
     function doIt() {
-        rsync --exclude ".git/" \
-            --exclude "setup.sh" \
-            --exclude "README.md" \
-            --exclude "Miniconda3-latest-Linux-x86_64.sh" \
-            --exclude "LICENSE-MIT.txt" \
-            -avh --no-perms . ~
+        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -avh --files-from=include.file . $HOME
         source ~/.bash_profile
     }
 
     if [ $DOTFILES_FORCE == "true" ]; then
         doIt
     else
-        read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+        read -p "This may overwrite existing files in your home directory. Backups will be put in $BACKUP_DIR. Are you sure? (y/n) " -n 1;
         echo ""
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             doIt
