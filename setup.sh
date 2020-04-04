@@ -483,12 +483,21 @@ elif [ $task == "--dotfiles" ]; then
     fi
     unset doIt
 
+elif [ $task == "--install-icdiff" ]; then
+    ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
+    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
+    chmod +x ~/opt/bin/icdiff
+
 # ----------------------------------------------------------------------------
 # Diffs section
 
 elif [ $task == "--diffs" ]; then
+    command -v icdiff >/dev/null 2>&1 || {
+        printf "${RED}Can't find icdiff. Did you run ./setup.sh --install-icdiff?, and is ~/opt/bin on your \$PATH?${UNSET}\n"
+            exit 1;
+        }
     ok "Shows the diffs between this repo and what's in your home directory"
-    cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
+    cmd="icdiff --recursive --line-numbers"
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--graphical-diffs" ]; then
