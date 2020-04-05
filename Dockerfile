@@ -13,7 +13,7 @@ RUN locale-gen en_US.UTF-8
 # From now on, use login shell so that bashrc gets sourced
 ENV SHELL /bin/bash
 
-RUN git clone https://github.com/daler/dotfiles
+ADD . dotfiles
 WORKDIR dotfiles
 RUN git checkout $BRANCH
 
