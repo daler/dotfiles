@@ -13,38 +13,37 @@ RUN locale-gen en_US.UTF-8
 # From now on, use login shell so that bashrc gets sourced
 ENV SHELL /bin/bash
 
-ENV DOTFILES_FORCE=true
 RUN git clone https://github.com/daler/dotfiles
 WORKDIR dotfiles
 
 # Run setup in order
+ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-get-installs-minimal
 RUN ./setup.sh --install-miniconda
 RUN ./setup.sh --dotfiles
 RUN ./setup.sh --set-up-bioconda
-RUN ./setup.sh --download-nvim-appimage
-
-# Docker images can't use FUSE (without lots of extra work to use the host
-# kernel), so we extract and reset the alias
-RUN (cd ~ && nvim --appimage-extract)
-RUN ln -sf ~/squashfs-root/usr/bin/nvim ~/opt/bin/nvim
-
-RUN ./setup.sh --set-up-nvim-plugins
+RUN ./setup.sh --install-neovim
+RUN ./setup.sh --set-up-vim-plugins
 
 # Don't know why yet, but the alias isn't sticking. But this installs plugins
 # without interaction
 RUN nvim +PlugInstall +qall
 
 # Various installations using ./setup.sh
+RUN ./setup.sh --install-bat
+RUN ./setup.sh --install-black
 RUN ./setup.sh --install-fzf
+RUN ./setup.sh --install-git-cola
+RUN ./setup.sh --install-hub
+RUN ./setup.sh --install-icdiff
+RUN ./setup.sh --install-jq
+RUN ./setup.sh --install-radian
 RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-vd
-RUN ./setup.sh --install-bat
 
 # Additional for this container: asciinema for screen casts
 RUN pip install asciinema
 RUN conda install r-base
 RUN conda install ipython
-RUN ./setup.sh --install-radian
 
 ENTRYPOINT ["/bin/bash"]
