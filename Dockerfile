@@ -13,7 +13,7 @@ RUN locale-gen en_US.UTF-8
 # From now on, use login shell so that bashrc gets sourced
 ENV SHELL /bin/bash
 
-RUN git clone https://github.com/daler/dotfiles
+ADD . dotfiles
 WORKDIR dotfiles
 RUN git checkout $BRANCH
 
@@ -27,7 +27,8 @@ RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
 
-RUN source "~/.aliases"
+RUN echo $HOME
+RUN source $HOME/.aliases
 
 # Don't know why yet, but the alias isn't sticking. But this installs plugins
 # without interaction
