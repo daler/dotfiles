@@ -9,7 +9,7 @@ alias ls='ls --color=auto'
 # So the following sets the color differently if we're on Mac and not using
 # coreutils from conda.
 if [[ $OSTYPE == darwin* ]]; then
-    if [[ ! which ls | grep -q "miniconda3" ]]; then
+    if which ls | grep -q "/usr/bin"; then
         alias ls='ls -G'
     fi
 fi
