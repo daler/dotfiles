@@ -1,38 +1,29 @@
-if !has('nvim')
-    set nocompatible
-    execute pathogen#infect()
-endif
+call plug#begin()
 
-if has('nvim')
-    call plug#begin('~/.local/share/nvim/site/autoload')
-
-    " Note: where shortcuts are indicated, they're probably set below in the
-    " PLUGIN SETTINGS section.
-    "
-    Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
-    Plug 'scrooloose/nerdcommenter'           " Comment large blocks of text
-    Plug 'scrooloose/nerdtree'                " File browser for vim <Leader>n
-    Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
-    Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
-    Plug 'roxma/vim-tmux-clipboard'           " Copy yanked text from vim into tmux's clipboard and vice versa.
-    Plug 'tmux-plugins/vim-tmux-focus-events' " Makes tmux and vim play nicer together.
-    Plug 'vim-python/python-syntax'           " Sophisticated python syntax highlighting.
-    Plug 'Vimjas/vim-python-pep8-indent'      " Indent python using pep8 recommendations
-    Plug 'ervandew/supertab'                  " Autocomplete most things
-    Plug 'tpope/vim-fugitive'                 " Run git from vim
-    Plug 'chrisbra/vim-diff-enhanced'         " Provides additional diff algorithms
-    Plug 'kassio/neoterm'                     " Provides a separate terminal in vim <Leader>t
-    Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
-    Plug 'felixhummel/setcolors.vim'
-    Plug 'vim-pandoc/vim-rmarkdown'
-    Plug 'vim-pandoc/vim-pandoc'
-    Plug 'vim-pandoc/vim-pandoc-syntax'
-    Plug 'dhruvasagar/vim-table-mode'
-    Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
-    call plug#end()
-endif
-
-
+" Note: where shortcuts are indicated, they're probably set below in the
+" PLUGIN SETTINGS section.
+"
+Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
+Plug 'scrooloose/nerdcommenter'           " Comment large blocks of text
+Plug 'scrooloose/nerdtree'                " File browser for vim <Leader>n
+Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
+Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
+Plug 'roxma/vim-tmux-clipboard'           " Copy yanked text from vim into tmux's clipboard and vice versa.
+Plug 'tmux-plugins/vim-tmux-focus-events' " Makes tmux and vim play nicer together.
+Plug 'vim-python/python-syntax'           " Sophisticated python syntax highlighting.
+Plug 'Vimjas/vim-python-pep8-indent'      " Indent python using pep8 recommendations
+Plug 'ervandew/supertab'                  " Autocomplete most things
+Plug 'tpope/vim-fugitive'                 " Run git from vim
+Plug 'chrisbra/vim-diff-enhanced'         " Provides additional diff algorithms
+Plug 'kassio/neoterm'                     " Provides a separate terminal in vim <Leader>t
+Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
+Plug 'felixhummel/setcolors.vim'
+Plug 'vim-pandoc/vim-rmarkdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
+call plug#end()
 
 " ============================================================================
 " SETTINGS
