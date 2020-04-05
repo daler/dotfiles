@@ -265,17 +265,15 @@ elif [ $task == "--install-neovim" ]; then
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
-        tar -xzvf nvim-macos.tar.gz
+        tar -xzf nvim-macos.tar.gz
         mkdir -p "$HOME/opt/bin"
-        mv nvim-osx64 "$HOME/opt/"
-        ln -s ~/opt/nvim-osx64/bin/nvim ~/opt/bin/nvim
+        mv nvim-osx64 "$HOME/opt/neovim"
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
-        tar -xzvf nvim-linux64.tar.gz
-        mv nvim-linux64 "$HOME/opt/"
-        ln -s ~/opt/nvim-linux64/bin/nvim ~/opt/bin/nvim
+        tar -xzf nvim-linux64.tar.gz
+        mv nvim-linux64 "$HOME/opt/neovim"
     fi
-        printf "${YELLOW}Installed neovim to $HOME/opt/bin/nvim${UNSET}\n"
+        ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         add_line_to_file 'alias "vim=nvim"' ~/.aliases
         check_opt_bin_in_path
 
