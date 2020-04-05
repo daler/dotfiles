@@ -1,19 +1,20 @@
 # Overview and rationale
 
 This repo captures hard-won settings and tool installations that I have
-accumulated over time. Using the modular setup script, starting from a fresh
-installation of Ubuntu Linux or MacOS I can have everything I'm used to --
-programs and all -- in a few minutes.
+accumulated over time. Using the included modular setup script, starting from
+a fresh installation of Ubuntu Linux or MacOS I can have everything I'm used to
+-- programs and all -- in a few minutes.
 
 It doubles as a "batteries included" set of configuration files that can be used
 by others just starting out. It includes:
 
 - bash config
-- neovim config
+- tmux config
+- vim/neovim config
 - various tool installation commands
 
-If you don't want "the works", you can select only what is most useful to you
-because:
+If you don't want "batteries included", you can select only what is most useful
+to you because:
 
 - the `setup.sh` script is modular
 - this README documents everything
@@ -33,20 +34,19 @@ info on this.
 
 | argument                    | description                                                                                                                                        |
 |-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--apt-get-installs`        | installs packages on Ubuntu (see [`apt-installs.txt`](apt-installs.txt) for which packages)                                                        |
-| `--apt-get-install-minimal` | installs a smaller set of packages on Ubuntu (see [`apt-installs-minimal.txt`](apt-installs-minimal.txt) for the list)                             |
-| `--download-nvim-appimage`  | download appimage instead of compiling                                                                                                             |
-| `--download-macos-nvim`     | download binary nvim for MacOS                                                                                                                     |
-| `--powerline`               | installs powerline fonts, used for the vim airline plugin                                                                                          |
-| `--set-up-vim-plugins`      | download vim-plug for easy vim plugin installation                                                                                                 |
 | `--diffs`                   | show differences between repo and home directory                                                                                                   |
 | `--graphical-diffs`         | show differences between repo and home directory, using meld                                                                                       |
 | `--vim-diffs`               | show differences between repo and home directory, using `vim -d`                                                                                   |
 | `--dotfiles`                | update dotfiles in home directory with files in this repo (you'll be prompted). Includes `.path`, `.alias`, `.bashrc`, `.config/nvim`, and others. |
+| `--apt-get-installs`        | installs packages on Ubuntu (see [`apt-installs.txt`](apt-installs.txt) for which packages)                                                        |
+| `--apt-get-install-minimal` | installs a smaller set of packages on Ubuntu (see [`apt-installs-minimal.txt`](apt-installs-minimal.txt) for the list)                             |
+| `--install-neovim`          | download appimage instead of compiling                                                                                                             |
+| `--powerline`               | installs powerline fonts, used for the vim airline plugin                                                                                          |
+| `--set-up-vim-plugins`      | download vim-plug for easy vim plugin installation                                                                                                 |
 | `--install-miniconda`       | install downloaded Miniconda to ~/miniconda3                                                                                                       |
 | `--set-up-bioconda`         | add channels for bioconda in proper order                                                                                                          |
 | `--conda-env`               | install requirements.txt into root conda env                                                                                                       |
-| `--install-meld             | installs [`meld`](https://meldmerge.org/), a graphical merge tool                                                                                  |
+| `--install-meld`            | installs [`meld`](https://meldmerge.org/), a graphical merge tool                                                                                  |
 | `--install-fzf`             | installs [`fzf`](https://github.com/junegunn/fzf), command-line fuzzy finder                                                                       |
 | `--install-ripgrep`         | installs [`ripgrep`](https://github.com/BurntSushi/ripgrep), a fast code-searching tool with slightly different features from ag                   |
 | `--install-autojump`        | installs [`autojump`](https://github.com/wting/autojump), for quickly navigating multiple directories                                              |
