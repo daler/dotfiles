@@ -5,8 +5,8 @@
 GREEN="\e[32m"
 YELLOW="\e[33m"
 RED="\e[31m"
+BLUE="\e[34m"
 UNSET="\e[0m"
-
 
 export PS1=
 
@@ -15,8 +15,8 @@ function showHelp() {
     echo "Usage:"
     echo "   $0 [OPTION]"
     echo
-    echo "Options are intended to be run one-at-a-time; they are listed here in "
-    echo "recommended order. Each command will prompt if you want to continue."
+    echo "Options are intended to be run one-at-a-time. They are listed here in "
+    echo "Each command will prompt if you want to continue."
     echo "Set the env var DOTFILES_FORCE=true if you want always say yes."
     echo
     echo "Many commands are OK to run on remote machines on which you do not "
@@ -25,48 +25,41 @@ function showHelp() {
     printf "${GREEN}                       remote  Linux  Mac${UNSET} \n"
     printf "${GREEN}                        OK_____ | ___|   ${UNSET} \n"
     printf "${GREEN}                              | | |      ${UNSET} \n"
-    printf "${GREEN}                              |x|x|x|    ${UNSET} \n"
-    echo "Initial setup:"
-    printf "  ${GREEN} --apt-get-installs         | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
-    printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}(installs a bunch of useful Ubuntu packages)\n"
-    printf "  ${GREEN} --download-nvim-appimage   | |x| |  ${UNSET}(download nvim AppImage)\n"
-    printf "  ${GREEN} --download-macos-nvim      | | |x|  ${UNSET}(download binary nvim for MacOS)\n"
-    printf "  ${GREEN} --powerline                | |x|x|  ${UNSET}(installs powerline fonts)\n"
-    printf "  ${GREEN} --set-up-nvim-plugins      |x|x|x|  ${UNSET}(manually add vim-plug)\n"
+    printf "${GREEN}                              |x|x|x|  (an 'x' indicates OK for that system) ${UNSET} \n"
+    echo "Dotfiles:"
+    printf "  ${GREEN} --diffs                             ${UNSET}inspect diffs between repo and home\n"
+    printf "  ${GREEN} --vim-diffs                         ${UNSET}inspect diffs between repo and home, using vim -d\n"
+    printf "  ${GREEN} --graphical-diffs                   ${UNSET}inspect diffs between repo and home, using meld\n"
+    printf "  ${GREEN} --dotfiles                          ${UNSET}update dotfiles\n"
+    echo "General setup:"
+    printf "  ${GREEN} --apt-get-installs         | |x| |  ${UNSET}installs a bunch of useful Ubuntu packages)\n"
+    printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}installs a smaller set of useful Ubuntu packages)\n"
+    printf "  ${GREEN} --install-neovim           |x|x|x|  ${UNSET}installs neovim ${BLUE}https://neovim.io/${UNSET}\n"
+    printf "  ${GREEN} --powerline                | |x|x|  ${UNSET}powerline fonts for ${BLUE}https://github.com/vim-airline/vim-airline${UNSET}\n"
+    printf "  ${GREEN} --set-up-vim-plugins       |x|x|x|  ${UNSET}set up vim-plug ${BLUE}https://github.com/junegunn/vim-plug${UNSET}\n"
     echo
     echo "conda:"
-    printf "  ${GREEN} --install-miniconda        |x|x|x|  ${UNSET}(install downloaded Miniconda to ~/miniconda3)\n"
-    printf "  ${GREEN} --set-up-bioconda          |x|x|x|  ${UNSET}(add channels for bioconda in proper order and make recommended speed-ups)\n"
-    printf "  ${GREEN} --conda-env                |x|x| |  ${UNSET}(install requirements.txt into root conda env)\n"
-    printf "  ${GREEN} --conda-env-mac            |x| |x|  ${UNSET}(install requirements-mac.txt into root conda env)\n"
-    echo
-    echo "CentOS 7:"
-    printf "  ${GREEN} --nih-lablinux             | |x| |  ${UNSET}(install repo for LabLinux and LabLinux itself)\n"
-    printf "  ${GREEN} --set-up-lablinux          | |x| |  ${UNSET}(print out recommended scripts to run from LabLinux)\n"
-    printf "  ${GREEN} --centos7-installs         | |x| |  ${UNSET}(compilers; recent tmux)\n"
+    printf "  ${GREEN} --install-miniconda        |x|x|x|  ${UNSET}${BLUE}https://docs.conda.io/en/latest/miniconda.html${UNSET}\n"
+    printf "  ${GREEN} --set-up-bioconda          |x|x|x|  ${UNSET}${BLUE}https://bioconda.github.io/${UNSET}\n"
+    printf "  ${GREEN} --conda-env                |x|x|x|  ${UNSET}install requirements.txt into root conda env\n"
     echo
     echo "Installations:"
-    printf "  ${GREEN} --install-fzf              |x|x| |  ${UNSET}(installs fzf)\n"
-    printf "  ${GREEN} --install-ag               |x|x| |  ${UNSET}(installs ag)\n"
-    printf "  ${GREEN} --install-ripgrep          |x|x| |  ${UNSET}(installs ripgrep)\n"
-    printf "  ${GREEN} --install-autojump         |x|x| |  ${UNSET}(installs autojump)\n"
-    printf "  ${GREEN} --install-hub              |x|x| |  ${UNSET}(installs hub and makes symlink)\n"
-    printf "  ${GREEN} --install-fd               |x|x| |  ${UNSET}(installs fd and makes symlink)\n"
-    printf "  ${GREEN} --install-jq               |x|x| |  ${UNSET}(installs jq, 'like sed for JSON')\n"
-    printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}(installs visidata and makes symlink)\n"
-    printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}(installs black and makes symlink)\n"
-    printf "  ${GREEN} --install-tabview          |x|x|x|  ${UNSET}(installs tabview and makes symlink)\n"
-    printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}(installs radian and makes symlink)\n"
-    printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}(installs git-cola and makes symlink)\n"
-    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}(installs bat and makes symlink)\n"
-    printf "  ${GREEN} --install-alacritty        | |x|x|  ${UNSET}(installs alacritty, a GPU-accelerated terminal emulator)\n"
-    printf "  ${GREEN} --install-docker           | |x| |  ${UNSET}(installs docker and adds current user to new docker group)\n"
+    printf "  ${GREEN} --install-icdiff           |x|x|x|  ${UNSET}${BLUE}https://www.jefftk.com/icdiff${UNSET}\n"
+    printf "  ${GREEN} --install-meld             | | |x|  ${UNSET}(currently Mac only)\n"
+    printf "  ${GREEN} --install-fzf              |x|x|x|  ${UNSET}${BLUE}https://github.com/junegunn/fzf${UNSET}\n"
+    printf "  ${GREEN} --install-ripgrep          |x|x|x|  ${UNSET}${BLUE}https://github.com/BurntSushi/ripgrep/${UNSET}\n"
+    printf "  ${GREEN} --install-autojump         |x|x|x|  ${UNSET}${BLUE}https://github.com/wting/autojump${UNSET}\n"
+    printf "  ${GREEN} --install-hub              |x|x|x|  ${UNSET}${BLUE}https://github.com/github/hub${UNSET}\n"
+    printf "  ${GREEN} --install-fd               |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/fd${UNSET}\n"
+    printf "  ${GREEN} --install-jq               |x|x|x|  ${UNSET}${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
+    printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}${BLUE}https://visidata.org/${UNSET}\n"
+    printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}${BLUE}https://black.readthedocs.io${UNSET}\n"
+    printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}${BLUE}https://github.com/randy3k/radian${UNSET}\n"
+    printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
+    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
+    printf "  ${GREEN} --install-alacritty        | |x|x|  ${UNSET}${BLUE}https://github.com/alacritty/alacritty${UNSET}\n"
+    printf "  ${GREEN} --install-docker           | |x| |  ${UNSET}install docker and add current user to new docker group\n"
     echo
-    echo "Dotfiles:"
-    printf "  ${GREEN} --diffs                             ${UNSET}(inspect diffs between repo and home)\n"
-    printf "  ${GREEN} --vim-diffs                         ${UNSET}(inspect diffs between repo and home, using vim -d)\n"
-    printf "  ${GREEN} --graphical-diffs                   ${UNSET}(inspect diffs between repo and home, using meld)\n"
-    printf "  ${GREEN} --dotfiles                          ${UNSET}(update dotfiles)\n"
     echo
     echo "paths to miniconda and neovim will be prepended to PATH in the"
     echo "~/.path file; that file will then be sourced"
@@ -103,6 +96,7 @@ try_wget() {
 # Generic download function
 download() {
     echo "Downloading $1 to $2"
+    [[ -e $(dirname $2) ]] || mkdir -p $(dirname $2)
     if ! (try_curl $1 $2 || try_wget $1 $2); then
         echo "Could not download $1"
     fi
@@ -247,18 +241,19 @@ elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels defaults
     conda config --add channels bioconda
     conda config --add channels conda-forge
+    printf "${YELLOW}Channels configured, see ~/.condarc${UNSET}\n"
 
 elif [ $task == "--conda-env" ]; then
-    ok "Installs dependencies in 'requirements.txt' into the base conda environment"
-    conda install --file requirements.txt
-
-elif [ $task == "--conda-env-mac" ]; then
-    ok "Installs dependencies in 'requirements-mac.txt' into the base conda environment"
-    conda install --file requirements-mac.txt
-
+    if [[ $OSTYPE == darwin* ]]; then
+        ok "Installs dependencies in 'requirements.txt' and 'requirements-mac.txt' into the base conda environment"
+        conda install --file requirements.txt --file requirements-mac.txt
+    else
+        ok "Installs dependencies in 'requirements.txt' into the base conda environment"
+        conda install --file requirements.txt
+    fi
 
 elif [ $task == "--powerline" ]; then
-    ok "Installs patched powerline fonts from https://github.com/powerline/fonts"
+    ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
     (cd /tmp/fonts && ./install.sh)
     rm -rf /tmp/fonts
@@ -266,110 +261,72 @@ elif [ $task == "--powerline" ]; then
     printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
     echo
 
-elif [ $task == "--download-nvim-appimage" ]; then
-    ok "Download AppImage for neovim, install into $HOME/opt/neovim/bin/nvim, 
-    and add that to the \$PATH via the ~/.path file"
-    dest="$HOME/opt/bin/nvim"
-    mkdir -p $(dirname $dest)
-    download https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage $dest
-    chmod u+x $dest
-    printf "${YELLOW}Installed neovim to $HOME/opt/bin/nvim${UNSET}\n"
-    check_opt_bin_in_path
+elif [ $task == "--install-neovim" ]; then
+    NVIM_VERSION=0.4.3
+    ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
+        tar -xzf nvim-macos.tar.gz
+        mkdir -p "$HOME/opt/bin"
+        mv nvim-osx64 "$HOME/opt/neovim"
+    else
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
+        tar -xzf nvim-linux64.tar.gz
+        mv nvim-linux64 "$HOME/opt/neovim"
+    fi
+        ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
+        add_line_to_file 'alias "vim=nvim"' ~/.aliases
+        printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
+        printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
+        printf "${YELLOW}- added 'alias vim=nvim' to ~/.aliases${UNSET}\n"
+        check_opt_bin_in_path
 
-elif [ $task == "--download-macos-nvim" ]; then
-    ok "Downloads neovim tarball from https://github.com/neovim/neovim, install
-    into $HOME/opt/neovim, and add that to the \$PATH via the ~/.path file"
-    download https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-macos.tar.gz nvim-macos.tar.gz
-    tar -xzvf nvim-macos.tar.gz
-    mkdir -p "$HOME/opt/bin"
-    mv nvim-osx64 "$HOME/opt/"
-    ln -s ~/opt/nvim-osx64/bin/nvim ~/opt/bin/nvim
-
-elif [ $task == "--set-up-nvim-plugins" ]; then
-    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim"
-    dest=~/.local/share/nvim/site/autoload/plug.vim
-    mkdir -p $(dirname $dest)
-    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $dest
+elif [ $task == "--set-up-vim-plugins" ]; then
+    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. (for nvim) and ~/.vim/autoload/plug.vim (for vim). Read the instructions after this command when done."
+    nvim_dest=~/.local/share/nvim/site/autoload/plug.vim
+    vim_dest=~/.vim/autoload/plug.vim
+    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
+    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
     echo
-    echo "Open nvim and run :PlugInstall"
-    echo
-
-elif [ $task == "--diffs" ]; then
-    ok "Shows the diffs between this repo and what's in your home directory"
-    cmd="diff --recursive --exclude .git --exclude setup.sh --exclude README.md --exclude Miniconda3-latest-Linux-x86_64.sh --exclude LICENSE-MIT.txt"
-    $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
-
-
-elif [ $task == "--nih-lablinux" ]; then
-    ok "Assumes CentOS 7. Install lablinux repo, but don't run any commands"
-    set -ex
-    sudo yum install redhat-lsb-core
-    sudo yum  install \
-        http://mirror.nih.gov/nih/extras/$(lsb_release -is)/$(lsb_release -rs|sed -e 's/\..*//')/$(uname -m)/nih-extras-release.rpm
-    sudo yum install nih-lablinux
-    set +ex
-
-elif [ $task == "--set-up-lablinux" ]; then
-    ok "Just print the commands to run manually after installing lablinux"
-    echo
-    echo "Run the following commands:"
-    echo "---------------------------"
-    echo
-    echo "sudo lablinux install-packages"
-    echo "sudo lablinux configure-piv"
-    echo "sudo lablinux configure-piv-login"
-    echo "sudo lablinux configure-piv-gdm"
-    echo "sudo lablinux configure-sshd"
+    printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall{$UNSET}\n"
     echo
 
-elif [ $task == "--centos7-installs" ]; then
-    ok "Installs packages on CentOS 7 (includes compiling a recent-ish tmux)"
-    set -ex
-    sudo yum install epel-release
-    sudo yum groupinstall "GNOME Desktop"
-    sudo yum groupinstall 'Development Tools'
-    sudo yum install \
-        git \
-        libevent \
-        libevent-devel \
-        ncurses-devel \
-        glibc-static \
-        xclip \
-        htop
+# ----------------------------------------------------------------------------
+# Individual --install commands
 
-    TMUX_VERSION=2.7
-
-    (
-
-        cd /tmp
-        download https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz tmux-${TMUX_VERSION}.tar.gz
-        tar xzf tmux-${TMUX_VERSION}.tar.gz
-        cd tmux-${TMUX_VERSION}
-        ./configure && make -j8
-        sudo make install
-    )
-    set +ex
+elif [ $task == "--install-meld" ]; then
+    ok "Downloads .dmg for meld, install into ~/opt/meld and then writes ~/opt/bin/meld wrapper"
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/yousseb/meld/releases/download/osx-14/meldmerge.dmg /tmp/meldmerge.dmg
+        set -x
+        mounted=$(hdiutil attach /tmp/meldmerge.dmg | tail -1 | cut -f3)
+        cp -r "$mounted" ~/opt/meld
+        echo "~/opt/meld/Meld.app/Contents/MacOS/Meld \"\$@\"" > ~/opt/bin/meld
+        hdiutil detach "$mounted"
+        set +x
+    else
+        echo
+        printf "${RED}--install-meld currently only supported on Mac.\n"
+        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf\n${UNSET}"
+    fi
 
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
     (
       git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
       ~/.fzf/install --no-update-rc --completion --key-bindings
-      )
-
-elif [ $task == "--install-ag" ]; then
-    ok "Installs ag into $HOME/opt/bin (https://github.com/ggreer/the_silver_searcher)"
-    (
-        agdir=$HOME/tmp/ag
-        rm -rf $agdir
-        git clone https://github.com/ggreer/the_silver_searcher.git $agdir
-        cd $agdir
-        sh ./autogen.sh
-        sh ./configure --prefix=$HOME/opt/
-        make
-        make install
-        rm -rf $agdir
     )
+    printf "${YELLOW}fzf installed; see ~/.fzf${UNSET}\n"
+
+elif [ $task == "--install-ripgrep" ]; then
+    ok "Installs ripgrep to $HOME/opt/bin"
+    mkdir -p /tmp/rg
+    RG_VERSION=11.0.2
+    download https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz /tmp/rg/ripgrep.tar.gz
+    cd /tmp/rg
+    tar -xf ripgrep.tar.gz
+    cp ripgrep*/rg ~/opt/bin
+    printf "${YELLOW}Installed to ~/opt/bin/rg${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-autojump" ]; then
@@ -380,39 +337,52 @@ elif [ $task == "--install-autojump" ]; then
         python install.py
     )
     rm -rf /tmp/autojump-repo
+    printf "${YELLOW}autojump installed to default location of ~/.autojump${UNSET}\n"
+    printf "${YELLOW}If you're not using the .functions file from these dotfiles, follow the instructions above output by autojump.${UNSET}\n"
 
-elif [ $task == "--install-hub" ]; then
-    ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
-    HUB_VERSION=2.11.2
-    (
-        download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
-        cd /tmp
-        tar -xf hub.tar.gz
-        cd hub-linux-amd64-${HUB_VERSION}
-        prefix=$HOME/opt ./install
-    )
-    printf "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}\n"
-    check_opt_bin_in_path
 
 elif [ $task == "--install-fd" ]; then
     ok "Install fd (https://github.com/sharkdp/fd) into a new conda env and symlink to ~/opt/bin/fd"
     install_env_and_symlink fd fd-find fd
+    printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
     install_env_and_symlink visidata visidata vd
+    printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
 
-elif [ $task == "--install-tabview" ]; then
-    ok "Install tabview (https://github.com/TabViewer/tabview) into a new conda env and symlink to ~/opt/bin/tabview"
-    install_env_and_symlink tabview tabview tabview
+elif [ $task == "--install-hub" ]; then
+    ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
+    HUB_VERSION=2.11.2
+    if [[ $OSTYPE == darwin* ]]; then
+        (
+            download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-darwin-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
+            cd /tmp
+            tar -xf hub.tar.gz
+            cd hub-darwin-amd64-${HUB_VERSION}
+            prefix=$HOME/opt ./install
+        )
+    else
+        (
+            download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
+            cd /tmp
+            tar -xf hub.tar.gz
+            cd hub-linux-amd64-${HUB_VERSION}
+            prefix=$HOME/opt ./install
+        )
+    fi
+    printf "${YELLOW}Installed to ~/opt/bin/hub${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-black" ]; then
     ok "Install black (https://black.readthedocs.io) into a new conda env and symlink to ~/opt/bin/black"
     install_env_and_symlink black black black
+    printf "${YELLOW}Installed to ~/opt/bin/black${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-radian" ]; then
     ok "Install radian (https://github.com/randy3k/radian) into a new conda env and symlink to ~/opt/bin/radian"
@@ -447,7 +417,7 @@ elif [ $task == "--install-git-cola" ]; then
     echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola" >> ~/opt/bin/git-cola
     chmod +x ~/opt/bin/git-cola
 
-    printf "${YELLOW}Installed $HOME/opt/bin/git-cola${UNSET}\n"
+    printf "${YELLOW}Installed to ~/opt/bin/git-cola${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-bat" ]; then
@@ -468,33 +438,8 @@ elif [ $task == "--install-bat" ]; then
     mkdir -p ~/opt/bin
     cp /tmp/bat/bat*/bat ~/opt/bin
     rm -r "/tmp/bat-${BAT_VERSION}.tar.gz"
+    printf "${YELLOW}Installed to ~/opt/bin/bat${UNSET}\n"
     check_opt_bin_in_path
-
-elif [ $task == "--dotfiles" ]; then
-    ok "Copies over all the dotfiles here to your home directory.
-    Prompts again before actually running to make sure!"
-    cd "$(dirname "${BASH_SOURCE}")";
-
-    function doIt() {
-        rsync --exclude ".git/" \
-            --exclude "setup.sh" \
-            --exclude "README.md" \
-            --exclude "Miniconda3-latest-Linux-x86_64.sh" \
-            --exclude "LICENSE-MIT.txt" \
-            -avh --no-perms . ~
-        source ~/.bash_profile
-    }
-
-    if [ $DOTFILES_FORCE == "true" ]; then
-        doIt
-    else
-        read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
-        echo ""
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            doIt
-        fi
-    fi
-    unset doIt
 
 elif [ $task == "--install-alacritty" ]; then
     ok "Installs alacritty terminal. Also needs to install rust"
@@ -520,17 +465,62 @@ elif [ $task == "--install-alacritty" ]; then
 
 elif [ $task == "--install-jq" ]; then
     ok "Installs jq to $HOME/opt/bin"
-    download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64 $HOME/opt/bin/jq
+else
+        download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
+fi
     chmod +x $HOME/opt/bin/jq
+    printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
+    check_opt_bin_in_path
 
-elif [ $task == "--install-ripgrep" ]; then
-    ok "Installs ripgrep to $HOME/opt/bin"
-    mkdir -p /tmp/rg
-    RG_VERSION=11.0.2
-    download https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz /tmp/rg/ripgrep.tar.gz
-    cd /tmp/rg
-    tar -xf ripgrep.tar.gz
-    cp ripgrep*/rg ~/opt/bin
+elif [ $task == "--dotfiles" ]; then
+
+    # Unique backup directory based on the hash of the current time, all
+    # lowercase
+    BACKUP_DIR="$HOME/dotfiles-backup-$(date +%s | sha256sum | base64 | head -c 8 | tr [:upper:] [:lower:])"
+
+    ok "Copies over all the dotfiles here to your home directory.
+    - A backup will be made in $BACKUP_DIR
+    - List of files that will be copied is in 'include.files'
+    - Prompts again before actually running to make sure!"
+
+    cd "$(dirname "${BASH_SOURCE}")";
+
+    function doIt() {
+        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -avh --files-from=include.file . $HOME
+        source ~/.bash_profile
+    }
+
+    if [ $DOTFILES_FORCE == "true" ]; then
+        doIt
+    else
+        read -p "This may overwrite existing files in your home directory. Backups will be put in $BACKUP_DIR. Are you sure? (y/n) " -n 1;
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            doIt
+        fi
+    fi
+    unset doIt
+
+elif [ $task == "--install-icdiff" ]; then
+    ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
+    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
+    chmod +x ~/opt/bin/icdiff
+    printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
+    check_opt_bin_in_path
+
+# ----------------------------------------------------------------------------
+# Diffs section
+
+elif [ $task == "--diffs" ]; then
+    command -v icdiff >/dev/null 2>&1 || {
+        printf "${RED}Can't find icdiff. Did you run ./setup.sh --install-icdiff?, and is ~/opt/bin on your \$PATH?${UNSET}\n"
+            exit 1;
+        }
+    ok "Shows the diffs between this repo and what's in your home directory"
+    cmd="icdiff --recursive --line-numbers"
+    $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--graphical-diffs" ]; then
     ok "Opens up meld to display differences between files in this repo and your home directory"

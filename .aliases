@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
-alias grep='grep --color=auto'
 
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+
+# Vanilla MacOS has a different `ls` for which we use -G instead of --color.
+# However if you've conda-installed coreutils, that `ls` will be used.
+#
+# So the following sets the color differently if we're on Mac and not using
+# coreutils from conda.
 if [[ $OSTYPE == darwin* ]]; then
-    alias ls='ls -G'
-else
-    alias ls='ls --color=auto'
+    if [[ ! which ls | grep -q "miniconda3" ]]; then
+        alias ls='ls -G'
+    fi
 fi
 
 alias ll='ls -lrth'
 alias la='ls -lrthA'
 alias l='ls -CF'
 alias tmux="tmux -u"
-alias vim="nvim"
+
+# Sometimes when you try to open an X window, especially running tmux, you can
+# get an error about the display variable not being set. This alias fixes that.
 alias D="export DISPLAY=:0"
-alias ff="fzf-tmux"
-alias fv='vim $(fzf --preview "bat --color \"always\" {}")'
+
+# View syntax-highlighted files in the current directory, live-filtered by fzf.
 alias v='fzf --preview "bat --color \"always\" {}"'
