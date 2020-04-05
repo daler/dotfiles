@@ -27,7 +27,8 @@ RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
 
-RUN source "~/.aliases"
+RUN echo $HOME
+RUN source $HOME/.aliases
 
 # Don't know why yet, but the alias isn't sticking. But this installs plugins
 # without interaction
