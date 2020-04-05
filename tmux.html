@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>tmux configuration &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Why?" href="why.html" />
+    <link rel="prev" title="Vim / Neovim" href="vim.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tmux-configuration">
+<span id="tmux"></span><h1>tmux configuration<a class="headerlink" href="#tmux-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Here are the general features of the <code class="docutils literal notranslate"><span class="pre">.tmux.conf</span></code> file:</p>
+<ul class="simple">
+<li><p>Set the prefix to be <code class="docutils literal notranslate"><span class="pre">Ctrl-j</span></code> (instead of the default <code class="docutils literal notranslate"><span class="pre">Ctrl-b</span></code>)</p></li>
+<li><p>Use mouse</p></li>
+<li><p>Reset escape key time to avoid conflicting with vim</p></li>
+<li><p>Set a large history size</p></li>
+<li><p>Use vim mode for navigating in copy mode</p></li>
+<li><p>When creating a new window or pane, automatically change to the
+directory of the current window or pane.</p></li>
+</ul>
+<p>Here are some shortcuts for window and pane navigation:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>command</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-left</span></code></p></td>
+<td><p>move to pane on the left</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-right</span></code></p></td>
+<td><p>move to pane on the right</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-up</span></code></p></td>
+<td><p>move to pane above</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-down</span></code></p></td>
+<td><p>move to pane below</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Shift-left</span></code></p></td>
+<td><p>move to next window</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Shift-right</span></code></p></td>
+<td><p>move to previous window</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="copy-paste-in-vim-and-tmux">
+<h2>Copy/paste in vim and tmux<a class="headerlink" href="#copy-paste-in-vim-and-tmux" title="Permalink to this headline">¶</a></h2>
+<p>In general, if things seem strange, try adding Shift to copy/paste
+commands.</p>
+<p>This is by far the most annoying part about using tmux and vim together.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 16%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>copy method</p></th>
+<th class="head"><p>where
+does it
+go</p></th>
+<th class="head"><p>how to
+paste</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Shift-select text</p></td>
+<td><p>mid
+dle-click
+buffer</p></td>
+<td><p>sh
+ift-midd
+le-click</p></td>
+</tr>
+<tr class="row-odd"><td><p>Shift-select text, then Ctrl-shift-C</p></td>
+<td><p>clipboard</p></td>
+<td><p>Ctrl
+-shift-V</p></td>
+</tr>
+<tr class="row-even"><td><p>tmux copy mode (<code class="docutils literal notranslate"><span class="pre">Ctrl-j</span></code>, <code class="docutils literal notranslate"><span class="pre">[</span></code>). You
+probably want to avoid using this inside vim</p></td>
+<td><p>tmux
+clipboard</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C</span>
+<span class="pre">trl-j</span></code>,
+<code class="docutils literal notranslate"><span class="pre">]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Another annoying situation is when copying text from the terminal into
+an email. In this case, we cannot use tmux copy mode, because X windows
+doesn’t know about it. Instead:</p>
+<ul class="simple">
+<li><p>if you’re in a pane, make it full screen (<code class="docutils literal notranslate"><span class="pre">Ctrl-j</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>)</p></li>
+<li><p>if you’re in vim, turn off line numbers (<code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">nonu</span></code>), or maybe
+quit out of vim and just cat the file</p></li>
+<li><p>shift-select text in terminal</p></li>
+<li><p>middle-click to paste into email</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tmux configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#copy-paste-in-vim-and-tmux">Copy/paste in vim and tmux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="vim.html" title="previous chapter">Vim / Neovim</a></li>
+      <li>Next: <a href="why.html" title="next chapter">Why?</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tmux.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Additional tool installations &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bash dotfiles" href="bash.html" />
+    <link rel="prev" title="Start here" href="starthere.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="additional-tool-installations">
+<span id="tools"></span><h1>Additional tool installations<a class="headerlink" href="#additional-tool-installations" title="Permalink to this headline">¶</a></h1>
+<p>Run the <code class="docutils literal notranslate"><span class="pre">--install-&lt;toolname&gt;</span></code> for each of the tools below. Each is
+installed (or symlinked) into <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, so you’ll want to make sure
+that’s on your path.</p>
+<div class="section" id="icdiff">
+<h2><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-icdiff
+</pre></div>
+</div>
+<p><a class="reference external" href="https://www.jefftk.com/icdiff">icdiff</a> makes an easy-to-read, side-by-side
+colored diff between files. It’s used for <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--diffs</span></code>.</p>
+</div>
+<div class="section" id="fzf">
+<h2><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fzf
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/junegunn/fzf">fzf</a> is a fuzzy-finder interface that
+works with stdin. It integrates with bash so that when you use <code class="docutils literal notranslate"><span class="pre">Ctrl-R</span></code> (the
+standard bash way of reverse-search through history), you’ll instead get the
+fzf interface.</p>
+</div>
+<div class="section" id="ripgrep-rg">
+<h2><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)<a class="headerlink" href="#ripgrep-rg" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-ripgrep
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/BurntSushi/ripgrep/">ripgrep</a> is a fast
+code-searching tool. It is like grep, but by default skips files in
+.gitignore, binary files, and hidden files.</p>
+</div>
+<div class="section" id="fd">
+<h2><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fd
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/sharkdp/fd">fd</a> is a much faster and more
+ergonomic <code class="docutils literal notranslate"><span class="pre">find</span></code>.</p>
+</div>
+<div class="section" id="visidata-vd">
+<h2><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)<a class="headerlink" href="#visidata-vd" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-vd
+</pre></div>
+</div>
+<p><a class="reference external" href="https://visidata.org/">visidata</a> ia a powerful spreadsheet-like tool
+for viewing, sorting, searching, and manipulating data directly in the
+terminal. Any files that pandas can open, visidata can open too.</p>
+</div>
+<div class="section" id="black">
+<h2><code class="docutils literal notranslate"><span class="pre">black</span></code><a class="headerlink" href="#black" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-black
+</pre></div>
+</div>
+<p><a class="reference external" href="https://black.readthedocs.io">black</a> reformats Python files to conform to
+PEP8 style conventions.</p>
+</div>
+<div class="section" id="radian">
+<h2><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-radian
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/randy3k/radian">radian</a> is a replacement shell for
+R. It has syntax highlighting, multiline editings, and tab completion built in.
+can be used with any version of R, in a conda environment or otherwise.</p>
+</div>
+<div class="section" id="git-cola">
+<h2><code class="docutils literal notranslate"><span class="pre">git-cola</span></code><a class="headerlink" href="#git-cola" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-git-cola
+</pre></div>
+</div>
+<p><a class="reference external" href="https://git-cola.github.io/">git-cola</a> is a graphical tool for
+incrementally making git commits. Very useful, for example, at the end of
+a coding session and you want to make atomic commits from all the changes you
+made.</p>
+</div>
+<div class="section" id="bat">
+<h2><code class="docutils literal notranslate"><span class="pre">bat</span></code><a class="headerlink" href="#bat" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-bat
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/sharkdp/bat">bat</a> is a replacement for <code class="docutils literal notranslate"><span class="pre">cat</span></code>,
+with syntax highlighting, line numbers, non-printable characters, and
+git diffs.</p>
+</div>
+<div class="section" id="alacritty">
+<h2><code class="docutils literal notranslate"><span class="pre">alacritty</span></code><a class="headerlink" href="#alacritty" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-alacritty
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/alacritty/alacritty">alacritty</a> is a
+cross-platform GPU-accelerated terminal emulator. The speed is most
+noticable when catting large files over tmux.</p>
+</div>
+<div class="section" id="jq">
+<h2><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-jq
+</pre></div>
+</div>
+<p><cite>jq &lt;https://stedolan.github.io/jq/&gt;</cite> is like sed or awk for JSON data.</p>
+</div>
+<div class="section" id="docker">
+<h2><code class="docutils literal notranslate"><span class="pre">docker</span></code><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-docker
+</pre></div>
+</div>
+<p><a class="reference external" href="https://www.docker.com">docker</a> runs containers. Needs root access, and the
+installation here is currently only supported on Linux.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Additional tool installations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#icdiff"><code class="docutils literal notranslate"><span class="pre">icdiff</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fzf"><code class="docutils literal notranslate"><span class="pre">fzf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ripgrep-rg"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fd"><code class="docutils literal notranslate"><span class="pre">fd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visidata-vd"><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#black"><code class="docutils literal notranslate"><span class="pre">black</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#radian"><code class="docutils literal notranslate"><span class="pre">radian</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-cola"><code class="docutils literal notranslate"><span class="pre">git-cola</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bat"><code class="docutils literal notranslate"><span class="pre">bat</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alacritty"><code class="docutils literal notranslate"><span class="pre">alacritty</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jq"><code class="docutils literal notranslate"><span class="pre">jq</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker"><code class="docutils literal notranslate"><span class="pre">docker</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="starthere.html" title="previous chapter">Start here</a></li>
+      <li>Next: <a href="bash.html" title="next chapter">Bash dotfiles</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tools.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bash dotfiles &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Vim / Neovim" href="vim.html" />
+    <link rel="prev" title="Additional tool installations" href="tools.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bash-dotfiles">
+<span id="bash"></span><h1>Bash dotfiles<a class="headerlink" href="#bash-dotfiles" title="Permalink to this headline">¶</a></h1>
+<p>The modular organization for bash configuration is inspired by <a class="reference external" href="https://github.com/mathiasbynens/dotfiles">this
+repo</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> sources <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>, which in turn sources the
+following files if they’re present. This keeps things a little more
+organized and modular. They work like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">bashrc</span> <span class="c1"># sources .bash_profile</span>
+   <span class="o">--&gt;</span> <span class="o">.</span><span class="n">bash_profile</span>  <span class="c1"># sources the following files</span>
+         <span class="o">--&gt;</span> <span class="o">.</span><span class="n">path</span>         <span class="c1"># all &quot;export PATH=...&quot; goes in here</span>
+         <span class="o">--&gt;</span> <span class="o">.</span><span class="n">aliases</span>      <span class="c1"># add your aliases here</span>
+         <span class="o">--&gt;</span> <span class="o">.</span><span class="n">functions</span>    <span class="c1"># add your functions here</span>
+         <span class="o">--&gt;</span> <span class="o">.</span><span class="n">exports</span>      <span class="c1"># add your various exports here</span>
+         <span class="o">--&gt;</span> <span class="o">.</span><span class="n">bash_prompt</span>  <span class="c1"># edit your bash prompt here</span>
+         <span class="o">--&gt;</span> <span class="o">.</span><span class="n">extra</span>        <span class="c1"># any machine-specific config goes here</span>
+</pre></div>
+</div>
+<p>Below is a little more detail on the contents of each of these files and
+some notable features.</p>
+<div class="section" id="path">
+<h2><code class="docutils literal notranslate"><span class="pre">.path</span></code><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h2>
+<p>This file ends up being lots of <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:/some/other/path&quot;</span></code>
+lines. It is initially populated to put <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code> and
+<code class="docutils literal notranslate"><span class="pre">~/miniconda3/bin</span></code> on the path. As you install more software in other
+locations, this is a tidy place to put the various exports.</p>
+</div>
+<div class="section" id="aliases">
+<h2><code class="docutils literal notranslate"><span class="pre">.aliases</span></code><a class="headerlink" href="#aliases" title="Permalink to this headline">¶</a></h2>
+<p>This file keeps aliases separate. Some notable aliases that are
+included:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>alias</p></td>
+<td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nvim</span></code></p></td>
+<td><p>always use neovim (this is added only after you’ve run
+<strong class="command">./setup.sh --install-neovim</strong>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">DISPLAY=:0</span></code></p></td>
+<td><p>sometimes when using tmux the display is not set, causing GUI programs
+launched from the terminal to complain. This sets the display variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ll</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lrth</span> <span class="pre">--color=auto</span></code></p></td>
+<td><p>useful <cite>ls</cite> arguments (long format, human-readable sizes, sorted by
+time (latest at bottom), use color)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">la</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lrthA</span> <span class="pre">--color=auto</span></code></p></td>
+<td><p>same as above, but also show hidden files</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">v</span></code></p></td>
+<td><p>(see .aliases file)</p></td>
+<td><p>Live, searchable, syntax-highlighted preview of files in a directory.
+Needs <cite>–install-fzf</cite> and <cite>–install-bat</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h2><code class="docutils literal notranslate"><span class="pre">.functions</span></code><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>Separate file for bash functions. This is also where fzf and autojump
+are set up. Some notable functions defined here:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>function</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">start_agent</span></code></p></td>
+<td><p>Use this to start the ssh agent so you don’t need to keep entering your
+ssh key during a session</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tre</span></code></p></td>
+<td><p>Nicer <code class="docutils literal notranslate"><span class="pre">tree</span></code> output, colored and piped to less</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sa</span></code></p></td>
+<td><p>Open``fzf`` to search across all conda environments, and activates the
+selected one</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bash-prompt">
+<h2><code class="docutils literal notranslate"><span class="pre">.bash_prompt</span></code><a class="headerlink" href="#bash-prompt" title="Permalink to this headline">¶</a></h2>
+<p>This file changes the prompt color for Biowulf or Helix (NIH HPC), but
+here you can add any other hosts or colors. See
+<a class="reference external" href="https://misc.flogisoft.com/bash/tip_colors_and_formatting">https://misc.flogisoft.com/bash/tip_colors_and_formatting</a> for color
+options.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bash dotfiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#path"><code class="docutils literal notranslate"><span class="pre">.path</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aliases"><code class="docutils literal notranslate"><span class="pre">.aliases</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions"><code class="docutils literal notranslate"><span class="pre">.functions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bash-prompt"><code class="docutils literal notranslate"><span class="pre">.bash_prompt</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tools.html" title="previous chapter">Additional tool installations</a></li>
+      <li>Next: <a href="vim.html" title="next chapter">Vim / Neovim</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/bash.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

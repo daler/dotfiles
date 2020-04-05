@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Start here &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Additional tool installations" href="tools.html" />
+    <link rel="prev" title="daler dotfiles" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="start-here">
+<span id="starthere"></span><h1>Start here<a class="headerlink" href="#start-here" title="Permalink to this headline">¶</a></h1>
+<p>A couple of preliminary things to get out of the way:</p>
+<ul>
+<li><p>There are <strong>three general sections</strong>: <a class="reference internal" href="#dotfilessection"><span class="std std-ref">1. dotfiles</span></a>,
+<a class="reference internal" href="#setupsection"><span class="std std-ref">2: setup</span></a>, and <a class="reference internal" href="#toolsection"><span class="std std-ref">3: programs</span></a>.</p></li>
+<li><p><strong>Everything is driven</strong> by <code class="file docutils literal notranslate"><span class="pre">setup.sh</span></code>. When in doubt, consult that
+file!</p></li>
+<li><p>Everything here is <strong>simply a convenience</strong> to make my life easier setting up
+a new machine. I spent the work figuring this out, so might as well make it
+available to others. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>To avoid visiting each tool’s homepage, downloading for Linux or Mac, and
+following the particular installation instructions, I can instead use the
+<code class="docutils literal notranslate"><span class="pre">--install-&lt;toolname&gt;</span></code> commands.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--diffs</span></code> commands help me figure out if all my dotfiles  on
+a particular machine are up-to-date with this repo.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>All steps are optional</strong> though there are some dependencies and assumptions
+which are noted as they come up.</p></li>
+</ul>
+<div class="section" id="step-0-download-and-check-the-help">
+<span id="step0"></span><h2>Step 0: Download and check the help<a class="headerlink" href="#step-0-download-and-check-the-help" title="Permalink to this headline">¶</a></h2>
+<p><strong>Already have git installed?</strong> Clone the repo and go to the directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~
+git clone https://github.com/daler/dotfiles.git
+<span class="nb">cd</span> dotfiles
+</pre></div>
+</div>
+<p><strong>Don’t have git installed?</strong> Download the <a class="reference external" href="https://github.com/daler/dotfiles/archive/master.zip">zip file</a> containing the latest
+version of this repo, unzip, and go to the unzipped directory.</p>
+<p><strong>To test</strong>, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>to see the help which includes links for each tool and a guide on what steps
+can be run on what kinds of systems.</p>
+</div>
+<div class="section" id="dotfiles">
+<span id="dotfilessection"></span><h2>1. dotfiles<a class="headerlink" href="#dotfiles" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="option-1-use-everything">
+<span id="option1"></span><h3>Option 1: Use everything<a class="headerlink" href="#option-1-use-everything" title="Permalink to this headline">¶</a></h3>
+<p><strong>To replace all your existing dotfiles with the ones here</strong>, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --dotfiles
+</pre></div>
+</div>
+<p>and then move to <a class="reference internal" href="#setupsection"><span class="std std-ref">2: setup</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This will make a backup of any existing files so you can roll back any
+changes if you don’t like anything here. This method is best when you are
+setting up a machine for the first time.</p>
+</div>
+</div>
+<div class="section" id="option-2-selective-usage">
+<span id="option2"></span><h3>Option 2: Selective usage<a class="headerlink" href="#option-2-selective-usage" title="Permalink to this headline">¶</a></h3>
+<p><strong>Otherwise if you want to manually copy over the parts that you find useful</strong>,
+you’ll probably want to spend some time reading through <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>,
+<a class="reference internal" href="vim.html#vim"><span class="std std-ref">Vim / Neovim</span></a>, and <a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux configuration</span></a> to see what’s useful. You can copy over the parts
+of the relevant config files that may be useful to you.</p>
+<p>However, you should at least put the following line in your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> or
+<code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>, which adds the directories into which later tools will be
+installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># add to .bashrc or .bash_profile</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3/bin:</span><span class="nv">$HOME</span><span class="s2">/opt/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>If you’ve used this repo before and want to update, but aren’t sure what’s
+changed and whether you have custom stuff that you want to keep, the setup
+script provides some tools for figuring this out. For example, the
+<strong class="program">icdiff</strong> tool shows colored, side-by-side, easy-to-read diffs. Install
+it to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code> with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-icdiff
+</pre></div>
+</div>
+<p>and then use it with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shows diffs through icdiff</span>
+./setup.sh --diffs
+</pre></div>
+</div>
+<p>There are also some other ways of viewing the diffs to decide what to add. If
+you’re familiar with vimdiff:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shows diffs in vimdiff</span>
+./setup.sh --vim-diffs
+</pre></div>
+</div>
+<p>If you have <strong class="program">meld</strong> installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shows diffs in meld, if installed</span>
+./setup.sh --graphical-diffs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="setup">
+<span id="setupsection"></span><h2>2: setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vim">
+<h3>2.1 vim<a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h3>
+<p>This section sets up vim (or neovim), particularly to get set up for using
+plugins.</p>
+<div class="section" id="neovim">
+<h4>2.1.1 neovim<a class="headerlink" href="#neovim" title="Permalink to this headline">¶</a></h4>
+<p>Install <a class="reference external" href="https://neovim.io/">neovim</a>, if you want to use it. See <a class="reference internal" href="why.html#why"><span class="std std-ref">Why?</span></a>
+for more info on deciding.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">neovim</span>
+</pre></div>
+</div>
+<p>This:</p>
+<ul class="simple">
+<li><p>installs neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code></p></li>
+<li><p>adds an alias <cite>alias vim=nvim</cite> to <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code>. If you are using
+<a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, then you may want to manually add that alias to your
+<code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code> or <code class="file docutils literal notranslate"><span class="pre">.bash_profile</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="vim-nvim-plugin-setup">
+<h4>2.1.2 vim/nvim plugin setup<a class="headerlink" href="#vim-nvim-plugin-setup" title="Permalink to this headline">¶</a></h4>
+<p>This step sets up <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>, placing
+the required files in the locations expected by vim and neovim. If you’re using
+<a class="reference internal" href="#option1"><span class="std std-ref">Option 1: Use everything</span></a>, there are a lot of vim plugins included, which you can read
+more about at <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Vim / Neovim</span></a>. If you’re using <a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, then you may or may
+not have any plugins configured, so you might not need this step.</p>
+<ul class="simple">
+<li><p>set up vim-plug:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --set-up-vim-plugins
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>As the command reminds you, open up vim (and/or nvim, if you installed that)
+and run <strong class="command">:PlugInstall</strong>. This will install the plugins configured in
+<code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> (for vim) or <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code> (for nvim).</p></li>
+</ul>
+</div>
+<div class="section" id="powerline">
+<h4>2.1.3 powerline<a class="headerlink" href="#powerline" title="Permalink to this headline">¶</a></h4>
+<p>I really like the <a class="reference external" href="https://github.com/vim-airline/vim-airline">vim-airline</a>
+plugin, but it uses fancy glyphs (see the documentation for some nice demos).
+Those arrow shapes for buffers, line number glyphs, and so on need a patched
+font, and your terminal needs to be set to use those font.</p>
+<p>This only needs to be done on the machine you’re running the terminal app on.
+So this does not need to be run on a remote machine.</p>
+<ul class="simple">
+<li><p>Install the fonts with:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-powerline
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Once it installs, you’ll need to configure your terminal to use one of the
+new fonts that ends in “for Powerline”.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="conda">
+<h3>2.2: conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="install-miniconda">
+<h4>2.2.1: install miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h4>
+<p>The following command:</p>
+<ul class="simple">
+<li><p>downloads the latest version of <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a></p></li>
+<li><p>installs it to <code class="file docutils literal notranslate"><span class="pre">~/miniconda3</span></code></p></li>
+<li><p>adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/miniconda3/bin&quot;</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code>
+(which you can read more about at <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>)</p></li>
+</ul>
+<p>If you went with <a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, you should add this to your path manually.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-miniconda
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-bioconda">
+<h4>2.2.2: set up bioconda<a class="headerlink" href="#set-up-bioconda" title="Permalink to this headline">¶</a></h4>
+<p>Set up conda to use the proper channel order for <a class="reference external" href="https://bioconda.github.io">Bioconda</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --set-up-bioconda
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="programs">
+<span id="toolsection"></span><h2>3: programs<a class="headerlink" href="#programs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-conda-packages">
+<h3>3.1 install conda packages<a class="headerlink" href="#install-conda-packages" title="Permalink to this headline">¶</a></h3>
+<p>Install the packages listed in <code class="file docutils literal notranslate"><span class="pre">requirements.txt</span></code> into the base
+environment, as well as <code class="file docutils literal notranslate"><span class="pre">requirements-mac.txt</span></code> if you’re on a Mac:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --conda-env
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-apt-packages">
+<h3>3.2: install apt packages<a class="headerlink" href="#install-apt-packages" title="Permalink to this headline">¶</a></h3>
+<p>If you’re on Linux and have root privileges, this is a quick way to install
+“the works” or a minimal set of packages. You can inspect the files
+<code class="file docutils literal notranslate"><span class="pre">apt-installs.txt</span></code> or <code class="file docutils literal notranslate"><span class="pre">apt-installs-minimal.txt</span></code> for what will be
+installed. These are packages I find to be most useful (git, build-essential,
+meld, and so on).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="o">-</span><span class="n">installs</span>
+
+<span class="c1"># or</span>
+
+<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="o">-</span><span class="n">installs</span><span class="o">-</span><span class="n">minimal</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-other-tools">
+<h3>3.3: install other tools<a class="headerlink" href="#install-other-tools" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="file docutils literal notranslate"><span class="pre">setup.sh</span></code> script has many commands for installing various tools
+I find useful. These warrant their own section, so continue to <a class="reference internal" href="tools.html#tools"><span class="std std-ref">Additional tool installations</span></a> for
+descriptions of tools and the commands to install them.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Start here</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-0-download-and-check-the-help">Step 0: Download and check the help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dotfiles">1. dotfiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup">2: setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#programs">3: programs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">daler dotfiles</a></li>
+      <li>Next: <a href="tools.html" title="next chapter">Additional tool installations</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/starthere.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

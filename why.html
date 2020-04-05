@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>daler dotfiles &#8212; dotfiles  documentation</title>
+    <title>Why? &#8212; dotfiles  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Start here" href="starthere.html" />
+    <link rel="prev" title="tmux configuration" href="tmux.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -31,30 +31,32 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="daler-dotfiles">
-<h1>daler dotfiles<a class="headerlink" href="#daler-dotfiles" title="Permalink to this headline">¶</a></h1>
-<p>This repo captures hard-won settings and tool installations that I have
-accumulated over time. Using the included modular setup script, starting
-from a fresh installation of Ubuntu Linux or MacOS I can have everything
-I’m used to – programs and all – in a few minutes.</p>
-<p>It doubles as a “batteries included” set of configuration files that can
-be used by others just starting out. It includes:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="bash.html#bash"><span class="std std-ref">bash config</span></a></p></li>
-<li><p><a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux config</span></a></p></li>
-<li><p><a class="reference internal" href="vim.html#vim"><span class="std std-ref">vim/neovim config</span></a></p></li>
-<li><p>various <a class="reference internal" href="tools.html#tools"><span class="std std-ref">tool installation commands</span></a></p></li>
-</ul>
-<p>If you don’t want “batteries included”, you can select only what is most
-useful to you because:</p>
-<ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> script is modular</p></li>
-<li><p>this README documents everything</p></li>
-<li><p>the config files themselves are documented</p></li>
-</ul>
-<p>Ready? <a class="reference internal" href="starthere.html#starthere"><span class="std std-ref">Start here</span></a>!</p>
-<div class="toctree-wrapper compound">
-</div>
+  <div class="section" id="why">
+<span id="id1"></span><h1>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h1>
+<p><strong>Why this repo?</strong> This started as a way of quickly getting myself set
+up on a new Linux box (like a fresh AWS instance). Once I started my own
+bioinformatics group, I realized there was a benefit to having others
+use it as well. It now serves as an opinionated set of configs and tools
+that new members to the group can use as a starting point to grow their
+own dotfiles.</p>
+<p><strong>Why neovim?</strong> The biggest reason is for the within-editor terminal
+that lets us recapitulate RStudio completely within the terminal on an
+HPC cluster. While the latest version of vim (version 8) is approaching
+feature parity with neovim especially with a terminal, vim 8 is just
+about as difficult to install as nvim. On biowulf, nvim (but not vim8)
+is installed. That makes it easier to use the same features both locally
+and on biowulf. There are a couple of nice additions,and plugins that
+work only with nvim, but honestly the differences now are pretty subtle.</p>
+<p><strong>Why have all those install commands?</strong> Each tool has its own way of
+installing and/or compiling. Many tools have been turned into conda
+packages, which simplifies things, but not all tools are available on
+conda. Those install commands keep things modular (only install what you
+want) and simple. And of course the end result is lots of useful tools.</p>
+<p><strong>Why use conda and then symlink to ``~/opt/bin``?</strong> I wanted the tools
+to be available no matter what conda environment I was in.</p>
+<p><strong>Why bash for ``setup.sh``?</strong> There are a lot of system calls, which
+gets awkward in Python. This way everything is straightforwardly (if
+verbosely) captured in a single script without any other dependencies.</p>
 </div>
 
 
@@ -64,7 +66,7 @@ useful to you because:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">dotfiles</a></h1>
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
 
 
 
@@ -74,20 +76,20 @@ useful to you because:</p>
 
 
 <h3>Navigation</h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Why?</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="starthere.html" title="next chapter">Start here</a></li>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tmux.html" title="previous chapter">tmux configuration</a></li>
   </ul></li>
 </ul>
 </div>
@@ -121,7 +123,7 @@ useful to you because:</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/index.rst.txt"
+      <a href="_sources/why.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
