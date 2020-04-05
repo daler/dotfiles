@@ -274,6 +274,7 @@ elif [ $task == "--install-nvim" ]; then
         ln -s ~/opt/nvim-linux64/bin/nvim ~/opt/bin/nvim
     fi
         printf "${YELLOW}Installed neovim to $HOME/opt/bin/nvim${UNSET}\n"
+        add_line_to_file 'alias "vim=nvim"' ~/.aliases
         check_opt_bin_in_path
 
 elif [ $task == "--set-up-vim-plugins" ]; then
