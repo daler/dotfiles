@@ -15,8 +15,10 @@ ENV SHELL /bin/bash
 
 RUN git clone https://github.com/daler/dotfiles
 WORKDIR dotfiles
+RUN git checkout $BRANCH
 
 # Run setup in order
+
 ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-get-installs-minimal
 RUN ./setup.sh --install-miniconda
@@ -24,6 +26,8 @@ RUN ./setup.sh --dotfiles
 RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
+
+RUN source "~/.aliases"
 
 # Don't know why yet, but the alias isn't sticking. But this installs plugins
 # without interaction

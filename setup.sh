@@ -241,6 +241,7 @@ elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels defaults
     conda config --add channels bioconda
     conda config --add channels conda-forge
+    printf "${YELLOW}Channels configured, see ~/.condarc${UNSET}\n"
 
 elif [ $task == "--conda-env" ]; then
     if [[ $OSTYPE == darwin* ]]; then
@@ -275,6 +276,9 @@ elif [ $task == "--install-neovim" ]; then
     fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         add_line_to_file 'alias "vim=nvim"' ~/.aliases
+        printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
+        printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
+        printf "${YELLOW}- added 'alias vim=nvim' to ~/.aliases${UNSET}\n"
         check_opt_bin_in_path
 
 elif [ $task == "--set-up-vim-plugins" ]; then
@@ -311,7 +315,8 @@ elif [ $task == "--install-fzf" ]; then
     (
       git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
       ~/.fzf/install --no-update-rc --completion --key-bindings
-      )
+    )
+    printf "${YELLOW}fzf installed; see ~/.fzf${UNSET}\n"
 
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
@@ -321,6 +326,8 @@ elif [ $task == "--install-ripgrep" ]; then
     cd /tmp/rg
     tar -xf ripgrep.tar.gz
     cp ripgrep*/rg ~/opt/bin
+    printf "${YELLOW}Installed to ~/opt/bin/rg${UNSET}\n"
+    check_opt_bin_in_path
 
 elif [ $task == "--install-autojump" ]; then
     ok "Installs autojump (https://github.com/wting/autojump)"
@@ -330,15 +337,20 @@ elif [ $task == "--install-autojump" ]; then
         python install.py
     )
     rm -rf /tmp/autojump-repo
+    printf "${YELLOW}autojump installed to default location of ~/.autojump${UNSET}\n"
+    printf "${YELLOW}If you're not using the .functions file from these dotfiles, follow the instructions above output by autojump.${UNSET}\n"
+
 
 elif [ $task == "--install-fd" ]; then
     ok "Install fd (https://github.com/sharkdp/fd) into a new conda env and symlink to ~/opt/bin/fd"
     install_env_and_symlink fd fd-find fd
+    printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
     install_env_and_symlink visidata visidata vd
+    printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-hub" ]; then
@@ -361,13 +373,16 @@ elif [ $task == "--install-hub" ]; then
             prefix=$HOME/opt ./install
         )
     fi
-    printf "${YELLOW}Installed to $HOME/opt/bin/hub${UNSET}\n"
+    printf "${YELLOW}Installed to ~/opt/bin/hub${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-black" ]; then
     ok "Install black (https://black.readthedocs.io) into a new conda env and symlink to ~/opt/bin/black"
     install_env_and_symlink black black black
+    printf "${YELLOW}Installed to ~/opt/bin/black${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-radian" ]; then
     ok "Install radian (https://github.com/randy3k/radian) into a new conda env and symlink to ~/opt/bin/radian"
@@ -402,7 +417,7 @@ elif [ $task == "--install-git-cola" ]; then
     echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola" >> ~/opt/bin/git-cola
     chmod +x ~/opt/bin/git-cola
 
-    printf "${YELLOW}Installed $HOME/opt/bin/git-cola${UNSET}\n"
+    printf "${YELLOW}Installed to ~/opt/bin/git-cola${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-bat" ]; then
@@ -423,6 +438,7 @@ elif [ $task == "--install-bat" ]; then
     mkdir -p ~/opt/bin
     cp /tmp/bat/bat*/bat ~/opt/bin
     rm -r "/tmp/bat-${BAT_VERSION}.tar.gz"
+    printf "${YELLOW}Installed to ~/opt/bin/bat${UNSET}\n"
     check_opt_bin_in_path
 
 elif [ $task == "--install-alacritty" ]; then
@@ -455,6 +471,8 @@ else
         download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
 fi
     chmod +x $HOME/opt/bin/jq
+    printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
+    check_opt_bin_in_path
 
 elif [ $task == "--dotfiles" ]; then
 
@@ -462,9 +480,10 @@ elif [ $task == "--dotfiles" ]; then
     # lowercase
     BACKUP_DIR="$HOME/dotfiles-backup-$(date +%s | sha256sum | base64 | head -c 8 | tr [:upper:] [:lower:])"
 
-    ok "Copies over all the dotfiles here to your home directory. A backup will
-    be made in $BACKUP_DIR. Prompts again before actually running to make
-    sure!"
+    ok "Copies over all the dotfiles here to your home directory.
+    - A backup will be made in $BACKUP_DIR
+    - List of files that will be copied is in 'include.files'
+    - Prompts again before actually running to make sure!"
 
     cd "$(dirname "${BASH_SOURCE}")";
 
@@ -488,6 +507,8 @@ elif [ $task == "--install-icdiff" ]; then
     ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
     download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
     chmod +x ~/opt/bin/icdiff
+    printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
+    check_opt_bin_in_path
 
 # ----------------------------------------------------------------------------
 # Diffs section
