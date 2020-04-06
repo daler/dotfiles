@@ -36,8 +36,15 @@
 <span id="starthere"></span><h1>Start here<a class="headerlink" href="#start-here" title="Permalink to this headline">¶</a></h1>
 <p>A couple of preliminary things to get out of the way:</p>
 <ul>
-<li><p>There are <strong>three general sections</strong>: <a class="reference internal" href="#dotfilessection"><span class="std std-ref">1. dotfiles</span></a>,
-<a class="reference internal" href="#setupsection"><span class="std std-ref">2: setup</span></a>, and <a class="reference internal" href="#toolsection"><span class="std std-ref">3: programs</span></a>.</p></li>
+<li><dl class="simple">
+<dt>There are <strong>three general sections</strong>:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="#dotfilessection"><span class="std std-ref">1. dotfiles</span></a> for copying over the dotfiles</p></li>
+<li><p><a class="reference internal" href="#setupsection"><span class="std std-ref">2: setup</span></a> for setting up vim/neovim and conda</p></li>
+<li><p><a class="reference internal" href="#toolsection"><span class="std std-ref">3: programs</span></a> for installing useful tools</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p><strong>Everything is driven</strong> by <code class="file docutils literal notranslate"><span class="pre">setup.sh</span></code>. When in doubt, consult that
 file!</p></li>
 <li><p>Everything here is <strong>simply a convenience</strong> to make my life easier setting up
@@ -79,6 +86,11 @@ can be run on what kinds of systems.</p>
 <span id="option1"></span><h3>Option 1: Use everything<a class="headerlink" href="#option-1-use-everything" title="Permalink to this headline">¶</a></h3>
 <p><strong>To replace all your existing dotfiles with the ones here</strong>, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --dotfiles
+</pre></div>
+</div>
+<p>This copies files over to your home directory. You should now either
+close your terminal and reopen it, or source the new <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code> file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ~/.bashrc
 </pre></div>
 </div>
 <p>and then move to <a class="reference internal" href="#setupsection"><span class="std std-ref">2: setup</span></a>.</p>
@@ -126,6 +138,8 @@ you’re familiar with vimdiff:</p>
 ./setup.sh --graphical-diffs
 </pre></div>
 </div>
+<p>In any case, once you’re done with your dotfiles you can move on to the next
+step.</p>
 </div>
 </div>
 <div class="section" id="setup">
@@ -144,8 +158,9 @@ for more info on deciding.</p>
 <p>This:</p>
 <ul class="simple">
 <li><p>installs neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code></p></li>
-<li><p>adds an alias <cite>alias vim=nvim</cite> to <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code>. If you are using
-<a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, then you may want to manually add that alias to your
+<li><p>adds an alias <cite>alias vim=nvim</cite> to <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code>. As described in
+<a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>, this is sourced each time you start a new shell. If you are
+using <a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, then you may want to manually add that alias to your
 <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code> or <code class="file docutils literal notranslate"><span class="pre">.bash_profile</span></code>.</p></li>
 </ul>
 </div>
@@ -153,9 +168,9 @@ for more info on deciding.</p>
 <h4>2.1.2 vim/nvim plugin setup<a class="headerlink" href="#vim-nvim-plugin-setup" title="Permalink to this headline">¶</a></h4>
 <p>This step sets up <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>, placing
 the required files in the locations expected by vim and neovim. If you’re using
-<a class="reference internal" href="#option1"><span class="std std-ref">Option 1: Use everything</span></a>, there are a lot of vim plugins included, which you can read
-more about at <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Vim / Neovim</span></a>. If you’re using <a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, then you may or may
-not have any plugins configured, so you might not need this step.</p>
+<a class="reference internal" href="#option1"><span class="std std-ref">Option 1: Use everything</span></a>, then you should do this. There are a lot of vim plugins
+included, which you can read more about at <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Vim / Neovim</span></a>. If you’re using
+<a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, this step is useful if you have plugins managed by vim-plug.</p>
 <ul class="simple">
 <li><p>set up vim-plug:</p></li>
 </ul>
@@ -179,17 +194,26 @@ So this does not need to be run on a remote machine.</p>
 <ul class="simple">
 <li><p>Install the fonts with:</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-powerline
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --powerline
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may get a warning about “cannot load default config file”. As long as
+the new fonts show up, you should be fine.</p>
+</div>
 <ul class="simple">
-<li><p>Once it installs, you’ll need to configure your terminal to use one of the
-new fonts that ends in “for Powerline”.</p></li>
+<li><p>Once it installs, you’ll need to configure your terminal preferences to use
+one of the new fonts that ends in “for Powerline”. Note that on Terminal on
+Mac, you’ll also need to set the font for non-ASCII characters.</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="conda">
 <h3>2.2: conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.conda.io/en/latest/">conda</a> is a cross-platform,
+language-agnostic package manager. It’s by far the best way to get set up with
+Python, but it also works for many other languages.</p>
 <div class="section" id="install-miniconda">
 <h4>2.2.1: install miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h4>
 <p>The following command:</p>
@@ -203,6 +227,11 @@ new fonts that ends in “for Powerline”.</p></li>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-miniconda
 </pre></div>
 </div>
+<p>After installation, run the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda init bash
+</pre></div>
+</div>
+<p>to allow the use of <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code> to activate environments.</p>
 </div>
 <div class="section" id="set-up-bioconda">
 <h4>2.2.2: set up bioconda<a class="headerlink" href="#set-up-bioconda" title="Permalink to this headline">¶</a></h4>
@@ -215,6 +244,10 @@ new fonts that ends in “for Powerline”.</p></li>
 </div>
 <div class="section" id="programs">
 <span id="toolsection"></span><h2>3: programs<a class="headerlink" href="#programs" title="Permalink to this headline">¶</a></h2>
+<p>This section (and the following <a class="reference internal" href="tools.html#tools"><span class="std std-ref">Additional tool installations</span></a>) contains quick ways of getting
+useful stuff installed. This is my opinionated list of what I like to have
+installed, so you should check the files referenced and edit them as you see
+fit to match your requirements.</p>
 <div class="section" id="install-conda-packages">
 <h3>3.1 install conda packages<a class="headerlink" href="#install-conda-packages" title="Permalink to this headline">¶</a></h3>
 <p>Install the packages listed in <code class="file docutils literal notranslate"><span class="pre">requirements.txt</span></code> into the base
@@ -226,7 +259,7 @@ environment, as well as <code class="file docutils literal notranslate"><span cl
 <div class="section" id="install-apt-packages">
 <h3>3.2: install apt packages<a class="headerlink" href="#install-apt-packages" title="Permalink to this headline">¶</a></h3>
 <p>If you’re on Linux and have root privileges, this is a quick way to install
-“the works” or a minimal set of packages. You can inspect the files
+“the works” or optionally a minimal set of packages. You can inspect the files
 <code class="file docutils literal notranslate"><span class="pre">apt-installs.txt</span></code> or <code class="file docutils literal notranslate"><span class="pre">apt-installs-minimal.txt</span></code> for what will be
 installed. These are packages I find to be most useful (git, build-essential,
 meld, and so on).</p>

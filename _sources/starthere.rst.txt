@@ -6,8 +6,10 @@ Start here
 
 A couple of preliminary things to get out of the way:
 
-* There are **three general sections**: :ref:`dotfilessection`,
-  :ref:`setupsection`, and :ref:`toolsection`.
+* There are **three general sections**:
+   - :ref:`dotfilessection` for copying over the dotfiles
+   - :ref:`setupsection` for setting up vim/neovim and conda
+   - :ref:`toolsection` for installing useful tools
 
 * **Everything is driven** by :file:`setup.sh`. When in doubt, consult that
   file!
@@ -67,6 +69,13 @@ Option 1: Use everything
 
     ./setup.sh --dotfiles
 
+This copies files over to your home directory. You should now either
+close your terminal and reopen it, or source the new :file:`.bashrc` file:
+
+.. code-block:: bash
+
+   source ~/.bashrc
+
 and then move to :ref:`setupsection`.
 
 .. warning::
@@ -92,7 +101,6 @@ installed:
 
     # add to .bashrc or .bash_profile
     export PATH="$HOME/miniconda3/bin:$HOME/opt/bin:$PATH"
-
 
 If you've used this repo before and want to update, but aren't sure what's
 changed and whether you have custom stuff that you want to keep, the setup
@@ -126,7 +134,8 @@ If you have :program:`meld` installed:
     # shows diffs in meld, if installed
     ./setup.sh --graphical-diffs
 
-
+In any case, once you're done with your dotfiles you can move on to the next
+step.
 
 .. _setupsection:
 
@@ -152,8 +161,9 @@ for more info on deciding.
 This:
 
 - installs neovim to :file:`~/opt/bin`
-- adds an alias `alias vim=nvim` to :file:`~/.aliases`. If you are using
-  :ref:`option2`, then you may want to manually add that alias to your
+- adds an alias `alias vim=nvim` to :file:`~/.aliases`. As described in
+  :ref:`bash`, this is sourced each time you start a new shell. If you are
+  using :ref:`option2`, then you may want to manually add that alias to your
   :file:`.bashrc` or :file:`.bash_profile`.
 
 2.1.2 vim/nvim plugin setup
@@ -161,10 +171,9 @@ This:
 
 This step sets up `vim-plug <https://github.com/junegunn/vim-plug>`_, placing
 the required files in the locations expected by vim and neovim. If you're using
-:ref:`option1`, there are a lot of vim plugins included, which you can read
-more about at :ref:`vim`. If you're using :ref:`option2`, then you may or may
-not have any plugins configured, so you might not need this step.
-
+:ref:`option1`, then you should do this. There are a lot of vim plugins
+included, which you can read more about at :ref:`vim`. If you're using
+:ref:`option2`, this step is useful if you have plugins managed by vim-plug.
 
 - set up vim-plug:
 
@@ -191,21 +200,31 @@ So this does not need to be run on a remote machine.
 
 .. code-block:: bash
 
-    ./setup.sh --install-powerline
+    ./setup.sh --powerline
 
-- Once it installs, you’ll need to configure your terminal to use one of the
-  new fonts that ends in “for Powerline”.
+.. note::
+
+   You may get a warning about "cannot load default config file". As long as
+   the new fonts show up, you should be fine.
+
+- Once it installs, you’ll need to configure your terminal preferences to use
+  one of the new fonts that ends in “for Powerline”. Note that on Terminal on
+  Mac, you'll also need to set the font for non-ASCII characters.
 
 2.2: conda
 ~~~~~~~~~~
 
+`conda <https://docs.conda.io/en/latest/>`_ is a cross-platform,
+language-agnostic package manager. It's by far the best way to get set up with
+Python, but it also works for many other languages.
 
 2.2.1: install miniconda
 ++++++++++++++++++++++++
 
 The following command:
 
-- downloads the latest version of `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_
+- downloads the latest version of `Miniconda
+  <https://docs.conda.io/en/latest/miniconda.html>`_
 - installs it to :file:`~/miniconda3`
 - adds the line ``export PATH="$PATH:~/miniconda3/bin"`` to the :file:`~/.path`
   (which you can read more about at :ref:`bash`)
@@ -216,10 +235,19 @@ If you went with :ref:`option2`, you should add this to your path manually.
 
   ./setup.sh --install-miniconda
 
+After installation, run the following:
+
+.. code-block:: bash
+
+   conda init bash
+
+to allow the use of ``conda activate`` to activate environments.
+
 2.2.2: set up bioconda
 ++++++++++++++++++++++
 
-Set up conda to use the proper channel order for `Bioconda <https://bioconda.github.io>`_:
+Set up conda to use the proper channel order for `Bioconda
+<https://bioconda.github.io>`_:
 
 .. code-block:: bash
 
@@ -229,6 +257,11 @@ Set up conda to use the proper channel order for `Bioconda <https://bioconda.git
 
 3: programs
 -----------
+
+This section (and the following :ref:`tools`) contains quick ways of getting
+useful stuff installed. This is my opinionated list of what I like to have
+installed, so you should check the files referenced and edit them as you see
+fit to match your requirements.
 
 3.1 install conda packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -243,7 +276,7 @@ environment, as well as :file:`requirements-mac.txt` if you're on a Mac:
 3.2: install apt packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 If you're on Linux and have root privileges, this is a quick way to install
-"the works" or a minimal set of packages. You can inspect the files
+"the works" or optionally a minimal set of packages. You can inspect the files
 :file:`apt-installs.txt` or :file:`apt-installs-minimal.txt` for what will be
 installed. These are packages I find to be most useful (git, build-essential,
 meld, and so on).

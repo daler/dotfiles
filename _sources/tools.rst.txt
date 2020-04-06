@@ -7,6 +7,19 @@ Run the ``--install-<toolname>`` for each of the tools below. Each is
 installed (or symlinked) into ``~/opt/bin``, so you’ll want to make sure
 that’s on your path.
 
+.. note::
+
+   Some of these tools are available in conda. In those cases, they are
+   "installed" as follows:
+
+   - create a conda environment named after the tool
+   - symlink the tool's executable from the conda environment over to ~/opt/bin
+
+   This means that you do **not** have to ``conda activate`` an environment to
+   use an installed tool. As long as ~/opt/bin is on your path, you can use it
+   immediately. This allows for more modular updating of the tools and avoiding
+   conflicting dependencies.
+
 ``icdiff``
 ~~~~~~~~~~
 

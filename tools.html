@@ -37,6 +37,19 @@
 <p>Run the <code class="docutils literal notranslate"><span class="pre">--install-&lt;toolname&gt;</span></code> for each of the tools below. Each is
 installed (or symlinked) into <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, so you’ll want to make sure
 that’s on your path.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of these tools are available in conda. In those cases, they are
+“installed” as follows:</p>
+<ul class="simple">
+<li><p>create a conda environment named after the tool</p></li>
+<li><p>symlink the tool’s executable from the conda environment over to ~/opt/bin</p></li>
+</ul>
+<p>This means that you do <strong>not</strong> have to <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code> an environment to
+use an installed tool. As long as ~/opt/bin is on your path, you can use it
+immediately. This allows for more modular updating of the tools and avoiding
+conflicting dependencies.</p>
+</div>
 <div class="section" id="icdiff">
 <h2><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-icdiff
