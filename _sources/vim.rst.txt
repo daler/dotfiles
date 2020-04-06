@@ -3,7 +3,7 @@
 Vim / Neovim
 ============
 
-``.vimrc`` and ``.config/nvim/init.vim`` have the same contents.
+:file:`.vimrc` and :file:`.config/nvim/init.vim` have the same contents.
 
 In the `.config/nvim/init.vim <.config/nvim/init.vim>`__ file in this
 repo:
@@ -80,12 +80,42 @@ talking about a terminal) expect Neovim and the neoterm plugin.
       - normal
       - macro to surround the line with quotes and add a trailing comma, making
         it easy to make Python or R lists out of pasted text
+
+
+Plugins
+-------
+
+The plugins configured at the top of :file:`.config/nvim/init.vim` have lots
+and lots of options. Here I’m only highlighting the options I use the most, but
+definitely check out each homepage to see all the other weird and wonderful
+ways they can be used.
+
+
+neoterm
+~~~~~~~
+
+Provides a separate terminal in vim.
+
+`homepage <https://github.com/kassio/neoterm>`_
+
+With a terminal inside vim, you can send text between that terminal and a file
+you have open. As described in the “Using R with nvim” section, this lets you
+reproduce an RStudio-like environment purely from the terminal.
+
+The following commands are custom mappings set in :file:`.config/nvim/init.vim`
+that affect the terminal use:
+
+.. list-table::
+
+    * - command
+      - mode
+      - description
     * - :kbd:`,t`
       - normal
       - Open neoterm terminal to the right.
     * - :kbd:`,te`
       - normal
-      - Open neoterm terminal to the right, and immediatly activate the conda environment in the `./env` directory
+      - Open neoterm terminal to the right, and immediately activate the conda environment in the `./env` directory
     * - :kbd:`,t1e`
       - normal
       - Same as above, but 1 dir above in  `../env`
@@ -112,10 +142,10 @@ talking about a terminal) expect Neovim and the neoterm plugin.
       - Send the current RMarkdown code chunk to the neoterm buffer, and jump to the next chunk
     * - :kbd:`gxx`
       - normal
-      - Send the current line to the neoterm buffer
+      - Send the current *line* to the neoterm buffer
     * - :kbd:`gx`
       - visual
-      - Send the selection to the neoterm buffer
+      - Send the current *selection* to the neoterm buffer
     * - :kbd:`,k`
       - normal
       - Render the current RMarkdown file to HTML using `knitr::render()`.
@@ -123,319 +153,276 @@ talking about a terminal) expect Neovim and the neoterm plugin.
         buffer
 
 
-Plugins
--------
 
-The plugins configured at the top of ``.config/nvim/init.vim`` have lots
-and lots of options. Here I’m only highlighting the options I use the
-most, but definitely check out each homepage to see all the other weird
-and wonderful ways they can be used.
-
-
-
-+----------------------------------------+-----------------------------+
-| Plugin                                 | Description                 |
-+========================================+=============================+
-| ``neoterm`` `[section] <#neoterm>`__   | Provides a separate         |
-| `[repo]                                | terminal in vim             |
-| <https://github.com/kassio/neoterm>`__ |                             |
-+----------------------------------------+-----------------------------+
-| `                                      | Autocomplete most things by |
-| `supertab``\ `[section] <#supertab>`__ | hitting                     |
-| `[repo] <ht                            |                             |
-| tps://github.com/ervandew/supertab>`__ |                             |
-+----------------------------------------+-----------------------------+
-| ``python-syntax``                      | Sophisticated python syntax |
-| `[section] <#python-syntax>`__         | highlighting.               |
-| `[repo] <https://g                     |                             |
-| ithub.com/vim-python/python-syntax>`__ |                             |
-+----------------------------------------+-----------------------------+
-| ``Vimjas/vim-python-pep8-indent``      | Indent python using pep8    |
-|                                        | recommendations             |
-+----------------------------------------+-----------------------------+
-| ``vim-pandoc/vim-rmarkdown``           | Nice RMarkdown syntax       |
-|                                        | highlighting                |
-+----------------------------------------+-----------------------------+
-| ``vim-pandoc/vim-pandoc``              | Required for vim-rmarkdown  |
-+----------------------------------------+-----------------------------+
-| ``vim-pandoc/vim-pandoc-syntax``       | Required for vim-rmarkdown, |
-|                                        | lots of other nice syntax   |
-|                                        | highlighting, too           |
-+----------------------------------------+-----------------------------+
-| ``dhruvasagar/vim-table-mode``         | Easily create Markdown or   |
-|                                        | ReST tables                 |
-+----------------------------------------+-----------------------------+
-| ``tmhedberg/SimpylFold``               | Nice folding for Python     |
-+----------------------------------------+-----------------------------+
-| ``vim-scripts/vis``                    | Operations in visual block  |
-|                                        | mode respect selection      |
-+----------------------------------------+-----------------------------+
-| ``scrooloose/nerdcommenter``           | Comment large blocks of     |
-|                                        | text                        |
-+----------------------------------------+-----------------------------+
-| ``scrooloose/nerdtree``                | File browser for vim        |
-+----------------------------------------+-----------------------------+
-| ``roxma/vim-tmux-clipboard``           | Copy yanked text from vim   |
-|                                        | into tmux’s clipboard and   |
-|                                        | vice versa.                 |
-+----------------------------------------+-----------------------------+
-| ``tmux-plugins/vim-tmux-focus-events`` | Makes tmux and vim play     |
-|                                        | nicer together.             |
-+----------------------------------------+-----------------------------+
-| ``tpope/vim-fugitive``                 | Run git from vim            |
-+----------------------------------------+-----------------------------+
-| ``tpope/vim-surround``                 | Quickly change surrounding  |
-|                                        | characters                  |
-+----------------------------------------+-----------------------------+
-| ``vim-airline/vim-airline``            | Nice statusline. Install    |
-|                                        | powerline fonts for full    |
-|                                        | effect.                     |
-+----------------------------------------+-----------------------------+
-| ``vim-airline/vim-airline-themes``     | Themes for the statusline   |
-+----------------------------------------+-----------------------------+
-| ``chrisbra/vim-diff-enhanced``         | Provides additional diff    |
-|                                        | algorithms                  |
-+----------------------------------------+-----------------------------+
-| ``flazz/vim-colorschemes``             | Pile ’o colorschemes        |
-+----------------------------------------+-----------------------------+
-| ``felixhummel/setcolors.vim``          | ``:SetColors all`` and then |
-|                                        | use F8 to change            |
-|                                        | colorscheme                 |
-+----------------------------------------+-----------------------------+
-| ``jremmen/vim-ripgrep``                | Search current directory    |
-|                                        | for lines in files          |
-|                                        | containing word under       |
-|                                        | cursor                      |
-+----------------------------------------+-----------------------------+
-| ``singularityware/singularity.lang``   | Syntax highlighting for     |
-|                                        | Singularity                 |
-+----------------------------------------+-----------------------------+
-
-```kassio/neoterm`` <https://github.com/kassio/neoterm>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Provides a separate terminal in vim. That way you can send text between
-that terminal and a file you have open. As described in the “Using R
-with nvim” section, this lets you reproduce an RStudio-like environment
-purely from the terminal.
-
-The following commands are custom mappings set in
-`.config/nvim/init.vim <.config/nvim/init.vim>`__ that affect the
-terminal use:
-
-+---------+------------------------------------------------------------+
-| command | description                                                |
-+=========+============================================================+
-| ``<lea  | Open a terminal in a new window to the right               |
-| der>t`` |                                                            |
-+---------+------------------------------------------------------------+
-| ``gx``  | Send the current selection to the terminal                 |
-+---------+------------------------------------------------------------+
-| ``gxx`` | Send the current line to the terminal                      |
-+---------+------------------------------------------------------------+
-| ``<lead | Send the current RMarkdown chunk to the terminal (which is |
-| er>cd`` | assumed to be running R)                                   |
-+---------+------------------------------------------------------------+
-
-```ervandew/supertab`` <https://github.com/ervandew/supertab>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+supertab
+~~~~~~~~
 
 Autocomplete most things with ``TAB`` in insert mode.
 
-```vim-python/python-syntax`` <https://github.com/vim-python/python-syntax>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`homepaage <https://github.com/ervandew/supertab>`_
 
-Sophisticated python syntax highlighting, for example within format
-strings. Happens automatically when editing Python files.
+This is enabled automatically when the plugin is installed.
 
-```Vimjas/vim-python-pep8-indent`` <https://github.com/Vimjas/vim-python-pep8-indent>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python-syntax
+~~~~~~~~~~~~~
+Sophisticated Python syntax highlighting.
 
-Auto-indent Python using pep8 recommendations. This happens as you’re
-typing, or when you use ``gq`` on a selection.
+`homepage https://github.com/vim-python/python-syntax>`_
 
-```vim-pandoc/vim-rmarkdown`` <https://github.com/vim-pandoc/vim-rmarkdown>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This happens automatically when editing Python files.
+The syntax highlighting works for example within format
+strings, within docstrings, reserved keywords. Happens automatically when
+editing Python files.
 
-Syntax highlight R within RMarkdown code chunks. Requires both
-``vim-pandoc`` and ``vim-pandoc-syntax``, described below.
+SimpylFold
+~~~~~~~~~~
 
-```vim-pandoc/vim-pandoc`` <https://github.com/vim-pandoc/vim-pandoc>`__ and ```vim-pandoc/vim-pandoc-syntax`` <https://github.com/vim-pandoc/vim-pandoc-syntax>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nice code folding for Python.
 
-Integration with pandoc, including folding and formatting. Lots of
-shortcuts defined, see `this section of the
-help <https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390>`__
+`homepage <https://github.com/tmhedberg/SimpylFold>`_
+
+
+Use built-in vim commands for folding like ``zc``, ``zn``, ``zM`` as follows:
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`zn`
+      - unfold everything
+    * - :kbd:`zM`
+      - fold everything
+    * - :kbd:`zc`
+      - toggle folding of current block
+
+vim-python-pep8-indent
+~~~~~~~~~~~~~~~~~~~~~~
+
+Auto-indent Python using pep8 recommendations.
+
+`homepage <https://github.com/Vimjas/vim-python-pep8-indent>`_
+
+This happens as you’re typing, or when you use :kbd:`gq` on a selection to wrap
+it.
+
+vim-rmarkdown
+~~~~~~~~~~~~~
+
+Syntax highlight R within RMarkdown code chunks.
+
+`homepage <https://github.com/vim-pandoc/vim-rmarkdown>`_
+
+Requires both ``vim-pandoc`` and ``vim-pandoc-syntax``, described below.
+
+vim-pandoc
+~~~~~~~~~~
+
+Integration with `pandoc <http://johnmacfarlane.net/pandoc/>`_.
+
+`homepage <https://github.com/vim-pandoc/vim-pandoc>`_
+
+Includes folding and formatting. Lots of shortcuts defined, see `this section
+of the help
+<https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390>`_
 for more.
 
-+-----+----------------------------------------------------------------+
-| c   | description                                                    |
-| omm |                                                                |
-| and |                                                                |
-+=====+================================================================+
-| ``  | Open a table contents for the current document that you can    |
-| :TO | use to navigate the document                                   |
-| C`` |                                                                |
-+-----+----------------------------------------------------------------+
+Uses vim-pandoc-syntax (see below) for syntax highlighting.
 
-```vis`` <vim-scripts/vis>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. list-table::
 
-When selecting things in visual block mode, by default operations
+    * - command
+      - description
+    * - :kbd:`:TOC`
+      - Open a table of contents for the current document that you can use to
+        navigate
+
+vim-pandoc-syntax
+~~~~~~~~~~~~~~~~~
+
+Used by vim-pandoc (above)
+
+`homepage <https://github.com/vim-pandoc/vim-pandoc-syntax>`_
+
+vis
+~~~
+Better behavior on visual blocks.
+
+`homepage <vim-scripts/vis>`_
+
+By default, when selecting things in visual block mode, operations
 (substitutions, sorting) operate on the entire line, not just the block.
+However sometimes you want to edit just the visual block selection, for example
+when editing TSV files.
 
-================================================= ======================
-command                                           description
-================================================= ======================
-Ctrl-v, then select, then ``:B`` instead of ``:`` Operates on block only
-================================================= ======================
+.. list-table::
 
-```scrooloose/nerdcommenter`` <https://github.com/scrooloose/nerdcommenter>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    * - command
+      - description
+    * - :kbd:`Ctrl-v`, then use `:B` instead of `:`
+      - Operates on visual block selection only
 
-Easily comment blocks of text
+nerdcommenter
+~~~~~~~~~~~~~
 
-============== =================================
-command        description
-============== =================================
-``<leader>cc`` Comment current or selected lines
-============== =================================
+Easily comment blocks of text.
 
-```scrooloose/nerdtree`` <https://github.com/scrooloose/nerdtree>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`homepage <https://github.com/scrooloose/nerdcommenter>`_
 
-Open up a file browser, navigate it with vim movement keys, and hit
-``Enter`` to open the file in a new buffer.
+.. list-table::
 
-============= ===================
-command       description
-============= ===================
-``<leader>n`` Toggle file browser
-============= ===================
+    * - command
+      - description
+    * - :kbd:`,cc`
+      - Comment current or selected lines
 
-```vim-airline/vim-airline`` <https://github.com/vim-airline/vim-airline>`__ and ```vim-airline/vim-airline-themes`` <https://github.com/vim-airline/vim-airline/wiki/Screenshots>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Nice statusline. Install powerline fonts for full effect (with
-``./setup.py --powerline-fonts`` using the setup script in this
-repository)
+nerdtree
+~~~~~~~~
 
-```roxma/vim-tmux-clipboard``, ``tmux-plugins/vim-tmux-focus-events`` <https://github.com/roxma/vim-tmux-clipboard>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Open up a file browser for finding/selecting files to edit.
 
-Copy yanked text from vim into tmux’s clipboard and vice versa. The
-focus-events plugin is also needed for this to work.
+`homepage <https://github.com/scrooloose/nerdtree>`_
 
-```tpope/vim-fugitive`` <https://github.com/tpope/vim-fugitive>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open up a file browser, navigate it with vim movement keys, and hit ``Enter``
+to open the file in a new buffer.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`,n`
+      - toggle file browser
+
+
+vim-airline
+~~~~~~~~~~~
+Nice statusline, plus "tabs" that allow you to easily switch between open files
+and copy/paste between them.
+
+`homepage <https://github.com/vim-airline/vim-airline>`
+
+Install powerline fonts for full effect (``./setup.sh --powerline``). See below
+for themes.
+
+vim-airline-themes
+~~~~~~~~~~~~~~~~~~
+Themes for use with vim-airline.
+
+`homepage <https://github.com/vim-airline/vim-airline/wiki/Screenshots>`_
+
+
+vim-tmux-clipboard
+~~~~~~~~~~~~~~~~~~
+
+Automatically copy yanked text from vim into the tmux clipboard.
+
+`homepage <https://github.com/roxma/vim-tmux-clipboard>`
+
+See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
+usage details. Note that this also requires the `vim-tmux-focus-events
+<https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin as well.
+
+
+vim-fugitive
+~~~~~~~~~~~~
 
 Run git from vim.
 
-I mostly use it for making incremental commits from within vim. This
-makes it a terminal-only version of
-`git-cola <https://git-cola.github.io>`__. Specifically:
+`homepage <https://github.com/tpope/vim-fugitive>`_
 
-+-----+----------------------------------------------------------------+
-| c   | description                                                    |
-| omm |                                                                |
-| and |                                                                |
-+=====+================================================================+
-| `   | Split the current buffer, showing the current version on one   |
-| `:G | side and the last-committed version in the other side          |
-| dif |                                                                |
-| f`` |                                                                |
-+-----+----------------------------------------------------------------+
-| ``: | After saving the buffer, commit to git (without having to jump |
-| Gco | back out to terminal) \`:Gcommit -m “commit notes” works, too. |
-| mmi |                                                                |
-| t`` |                                                                |
-+-----+----------------------------------------------------------------+
+I mostly use this for making incremental commits from within vim. This makes it
+a terminal-only version of `git-cola <https://git-cola.github.io>`__.
+Specifically:
+
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`:Gdiff`
+      - Split the current buffer, showing the current version on one side and
+        the last-committed version on the other
+    * - :kbd:`Gcommit`
+      - After saving the buffer, commit to git (without having to jump back out
+        the terminal). ``:Gcommit -m "commit message..."`` works too.
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``:
 
-======= ========================================================
-command description
-======= ========================================================
-``]c``  Go to the next diff.
-``[c``  Go to the previous diff
-``do``  Use the **o**\ ther file’s contents for the current diff
-``dp``  **p**\ ut the contents of this diff into the other file
-======= ========================================================
+.. list-table::
 
-```chrisbra/vim-diff-enhanced`` <https://github.com/chrisbra/vim-diff-enhanced>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    * - command
+      - description
+    * - :kbd:`]c`
+      - Go to the next diff
+    * - :kbd:`[c`
+      - Go to the previous diff
+    * - :kbd:`do`
+      - Use the [o]ther file's contents for the current diff
+    * - :kbd:`dp`
+      - [P]ut the contents of this diff into the other file
+
+vim-diff-enhanced
+~~~~~~~~~~~~~~~~~
 
 Provides additional diff algorithms that work better on certain kinds of
 files.
 
-+------------------------+---------------------------------------------+
-| command                | description                                 |
-+========================+=============================================+
-| ``:Enha                | Configure the diff algorithm to use, see    |
-| ncedDiff <algorithm>`` | below table                                 |
-+------------------------+---------------------------------------------+
+`homepage: <https://github.com/chrisbra/vim-diff-enhanced>`_
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`:EnhancedDiff <algorithm>`
+      - Configure the diff algorithm to use, see below table
+
 
 The following algorithms are available:
 
-+--------+-------------------------------------------------------------+
-| Alg    | Description                                                 |
-| orithm |                                                             |
-+========+=============================================================+
-| myers  | Default diff algorithm                                      |
-+--------+-------------------------------------------------------------+
-| d      | Alias for myers                                             |
-| efault |                                                             |
-+--------+-------------------------------------------------------------+
-| m      | Like myers, but tries harder to minimize the resulting diff |
-| inimal |                                                             |
-+--------+-------------------------------------------------------------+
-| pa     | Use the patience diff algorithm                             |
-| tience |                                                             |
-+--------+-------------------------------------------------------------+
-| his    | Use the histogram diff algorithm (similar to patience but   |
-| togram | slightly faster)                                            |
-+--------+-------------------------------------------------------------+
+.. list-table::
 
-```dhruvasagar/vim-table-mode`` <https://github.com/vim-pandoc/vim-pandoc-syntax>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    * - algorithm
+      - description
+    * - myers
+      - Default diff algorithm
+    * - default
+      - alias for `myers`
+    * - minimal
+      - Like myers, but tries harder to minimize the resulting diff
+    * - patience
+      - Patience diff algorithm
+    * - histogram
+      - Histogram is similar to patience but slightly faster
+
+
+vim-table-mode
+~~~~~~~~~~~~~~
+
+Easy formatting of tables in Markdown and Restructured Text.
+
+`homepage <https://github.com/vim-pandoc/vim-pandoc-syntax>`_
 
 Nice Markdown tables are a pain to format. This plugin makes it easy, by
 auto-padding table cells and adding the header lines as needed.
 
-+-----------------+----------------------------------------------------+
-| command         | description                                        |
-+=================+====================================================+
-| ``:Ta           | enables table mode                                 |
-| bleModeEnable`` |                                                    |
-+-----------------+----------------------------------------------------+
-| ``:Tab          | disables table mode                                |
-| leModeDisable`` |                                                    |
-+-----------------+----------------------------------------------------+
-| ``:Tableize     | realigns an existing table (adding padding as      |
-|       | creates | necessary)                                         |
-|  a markdown or  |                                                    |
-| ReST table base |                                                    |
-| d on TSV or CSV |                                                    |
-|  text | |``:Tab |                                                    |
-| leModeRealign\` |                                                    |
-+-----------------+----------------------------------------------------+
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`:TableModeEnable`
+      - Enables table mode, which makes on-the-fly adjustements to table cells
+        as they're edited
+    * - :kbd:`:TableModeDisable`
+      - Disables table mode
+    * - :kbd:`:Tableize`
+      - Creates a markdown or restructured text table based on TSV or CSV text
+    * - :kbd:`TableModeRealign`
+      - Realigns an existing table, adding padding as necessary
 
 See the homepage for, e.g., using ``||`` to auto-create header lines.
-
-```tmhedberg/SimpylFold`` <https://github.com/tmhedberg/SimpylFold>`__
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Nice folding for Python, using built-in vim commands for folding like
-``zc``, ``zn``, ``zM``.
-
-======= ===============================
-command description
-======= ===============================
-``zn``  unfold everything
-``zM``  fold everything
-``zc``  toggle folding of current block
-======= ===============================
 
 Working with R in nvim
 ----------------------

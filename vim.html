@@ -34,7 +34,7 @@
             
   <div class="section" id="vim-neovim">
 <span id="vim"></span><h1>Vim / Neovim<a class="headerlink" href="#vim-neovim" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> and <code class="docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code> have the same contents.</p>
+<p><code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> and <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code> have the same contents.</p>
 <p>In the <a class="reference external" href=".config/nvim/init.vim">.config/nvim/init.vim</a> file in this
 repo:</p>
 <ul class="simple">
@@ -120,55 +120,84 @@ to type</p></td>
 <td><p>macro to surround the line with quotes and add a trailing comma, making
 it easy to make Python or R lists out of pasted text</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,t</kbd></p></td>
+</tbody>
+</table>
+</div>
+<div class="section" id="plugins">
+<h2>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h2>
+<p>The plugins configured at the top of <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code> have lots
+and lots of options. Here I’m only highlighting the options I use the most, but
+definitely check out each homepage to see all the other weird and wonderful
+ways they can be used.</p>
+<div class="section" id="neoterm">
+<h3>neoterm<a class="headerlink" href="#neoterm" title="Permalink to this headline">¶</a></h3>
+<p>Provides a separate terminal in vim.</p>
+<p><a class="reference external" href="https://github.com/kassio/neoterm">homepage</a></p>
+<p>With a terminal inside vim, you can send text between that terminal and a file
+you have open. As described in the “Using R with nvim” section, this lets you
+reproduce an RStudio-like environment purely from the terminal.</p>
+<p>The following commands are custom mappings set in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>
+that affect the terminal use:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>mode</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,t</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Open neoterm terminal to the right.</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,te</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,te</kbd></p></td>
 <td><p>normal</p></td>
-<td><p>Open neoterm terminal to the right, and immediatly activate the conda environment in the <cite>./env</cite> directory</p></td>
+<td><p>Open neoterm terminal to the right, and immediately activate the conda environment in the <cite>./env</cite> directory</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,t1e</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,t1e</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Same as above, but 1 dir above in  <cite>../env</cite></p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,t2e</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,t2e</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Same as above, but 2 dir above in  <cite>../../env</cite></p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,t3e</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,t3e</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Same as above, but 2 dir above in  <cite>../../../env</cite></p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">Alt-w</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">Alt-w</kbd></p></td>
 <td><p>normal or insert</p></td>
 <td><p>Move to terminal on right and enter insert mode</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,w</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,w</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Same as above, but normal mode only</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">Alt-q</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">Alt-q</kbd></p></td>
 <td><p>normal or insert</p></td>
 <td><p>Move to buffer on left and enter normal mode</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,q</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,q</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Same as above, but normal mode only</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,cd</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,cd</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Send the current RMarkdown code chunk to the neoterm buffer, and jump to the next chunk</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">gxx</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">gxx</kbd></p></td>
 <td><p>normal</p></td>
-<td><p>Send the current line to the neoterm buffer</p></td>
+<td><p>Send the current <em>line</em> to the neoterm buffer</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">gx</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">gx</kbd></p></td>
 <td><p>visual</p></td>
-<td><p>Send the selection to the neoterm buffer</p></td>
+<td><p>Send the current <em>selection</em> to the neoterm buffer</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,k</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,k</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Render the current RMarkdown file to HTML using <cite>knitr::render()</cite>.
 Assumes you have knitr installed and you’re running R in a neoterm
@@ -177,312 +206,195 @@ buffer</p></td>
 </tbody>
 </table>
 </div>
-<div class="section" id="plugins">
-<h2>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h2>
-<p>The plugins configured at the top of <code class="docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code> have lots
-and lots of options. Here I’m only highlighting the options I use the
-most, but definitely check out each homepage to see all the other weird
-and wonderful ways they can be used.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 58%" />
-<col style="width: 42%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Plugin</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">neoterm</span></code> <a class="reference external" href="#neoterm">[section]</a>
-<a class="reference external" href="https://github.com/kassio/neoterm">[repo]</a></p></td>
-<td><p>Provides a separate
-terminal in vim</p></td>
-</tr>
-<tr class="row-odd"><td><p>`
-<cite>supertab`</cite><a class="reference external" href="#supertab">[section]</a>
-<a class="reference external" href="https://github.com/ervandew/supertab">[repo]</a></p></td>
-<td><p>Autocomplete most things by
-hitting</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">python-syntax</span></code>
-<a class="reference external" href="#python-syntax">[section]</a>
-<a class="reference external" href="https://github.com/vim-python/python-syntax">[repo]</a></p></td>
-<td><p>Sophisticated python syntax
-highlighting.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Vimjas/vim-python-pep8-indent</span></code></p></td>
-<td><p>Indent python using pep8
-recommendations</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim-pandoc/vim-rmarkdown</span></code></p></td>
-<td><p>Nice RMarkdown syntax
-highlighting</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vim-pandoc/vim-pandoc</span></code></p></td>
-<td><p>Required for vim-rmarkdown</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim-pandoc/vim-pandoc-syntax</span></code></p></td>
-<td><p>Required for vim-rmarkdown,
-lots of other nice syntax
-highlighting, too</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dhruvasagar/vim-table-mode</span></code></p></td>
-<td><p>Easily create Markdown or
-ReST tables</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tmhedberg/SimpylFold</span></code></p></td>
-<td><p>Nice folding for Python</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vim-scripts/vis</span></code></p></td>
-<td><p>Operations in visual block
-mode respect selection</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scrooloose/nerdcommenter</span></code></p></td>
-<td><p>Comment large blocks of
-text</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scrooloose/nerdtree</span></code></p></td>
-<td><p>File browser for vim</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">roxma/vim-tmux-clipboard</span></code></p></td>
-<td><p>Copy yanked text from vim
-into tmux’s clipboard and
-vice versa.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tmux-plugins/vim-tmux-focus-events</span></code></p></td>
-<td><p>Makes tmux and vim play
-nicer together.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tpope/vim-fugitive</span></code></p></td>
-<td><p>Run git from vim</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tpope/vim-surround</span></code></p></td>
-<td><p>Quickly change surrounding
-characters</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim-airline/vim-airline</span></code></p></td>
-<td><p>Nice statusline. Install
-powerline fonts for full
-effect.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vim-airline/vim-airline-themes</span></code></p></td>
-<td><p>Themes for the statusline</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">chrisbra/vim-diff-enhanced</span></code></p></td>
-<td><p>Provides additional diff
-algorithms</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">flazz/vim-colorschemes</span></code></p></td>
-<td><p>Pile ’o colorschemes</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">felixhummel/setcolors.vim</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">:SetColors</span> <span class="pre">all</span></code> and then
-use F8 to change
-colorscheme</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">jremmen/vim-ripgrep</span></code></p></td>
-<td><p>Search current directory
-for lines in files
-containing word under
-cursor</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">singularityware/singularity.lang</span></code></p></td>
-<td><p>Syntax highlighting for
-Singularity</p></td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="kassio-neoterm-https-github-com-kassio-neoterm">
-<h3><code class="docutils literal notranslate"><span class="pre">`kassio/neoterm</span></code> &lt;<a class="reference external" href="https://github.com/kassio/neoterm">https://github.com/kassio/neoterm</a>&gt;`__<a class="headerlink" href="#kassio-neoterm-https-github-com-kassio-neoterm" title="Permalink to this headline">¶</a></h3>
-<p>Provides a separate terminal in vim. That way you can send text between
-that terminal and a file you have open. As described in the “Using R
-with nvim” section, this lets you reproduce an RStudio-like environment
-purely from the terminal.</p>
-<p>The following commands are custom mappings set in
-<a class="reference external" href=".config/nvim/init.vim">.config/nvim/init.vim</a> that affect the
-terminal use:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 87%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;lea</span>
-<span class="pre">der&gt;t</span></code></p></td>
-<td><p>Open a terminal in a new window to the right</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gx</span></code></p></td>
-<td><p>Send the current selection to the terminal</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gxx</span></code></p></td>
-<td><p>Send the current line to the terminal</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;lead</span>
-<span class="pre">er&gt;cd</span></code></p></td>
-<td><p>Send the current RMarkdown chunk to the terminal (which is
-assumed to be running R)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="ervandew-supertab-https-github-com-ervandew-supertab">
-<h3><code class="docutils literal notranslate"><span class="pre">`ervandew/supertab</span></code> &lt;<a class="reference external" href="https://github.com/ervandew/supertab">https://github.com/ervandew/supertab</a>&gt;`__<a class="headerlink" href="#ervandew-supertab-https-github-com-ervandew-supertab" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="supertab">
+<h3>supertab<a class="headerlink" href="#supertab" title="Permalink to this headline">¶</a></h3>
 <p>Autocomplete most things with <code class="docutils literal notranslate"><span class="pre">TAB</span></code> in insert mode.</p>
+<p><a class="reference external" href="https://github.com/ervandew/supertab">homepaage</a></p>
+<p>This is enabled automatically when the plugin is installed.</p>
 </div>
-<div class="section" id="vim-python-python-syntax-https-github-com-vim-python-python-syntax">
-<h3><code class="docutils literal notranslate"><span class="pre">`vim-python/python-syntax</span></code> &lt;<a class="reference external" href="https://github.com/vim-python/python-syntax">https://github.com/vim-python/python-syntax</a>&gt;`__<a class="headerlink" href="#vim-python-python-syntax-https-github-com-vim-python-python-syntax" title="Permalink to this headline">¶</a></h3>
-<p>Sophisticated python syntax highlighting, for example within format
-strings. Happens automatically when editing Python files.</p>
+<div class="section" id="python-syntax">
+<h3>python-syntax<a class="headerlink" href="#python-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Sophisticated Python syntax highlighting.</p>
+<p><a href="#id13"><span class="problematic" id="id14">`homepage https://github.com/vim-python/python-syntax&gt;`_</span></a></p>
+<p>This happens automatically when editing Python files.
+The syntax highlighting works for example within format
+strings, within docstrings, reserved keywords. Happens automatically when
+editing Python files.</p>
 </div>
-<div class="section" id="vimjas-vim-python-pep8-indent-https-github-com-vimjas-vim-python-pep8-indent">
-<h3><code class="docutils literal notranslate"><span class="pre">`Vimjas/vim-python-pep8-indent</span></code> &lt;<a class="reference external" href="https://github.com/Vimjas/vim-python-pep8-indent">https://github.com/Vimjas/vim-python-pep8-indent</a>&gt;`__<a class="headerlink" href="#vimjas-vim-python-pep8-indent-https-github-com-vimjas-vim-python-pep8-indent" title="Permalink to this headline">¶</a></h3>
-<p>Auto-indent Python using pep8 recommendations. This happens as you’re
-typing, or when you use <code class="docutils literal notranslate"><span class="pre">gq</span></code> on a selection.</p>
+<div class="section" id="simpylfold">
+<h3>SimpylFold<a class="headerlink" href="#simpylfold" title="Permalink to this headline">¶</a></h3>
+<p>Nice code folding for Python.</p>
+<p><a class="reference external" href="https://github.com/tmhedberg/SimpylFold">homepage</a></p>
+<p>Use built-in vim commands for folding like <code class="docutils literal notranslate"><span class="pre">zc</span></code>, <code class="docutils literal notranslate"><span class="pre">zn</span></code>, <code class="docutils literal notranslate"><span class="pre">zM</span></code> as follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">zn</kbd></p></td>
+<td><p>unfold everything</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">zM</kbd></p></td>
+<td><p>fold everything</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">zc</kbd></p></td>
+<td><p>toggle folding of current block</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section" id="vim-pandoc-vim-rmarkdown-https-github-com-vim-pandoc-vim-rmarkdown">
-<h3><code class="docutils literal notranslate"><span class="pre">`vim-pandoc/vim-rmarkdown</span></code> &lt;<a class="reference external" href="https://github.com/vim-pandoc/vim-rmarkdown">https://github.com/vim-pandoc/vim-rmarkdown</a>&gt;`__<a class="headerlink" href="#vim-pandoc-vim-rmarkdown-https-github-com-vim-pandoc-vim-rmarkdown" title="Permalink to this headline">¶</a></h3>
-<p>Syntax highlight R within RMarkdown code chunks. Requires both
-<code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code> and <code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code>, described below.</p>
+<div class="section" id="vim-python-pep8-indent">
+<h3>vim-python-pep8-indent<a class="headerlink" href="#vim-python-pep8-indent" title="Permalink to this headline">¶</a></h3>
+<p>Auto-indent Python using pep8 recommendations.</p>
+<p><a class="reference external" href="https://github.com/Vimjas/vim-python-pep8-indent">homepage</a></p>
+<p>This happens as you’re typing, or when you use <kbd class="kbd docutils literal notranslate">gq</kbd> on a selection to wrap
+it.</p>
 </div>
-<div class="section" id="vim-pandoc-vim-pandoc-https-github-com-vim-pandoc-vim-pandoc-and-vim-pandoc-vim-pandoc-syntax-https-github-com-vim-pandoc-vim-pandoc-syntax">
-<h3><code class="docutils literal notranslate"><span class="pre">`vim-pandoc/vim-pandoc</span></code> &lt;<a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc">https://github.com/vim-pandoc/vim-pandoc</a>&gt;`__ and <code class="docutils literal notranslate"><span class="pre">`vim-pandoc/vim-pandoc-syntax</span></code> &lt;<a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc-syntax">https://github.com/vim-pandoc/vim-pandoc-syntax</a>&gt;`__<a class="headerlink" href="#vim-pandoc-vim-pandoc-https-github-com-vim-pandoc-vim-pandoc-and-vim-pandoc-vim-pandoc-syntax-https-github-com-vim-pandoc-vim-pandoc-syntax" title="Permalink to this headline">¶</a></h3>
-<p>Integration with pandoc, including folding and formatting. Lots of
-shortcuts defined, see <a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390">this section of the
-help</a>
+<div class="section" id="vim-rmarkdown">
+<h3>vim-rmarkdown<a class="headerlink" href="#vim-rmarkdown" title="Permalink to this headline">¶</a></h3>
+<p>Syntax highlight R within RMarkdown code chunks.</p>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-rmarkdown">homepage</a></p>
+<p>Requires both <code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code> and <code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code>, described below.</p>
+</div>
+<div class="section" id="vim-pandoc">
+<h3>vim-pandoc<a class="headerlink" href="#vim-pandoc" title="Permalink to this headline">¶</a></h3>
+<p>Integration with <a class="reference external" href="http://johnmacfarlane.net/pandoc/">pandoc</a>.</p>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc">homepage</a></p>
+<p>Includes folding and formatting. Lots of shortcuts defined, see <a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390">this section
+of the help</a>
 for more.</p>
+<p>Uses vim-pandoc-syntax (see below) for syntax highlighting.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 7%" />
-<col style="width: 93%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>c
-omm
-and</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p>``
-:TO
-C``</p></td>
-<td><p>Open a table contents for the current document that you can
-use to navigate the document</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:TOC</kbd></p></td>
+<td><p>Open a table of contents for the current document that you can use to
+navigate</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="vis-vim-scripts-vis">
-<h3><code class="docutils literal notranslate"><span class="pre">`vis</span></code> &lt;vim-scripts/vis&gt;`__<a class="headerlink" href="#vis-vim-scripts-vis" title="Permalink to this headline">¶</a></h3>
-<p>When selecting things in visual block mode, by default operations
-(substitutions, sorting) operate on the entire line, not just the block.</p>
+<div class="section" id="vim-pandoc-syntax">
+<h3>vim-pandoc-syntax<a class="headerlink" href="#vim-pandoc-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Used by vim-pandoc (above)</p>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc-syntax">homepage</a></p>
+</div>
+<div class="section" id="vis">
+<h3>vis<a class="headerlink" href="#vis" title="Permalink to this headline">¶</a></h3>
+<p>Better behavior on visual blocks.</p>
+<p><a class="reference external" href="vim-scripts/vis">homepage</a></p>
+<p>By default, when selecting things in visual block mode, operations
+(substitutions, sorting) operate on the entire line, not just the block.
+However sometimes you want to edit just the visual block selection, for example
+when editing TSV files.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 69%" />
-<col style="width: 31%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p>Ctrl-v, then select, then <code class="docutils literal notranslate"><span class="pre">:B</span></code> instead of <code class="docutils literal notranslate"><span class="pre">:</span></code></p></td>
-<td><p>Operates on block only</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">Ctrl-v</kbd>, then use <cite>:B</cite> instead of <cite>:</cite></p></td>
+<td><p>Operates on visual block selection only</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="scrooloose-nerdcommenter-https-github-com-scrooloose-nerdcommenter">
-<h3><code class="docutils literal notranslate"><span class="pre">`scrooloose/nerdcommenter</span></code> &lt;<a class="reference external" href="https://github.com/scrooloose/nerdcommenter">https://github.com/scrooloose/nerdcommenter</a>&gt;`__<a class="headerlink" href="#scrooloose-nerdcommenter-https-github-com-scrooloose-nerdcommenter" title="Permalink to this headline">¶</a></h3>
-<p>Easily comment blocks of text</p>
+<div class="section" id="nerdcommenter">
+<h3>nerdcommenter<a class="headerlink" href="#nerdcommenter" title="Permalink to this headline">¶</a></h3>
+<p>Easily comment blocks of text.</p>
+<p><a class="reference external" href="https://github.com/scrooloose/nerdcommenter">homepage</a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;cc</span></code></p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,cc</kbd></p></td>
 <td><p>Comment current or selected lines</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="scrooloose-nerdtree-https-github-com-scrooloose-nerdtree">
-<h3><code class="docutils literal notranslate"><span class="pre">`scrooloose/nerdtree</span></code> &lt;<a class="reference external" href="https://github.com/scrooloose/nerdtree">https://github.com/scrooloose/nerdtree</a>&gt;`__<a class="headerlink" href="#scrooloose-nerdtree-https-github-com-scrooloose-nerdtree" title="Permalink to this headline">¶</a></h3>
-<p>Open up a file browser, navigate it with vim movement keys, and hit
-<code class="docutils literal notranslate"><span class="pre">Enter</span></code> to open the file in a new buffer.</p>
+<div class="section" id="nerdtree">
+<h3>nerdtree<a class="headerlink" href="#nerdtree" title="Permalink to this headline">¶</a></h3>
+<p>Open up a file browser for finding/selecting files to edit.</p>
+<p><a class="reference external" href="https://github.com/scrooloose/nerdtree">homepage</a></p>
+<p>Open up a file browser, navigate it with vim movement keys, and hit <code class="docutils literal notranslate"><span class="pre">Enter</span></code>
+to open the file in a new buffer.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 41%" />
-<col style="width: 59%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;n</span></code></p></td>
-<td><p>Toggle file browser</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,n</kbd></p></td>
+<td><p>toggle file browser</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="vim-airline-vim-airline-https-github-com-vim-airline-vim-airline-and-vim-airline-vim-airline-themes-https-github-com-vim-airline-vim-airline-wiki-screenshots">
-<h3><code class="docutils literal notranslate"><span class="pre">`vim-airline/vim-airline</span></code> &lt;<a class="reference external" href="https://github.com/vim-airline/vim-airline">https://github.com/vim-airline/vim-airline</a>&gt;`__ and <code class="docutils literal notranslate"><span class="pre">`vim-airline/vim-airline-themes</span></code> &lt;<a class="reference external" href="https://github.com/vim-airline/vim-airline/wiki/Screenshots">https://github.com/vim-airline/vim-airline/wiki/Screenshots</a>&gt;`__<a class="headerlink" href="#vim-airline-vim-airline-https-github-com-vim-airline-vim-airline-and-vim-airline-vim-airline-themes-https-github-com-vim-airline-vim-airline-wiki-screenshots" title="Permalink to this headline">¶</a></h3>
-<p>Nice statusline. Install powerline fonts for full effect (with
-<code class="docutils literal notranslate"><span class="pre">./setup.py</span> <span class="pre">--powerline-fonts</span></code> using the setup script in this
-repository)</p>
+<div class="section" id="vim-airline">
+<h3>vim-airline<a class="headerlink" href="#vim-airline" title="Permalink to this headline">¶</a></h3>
+<p>Nice statusline, plus “tabs” that allow you to easily switch between open files
+and copy/paste between them.</p>
+<p><cite>homepage &lt;https://github.com/vim-airline/vim-airline&gt;</cite></p>
+<p>Install powerline fonts for full effect (<code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--powerline</span></code>). See below
+for themes.</p>
 </div>
-<div class="section" id="roxma-vim-tmux-clipboard-tmux-plugins-vim-tmux-focus-events-https-github-com-roxma-vim-tmux-clipboard">
-<h3><code class="docutils literal notranslate"><span class="pre">`roxma/vim-tmux-clipboard</span></code>, <code class="docutils literal notranslate"><span class="pre">tmux-plugins/vim-tmux-focus-events</span></code> &lt;<a class="reference external" href="https://github.com/roxma/vim-tmux-clipboard">https://github.com/roxma/vim-tmux-clipboard</a>&gt;`__<a class="headerlink" href="#roxma-vim-tmux-clipboard-tmux-plugins-vim-tmux-focus-events-https-github-com-roxma-vim-tmux-clipboard" title="Permalink to this headline">¶</a></h3>
-<p>Copy yanked text from vim into tmux’s clipboard and vice versa. The
-focus-events plugin is also needed for this to work.</p>
+<div class="section" id="vim-airline-themes">
+<h3>vim-airline-themes<a class="headerlink" href="#vim-airline-themes" title="Permalink to this headline">¶</a></h3>
+<p>Themes for use with vim-airline.</p>
+<p><a class="reference external" href="https://github.com/vim-airline/vim-airline/wiki/Screenshots">homepage</a></p>
 </div>
-<div class="section" id="tpope-vim-fugitive-https-github-com-tpope-vim-fugitive">
-<h3><code class="docutils literal notranslate"><span class="pre">`tpope/vim-fugitive</span></code> &lt;<a class="reference external" href="https://github.com/tpope/vim-fugitive">https://github.com/tpope/vim-fugitive</a>&gt;`__<a class="headerlink" href="#tpope-vim-fugitive-https-github-com-tpope-vim-fugitive" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="vim-tmux-clipboard">
+<h3>vim-tmux-clipboard<a class="headerlink" href="#vim-tmux-clipboard" title="Permalink to this headline">¶</a></h3>
+<p>Automatically copy yanked text from vim into the tmux clipboard.</p>
+<p><cite>homepage &lt;https://github.com/roxma/vim-tmux-clipboard&gt;</cite></p>
+<p>See this <a class="reference external" href="https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy">screencast</a> for
+usage details. Note that this also requires the <a class="reference external" href="https://github.com/tmux-plugins/vim-tmux-focus-events">vim-tmux-focus-events</a> plugin as well.</p>
+</div>
+<div class="section" id="vim-fugitive">
+<h3>vim-fugitive<a class="headerlink" href="#vim-fugitive" title="Permalink to this headline">¶</a></h3>
 <p>Run git from vim.</p>
-<p>I mostly use it for making incremental commits from within vim. This
-makes it a terminal-only version of
-<a class="reference external" href="https://git-cola.github.io">git-cola</a>. Specifically:</p>
+<p><a class="reference external" href="https://github.com/tpope/vim-fugitive">homepage</a></p>
+<p>I mostly use this for making incremental commits from within vim. This makes it
+a terminal-only version of <a class="reference external" href="https://git-cola.github.io">git-cola</a>.
+Specifically:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 7%" />
-<col style="width: 93%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>c
-omm
-and</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p>`
-<cite>:G
-dif
-f`</cite></p></td>
-<td><p>Split the current buffer, showing the current version on one
-side and the last-committed version in the other side</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:</span>
-<span class="pre">Gco</span>
-<span class="pre">mmi</span>
-<span class="pre">t</span></code></p></td>
-<td><p>After saving the buffer, commit to git (without having to jump
-back out to terminal) `:Gcommit -m “commit notes” works, too.</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:Gdiff</kbd></p></td>
+<td><p>Split the current buffer, showing the current version on one side and
+the last-committed version on the other</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">Gcommit</kbd></p></td>
+<td><p>After saving the buffer, commit to git (without having to jump back out
+the terminal). <code class="docutils literal notranslate"><span class="pre">:Gcommit</span> <span class="pre">-m</span> <span class="pre">&quot;commit</span> <span class="pre">message...&quot;</span></code> works too.</p></td>
 </tr>
 </tbody>
 </table>
@@ -490,166 +402,114 @@ back out to terminal) `:Gcommit -m “commit notes” works, too.</p></td>
 are used heavily when working with <code class="docutils literal notranslate"><span class="pre">:Gdiff</span></code>:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 89%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">]c</span></code></p></td>
-<td><p>Go to the next diff.</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[c</span></code></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">]c</kbd></p></td>
+<td><p>Go to the next diff</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">[c</kbd></p></td>
 <td><p>Go to the previous diff</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">do</span></code></p></td>
-<td><p>Use the <strong>o</strong>ther file’s contents for the current diff</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">do</kbd></p></td>
+<td><p>Use the [o]ther file’s contents for the current diff</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dp</span></code></p></td>
-<td><p><strong>p</strong>ut the contents of this diff into the other file</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">dp</kbd></p></td>
+<td><p>[P]ut the contents of this diff into the other file</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="chrisbra-vim-diff-enhanced-https-github-com-chrisbra-vim-diff-enhanced">
-<h3><code class="docutils literal notranslate"><span class="pre">`chrisbra/vim-diff-enhanced</span></code> &lt;<a class="reference external" href="https://github.com/chrisbra/vim-diff-enhanced">https://github.com/chrisbra/vim-diff-enhanced</a>&gt;`__<a class="headerlink" href="#chrisbra-vim-diff-enhanced-https-github-com-chrisbra-vim-diff-enhanced" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="vim-diff-enhanced">
+<h3>vim-diff-enhanced<a class="headerlink" href="#vim-diff-enhanced" title="Permalink to this headline">¶</a></h3>
 <p>Provides additional diff algorithms that work better on certain kinds of
 files.</p>
+<p><a class="reference external" href="https://github.com/chrisbra/vim-diff-enhanced">homepage:</a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 35%" />
-<col style="width: 65%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:Enha</span>
-<span class="pre">ncedDiff</span> <span class="pre">&lt;algorithm&gt;</span></code></p></td>
-<td><p>Configure the diff algorithm to use, see
-below table</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:EnhancedDiff &lt;algorithm&gt;</kbd></p></td>
+<td><p>Configure the diff algorithm to use, see below table</p></td>
 </tr>
 </tbody>
 </table>
 <p>The following algorithms are available:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 12%" />
-<col style="width: 88%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Alg
-orithm</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="row-odd"><td><p>algorithm</p></td>
+<td><p>description</p></td>
+</tr>
 <tr class="row-even"><td><p>myers</p></td>
 <td><p>Default diff algorithm</p></td>
 </tr>
-<tr class="row-odd"><td><p>d
-efault</p></td>
-<td><p>Alias for myers</p></td>
+<tr class="row-odd"><td><p>default</p></td>
+<td><p>alias for <cite>myers</cite></p></td>
 </tr>
-<tr class="row-even"><td><p>m
-inimal</p></td>
+<tr class="row-even"><td><p>minimal</p></td>
 <td><p>Like myers, but tries harder to minimize the resulting diff</p></td>
 </tr>
-<tr class="row-odd"><td><p>pa
-tience</p></td>
-<td><p>Use the patience diff algorithm</p></td>
+<tr class="row-odd"><td><p>patience</p></td>
+<td><p>Patience diff algorithm</p></td>
 </tr>
-<tr class="row-even"><td><p>his
-togram</p></td>
-<td><p>Use the histogram diff algorithm (similar to patience but
-slightly faster)</p></td>
+<tr class="row-even"><td><p>histogram</p></td>
+<td><p>Histogram is similar to patience but slightly faster</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="dhruvasagar-vim-table-mode-https-github-com-vim-pandoc-vim-pandoc-syntax">
-<h3><code class="docutils literal notranslate"><span class="pre">`dhruvasagar/vim-table-mode</span></code> &lt;<a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc-syntax">https://github.com/vim-pandoc/vim-pandoc-syntax</a>&gt;`__<a class="headerlink" href="#dhruvasagar-vim-table-mode-https-github-com-vim-pandoc-vim-pandoc-syntax" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="vim-table-mode">
+<h3>vim-table-mode<a class="headerlink" href="#vim-table-mode" title="Permalink to this headline">¶</a></h3>
+<p>Easy formatting of tables in Markdown and Restructured Text.</p>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc-syntax">homepage</a></p>
 <p>Nice Markdown tables are a pain to format. This plugin makes it easy, by
 auto-padding table cells and adding the header lines as needed.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 75%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:Ta</span>
-<span class="pre">bleModeEnable</span></code></p></td>
-<td><p>enables table mode</p></td>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:Tab</span>
-<span class="pre">leModeDisable</span></code></p></td>
-<td><p>disables table mode</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:TableModeEnable</kbd></p></td>
+<td><p>Enables table mode, which makes on-the-fly adjustements to table cells
+as they’re edited</p></td>
 </tr>
-<tr class="row-even"><td><dl>
-<dt><a href="#id1"><span class="problematic" id="id2">``</span></a>:Tableize</dt><dd><blockquote>
-<div><div class="line-block">
-<div class="line">creates</div>
-</div>
-</div></blockquote>
-<p>a markdown or</p>
-</dd>
-</dl>
-<p>ReST table base
-d on TSV or CSV</p>
-<blockquote>
-<div><p>text | <a href="#id3"><span class="problematic" id="id4">|</span></a><a href="#id5"><span class="problematic" id="id6">``</span></a>:Tab</p>
-</div></blockquote>
-<p>leModeRealign`</p>
-</td>
-<td><p>realigns an existing table (adding padding as
-necessary)</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">:TableModeDisable</kbd></p></td>
+<td><p>Disables table mode</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:Tableize</kbd></p></td>
+<td><p>Creates a markdown or restructured text table based on TSV or CSV text</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">TableModeRealign</kbd></p></td>
+<td><p>Realigns an existing table, adding padding as necessary</p></td>
 </tr>
 </tbody>
 </table>
 <p>See the homepage for, e.g., using <code class="docutils literal notranslate"><span class="pre">||</span></code> to auto-create header lines.</p>
-</div>
-<div class="section" id="tmhedberg-simpylfold-https-github-com-tmhedberg-simpylfold">
-<h3><code class="docutils literal notranslate"><span class="pre">`tmhedberg/SimpylFold</span></code> &lt;<a class="reference external" href="https://github.com/tmhedberg/SimpylFold">https://github.com/tmhedberg/SimpylFold</a>&gt;`__<a class="headerlink" href="#tmhedberg-simpylfold-https-github-com-tmhedberg-simpylfold" title="Permalink to this headline">¶</a></h3>
-<p>Nice folding for Python, using built-in vim commands for folding like
-<code class="docutils literal notranslate"><span class="pre">zc</span></code>, <code class="docutils literal notranslate"><span class="pre">zn</span></code>, <code class="docutils literal notranslate"><span class="pre">zM</span></code>.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 82%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zn</span></code></p></td>
-<td><p>unfold everything</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">zM</span></code></p></td>
-<td><p>fold everything</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zc</span></code></p></td>
-<td><p>toggle folding of current block</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div class="section" id="working-with-r-in-nvim">
 <h2>Working with R in nvim<a class="headerlink" href="#working-with-r-in-nvim" title="Permalink to this headline">¶</a></h2>
 <p>This assumes that you’re using neovim and have installed the neoterm
 plugin.</p>
+<div class="section" id="initial-setup">
+<h3>Initial setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline">¶</a></h3>
 <p>When first starting work on a file:</p>
 <ol class="arabic simple">
 <li><p>Open or create a new RMarkdown file with nvim</p></li>
@@ -660,6 +520,9 @@ plugin.</p>
 <li><p>Go back to the RMarkdown or R script, and use the commands above to
 send lines over.</p></li>
 </ol>
+</div>
+<div class="section" id="working-with-r">
+<h3>Working with R<a class="headerlink" href="#working-with-r" title="Permalink to this headline">¶</a></h3>
 <p>Once you have the terminal up and running:</p>
 <ol class="arabic simple">
 <li><p>Write some R code.</p></li>
@@ -671,6 +534,9 @@ jumps to the next one. This way you can <code class="docutils literal notranslat
 Rmd</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">,k</span></code> to render the current Rmd to HTML.</p></li>
 </ol>
+</div>
+<div class="section" id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes text gets garbled when using an interactive node on biowulf.
 This is due to a known bug in Slurm, but Biowulf is not intending on
 updating any time soon. The fix is <code class="docutils literal notranslate"><span class="pre">Ctrl-L</span></code> either in the Rmd buffer
@@ -678,6 +544,7 @@ or in the terminal buffer. And maybe <code class="docutils literal notranslate">
 highlighting.</p>
 <p>Remember that the terminal is a vim window, so to enter commands you
 need to be in insert mode.</p>
+</div>
 </div>
 </div>
 
