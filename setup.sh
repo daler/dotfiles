@@ -288,7 +288,7 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
     echo
-    printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall{$UNSET}\n"
+    printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall${UNSET}\n"
     echo
 
 # ----------------------------------------------------------------------------
