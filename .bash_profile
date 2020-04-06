@@ -26,11 +26,6 @@ fi
 # enable color support of ls and also add handy aliases
 if [ `command -v dircolors` ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-else
-    if [[ $OSTYPE == darwin* ]]; then
-        echo "Looks like you're on MacOS. Might want to 'conda install dircolors'"
-        echo "and re-run"
-    fi
 fi
 
 if [[ $OSTYPE == darwin* ]]; then
