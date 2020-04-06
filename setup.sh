@@ -478,7 +478,15 @@ elif [ $task == "--dotfiles" ]; then
 
     # Unique backup directory based on the hash of the current time, all
     # lowercase
-    BACKUP_DIR="$HOME/dotfiles-backup-$(date +%s | sha256sum | base64 | head -c 8 | tr [:upper:] [:lower:])"
+    #
+    # Mac doesn't have md5sum, so we use md5
+    if [[ $OSTYPE == darwin* ]]; then
+        md5program=md5
+    else
+        md5program=md5sum
+    fi
+
+    BACKUP_DIR="$HOME/dotfiles-backup-$(date +%s | $md5program | base64 | head -c 8 | tr [:upper:] [:lower:])"
 
     ok "Copies over all the dotfiles here to your home directory.
     - A backup will be made in $BACKUP_DIR
