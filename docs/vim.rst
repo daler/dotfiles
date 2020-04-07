@@ -47,8 +47,7 @@ pick-and-choose at will.
 Shortcuts
 ---------
 
-Here are the shortcuts defined. Note that many of these (the ones
-talking about a terminal) expect Neovim and the neoterm plugin.
+Here are some general shortcuts that are defined in the included config:
 
 .. list-table::
 
@@ -113,18 +112,6 @@ that affect the terminal use:
     * - :kbd:`,t`
       - normal
       - Open neoterm terminal to the right.
-    * - :kbd:`,te`
-      - normal
-      - Open neoterm terminal to the right, and immediately activate the conda environment in the `./env` directory
-    * - :kbd:`,t1e`
-      - normal
-      - Same as above, but 1 dir above in  `../env`
-    * - :kbd:`,t2e`
-      - normal
-      - Same as above, but 2 dir above in  `../../env`
-    * - :kbd:`,t3e`
-      - normal
-      - Same as above, but 2 dir above in  `../../../env`
     * - :kbd:`Alt-w`
       - normal or insert
       - Move to terminal on right and enter insert mode
@@ -151,6 +138,18 @@ that affect the terminal use:
       - Render the current RMarkdown file to HTML using `knitr::render()`.
         Assumes you have knitr installed and you're running R in a neoterm
         buffer
+    * - :kbd:`,te`
+      - normal
+      - Open neoterm terminal to the right, and immediately activate the conda environment in the `./env` directory
+    * - :kbd:`,t1e`
+      - normal
+      - Same as above, but 1 dir above in  `../env`
+    * - :kbd:`,t2e`
+      - normal
+      - Same as above, but 2 dir above in  `../../env`
+    * - :kbd:`,t3e`
+      - normal
+      - Same as above, but 3 dir above in  `../../../env`
 
 
 
