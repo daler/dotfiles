@@ -322,7 +322,14 @@ elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
     mkdir -p /tmp/rg
     RG_VERSION=11.0.2
-    download https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz /tmp/rg/ripgrep.tar.gz
+
+    if [[ $OSTYPE == darwin* ]]; then
+        URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-apple-darwin.tar.gz
+    else
+        URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz
+    fi
+
+    download $URL /tmp/rg/ripgrep.tar.gz
     cd /tmp/rg
     tar -xf ripgrep.tar.gz
     cp ripgrep*/rg ~/opt/bin
