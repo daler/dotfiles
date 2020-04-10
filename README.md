@@ -104,9 +104,7 @@ many of the `--install-<toolname>` commands expect a conda installation.
    dotfiles here (which are documented below). Or you may want to go
    through the dotfiles here to manually copy/paste into your dotfiles.
 
-   - **To use everything here**, run `./setup.sh --dotfiles`. This will make
-     a backup of any existing files so you can roll back any changes if you
-     don't like anything here.
+   - **To use everything here**, run `./setup.sh --dotfiles`.
 
    - **If manually copying**, be aware that subsequent commands expect that you
      have the directories `$HOME/miniconda3/bin` and `$HOME/opt/bin` on your
