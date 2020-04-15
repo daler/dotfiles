@@ -17,11 +17,11 @@ Plug 'tpope/vim-fugitive'                 " Run git from vim
 Plug 'chrisbra/vim-diff-enhanced'         " Provides additional diff algorithms
 Plug 'kassio/neoterm'                     " Provides a separate terminal in vim <Leader>t
 Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
-Plug 'felixhummel/setcolors.vim'
-Plug 'vim-pandoc/vim-rmarkdown'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'dhruvasagar/vim-table-mode'
+Plug 'felixhummel/setcolors.vim'          " Easily set colorschemes
+Plug 'vim-pandoc/vim-rmarkdown'           " Syntax highlighting for RMarkdown
+Plug 'vim-pandoc/vim-pandoc'              " Required for vim-rmarkdown
+Plug 'vim-pandoc/vim-pandoc-syntax'       " Required for vim-rmarkdown
+Plug 'dhruvasagar/vim-table-mode'         " Very easily make and work with markdown and restructured text tables
 Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
 call plug#end()
 
@@ -34,6 +34,7 @@ call plug#end()
 syntax on                      " Syntax highlighting; also does an implicit filetype on
 filetype plugin indent on      " Enable detection, plugin , and indent for filetype
 set backspace=indent,eol,start " This gets backspace to work in some situations
+set nrformats-=octal           " ?????
 
 " ----------------------------------------------------------------------------
 " Python-specific indentation handling. Use these by default.
@@ -225,6 +226,8 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 " Open a terminal to the right (neoterm plugin)
 nmap <Leader>t :vert rightb Tnew<CR>
 
+" In many cases we have a conda environment nearby named 'env', here are some
+" easy ways to open a terminal and activate it.
 nmap <Leader>te :vert rightb Tnew<CR>:wincmd l<CR>source activate ./env<CR>
 nmap <Leader>t1e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../env<CR>
 nmap <Leader>t2e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../env<CR>
@@ -235,7 +238,8 @@ nmap <Leader>t3e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../../env<
 " instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
 tnoremap <Esc> <C-\><C-n>
 
-" Any time a terminal is entered, go directly into Insert mode.
+" Any time a terminal is entered, go directly into Insert mode. This makes it
+" behave a little more like a typical terminal.
 :au BufEnter,FocusGained,BufWinEnter,WinEnter * if &buftype == 'terminal' | :startinsert | endif
 :au BufLeave,FocusLost,BufWinLeave,WinLeave * if &buftype == 'terminal' | :stopinsert | endif
 
@@ -313,19 +317,3 @@ let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
 let g:pandoc#folding#fold_fenced_codeblocks = 1
-
-
-" ============================================================================
-" OLD PLUGINS
-" ============================================================================
-" The following plugins have been useful in the past but are no longer needed
-" or not used enough to warrant keeping . . . but storing here for future
-" reference.
-"
-" Plug 'ctrlpvim/ctrlp.vim'           " (Fuzzy-finder for opening files)
-" Plug 'justincampbell/vim-eighties'  " (Smaller windows will temporarily resize to 80 chars when switched to)
-" Plug 'godlygeek/tabular'            " (Nice features for aligning text)
-" Plug 'vimwiki/vimwiki'              " (For editing markdown/wiki format. Creates a local wiki)
-" Plug 'jalvesaq/Nvim-R'              " (Superceded by neoterm)
-" Plug 'vim-scripts/indentpython.vim' " (Superceded by vim-python-pep8-indent)
-" Plug 'tpope/vim-surround'           " (Quickly change surrounding characters)
