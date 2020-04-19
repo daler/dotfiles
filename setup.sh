@@ -534,7 +534,7 @@ elif [ $task == "--diffs" ]; then
             exit 1;
         }
     ok "Shows the diffs between this repo and what's in your home directory"
-    cmd="~/opt/bin/icdiff --recursive --line-numbers"
+    cmd="$HOME/opt/bin/icdiff --recursive --line-numbers"
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--graphical-diffs" ]; then
