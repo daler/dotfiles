@@ -225,16 +225,36 @@ elif [ $task == "--install-docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--install-miniconda" ]; then
-    ok "Installs Miniconda to $HOME/miniconda3/bin and then add $HOME/miniconda3/bin to the
-    \$PATH by adding it to the end of ~/.path, and then source ~/.path"
+
+    # On Biowulf/Helix, if we install into $HOME then the installation might
+    # larger than the quota for the home directory. Instead, install to user's
+    # data directory which has much more space.
+    MINICONDA_DIR=$HOME/miniconda3
+    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
+        MINICONDA_DIR=/data/$USER/miniconda3-test
+    fi
+    if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
+        MINICONDA_DIR=/data/$USER/miniconda3-test
+    fi
+
+    ok "Installs Miniconda
+       - installs to $MINICONDA_DIR
+       - adds $MINICONDA_DIR/bin to the end of ~/.path
+       - sources ~/.path
+    "
     if [[ $OSTYPE == darwin* ]]; then
         download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
     else
         download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
     fi
-    bash miniconda.sh -b
-    add_line_to_file "export PATH=\"\$PATH:$HOME/miniconda3/bin\"" ~/.path
+
+    set -x
+    bash miniconda.sh -b -p $MINICONDA_DIR
+    add_line_to_file "export PATH=\"\$PATH:$MINICONDA_DIR/bin\"" ~/.path
     source ~/.path
+    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR, added to ~/.path, and sourced ~/.path.${UNSET}"
+    printf "${YELLOW}If you're not using ~/.path, please add the following to your .bashrc:${UNSET}"
+    printf "${YELLOW}   export PATH=\"\$PATH:$MINICONDA_DIR${UNSET}\""
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
