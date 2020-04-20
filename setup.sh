@@ -389,7 +389,7 @@ elif [ $task == "--install-hub" ]; then
             cd /tmp
             tar -xf hub.tar.gz
             cd hub-darwin-amd64-${HUB_VERSION}
-            prefix=$HOME/opt ./install
+            prefix=$HOME/opt bash install
         )
     else
         (
@@ -397,7 +397,7 @@ elif [ $task == "--install-hub" ]; then
             cd /tmp
             tar -xf hub.tar.gz
             cd hub-linux-amd64-${HUB_VERSION}
-            prefix=$HOME/opt ./install
+            prefix=$HOME/opt bash install
         )
     fi
     printf "${YELLOW}Installed to ~/opt/bin/hub${UNSET}\n"
