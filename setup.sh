@@ -494,12 +494,19 @@ elif [ $task == "--install-jq" ]; then
     ok "Installs jq to $HOME/opt/bin"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64 $HOME/opt/bin/jq
-else
+    else
         download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
-fi
+    fi
     chmod +x $HOME/opt/bin/jq
     printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
     check_opt_bin_in_path
+
+elif [ $task == "--install-lazygit" ]; then
+    ok "Installs lazygit to $HOME/opt/bin"
+    install_env_and_symlink lazygit lazygit lazygit
+    printf "${YELLOW}Installed to ~/opt/bin/lazygit${UNSET}\n"
+    check_opt_bin_in_path
+
 
 elif [ $task == "--dotfiles" ]; then
 
