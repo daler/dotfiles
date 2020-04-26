@@ -59,7 +59,7 @@ info on this.
 | `--install-hub`             | installs [`hub`](https://github.com/github/hub), for more easily working with pull requests                                                        |
 | `--install-jq`              | installs [`jq`](https://stedolan.github.io/jq/), a command-line tool for operating on JSON                                                         |
 | `--install-docker`          | installs docker on Ubuntu and adds current user to new docker group                                                                                |
-| `--install-alacritty`       | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator
+| `--install-alacritty`       | installs [`alacritty`](https://github.com/jwilm/alacritty), a GPU-accelerated terminal emulator                                                    |
 
 
 **Note 1:** These tools are either available in conda, or have Python

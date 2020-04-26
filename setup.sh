@@ -501,11 +501,33 @@ elif [ $task == "--install-jq" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
     check_opt_bin_in_path
 
-elif [ $task == "--install-lazygit" ]; then
-    ok "Installs lazygit to $HOME/opt/bin"
-    install_env_and_symlink lazygit lazygit lazygit
-    printf "${YELLOW}Installed to ~/opt/bin/lazygit${UNSET}\n"
-    check_opt_bin_in_path
+elif [ $task == "--install-tig" ]; then
+    ok "Installs tig to $HOME/opt/bin"
+
+    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
+        printf "${RED}Cannot install on helix -- need ncurses, which is in the gcc module, which needs to be loaded on biowulf.\n\n${UNSET}"
+        exit 1
+    fi
+    if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
+        printf "${YELLOW}Loading gcc module to get ncurses...${UNSET}"
+        module load gcc
+    fi
+
+    TIG_VERSION=2.3.3
+    mkdir -p $HOME/.tig-install
+    (
+        cd $HOME/.tig-install
+        download https://github.com/jonas/tig/releases/download/tig-${TIG_VERSION}/tig-${TIG_VERSION}.tar.gz tig.tar.gz
+        tar -xf tig.tar.gz
+        cd tig-${TIG_VERSION}
+        make prefix=$HOME/opt
+        make install prefix=$HOME/opt
+    )
+
+    if [[ $HOSTNAME == "biowulf" ]]; then
+        printf "${YELLOW}Unloading gcc module...${UNSET}"
+        module unload gcc
+    fi
 
 
 elif [ $task == "--dotfiles" ]; then
