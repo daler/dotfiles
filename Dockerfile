@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 SHELL ["/bin/bash", "--login", "-c"]
 
-RUN apt update && apt install -y git wget curl sudo rsync locales
+RUN apt-get update && apt-get install -y git wget curl sudo rsync locales
 
 # Locale is set in .bash_profile; needs to be created
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
@@ -12,6 +12,10 @@ RUN locale-gen en_US.UTF-8
 
 # From now on, use login shell so that bashrc gets sourced
 ENV SHELL /bin/bash
+
+# Get this installed up front out of the way without prompting for a region
+# (which otherwise hangs the build)
+RUN DEBIAN_FRONTEND=noninteractive apt-get install tzdata
 
 ADD . dotfiles
 WORKDIR dotfiles
@@ -42,9 +46,12 @@ RUN ./setup.sh --install-git-cola
 RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
+RUN ./setup.sh --install-pyp
 RUN ./setup.sh --install-radian
 RUN ./setup.sh --install-ripgrep
+RUN ./setup.sh --install-tig
 RUN ./setup.sh --install-vd
+
 
 # Additional for this container: asciinema for screen casts
 RUN pip install asciinema
