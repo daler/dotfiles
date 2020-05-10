@@ -31,6 +31,11 @@ that’s on your path.
 colored diff between files. It’s used for ``./setup.sh --diffs``.
 
 
+Alternatives:
+
+- ``diff``
+- ``vim -d``, which I still use quite often
+
 ``fzf``
 ~~~~~~~
 
@@ -55,6 +60,11 @@ fzf interface.
 code-searching tool. It is like grep, but by default skips files in
 .gitignore, binary files, and hidden files.
 
+Alternatives:
+
+- ``grep``, or ``find ... | xargs grep``
+- ``ag``, the Silver Searcher
+
 ``fd``
 ~~~~~~
 
@@ -65,6 +75,10 @@ code-searching tool. It is like grep, but by default skips files in
 `fd <https://github.com/sharkdp/fd>`__ is a much faster and more
 ergonomic ``find``.
 
+Alternatives:
+
+- ``find``
+
 ``visidata`` (``vd``)
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -72,9 +86,19 @@ ergonomic ``find``.
 
     ./setup.sh --install-vd
 
-`visidata <https://visidata.org/>`__ ia a powerful spreadsheet-like tool
+`visidata <https://visidata.org/>`__ is a powerful spreadsheet-like tool
 for viewing, sorting, searching, and manipulating data directly in the
 terminal. Any files that pandas can open, visidata can open too.
+
+Waaaaay nicer than ``less -S`` or ``vim`` followed by messing with tabstops.
+
+Alternatives:
+
+- tabview. Visidata can do a lot more, even though I pretty much use it along
+  the same lines as tabview.
+- ``less -S``
+- ``vim`` followed by messing with tabstops. You'll probably need to use vim if
+  you have editing to do.
 
 ``tig``
 ~~~~~~~
@@ -158,6 +182,10 @@ PEP8 style conventions.
 R. It has syntax highlighting, multiline editings, and tab completion built in.
 can be used with any version of R, in a conda environment or otherwise.
 
+Alternatives:
+
+- plain vanilla R, which doesn't have the syntax highlighting or tab completion
+
 ``git-cola``
 ~~~~~~~~~~~~
 
@@ -171,6 +199,10 @@ incrementally making git commits. Very useful, for example, at the end of
 a coding session and you want to make atomic commits from all the changes you
 made.
 
+Alternatives:
+
+- tig, which I'm using more than git-cola now. It's a TUI instead of GUI.
+
 ``bat``
 ~~~~~~~
 
@@ -182,6 +214,10 @@ made.
 with syntax highlighting, line numbers, non-printable characters, and
 git diffs.
 
+Alternatives:
+
+- cat
+
 ``alacritty``
 ~~~~~~~~~~~~~
 
@@ -192,6 +228,12 @@ git diffs.
 `alacritty <https://github.com/alacritty/alacritty>`_ is a
 cross-platform GPU-accelerated terminal emulator. The speed is most
 noticable when catting large files over tmux.
+
+Alternatives:
+
+- On Mac, iTerm2 or the default Terminal app
+- On Linux, any number of default terminal apps
+
 
 ``jq``
 ~~~~~~
