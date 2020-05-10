@@ -151,8 +151,8 @@ plugins.
 2.1.1 neovim
 ++++++++++++
 
-Install `neovim <https://neovim.io/>`_, if you want to use it. See :ref:`why`
-for more info on deciding.
+Do this if you want to use `neovim <https://neovim.io/>`_. See :ref:`why` for
+more help on deciding.
 
 .. code-block::
 
@@ -161,13 +161,18 @@ for more info on deciding.
 This:
 
 - installs neovim to :file:`~/opt/bin`
-- adds an alias `alias vim=nvim` to :file:`~/.aliases`. As described in
-  :ref:`bash`, this is sourced each time you start a new shell. If you are
-  using :ref:`option2`, then you may want to manually add that alias to your
-  :file:`.bashrc` or :file:`.bash_profile`.
+- so that `nvim` will run when you type `vim`, this adds an alias `alias
+  vim=nvim` to :file:`~/.aliases`. As described in :ref:`bash`, this is sourced
+  each time you start a new shell. If you are using :ref:`option2`, then you
+  may want to manually add that alias to your :file:`.bashrc` or
+  :file:`.bash_profile`.
+
 
 2.1.2 vim/nvim plugin setup
 +++++++++++++++++++++++++++
+
+Do this if you want to use all the plugins in the ``.config/nvim/init.vim``
+file (so, yes if you're going with :ref:`option1`).
 
 This step sets up `vim-plug <https://github.com/junegunn/vim-plug>`_, placing
 the required files in the locations expected by vim and neovim. If you're using
@@ -188,10 +193,12 @@ included, which you can read more about at :ref:`vim`. If you're using
 2.1.3 powerline
 +++++++++++++++
 
-I really like the `vim-airline <https://github.com/vim-airline/vim-airline>`_
-plugin, but it uses fancy glyphs (see the documentation for some nice demos).
-Those arrow shapes for buffers, line number glyphs, and so on need a patched
-font, and your terminal needs to be set to use those font.
+Do this if you want the fancy `vim-airline
+<https://github.com/vim-airline/vim-airline>`_ status bar in vim.
+
+The vim-airline plugin uses fancy glyphs (see the documentation for some nice
+demos). Those arrow shapes for buffers, line number glyphs, and so on need
+a patched font, and your terminal needs to be set to use those font.
 
 This only needs to be done on the machine you’re running the terminal app on.
 So this does not need to be run on a remote machine.
@@ -207,9 +214,11 @@ So this does not need to be run on a remote machine.
    You may get a warning about "cannot load default config file". As long as
    the new fonts show up, you should be fine.
 
-- Once it installs, you’ll need to configure your terminal preferences to use
-  one of the new fonts that ends in “for Powerline”. Note that on Terminal on
-  Mac, you'll also need to set the font for non-ASCII characters.
+.. note::
+
+    Once it installs, you’ll need to configure your terminal preferences to use
+    one of the new fonts that ends in “for Powerline”. Note that on Terminal on
+    Mac, you'll also need to set the font for non-ASCII characters.
 
 2.2: conda
 ~~~~~~~~~~
@@ -220,6 +229,8 @@ Python, but it also works for many other languages.
 
 2.2.1: install miniconda
 ++++++++++++++++++++++++
+
+Do this if you want to use conda.
 
 The following command:
 
@@ -246,8 +257,9 @@ to allow the use of ``conda activate`` to activate environments.
 2.2.2: set up bioconda
 ++++++++++++++++++++++
 
-Set up conda to use the proper channel order for `Bioconda
-<https://bioconda.github.io>`_:
+Do this if you want to use `Bioconda
+<https://bioconda.github.io>`_. It sets up the channels in the proper order as
+recommended by the bioconda docs.
 
 .. code-block:: bash
 
@@ -265,6 +277,8 @@ fit to match your requirements.
 
 3.1 install conda packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+Do this if you want to install the conda packages in :file:`requirements.txt`
+into the base conda environment. (you may want to edit that file first)
 
 Install the packages listed in :file:`requirements.txt` into the base
 environment, as well as :file:`requirements-mac.txt` if you're on a Mac:
@@ -275,6 +289,9 @@ environment, as well as :file:`requirements-mac.txt` if you're on a Mac:
 
 3.2: install apt packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+Do this if you want to install a large or small set of package for Linux (you
+may want to edit the files mentioned below first).
+
 If you're on Linux and have root privileges, this is a quick way to install
 "the works" or optionally a minimal set of packages. You can inspect the files
 :file:`apt-installs.txt` or :file:`apt-installs-minimal.txt` for what will be
@@ -293,5 +310,5 @@ meld, and so on).
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :file:`setup.sh` script has many commands for installing various tools
-I find useful. These warrant their own section, so continue to :ref:`tools` for
+I find useful. These warrant their own section, so **continue to** :ref:`tools` for
 descriptions of tools and the commands to install them.
