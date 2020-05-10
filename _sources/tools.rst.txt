@@ -255,6 +255,9 @@ Alternatives:
 cross-platform GPU-accelerated terminal emulator. The speed is most
 noticable when catting large files over tmux.
 
+You can find more details on the benefits of alactritty at
+https://jwilm.io/blog/announcing-alacritty/.
+
 Alternatives:
 
 - On Mac, iTerm2 or the default Terminal app
