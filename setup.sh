@@ -14,13 +14,14 @@ function showHelp() {
     echo
     echo "Usage:"
     echo "   $0 [OPTION]"
+    echo 
+    printf "   ${RED}Documenation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
-    echo "Options are intended to be run one-at-a-time. They are listed here in "
-    echo "Each command will prompt if you want to continue."
-    echo "Set the env var DOTFILES_FORCE=true if you want always say yes."
-    echo
-    echo "Many commands are OK to run on remote machines on which you do not "
-    echo "have root access. These commands are marked 'remote OK'"
+    echo " - Options are intended to be run one-at-a-time."
+    echo " - Each command will prompt if you want to continue."
+    echo " - Set the env var DOTFILES_FORCE=true if you want always say yes."
+    echo " - Many commands are OK to run on remote machines on which you do not "
+    echo "   have root access. These commands are marked 'remote OK'"
     echo
     printf "${GREEN}                       remote  Linux  Mac${UNSET} \n"
     printf "${GREEN}                        OK_____ | ___|   ${UNSET} \n"
@@ -56,13 +57,10 @@ function showHelp() {
     printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}${BLUE}https://black.readthedocs.io${UNSET}\n"
     printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}${BLUE}https://github.com/randy3k/radian${UNSET}\n"
     printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
-    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
+    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/bat${UNSET}\n"
     printf "  ${GREEN} --install-alacritty        | |x|x|  ${UNSET}${BLUE}https://github.com/alacritty/alacritty${UNSET}\n"
     printf "  ${GREEN} --install-docker           | |x| |  ${UNSET}install docker and add current user to new docker group\n"
     echo
-    echo
-    echo "paths to miniconda and neovim will be prepended to PATH in the"
-    echo "~/.path file; that file will then be sourced"
     echo
     exit 0
 }
