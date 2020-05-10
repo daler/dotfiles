@@ -1,10 +1,10 @@
 daler dotfiles
 ==============
 
-This repo captures hard-won settings and tool installations that I have
-accumulated over time. Using the included modular setup script, starting
-from a fresh installation of Ubuntu Linux or MacOS I can have everything
-I’m used to – programs and all – in a few minutes.
+`This repo <https://github.com/daler/dotfiles>`_ captures hard-won settings and
+tool installations that I have accumulated over time. Using the included
+modular setup script, starting from a fresh installation of Ubuntu Linux or
+MacOS I can have everything I’m used to – programs and all – in a few minutes.
 
 It doubles as a “batteries included” set of configuration files that can
 be used by others just starting out. It includes:

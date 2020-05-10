@@ -7,6 +7,7 @@ liblzma-dev          # dev lib for compiling tools needing lzma
 libpcre3-dev         # for Perl-compatible regexes
 pkg-config           # for using the right compiler options
 zlib1g-dev           # dep lib for compiling tools needing zlib
+ncurses-dev          # for TUI programs
 
 # general ----------------------------------------------------------
 cifs-utils           # mount SMB network shares
