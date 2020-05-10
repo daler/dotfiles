@@ -54,6 +54,7 @@ function showHelp() {
     printf "  ${GREEN} --install-fd               |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/fd${UNSET}\n"
     printf "  ${GREEN} --install-jq               |x|x|x|  ${UNSET}${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
     printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}${BLUE}https://visidata.org/${UNSET}\n"
+    printf "  ${GREEN} --install-tig              |x|x|x|  ${UNSET}${BLUE}https://jonas.github.io/tig/${UNSET}\n"
     printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}${BLUE}https://black.readthedocs.io${UNSET}\n"
     printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}${BLUE}https://github.com/randy3k/radian${UNSET}\n"
     printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"

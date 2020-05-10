@@ -76,6 +76,49 @@ ergonomic ``find``.
 for viewing, sorting, searching, and manipulating data directly in the
 terminal. Any files that pandas can open, visidata can open too.
 
+``tig``
+~~~~~~~
+
+.. code-block:: bash
+
+    ./setup.sh --install-tig
+
+`tig <https://jonas.github.io/tig/>`_ is a terminal user interface ("TUI") for
+git. It lets you browse changes and stage them in chunks. There is a bit of
+a learning curve and there are a lot of features, but what I've been using the
+most is the following workflow:
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`s`
+      - enter "status" mode
+    * - up/dn arrows
+      - move between *files* in the status window
+    * - :kbd:`enter` (on a filename in status view)
+      - show diffs in file
+    * - :kbd:`j`, :kbd:`k`
+      - move between *lines in the open file*
+    * - :kbd:`1`
+      - stage just the current line. For multiple lines, you'll need to hit
+        :kbd:`1` for each one of them.
+    * - :kbd:`u`
+      - stage current chunk
+    * - :kbd:`q`
+      - quit out of window, view, and program
+
+While there are options for commiting and other fancy things from within `tig`,
+it's so fast to start and quit that I just use it for incremental staging, then
+pop back out to the terminal to commit as usual.
+
+Alternatives:
+
+- ``vim-fugitive``, which I still fall back to for complicated situations
+- ``git-cola``, but this is a GUI so not that useful for remote work
+- ``lazygit`` is super powerful, but has even more of a learning curve than
+  ``tig``. With so many keyboard shortcuts, I was worried I'd do something
+  terrible to my git repo by accident.
 ``black``
 ~~~~~~~~~
 
