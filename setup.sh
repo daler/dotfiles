@@ -252,9 +252,9 @@ elif [ $task == "--install-miniconda" ]; then
     bash miniconda.sh -b -p $MINICONDA_DIR
     add_line_to_file "export PATH=\"\$PATH:$MINICONDA_DIR/bin\"" ~/.path
     source ~/.path
-    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR, added to ~/.path, and sourced ~/.path.${UNSET}"
-    printf "${YELLOW}If you're not using ~/.path, please add the following to your .bashrc:${UNSET}"
-    printf "${YELLOW}   export PATH=\"\$PATH:$MINICONDA_DIR${UNSET}\""
+    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR, added to ~/.path, and sourced ~/.path.${UNSET}\n"
+    printf "${YELLOW}If you're not using ~/.path, please add the following to your .bashrc:${UNSET}\n"
+    printf "${YELLOW}   export PATH=\"\$PATH:$MINICONDA_DIR${UNSET}\"\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
@@ -327,7 +327,7 @@ elif [ $task == "--install-meld" ]; then
     else
         echo
         printf "${RED}--install-meld currently only supported on Mac.\n"
-        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf\n${UNSET}"
+        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf${UNSET}\n"
     fi
 
 elif [ $task == "--install-fzf" ]; then
@@ -509,7 +509,7 @@ elif [ $task == "--install-tig" ]; then
         exit 1
     fi
     if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
-        printf "${YELLOW}Loading gcc module to get ncurses...${UNSET}"
+        printf "${YELLOW}Loading gcc module to get ncurses...${UNSET}\n"
         module load gcc
     fi
 
@@ -525,7 +525,7 @@ elif [ $task == "--install-tig" ]; then
     )
 
     if [[ $HOSTNAME == "biowulf" ]]; then
-        printf "${YELLOW}Unloading gcc module...${UNSET}"
+        printf "${YELLOW}Unloading gcc module...${UNSET}\n"
         module unload gcc
     fi
 
