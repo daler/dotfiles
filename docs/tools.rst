@@ -119,6 +119,23 @@ Alternatives:
 - ``lazygit`` is super powerful, but has even more of a learning curve than
   ``tig``. With so many keyboard shortcuts, I was worried I'd do something
   terrible to my git repo by accident.
+
+``pyp``
+~~~~~~~
+
+`pyp <https://github.com/hauntsaninja/pyp>`_ lets you run Python right from the
+terminal similar to Perl one-liners.
+
+I use it most often for a quick calculator (``pyp "(4e6 / 300) * 3600"``), and
+am starting to introduce it more into my workflow for arbitrary command-line
+activities. It strikes a nice balance of having enough magic (e.g., implicit
+variable names for lines) while still being understandable (the ``--explain``
+flag is a brilliant touch).
+
+ALternatives:
+
+- pythonpy (no longer maintained)
+
 ``black``
 ~~~~~~~~~
 

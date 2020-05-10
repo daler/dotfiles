@@ -55,6 +55,7 @@ function showHelp() {
     printf "  ${GREEN} --install-jq               |x|x|x|  ${UNSET}${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
     printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}${BLUE}https://visidata.org/${UNSET}\n"
     printf "  ${GREEN} --install-tig              |x|x|x|  ${UNSET}${BLUE}https://jonas.github.io/tig/${UNSET}\n"
+    printf "  ${GREEN} --install-pyp              |x|x|x|  ${UNSET}${BLUE}https://github.com/hauntsaninja/pyp${UNSET}\n"
     printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}${BLUE}https://black.readthedocs.io${UNSET}\n"
     printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}${BLUE}https://github.com/randy3k/radian${UNSET}\n"
     printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
@@ -572,6 +573,16 @@ elif [ $task == "--install-icdiff" ]; then
     chmod +x ~/opt/bin/icdiff
     printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
     check_opt_bin_in_path
+
+elif [ $task == "--install-pyp" ]; then
+    ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
+    can_make_conda_env "pyp"
+    conda create -y -n pyp python
+    source activate pyp
+    pip install pypyp
+    ln -s $(which pyp) $HOME/opt/bin/pyp
+    source deactivate
+
 
 # ----------------------------------------------------------------------------
 # Diffs section
