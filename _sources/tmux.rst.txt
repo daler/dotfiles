@@ -15,16 +15,12 @@ Here are the general features of the ``.tmux.conf`` file:
 
 Here are some shortcuts for window and pane navigation:
 
-=============== =========================
-command         description
-=============== =========================
-``Alt-left``    move to pane on the left
-``Alt-right``   move to pane on the right
-``Alt-up``      move to pane above
-``Alt-down``    move to pane below
-``Shift-left``  move to next window
-``Shift-right`` move to previous window
-=============== =========================
+================ ===========================
+command          description
+================ ===========================
+``Alt-arrows``   move around panes
+``Shift-arrows`` switch windows (left/right)
+================ ===========================
 
 Copy/paste in vim and tmux
 --------------------------

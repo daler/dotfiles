@@ -8,14 +8,16 @@ Vim / Neovim
 In the `.config/nvim/init.vim <.config/nvim/init.vim>`__ file in this
 repo:
 
--  ``<Leader>`` is set to ``,``.
+-  ``<Leader>`` is set to ``,``
 -  ``<Localleader>`` is set to ``/``
 
-**Setting up powerline fonts:** After running
-``./setup.sh --powerline``, which will install the fonts, you need to
-tell the terminal to use those fonts. In the terminal itself, go to
-Preferences, select the “Custom Font” checkbox, and choose a font that
-ends with “Powerline”.
+
+.. note:: 
+
+    **Setting up powerline fonts:** After running ``./setup.sh --powerline``,
+    which will install the fonts, you need to tell the terminal to use those
+    fonts. Go to Preferences for the terminal app, select the “Custom Font”
+    checkbox, and choose a font that ends with “Powerline”.
 
 General features
 ----------------
@@ -56,8 +58,8 @@ Here are some general shortcuts that are defined in the included config:
       - description
     * - :kbd:`,`
       -
-      - Remapped leader. Below, when you see :kbd:`,` it means :kbd:`<leader>`
-        below, it means :kbd:`,`. E.g., :kbd:`<leader>3` becomes :kbd:`,3`
+      - Remapped leader. Below, when you see :kbd:`,` it means :kbd:`<leader>`.
+        E.g., :kbd:`<leader>3` becomes :kbd:`,3`
     * - :kbd:`,r`
       - normal
       - Toggle relative line numbering (makes it easier to jump around lines
@@ -100,6 +102,14 @@ Provides a separate terminal in vim.
 With a terminal inside vim, you can send text between that terminal and a file
 you have open. As described in the “Using R with nvim” section, this lets you
 reproduce an RStudio-like environment purely from the terminal.
+
+.. note::
+
+    This method works great to send lines to IPython from a Python script, but
+    to avoid issues with indentation, you should start IPython like this in the
+    neoterm terminal::
+
+        ipython --no-autoindent
 
 The following commands are custom mappings set in :file:`.config/nvim/init.vim`
 that affect the terminal use:
@@ -158,7 +168,7 @@ supertab
 
 Autocomplete most things with ``TAB`` in insert mode.
 
-`homepaage <https://github.com/ervandew/supertab>`_
+`homepage <https://github.com/ervandew/supertab>`_
 
 This is enabled automatically when the plugin is installed.
 
@@ -166,7 +176,7 @@ python-syntax
 ~~~~~~~~~~~~~
 Sophisticated Python syntax highlighting.
 
-`homepage https://github.com/vim-python/python-syntax>`_
+`homepage <https://github.com/vim-python/python-syntax>`_
 
 This happens automatically when editing Python files.
 The syntax highlighting works for example within format
@@ -248,10 +258,10 @@ Better behavior on visual blocks.
 
 `homepage <vim-scripts/vis>`_
 
-By default, when selecting things in visual block mode, operations
-(substitutions, sorting) operate on the entire line, not just the block.
-However sometimes you want to edit just the visual block selection, for example
-when editing TSV files.
+Did you know that by default in vim and neovim, when selecting things in visual
+block mode, operations (substitutions, sorting) operate on the entire line --
+not just the block, as you might expect. However sometimes you want to edit
+just the visual block selection, for example when editing TSV files.
 
 .. list-table::
 
@@ -299,7 +309,7 @@ vim-airline
 Nice statusline, plus "tabs" that allow you to easily switch between open files
 and copy/paste between them.
 
-`homepage <https://github.com/vim-airline/vim-airline>`
+`homepage <https://github.com/vim-airline/vim-airline>`_
 
 Install powerline fonts for full effect (``./setup.sh --powerline``). See below
 for themes.
@@ -316,7 +326,7 @@ vim-tmux-clipboard
 
 Automatically copy yanked text from vim into the tmux clipboard.
 
-`homepage <https://github.com/roxma/vim-tmux-clipboard>`
+`homepage <https://github.com/roxma/vim-tmux-clipboard>`_
 
 See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
 usage details. Note that this also requires the `vim-tmux-focus-events
@@ -331,7 +341,7 @@ Run git from vim.
 `homepage <https://github.com/tpope/vim-fugitive>`_
 
 I mostly use this for making incremental commits from within vim. This makes it
-a terminal-only version of `git-cola <https://git-cola.github.io>`__.
+a terminal-only version of :ref:`git-cola` or an alternativel to :ref:`tig`.
 Specifically:
 
 
@@ -439,22 +449,22 @@ When first starting work on a file:
 3. Move to that terminal (``Alt-w``).
 4. In the terminal, source activate your environment
 5. Start R in the terminal
-6. Go back to the RMarkdown or R script, and use the commands above to
+6. Go back to the RMarkdown or R script, and use the commands below to
    send lines over.
 
 Working with R
 ~~~~~~~~~~~~~~
 
-Once you have the terminal up and running:
+Once you have the terminal up and running, write some R code in the text file
+buffer. To test, you can send lines over using any of the following methods:
 
-1. Write some R code.
-2. ``gxx`` to send the current line to R
-3. Highlight some lines (``Shift-V`` in vim gets you to visual select
+1. ``gxx`` to send the current line to R
+2. Highlight some lines (``Shift-V`` in vim gets you to visual select
    mode), ``gx`` sends them and then jumps to the terminal.
 4. Inside a code chunk, ``,cd`` sends the entire code chunk and then
-   jumps to the next one. This way you can ``,cd`` your way through an
+3  jumps to the next one. This way you can ``,cd`` your way through an
    Rmd
-5. ``,k`` to render the current Rmd to HTML.
+4. ``,k`` to render the current Rmd to HTML.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~

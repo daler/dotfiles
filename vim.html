@@ -38,14 +38,16 @@
 <p>In the <a class="reference external" href=".config/nvim/init.vim">.config/nvim/init.vim</a> file in this
 repo:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Leader&gt;</span></code> is set to <code class="docutils literal notranslate"><span class="pre">,</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Leader&gt;</span></code> is set to <code class="docutils literal notranslate"><span class="pre">,</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;Localleader&gt;</span></code> is set to <code class="docutils literal notranslate"><span class="pre">/</span></code></p></li>
 </ul>
-<p><strong>Setting up powerline fonts:</strong> After running
-<code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--powerline</span></code>, which will install the fonts, you need to
-tell the terminal to use those fonts. In the terminal itself, go to
-Preferences, select the “Custom Font” checkbox, and choose a font that
-ends with “Powerline”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Setting up powerline fonts:</strong> After running <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--powerline</span></code>,
+which will install the fonts, you need to tell the terminal to use those
+fonts. Go to Preferences for the terminal app, select the “Custom Font”
+checkbox, and choose a font that ends with “Powerline”.</p>
+</div>
 <div class="section" id="general-features">
 <h2>General features<a class="headerlink" href="#general-features" title="Permalink to this headline">¶</a></h2>
 <p>Here are the features (and fixes) you get when using this config file.
@@ -89,8 +91,8 @@ line</p></li>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,</kbd></p></td>
 <td></td>
-<td><p>Remapped leader. Below, when you see <kbd class="kbd docutils literal notranslate">,</kbd> it means <kbd class="kbd docutils literal notranslate">&lt;leader&gt;</kbd>
-below, it means <kbd class="kbd docutils literal notranslate">,</kbd>. E.g., <kbd class="kbd docutils literal notranslate">&lt;leader&gt;3</kbd> becomes <kbd class="kbd docutils literal notranslate">,3</kbd></p></td>
+<td><p>Remapped leader. Below, when you see <kbd class="kbd docutils literal notranslate">,</kbd> it means <kbd class="kbd docutils literal notranslate">&lt;leader&gt;</kbd>.
+E.g., <kbd class="kbd docutils literal notranslate">&lt;leader&gt;3</kbd> becomes <kbd class="kbd docutils literal notranslate">,3</kbd></p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,r</kbd></p></td>
 <td><p>normal</p></td>
@@ -135,6 +137,15 @@ ways they can be used.</p>
 <p>With a terminal inside vim, you can send text between that terminal and a file
 you have open. As described in the “Using R with nvim” section, this lets you
 reproduce an RStudio-like environment purely from the terminal.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method works great to send lines to IPython from a Python script, but
+to avoid issues with indentation, you should start IPython like this in the
+neoterm terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ipython</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">autoindent</span>
+</pre></div>
+</div>
+</div>
 <p>The following commands are custom mappings set in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>
 that affect the terminal use:</p>
 <table class="docutils align-default">
@@ -208,13 +219,13 @@ buffer</p></td>
 <div class="section" id="supertab">
 <h3>supertab<a class="headerlink" href="#supertab" title="Permalink to this headline">¶</a></h3>
 <p>Autocomplete most things with <code class="docutils literal notranslate"><span class="pre">TAB</span></code> in insert mode.</p>
-<p><a class="reference external" href="https://github.com/ervandew/supertab">homepaage</a></p>
+<p><a class="reference external" href="https://github.com/ervandew/supertab">homepage</a></p>
 <p>This is enabled automatically when the plugin is installed.</p>
 </div>
 <div class="section" id="python-syntax">
 <h3>python-syntax<a class="headerlink" href="#python-syntax" title="Permalink to this headline">¶</a></h3>
 <p>Sophisticated Python syntax highlighting.</p>
-<p><a href="#id13"><span class="problematic" id="id14">`homepage https://github.com/vim-python/python-syntax&gt;`_</span></a></p>
+<p><a class="reference external" href="https://github.com/vim-python/python-syntax">homepage</a></p>
 <p>This happens automatically when editing Python files.
 The syntax highlighting works for example within format
 strings, within docstrings, reserved keywords. Happens automatically when
@@ -292,10 +303,10 @@ navigate</p></td>
 <h3>vis<a class="headerlink" href="#vis" title="Permalink to this headline">¶</a></h3>
 <p>Better behavior on visual blocks.</p>
 <p><a class="reference external" href="vim-scripts/vis">homepage</a></p>
-<p>By default, when selecting things in visual block mode, operations
-(substitutions, sorting) operate on the entire line, not just the block.
-However sometimes you want to edit just the visual block selection, for example
-when editing TSV files.</p>
+<p>Did you know that by default in vim and neovim, when selecting things in visual
+block mode, operations (substitutions, sorting) operate on the entire line –
+not just the block, as you might expect. However sometimes you want to edit
+just the visual block selection, for example when editing TSV files.</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 50%" />
@@ -355,7 +366,7 @@ to open the file in a new buffer.</p>
 <h3>vim-airline<a class="headerlink" href="#vim-airline" title="Permalink to this headline">¶</a></h3>
 <p>Nice statusline, plus “tabs” that allow you to easily switch between open files
 and copy/paste between them.</p>
-<p><cite>homepage &lt;https://github.com/vim-airline/vim-airline&gt;</cite></p>
+<p><a class="reference external" href="https://github.com/vim-airline/vim-airline">homepage</a></p>
 <p>Install powerline fonts for full effect (<code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--powerline</span></code>). See below
 for themes.</p>
 </div>
@@ -367,7 +378,7 @@ for themes.</p>
 <div class="section" id="vim-tmux-clipboard">
 <h3>vim-tmux-clipboard<a class="headerlink" href="#vim-tmux-clipboard" title="Permalink to this headline">¶</a></h3>
 <p>Automatically copy yanked text from vim into the tmux clipboard.</p>
-<p><cite>homepage &lt;https://github.com/roxma/vim-tmux-clipboard&gt;</cite></p>
+<p><a class="reference external" href="https://github.com/roxma/vim-tmux-clipboard">homepage</a></p>
 <p>See this <a class="reference external" href="https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy">screencast</a> for
 usage details. Note that this also requires the <a class="reference external" href="https://github.com/tmux-plugins/vim-tmux-focus-events">vim-tmux-focus-events</a> plugin as well.</p>
 </div>
@@ -376,7 +387,7 @@ usage details. Note that this also requires the <a class="reference external" hr
 <p>Run git from vim.</p>
 <p><a class="reference external" href="https://github.com/tpope/vim-fugitive">homepage</a></p>
 <p>I mostly use this for making incremental commits from within vim. This makes it
-a terminal-only version of <a class="reference external" href="https://git-cola.github.io">git-cola</a>.
+a terminal-only version of <span class="xref std std-ref">git-cola</span> or an alternativel to <span class="xref std std-ref">tig</span>.
 Specifically:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -516,21 +527,25 @@ plugin.</p>
 <li><p>Move to that terminal (<code class="docutils literal notranslate"><span class="pre">Alt-w</span></code>).</p></li>
 <li><p>In the terminal, source activate your environment</p></li>
 <li><p>Start R in the terminal</p></li>
-<li><p>Go back to the RMarkdown or R script, and use the commands above to
+<li><p>Go back to the RMarkdown or R script, and use the commands below to
 send lines over.</p></li>
 </ol>
 </div>
 <div class="section" id="working-with-r">
 <h3>Working with R<a class="headerlink" href="#working-with-r" title="Permalink to this headline">¶</a></h3>
-<p>Once you have the terminal up and running:</p>
+<p>Once you have the terminal up and running, write some R code in the text file
+buffer. To test, you can send lines over using any of the following methods:</p>
 <ol class="arabic simple">
-<li><p>Write some R code.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gxx</span></code> to send the current line to R</p></li>
 <li><p>Highlight some lines (<code class="docutils literal notranslate"><span class="pre">Shift-V</span></code> in vim gets you to visual select
 mode), <code class="docutils literal notranslate"><span class="pre">gx</span></code> sends them and then jumps to the terminal.</p></li>
-<li><p>Inside a code chunk, <code class="docutils literal notranslate"><span class="pre">,cd</span></code> sends the entire code chunk and then
-jumps to the next one. This way you can <code class="docutils literal notranslate"><span class="pre">,cd</span></code> your way through an
-Rmd</p></li>
+</ol>
+<p>4. Inside a code chunk, <code class="docutils literal notranslate"><span class="pre">,cd</span></code> sends the entire code chunk and then
+3  jumps to the next one. This way you can <code class="docutils literal notranslate"><span class="pre">,cd</span></code> your way through an</p>
+<blockquote>
+<div><p>Rmd</p>
+</div></blockquote>
+<ol class="arabic simple" start="4">
 <li><p><code class="docutils literal notranslate"><span class="pre">,k</span></code> to render the current Rmd to HTML.</p></li>
 </ol>
 </div>

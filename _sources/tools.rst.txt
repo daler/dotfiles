@@ -20,6 +20,8 @@ that’s on your path.
    immediately. This allows for more modular updating of the tools and avoiding
    conflicting dependencies.
 
+.. _icdiff:
+
 ``icdiff``
 ~~~~~~~~~~
 
@@ -36,6 +38,9 @@ Alternatives:
 - ``diff``
 - ``vim -d``, which I still use quite often
 
+
+.. _fzf:
+
 ``fzf``
 ~~~~~~~
 
@@ -48,6 +53,7 @@ works with stdin. It integrates with bash so that when you use ``Ctrl-R`` (the
 standard bash way of reverse-search through history), you’ll instead get the
 fzf interface.
 
+.. _rg:
 
 ``ripgrep`` (``rg``)
 ~~~~~~~~~~~~~~~~~~~~
@@ -65,6 +71,9 @@ Alternatives:
 - ``grep``, or ``find ... | xargs grep``
 - ``ag``, the Silver Searcher
 
+
+.. _fd:
+
 ``fd``
 ~~~~~~
 
@@ -78,6 +87,8 @@ ergonomic ``find``.
 Alternatives:
 
 - ``find``
+
+.. _vd:
 
 ``visidata`` (``vd``)
 ~~~~~~~~~~~~~~~~~~~~~
@@ -99,6 +110,9 @@ Alternatives:
 - ``less -S``
 - ``vim`` followed by messing with tabstops. You'll probably need to use vim if
   you have editing to do.
+
+
+.. _tig:
 
 ``tig``
 ~~~~~~~
@@ -144,6 +158,8 @@ Alternatives:
   ``tig``. With so many keyboard shortcuts, I was worried I'd do something
   terrible to my git repo by accident.
 
+.. _pyp:
+
 ``pyp``
 ~~~~~~~
 
@@ -160,6 +176,9 @@ ALternatives:
 
 - pythonpy (no longer maintained)
 
+
+.. _black:
+
 ``black``
 ~~~~~~~~~
 
@@ -170,6 +189,7 @@ ALternatives:
 `black <https://black.readthedocs.io>`_ reformats Python files to conform to
 PEP8 style conventions.
 
+.. _radian:
 
 ``radian``
 ~~~~~~~~~~
@@ -185,6 +205,8 @@ can be used with any version of R, in a conda environment or otherwise.
 Alternatives:
 
 - plain vanilla R, which doesn't have the syntax highlighting or tab completion
+
+.. _git-cola:
 
 ``git-cola``
 ~~~~~~~~~~~~
@@ -203,6 +225,8 @@ Alternatives:
 
 - tig, which I'm using more than git-cola now. It's a TUI instead of GUI.
 
+.. _bat:
+
 ``bat``
 ~~~~~~~
 
@@ -217,6 +241,8 @@ git diffs.
 Alternatives:
 
 - cat
+
+.. _alacritty:
 
 ``alacritty``
 ~~~~~~~~~~~~~
@@ -234,6 +260,7 @@ Alternatives:
 - On Mac, iTerm2 or the default Terminal app
 - On Linux, any number of default terminal apps
 
+.. _jq:
 
 ``jq``
 ~~~~~~
@@ -244,6 +271,8 @@ Alternatives:
 
 `jq <https://stedolan.github.io/jq/>` is like sed or awk for JSON data.
 
+
+.. _docker:
 
 ``docker``
 ~~~~~~~~~~

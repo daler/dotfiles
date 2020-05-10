@@ -66,7 +66,7 @@ included:
     * - ``v``
       - (see .aliases file)
       - Live, searchable, syntax-highlighted preview of files in a directory.
-        Needs `--install-fzf` and `--install-bat`.
+        Needs :ref:`fzf` and :ref:`bat` installed
 
 
 ``.functions``
@@ -87,7 +87,7 @@ are set up. Some notable functions defined here:
     * - ``tre``
       - Nicer ``tree`` output, colored and piped to less
     * - ``sa``
-      - Open``fzf`` to search across all conda environments, and activates the
+      - Open :ref:`fzf` to search across all conda environments, and activates the
         selected one
 
 ``.bash_prompt``
