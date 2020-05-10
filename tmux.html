@@ -66,48 +66,9 @@ directory of the current window or pane.</p></li>
 </table>
 <div class="section" id="copy-paste-in-vim-and-tmux">
 <h2>Copy/paste in vim and tmux<a class="headerlink" href="#copy-paste-in-vim-and-tmux" title="Permalink to this headline">¶</a></h2>
-<p>In general, if things seem strange, try adding Shift to copy/paste
+<p>In general, if things seem strange, try adding Shift to select/copy/paste
 commands.</p>
 <p>This is by far the most annoying part about using tmux and vim together.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 69%" />
-<col style="width: 16%" />
-<col style="width: 15%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>copy method</p></th>
-<th class="head"><p>where
-does it
-go</p></th>
-<th class="head"><p>how to
-paste</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Shift-select text</p></td>
-<td><p>mid
-dle-click
-buffer</p></td>
-<td><p>sh
-ift-midd
-le-click</p></td>
-</tr>
-<tr class="row-odd"><td><p>Shift-select text, then Ctrl-shift-C</p></td>
-<td><p>clipboard</p></td>
-<td><p>Ctrl
--shift-V</p></td>
-</tr>
-<tr class="row-even"><td><p>tmux copy mode (<code class="docutils literal notranslate"><span class="pre">Ctrl-j</span></code>, <code class="docutils literal notranslate"><span class="pre">[</span></code>). You
-probably want to avoid using this inside vim</p></td>
-<td><p>tmux
-clipboard</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">C</span>
-<span class="pre">trl-j</span></code>,
-<code class="docutils literal notranslate"><span class="pre">]</span></code></p></td>
-</tr>
-</tbody>
-</table>
 <p>Another annoying situation is when copying text from the terminal into
 an email. In this case, we cannot use tmux copy mode, because X windows
 doesn’t know about it. Instead:</p>
