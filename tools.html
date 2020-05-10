@@ -57,6 +57,11 @@ conflicting dependencies.</p>
 </div>
 <p><a class="reference external" href="https://www.jefftk.com/icdiff">icdiff</a> makes an easy-to-read, side-by-side
 colored diff between files. It’s used for <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--diffs</span></code>.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">diff</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">-d</span></code>, which I still use quite often</p></li>
+</ul>
 </div>
 <div class="section" id="fzf">
 <h2><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h2>
@@ -76,6 +81,11 @@ fzf interface.</p>
 <p><a class="reference external" href="https://github.com/BurntSushi/ripgrep/">ripgrep</a> is a fast
 code-searching tool. It is like grep, but by default skips files in
 .gitignore, binary files, and hidden files.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">grep</span></code>, or <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">...</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">grep</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ag</span></code>, the Silver Searcher</p></li>
+</ul>
 </div>
 <div class="section" id="fd">
 <h2><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h2>
@@ -84,15 +94,96 @@ code-searching tool. It is like grep, but by default skips files in
 </div>
 <p><a class="reference external" href="https://github.com/sharkdp/fd">fd</a> is a much faster and more
 ergonomic <code class="docutils literal notranslate"><span class="pre">find</span></code>.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">find</span></code></p></li>
+</ul>
 </div>
 <div class="section" id="visidata-vd">
 <h2><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)<a class="headerlink" href="#visidata-vd" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-vd
 </pre></div>
 </div>
-<p><a class="reference external" href="https://visidata.org/">visidata</a> ia a powerful spreadsheet-like tool
+<p><a class="reference external" href="https://visidata.org/">visidata</a> is a powerful spreadsheet-like tool
 for viewing, sorting, searching, and manipulating data directly in the
 terminal. Any files that pandas can open, visidata can open too.</p>
+<p>Waaaaay nicer than <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">-S</span></code> or <code class="docutils literal notranslate"><span class="pre">vim</span></code> followed by messing with tabstops.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>tabview. Visidata can do a lot more, even though I pretty much use it along
+the same lines as tabview.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">-S</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vim</span></code> followed by messing with tabstops. You’ll probably need to use vim if
+you have editing to do.</p></li>
+</ul>
+</div>
+<div class="section" id="tig">
+<h2><code class="docutils literal notranslate"><span class="pre">tig</span></code><a class="headerlink" href="#tig" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-tig
+</pre></div>
+</div>
+<p><a class="reference external" href="https://jonas.github.io/tig/">tig</a> is a terminal user interface (“TUI”) for
+git. It lets you browse changes and stage them in chunks. There is a bit of
+a learning curve and there are a lot of features, but what I’ve been using the
+most is the following workflow:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">s</kbd></p></td>
+<td><p>enter “status” mode</p></td>
+</tr>
+<tr class="row-odd"><td><p>up/dn arrows</p></td>
+<td><p>move between <em>files</em> in the status window</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">enter</kbd> (on a filename in status view)</p></td>
+<td><p>show diffs in file</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">j</kbd>, <kbd class="kbd docutils literal notranslate">k</kbd></p></td>
+<td><p>move between <em>lines in the open file</em></p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">1</kbd></p></td>
+<td><p>stage just the current line. For multiple lines, you’ll need to hit
+<kbd class="kbd docutils literal notranslate">1</kbd> for each one of them.</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">u</kbd></p></td>
+<td><p>stage current chunk</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">q</kbd></p></td>
+<td><p>quit out of window, view, and program</p></td>
+</tr>
+</tbody>
+</table>
+<p>While there are options for commiting and other fancy things from within <cite>tig</cite>,
+it’s so fast to start and quit that I just use it for incremental staging, then
+pop back out to the terminal to commit as usual.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code>, which I still fall back to for complicated situations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git-cola</span></code>, but this is a GUI so not that useful for remote work</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lazygit</span></code> is super powerful, but has even more of a learning curve than
+<code class="docutils literal notranslate"><span class="pre">tig</span></code>. With so many keyboard shortcuts, I was worried I’d do something
+terrible to my git repo by accident.</p></li>
+</ul>
+</div>
+<div class="section" id="pyp">
+<h2><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/hauntsaninja/pyp">pyp</a> lets you run Python right from the
+terminal similar to Perl one-liners.</p>
+<p>I use it most often for a quick calculator (<code class="docutils literal notranslate"><span class="pre">pyp</span> <span class="pre">&quot;(4e6</span> <span class="pre">/</span> <span class="pre">300)</span> <span class="pre">*</span> <span class="pre">3600&quot;</span></code>), and
+am starting to introduce it more into my workflow for arbitrary command-line
+activities. It strikes a nice balance of having enough magic (e.g., implicit
+variable names for lines) while still being understandable (the <code class="docutils literal notranslate"><span class="pre">--explain</span></code>
+flag is a brilliant touch).</p>
+<p>ALternatives:</p>
+<ul class="simple">
+<li><p>pythonpy (no longer maintained)</p></li>
+</ul>
 </div>
 <div class="section" id="black">
 <h2><code class="docutils literal notranslate"><span class="pre">black</span></code><a class="headerlink" href="#black" title="Permalink to this headline">¶</a></h2>
@@ -110,6 +201,10 @@ PEP8 style conventions.</p>
 <p><a class="reference external" href="https://github.com/randy3k/radian">radian</a> is a replacement shell for
 R. It has syntax highlighting, multiline editings, and tab completion built in.
 can be used with any version of R, in a conda environment or otherwise.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>plain vanilla R, which doesn’t have the syntax highlighting or tab completion</p></li>
+</ul>
 </div>
 <div class="section" id="git-cola">
 <h2><code class="docutils literal notranslate"><span class="pre">git-cola</span></code><a class="headerlink" href="#git-cola" title="Permalink to this headline">¶</a></h2>
@@ -120,6 +215,10 @@ can be used with any version of R, in a conda environment or otherwise.</p>
 incrementally making git commits. Very useful, for example, at the end of
 a coding session and you want to make atomic commits from all the changes you
 made.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>tig, which I’m using more than git-cola now. It’s a TUI instead of GUI.</p></li>
+</ul>
 </div>
 <div class="section" id="bat">
 <h2><code class="docutils literal notranslate"><span class="pre">bat</span></code><a class="headerlink" href="#bat" title="Permalink to this headline">¶</a></h2>
@@ -129,6 +228,10 @@ made.</p>
 <p><a class="reference external" href="https://github.com/sharkdp/bat">bat</a> is a replacement for <code class="docutils literal notranslate"><span class="pre">cat</span></code>,
 with syntax highlighting, line numbers, non-printable characters, and
 git diffs.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>cat</p></li>
+</ul>
 </div>
 <div class="section" id="alacritty">
 <h2><code class="docutils literal notranslate"><span class="pre">alacritty</span></code><a class="headerlink" href="#alacritty" title="Permalink to this headline">¶</a></h2>
@@ -138,6 +241,11 @@ git diffs.</p>
 <p><a class="reference external" href="https://github.com/alacritty/alacritty">alacritty</a> is a
 cross-platform GPU-accelerated terminal emulator. The speed is most
 noticable when catting large files over tmux.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>On Mac, iTerm2 or the default Terminal app</p></li>
+<li><p>On Linux, any number of default terminal apps</p></li>
+</ul>
 </div>
 <div class="section" id="jq">
 <h2><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h2>
@@ -181,6 +289,8 @@ installation here is currently only supported on Linux.</p>
 <li class="toctree-l2"><a class="reference internal" href="#ripgrep-rg"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fd"><code class="docutils literal notranslate"><span class="pre">fd</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visidata-vd"><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tig"><code class="docutils literal notranslate"><span class="pre">tig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pyp"><code class="docutils literal notranslate"><span class="pre">pyp</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#black"><code class="docutils literal notranslate"><span class="pre">black</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#radian"><code class="docutils literal notranslate"><span class="pre">radian</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#git-cola"><code class="docutils literal notranslate"><span class="pre">git-cola</span></code></a></li>
