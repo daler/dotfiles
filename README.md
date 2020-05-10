@@ -17,7 +17,7 @@ If you don't want "batteries included", you can select only what is most useful
 to you because:
 
 - the `setup.sh` script is modular
-- this README documents everything
+- the [documentation]( https://daler.github.io/dotfiles/) explains everything
 - the config files themselves are documented
 
 **For more, see full documentation at https://daler.github.io/dotfiles/**
