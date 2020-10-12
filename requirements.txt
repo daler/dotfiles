@@ -7,7 +7,7 @@ numpy
 pandas
 pandoc
 pybedtools
-r==3.5.1
+r-base
 r-dplyr
 r-ggplot2
 r-knitr
@@ -17,4 +17,3 @@ scipy
 seaborn
 snakemake
 xlrd
-pythonpy
