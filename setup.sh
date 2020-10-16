@@ -637,6 +637,9 @@ elif [ $task == "--install-tig" ]; then
         module unload gcc
     fi
 
+    printf "${YELLOW}Installed to ~/opt/bin/tig${UNSET}\n"
+    check_opt_bin_in_path
+
 
 elif [ $task == "--dotfiles" ]; then
 
@@ -688,8 +691,10 @@ elif [ $task == "--install-pyp" ]; then
     conda create -y -n pyp python
     source activate pyp
     pip install pypyp
-    ln -s $(which pyp) $HOME/opt/bin/pyp
     source deactivate
+    ln -sf $(which pyp) $HOME/opt/bin/pyp
+    printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
+    check_opt_bin_in_path
 
 
 # ----------------------------------------------------------------------------
