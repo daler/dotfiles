@@ -616,10 +616,10 @@ elif [ $task == "--install-alacritty" ]; then
                 source ~/.cargo/env
             fi
 
-            RUSTUP_Y=""
-            if [ -z "$PS1" ]; then
-                RUSTUP_Y=" -y "
-            fi
+            case "$-" in
+            *i*)  RUSTUP_Y="" ;;
+            *)    RUSTUP_Y=" -y " ;;
+            esac
             rustup override set stable $RUSTUP_Y
             rustup update stable $RUSTUP_Y
             (
