@@ -390,10 +390,8 @@ elif [ $task == "--install-neovim" ]; then
         mv nvim-linux64 "$HOME/opt/neovim"
     fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
-        add_line_to_file 'alias "vim=nvim"' ~/.aliases
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
-        printf "${YELLOW}- added 'alias vim=nvim' to ~/.aliases${UNSET}\n"
         check_opt_bin_in_path
 
 elif [ $task == "--set-up-vim-plugins" ]; then
