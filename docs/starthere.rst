@@ -300,11 +300,11 @@ meld, and so on).
 
 .. code-block::
 
-    ./setup.sh --apt-get-installs
+    ./setup.sh --apt-install
 
     # or
 
-    ./setup.sh --apt-get-installs-minimal
+    ./setup.sh --apt-install-minimal
 
 3.3: install other tools
 ~~~~~~~~~~~~~~~~~~~~~~~~
