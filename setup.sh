@@ -33,25 +33,25 @@ function showHelp() {
     echo
     echo "----------------------------------------------------------------------------------------------------------"
     echo "General setup:"
-    printf "  ${GREEN} --apt-install          ${YELLOW}Installs a bunch of useful Ubuntu packages${UNSET}\n"
+    printf "  ${GREEN} --apt-install           ${YELLOW}Install a bunch of useful Ubuntu packages${UNSET}\n"
     printf "                            See apt-installs.txt for list, and edit if needed\n"
     printf "                            Linux only, needs root.\n"
     echo
-    printf "  ${GREEN} --apt-install-minimal  ${YELLOW}Installs a smaller set of useful Ubuntu packages${UNSET}\n"
+    printf "  ${GREEN} --apt-install-minimal   ${YELLOW}Install a smaller set of useful Ubuntu packages${UNSET}\n"
     printf "                            See apt-installs-minimal.txt for list, and edit if needed\n"
     printf "                            Linux only, needs root.\n"
     echo
-    printf "  ${GREEN} --install-neovim       ${YELLOW}Install neovim${UNSET}\n"
+    printf "  ${GREEN} --install-neovim        ${YELLOW}Install neovim${UNSET}\n"
     printf "                            neovim is a drop-in replacement for vim, with additional features\n"
     printf "                            ${BLUE}https://neovim.io/${UNSET}\n"
     echo
-    printf "  ${GREEN} --powerline            ${YELLOW}Install powerline fonts${UNSET}\n"
+    printf "  ${GREEN} --powerline             ${YELLOW}Install powerline fonts${UNSET}\n"
     printf "                            Fancy glyphs used for the vim-airline status bar,\n"
     printf "                            ${BLUE}https://github.com/vim-airline/vim-airline${UNSET}\n"
     printf "                            Only needs to be installed on local machine that is running\n"
     printf "                            the terminal app.\n"
     echo
-    printf "  ${GREEN} --set-up-vim-plugins   ${YELLOW}Set up vim-plug${UNSET}\n"
+    printf "  ${GREEN} --set-up-vim-plugins    ${YELLOW}Set up vim-plug${UNSET}\n"
     printf "                            vim-plug needs to be installed separately,\n"
     printf "                            and then all vim plugins can be simply be installed\n"
     printf "                            by adding them to .vimrc or init.vim\n"
@@ -59,13 +59,13 @@ function showHelp() {
     echo
     echo "----------------------------------------------------------------------------------------------------------"
     echo "conda:"
-    printf "  ${GREEN} --install-miniconda    ${YELLOW}Install Miniconda to $HOME/miniconda3${UNSET}\n"
+    printf "  ${GREEN} --install-miniconda     ${YELLOW}Install Miniconda to $HOME/miniconda3${UNSET}\n"
     printf "                            ${BLUE}https://docs.conda.io/en/latest/miniconda.html${UNSET}\n"
     echo
-    printf "  ${GREEN} --set-up-bioconda      ${YELLOW}Set up bioconda channel priorities${UNSET}\n"
+    printf "  ${GREEN} --set-up-bioconda       ${YELLOW}Set up bioconda channel priorities${UNSET}\n"
     printf "                            ${BLUE}https://bioconda.github.io/${UNSET}\n"
     echo
-    printf "  ${GREEN} --conda-env            ${YELLOW}Install requirements.txt into root conda env${UNSET}\n"
+    printf "  ${GREEN} --conda-env             ${YELLOW}Install requirements.txt into root conda env${UNSET}\n"
     printf "                            Sets up a reasonable base conda env, edit requirements.txt\n"
     printf "                            (or requirements-mac.txt on a Mac) to customize.\n"
     echo
@@ -113,7 +113,7 @@ function showHelp() {
     printf "                            with git repositories.\n"
     printf "                            ${BLUE}https://jonas.github.io/tig/${UNSET}\n"
     echo
-    printf "  ${GREEN} --install-icdiff       ${YELLOW}Install idciff${UNSET}\n"
+    printf "  ${GREEN} --install-icdiff        ${YELLOW}Install icdiff${UNSET}\n"
     printf "                            icdiff shows colored diffs side-by-side in the terminal\n"
     printf "                            and shows whitespace diffs by default\n"
     printf "                            ${BLUE}https://www.jefftk.com/icdiff${UNSET}\n"
@@ -154,7 +154,7 @@ function showHelp() {
     printf "                            Installs docker and adds current user to new docker group.\n"
     printf "                            (Needs root, Linux only)\n"
     echo
-    printf "  ${GREEN} --install-meld         ${YELLOW}Install meld (Mac only)${UNSET}\n"
+    printf "  ${GREEN} --install-meld          ${YELLOW}Install meld (Mac only)${UNSET}\n"
     printf "                            meld is a graphical diff tool, extremely useful\n"
     printf "                            for 3-way diffs\n"
     echo
