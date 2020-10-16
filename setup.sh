@@ -526,10 +526,10 @@ elif [ $task == "--install-radian" ]; then
     # Note: radian needs R installed to compile the rchitect dependency. It
     # is unclear whether radian is dependent on a particular R version.
     conda create -n radian python r
-    source activate radian
+    conda activate radian
     pip install radian
     ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
-    source deactivate
+    conda deactivate
     set -u
     printf "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}\n"
     check_opt_bin_in_path
@@ -689,10 +689,10 @@ elif [ $task == "--install-pyp" ]; then
     ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
     can_make_conda_env "pyp"
     conda create -y -n pyp python
-    source activate pyp
+    conda activate pyp
     pip install pypyp
-    source deactivate
     ln -sf $(which pyp) $HOME/opt/bin/pyp
+    conda deactivate
     printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
     check_opt_bin_in_path
 
