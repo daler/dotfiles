@@ -11,57 +11,152 @@ UNSET="\e[0m"
 export PS1=
 
 function showHelp() {
+    # printf "                                         asdf\n"echo
     echo
     echo "Usage:"
     echo "   $0 [OPTION]"
-    echo 
-    printf "   ${RED}Documenation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
     echo " - Options are intended to be run one-at-a-time."
     echo " - Each command will prompt if you want to continue."
     echo " - Set the env var DOTFILES_FORCE=true if you want always say yes."
-    echo " - Many commands are OK to run on remote machines on which you do not "
-    echo "   have root access. These commands are marked 'remote OK'"
     echo
-    printf "${GREEN}                       remote  Linux  Mac${UNSET} \n"
-    printf "${GREEN}                        OK_____ | ___|   ${UNSET} \n"
-    printf "${GREEN}                              | | |      ${UNSET} \n"
-    printf "${GREEN}                              |x|x|x|  (an 'x' indicates OK for that system) ${UNSET} \n"
+    printf "   Documenation: ${BLUE}https://daler.github.io/dotfiles/${UNSET}\n"
+    echo
+    echo "----------------------------------------------------------------------------------------------------------"
     echo "Dotfiles:"
-    printf "  ${GREEN} --diffs                             ${UNSET}inspect diffs between repo and home\n"
-    printf "  ${GREEN} --vim-diffs                         ${UNSET}inspect diffs between repo and home, using vim -d\n"
-    printf "  ${GREEN} --graphical-diffs                   ${UNSET}inspect diffs between repo and home, using meld\n"
-    printf "  ${GREEN} --dotfiles                          ${UNSET}update dotfiles\n"
+    printf "  ${GREEN} --diffs                ${YELLOW}Inspect diffs between repo and home${UNSET}\n"
+    printf "  ${GREEN} --vim-diffs            ${YELLOW}Inspect diffs between repo and home, using vim -d${UNSET}\n"
+    printf "  ${GREEN} --graphical-diffs      ${YELLOW}Inspect diffs between repo and home, using meld${UNSET}\n"
+    echo
+    printf "  ${GREEN} --dotfiles             ${YELLOW}Update dotfiles${UNSET}\n"
+    printf "                            Replaces files in $HOME with files from this directory\n"
+    echo
+    echo "----------------------------------------------------------------------------------------------------------"
     echo "General setup:"
-    printf "  ${GREEN} --apt-get-installs         | |x| |  ${UNSET}installs a bunch of useful Ubuntu packages)\n"
-    printf "  ${GREEN} --apt-get-installs-minimal | |x| |  ${UNSET}installs a smaller set of useful Ubuntu packages)\n"
-    printf "  ${GREEN} --install-neovim           |x|x|x|  ${UNSET}installs neovim ${BLUE}https://neovim.io/${UNSET}\n"
-    printf "  ${GREEN} --powerline                | |x|x|  ${UNSET}powerline fonts for ${BLUE}https://github.com/vim-airline/vim-airline${UNSET}\n"
-    printf "  ${GREEN} --set-up-vim-plugins       |x|x|x|  ${UNSET}set up vim-plug ${BLUE}https://github.com/junegunn/vim-plug${UNSET}\n"
+    printf "  ${GREEN} --apt-install          ${YELLOW}Installs a bunch of useful Ubuntu packages${UNSET}\n"
+    printf "                            See apt-installs.txt for list, and edit if needed\n"
+    printf "                            Linux only, needs root.\n"
     echo
+    printf "  ${GREEN} --apt-install-minimal  ${YELLOW}Installs a smaller set of useful Ubuntu packages${UNSET}\n"
+    printf "                            See apt-installs-minimal.txt for list, and edit if needed\n"
+    printf "                            Linux only, needs root.\n"
+    echo
+    printf "  ${GREEN} --install-neovim       ${YELLOW}Install neovim${UNSET}\n"
+    printf "                            neovim is a drop-in replacement for vim, with additional features\n"
+    printf "                            ${BLUE}https://neovim.io/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --powerline            ${YELLOW}Install powerline fonts${UNSET}\n"
+    printf "                            Fancy glyphs used for the vim-airline status bar,\n"
+    printf "                            ${BLUE}https://github.com/vim-airline/vim-airline${UNSET}\n"
+    printf "                            Only needs to be installed on local machine that is running\n"
+    printf "                            the terminal app.\n"
+    echo
+    printf "  ${GREEN} --set-up-vim-plugins   ${YELLOW}Set up vim-plug${UNSET}\n"
+    printf "                            vim-plug needs to be installed separately,\n"
+    printf "                            and then all vim plugins can be simply be installed\n"
+    printf "                            by adding them to .vimrc or init.vim\n"
+    printf "                            ${BLUE}https://github.com/junegunn/vim-plug${UNSET}\n"
+    echo
+    echo "----------------------------------------------------------------------------------------------------------"
     echo "conda:"
-    printf "  ${GREEN} --install-miniconda        |x|x|x|  ${UNSET}${BLUE}https://docs.conda.io/en/latest/miniconda.html${UNSET}\n"
-    printf "  ${GREEN} --set-up-bioconda          |x|x|x|  ${UNSET}${BLUE}https://bioconda.github.io/${UNSET}\n"
-    printf "  ${GREEN} --conda-env                |x|x|x|  ${UNSET}install requirements.txt into root conda env\n"
+    printf "  ${GREEN} --install-miniconda    ${YELLOW}Install Miniconda to $HOME/miniconda3${UNSET}\n"
+    printf "                            ${BLUE}https://docs.conda.io/en/latest/miniconda.html${UNSET}\n"
     echo
+    printf "  ${GREEN} --set-up-bioconda      ${YELLOW}Set up bioconda channel priorities${UNSET}\n"
+    printf "                            ${BLUE}https://bioconda.github.io/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --conda-env            ${YELLOW}Install requirements.txt into root conda env${UNSET}\n"
+    printf "                            Sets up a reasonable base conda env, edit requirements.txt\n"
+    printf "                            (or requirements-mac.txt on a Mac) to customize.\n"
+    echo
+    echo "----------------------------------------------------------------------------------------------------------"
     echo "Installations:"
-    printf "  ${GREEN} --install-icdiff           |x|x|x|  ${UNSET}${BLUE}https://www.jefftk.com/icdiff${UNSET}\n"
-    printf "  ${GREEN} --install-meld             | | |x|  ${UNSET}(currently Mac only)\n"
-    printf "  ${GREEN} --install-fzf              |x|x|x|  ${UNSET}${BLUE}https://github.com/junegunn/fzf${UNSET}\n"
-    printf "  ${GREEN} --install-ripgrep          |x|x|x|  ${UNSET}${BLUE}https://github.com/BurntSushi/ripgrep/${UNSET}\n"
-    printf "  ${GREEN} --install-autojump         |x|x|x|  ${UNSET}${BLUE}https://github.com/wting/autojump${UNSET}\n"
-    printf "  ${GREEN} --install-hub              |x|x|x|  ${UNSET}${BLUE}https://github.com/github/hub${UNSET}\n"
-    printf "  ${GREEN} --install-fd               |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/fd${UNSET}\n"
-    printf "  ${GREEN} --install-jq               |x|x|x|  ${UNSET}${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
-    printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}${BLUE}https://visidata.org/${UNSET}\n"
-    printf "  ${GREEN} --install-tig              |x|x|x|  ${UNSET}${BLUE}https://jonas.github.io/tig/${UNSET}\n"
-    printf "  ${GREEN} --install-pyp              |x|x|x|  ${UNSET}${BLUE}https://github.com/hauntsaninja/pyp${UNSET}\n"
-    printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}${BLUE}https://black.readthedocs.io${UNSET}\n"
-    printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}${BLUE}https://github.com/randy3k/radian${UNSET}\n"
-    printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
-    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/bat${UNSET}\n"
-    printf "  ${GREEN} --install-alacritty        | |x|x|  ${UNSET}${BLUE}https://github.com/alacritty/alacritty${UNSET}\n"
-    printf "  ${GREEN} --install-docker           | |x| |  ${UNSET}install docker and add current user to new docker group\n"
+    printf "  ${GREEN} --install-vd            ${YELLOW}Install visidata${UNSET}\n"
+    printf "                            visidata is great for viewing, searching, sorting\n"
+    printf "                            tables (TSVs, CSVs, XLS). Only thing it can't do is edit them.\n"
+    printf "                            ${BLUE}https://visidata.org/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-fzf           ${YELLOW}Install fzf${UNSET}\n"
+    printf "                            fzf (fuzzy-finder) replaces your bash Ctrl-R reverse\n"
+    printf "                            history search. You can also can pipe anything into it for\n"
+    printf "                            on-the-fly fuzzy searches on text\n"
+    printf "                            ${BLUE}https://github.com/junegunn/fzf${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-ripgrep       ${YELLOW}Install ripgrep (rg)${UNSET}\n"
+    printf "                            ripgrep is a very fast grep replacement, especially\n"
+    printf "                            good for exploring code bases\n"
+    printf "                            ${BLUE}https://github.com/BurntSushi/ripgrep/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-autojump      ${YELLOW}Install autojump${UNSET}\n"
+    printf "                            autojump saves your cd history and provides a mechanism\n"
+    printf "                            for quickly revisiting directories\n"
+    printf "                            ${BLUE}https://github.com/wting/autojump${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-hub           ${YELLOW}Install hub${UNSET}\n"
+    printf "                            hub is a command-line wrapper for git, which allows\n"
+    printf "                            you to do things with GitHub like easily check out PRs\n"
+    printf "                            ${BLUE}https://github.com/github/hub${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-fd            ${YELLOW}Install fd${UNSET}\n"
+    printf "                            fd is a fast replacement for find, with additional\n"
+    printf "                            useful features.\n"
+    printf "                            ${BLUE}https://github.com/sharkdp/fd${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-jq            ${YELLOW}Install jq${UNSET}\n"
+    printf "                            jq is a command-line tool for extracting information\n"
+    printf "                            from json files.\n"
+    printf "                            ${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-tig           ${YELLOW}Install tig${UNSET}\n"
+    printf "                            tig is a tool that runs in the terminal that helps\n"
+    printf "                            make incremental git commits and do other useful things\n"
+    printf "                            with git repositories.\n"
+    printf "                            ${BLUE}https://jonas.github.io/tig/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-icdiff       ${YELLOW}Install idciff${UNSET}\n"
+    printf "                            icdiff shows colored diffs side-by-side in the terminal\n"
+    printf "                            and shows whitespace diffs by default\n"
+    printf "                            ${BLUE}https://www.jefftk.com/icdiff${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-pyp           ${YELLOW}Install pyp${UNSET}\n"
+    printf "                            pyp lets you run arbitrary python directly from\n"
+    printf "                            the command line. Great as a calculator, but can also\n"
+    printf "                            manipulate piped-in text\n"
+    printf "                            ${BLUE}https://github.com/hauntsaninja/pyp${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-black         ${YELLOW}Install black${UNSET}\n"
+    printf "                            The self-described 'uncompromising' Python formatter.\n"
+    printf "                            Re-formats Python code to match PEP8 guidelines.\n"
+    printf "                            ${BLUE}https://black.readthedocs.io${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-radian        ${YELLOW}Install radian${UNSET}\n"
+    printf "                            radian is a wrapper for the R interpreter, which adds\n"
+    printf "                            syntax highlighting and tab-completion\n"
+    printf "                            ${BLUE}https://github.com/randy3k/radian${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-git-cola      ${YELLOW}Install git-cola${UNSET}\n"
+    printf "                            git-cola is a GUI for making incremental git commits\n"
+    printf "                            ${BLUE}https://git-cola.github.io/${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-bat           ${YELLOW}Install bat${UNSET}\n"
+    printf "                            bat is like cat, but adds things like syntax highlighting,\n"
+    printf "                            showing lines changed based on git, and showing non-printable\n"
+    printf "                            characters.\n"
+    printf "                            ${BLUE}https://github.com/sharkdp/bat${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-alacritty     ${YELLOW}Install alacritty${UNSET}\n"
+    printf "                            Alacritty is a terminal emulator that is quite fast;\n"
+    printf "                            its speed is clear when catting a large file in tmux.\n"
+    printf "                            (Only install on local machine)\n"
+    printf "                            ${BLUE}https://github.com/alacritty/alacritty${UNSET}\n"
+    echo
+    printf "  ${GREEN} --install-docker        ${YELLOW}Install docker${UNSET}\n"
+    printf "                            Installs docker and adds current user to new docker group.\n"
+    printf "                            (Needs root, Linux only)\n"
+    echo
+    printf "  ${GREEN} --install-meld         ${YELLOW}Install meld (Mac only)${UNSET}\n"
+    printf "                            meld is a graphical diff tool, extremely useful\n"
+    printf "                            for 3-way diffs\n"
     echo
     echo
     exit 0
@@ -191,12 +286,12 @@ install_env_and_symlink () {
 # Each task asks if it's OK to run; that also serves as documentation for each
 # task.
 
-if [ $task == "--apt-get-installs" ]; then
+if [ $task == "--apt-install" ]; then
     ok "Installs packages from the file apt-installs.txt"
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
 
-elif [ $task == "--apt-get-installs-minimal" ]; then
+elif [ $task == "--apt-install-minimal" ]; then
     ok "Installs packages from the file apt-installs-minimal.txt"
     sudo apt-get update && \
     sudo apt-get install -y $(awk '{print $1}' apt-installs-minimal.txt | grep -v "^#")
