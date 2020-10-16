@@ -46,8 +46,7 @@ included:
 
     * - ``vim``
       - ``nvim``
-      - always use neovim (this is added only after you've run
-        :command:`./setup.sh --install-neovim`)
+      - always use neovim (this is added only if nvim is found on the path)
 
     * - ``D``
       - ``export DISPLAY=:0``
@@ -57,7 +56,8 @@ included:
     * - ``ll``
       - ``ls -lrth --color=auto``
       - useful `ls` arguments (long format, human-readable sizes, sorted by
-        time (latest at bottom), use color)
+        time (latest at bottom), use color). MacOS has different options, so
+        this alias tries to handle that correctly.
 
     * - ``la``
       - ``ls -lrthA --color=auto``
@@ -67,6 +67,10 @@ included:
       - (see .aliases file)
       - Live, searchable, syntax-highlighted preview of files in a directory.
         Needs :ref:`fzf` and :ref:`bat` installed
+
+    * - ``..``
+      - ``cd ..``
+      - faster way of moving up a directory
 
 
 ``.functions``
