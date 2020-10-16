@@ -75,8 +75,7 @@ included:</p>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">nvim</span></code></p></td>
-<td><p>always use neovim (this is added only after you’ve run
-<strong class="command">./setup.sh --install-neovim</strong>)</p></td>
+<td><p>always use neovim (this is added only if nvim is found on the path)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">D</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">DISPLAY=:0</span></code></p></td>
@@ -86,7 +85,8 @@ launched from the terminal to complain. This sets the display variable.</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ll</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lrth</span> <span class="pre">--color=auto</span></code></p></td>
 <td><p>useful <cite>ls</cite> arguments (long format, human-readable sizes, sorted by
-time (latest at bottom), use color)</p></td>
+time (latest at bottom), use color). MacOS has different options, so
+this alias tries to handle that correctly.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">la</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lrthA</span> <span class="pre">--color=auto</span></code></p></td>
@@ -96,6 +96,10 @@ time (latest at bottom), use color)</p></td>
 <td><p>(see .aliases file)</p></td>
 <td><p>Live, searchable, syntax-highlighted preview of files in a directory.
 Needs <span class="xref std std-ref">fzf</span> and <span class="xref std std-ref">bat</span> installed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">..</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code></p></td>
+<td><p>faster way of moving up a directory</p></td>
 </tr>
 </tbody>
 </table>
