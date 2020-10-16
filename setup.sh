@@ -232,8 +232,14 @@ can_make_conda_env () {
 # Find the conda installation location
 CONDA_LOCATION=
 check_for_conda () {
-    if [ $(which conda) ]; then
-        CONDA_LOCATION=$(dirname $(dirname $(which conda)))
+    if command -v conda > /dev/null; then
+
+        CONDA_LOCATION=$(conda info --base)
+
+        # Even if the user has not run conda init, this will enable the use of
+        # "conda activate" within the various conda creation steps below.
+        eval "$(conda shell.bash hook)"
+
     else
         printf "${RED}cannot find conda${UNSET}\n"
         exit 1
