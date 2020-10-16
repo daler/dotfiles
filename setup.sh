@@ -306,10 +306,12 @@ if [ $task == "--apt-install" ]; then
     sudo apt-get update && \
     sudo apt-get install $(awk '{print $1}' apt-installs.txt | grep -v "^#")
 
+
 elif [ $task == "--apt-install-minimal" ]; then
     ok "Installs packages from the file apt-installs-minimal.txt"
     sudo apt-get update && \
     sudo apt-get install -y $(awk '{print $1}' apt-installs-minimal.txt | grep -v "^#")
+
 
 elif [ $task == "--install-docker" ]; then
     ok "Adds the docker repo, installs docker-ce, adds user to the docker group"
@@ -333,6 +335,7 @@ elif [ $task == "--install-docker" ]; then
     echo
     echo
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
+
 
 elif [ $task == "--install-miniconda" ]; then
 
@@ -366,12 +369,14 @@ elif [ $task == "--install-miniconda" ]; then
     printf "${YELLOW}If you're not using ~/.path, please add the following to your .bashrc:${UNSET}\n"
     printf "${YELLOW}   export PATH=\"\$PATH:$MINICONDA_DIR${UNSET}\"\n"
 
+
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
     conda config --add channels defaults
     conda config --add channels bioconda
     conda config --add channels conda-forge
     printf "${YELLOW}Channels configured, see ~/.condarc${UNSET}\n"
+
 
 elif [ $task == "--conda-env" ]; then
     if [[ $OSTYPE == darwin* ]]; then
@@ -382,6 +387,7 @@ elif [ $task == "--conda-env" ]; then
         conda install --file requirements.txt
     fi
 
+
 elif [ $task == "--powerline" ]; then
     ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
     git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
@@ -390,6 +396,7 @@ elif [ $task == "--powerline" ]; then
     echo
     printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
     echo
+
 
 elif [ $task == "--install-neovim" ]; then
     NVIM_VERSION=0.4.3
@@ -408,6 +415,7 @@ elif [ $task == "--install-neovim" ]; then
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
+
 
 elif [ $task == "--set-up-vim-plugins" ]; then
     ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. (for nvim) and ~/.vim/autoload/plug.vim (for vim). Read the instructions after this command when done."
@@ -438,6 +446,7 @@ elif [ $task == "--install-meld" ]; then
         printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf${UNSET}\n"
     fi
 
+
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
     (
@@ -445,6 +454,7 @@ elif [ $task == "--install-fzf" ]; then
       ~/.fzf/install --no-update-rc --completion --key-bindings
     )
     printf "${YELLOW}fzf installed; see ~/.fzf${UNSET}\n"
+
 
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
@@ -464,6 +474,7 @@ elif [ $task == "--install-ripgrep" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/rg${UNSET}\n"
     check_opt_bin_in_path
 
+
 elif [ $task == "--install-autojump" ]; then
     ok "Installs autojump (https://github.com/wting/autojump)"
     (
@@ -482,11 +493,13 @@ elif [ $task == "--install-fd" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
     check_opt_bin_in_path
 
+
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
     install_env_and_symlink visidata visidata vd
     printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-hub" ]; then
     ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
@@ -534,6 +547,7 @@ elif [ $task == "--install-radian" ]; then
     printf "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}\n"
     check_opt_bin_in_path
 
+
 elif [ $task == "--install-git-cola" ]; then
     ok "Installs git-cola (https://git-cola.github.io/). Clone to ~/opt/git-cola, create a new conda env, and symlink the binary to ~/opt/bin"
     # NOTE: git-cola has vendored-in PyQt. We may not actually need it in the
@@ -555,6 +569,7 @@ elif [ $task == "--install-git-cola" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/git-cola${UNSET}\n"
     check_opt_bin_in_path
 
+
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
     BAT_VERSION=0.12.1
@@ -575,6 +590,7 @@ elif [ $task == "--install-bat" ]; then
     rm -r "/tmp/bat-${BAT_VERSION}.tar.gz"
     printf "${YELLOW}Installed to ~/opt/bin/bat${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-alacritty" ]; then
 
@@ -602,6 +618,7 @@ elif [ $task == "--install-alacritty" ]; then
             RUSTUP_Y=""
             if [ -z "$PS1" ]; then
                 RUSTUP_Y=" -y "
+            fi
             rustup override set stable $RUSTUP_Y
             rustup update stable $RUSTUP_Y
             (
@@ -611,6 +628,7 @@ elif [ $task == "--install-alacritty" ]; then
             )
         )
     fi
+
 
 elif [ $task == "--install-jq" ]; then
     ok "Installs jq to $HOME/opt/bin"
@@ -622,6 +640,7 @@ elif [ $task == "--install-jq" ]; then
     chmod +x $HOME/opt/bin/jq
     printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-tig" ]; then
     ok "Installs tig to $HOME/opt/bin"
