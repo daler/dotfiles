@@ -213,8 +213,17 @@ add_line_to_file () {
 # Only exits cleanly if the named conda env does not already exist
 can_make_conda_env () {
     check_for_conda
-    if conda env list | grep -q "/$1\$"; then
-        printf "${RED}conda env $1 already exists! Exiting.${UNSET}\n"
+
+    # Newer versions of conda have some sort of catch on "conda env list"  if
+    # you pipe the output of to something else. The help says to use --json for
+    # programmatic use of conda. So here we use JSON output, which requires
+    # also checking for the trailing ", of a JSON entry, hence the awkward grep
+    # command.
+    if conda env list --json | grep -q "/$1\",\$"; then
+        printf "${RED}conda env $1 already exists!\n"
+        printf "You can remove it with:\n"
+        printf "    conda env remove -n $1\n"
+        printf "Exiting.${UNSET}\n"
         return 1
     fi
 }
