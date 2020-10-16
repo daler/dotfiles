@@ -617,9 +617,18 @@ elif [ $task == "--install-alacritty" ]; then
             *)    RUSTUP_Y=" -y " ;;
             esac
 
+            # Extra installations needed to compile alacritty
+            sudo apt-get install -y \
+                cmake \
+                libfontconfig1-dev \
+                libfreetype6-dev \
+                libxcb-xfixes0-dev \
+                pkg-config \
+                python3
+
             # Install rust
             if [ ! `test "cargo"` ]; then
-                curl https://sh.rustup.rs -sSf > alacritty_install.sh
+                curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > alacritty_install.sh
                 sh alacritty_install.sh $RUSTUP_Y
                 source ~/.cargo/env
                 rm alacritty_install.sh
@@ -629,8 +638,8 @@ elif [ $task == "--install-alacritty" ]; then
             rustup update stable
             (
                 cd $SRC;
-                cargo install cargo-deb --force
-                cargo deb --install
+                cargo build --release
+                cp target/release/alacritty $HOME/opt/bin/alacritty
             )
         )
     fi
