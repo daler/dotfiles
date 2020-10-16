@@ -399,7 +399,7 @@ elif [ $task == "--powerline" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
-    NVIM_VERSION=0.4.3
+    NVIM_VERSION=0.4.4
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
@@ -459,7 +459,7 @@ elif [ $task == "--install-fzf" ]; then
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
     mkdir -p /tmp/rg
-    RG_VERSION=11.0.2
+    RG_VERSION=12.1.1
 
     if [[ $OSTYPE == darwin* ]]; then
         URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-apple-darwin.tar.gz
@@ -503,7 +503,7 @@ elif [ $task == "--install-vd" ]; then
 
 elif [ $task == "--install-hub" ]; then
     ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
-    HUB_VERSION=2.11.2
+    HUB_VERSION=2.14.2
     if [[ $OSTYPE == darwin* ]]; then
         (
             download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-darwin-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
@@ -572,7 +572,7 @@ elif [ $task == "--install-git-cola" ]; then
 
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
-    BAT_VERSION=0.12.1
+    BAT_VERSION=0.16.0
     BAT_TARBALL="/tmp/bat-${BAT_VERSION}.tar.gz"
     if [[ $OSTYPE == darwin* ]]; then
         download \
@@ -595,8 +595,9 @@ elif [ $task == "--install-bat" ]; then
 elif [ $task == "--install-alacritty" ]; then
 
     if [[ $OSTYPE == darwin* ]]; then
+        ALACRITTY_VERSION=0.5.0
         ok "Installs alacritty terminal"
-        download https://github.com/alacritty/alacritty/releases/download/v0.5.0/Alacritty-v0.5.0.dmg /tmp/alacritty.dmg
+        download https://github.com/alacritty/alacritty/releases/download/v${ALACRITTY_VERSION}/Alacritty-v${ALACRITTY_VERSION}.dmg /tmp/alacritty.dmg
         hdutil attach /tmp/alacritty.dmg
         cp /Volumes/Alacritty/Alacritty.app/Contents/MacOS/alacritty ~/opt/bin/alacritty
         hdutil detach /Volumes/Alacritty
@@ -631,11 +632,12 @@ elif [ $task == "--install-alacritty" ]; then
 
 
 elif [ $task == "--install-jq" ]; then
+    JQ_VERSION=1.6
     ok "Installs jq to $HOME/opt/bin"
     if [[ $OSTYPE == darwin* ]]; then
-        download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64 $HOME/opt/bin/jq
+        download https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-osx-amd64 $HOME/opt/bin/jq
     else
-        download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
+        download https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 $HOME/opt/bin/jq
     fi
     chmod +x $HOME/opt/bin/jq
     printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
@@ -643,7 +645,8 @@ elif [ $task == "--install-jq" ]; then
 
 
 elif [ $task == "--install-tig" ]; then
-    ok "Installs tig to $HOME/opt/bin"
+    TIG_VERSION=2.5.1
+    ok "Installs tig ${TIG_VERSION} to $HOME/opt/bin"
 
     if [[ $HOSTNAME == "helix.nih.gov" ]]; then
         printf "${RED}Cannot install on helix -- need ncurses, which is in the gcc module, which needs to be loaded on biowulf.\n\n${UNSET}"
@@ -654,7 +657,6 @@ elif [ $task == "--install-tig" ]; then
         module load gcc
     fi
 
-    TIG_VERSION=2.3.3
     mkdir -p $HOME/.tig-install
     (
         cd $HOME/.tig-install
