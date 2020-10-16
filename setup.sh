@@ -577,26 +577,36 @@ elif [ $task == "--install-bat" ]; then
     check_opt_bin_in_path
 
 elif [ $task == "--install-alacritty" ]; then
-    ok "Installs alacritty terminal. Also needs to install rust"
-    (
-        set -eoux
-        SRC=/tmp/alacritty
-        rm -rf $SRC
-        git clone https://github.com/jwilm/alacritty.git $SRC
 
-        # Install rust
-        if [ ! `test "cargo"` ]; then
-            curl https://sh.rustup.rs -sSf | sh
-            source ~/.cargo/env
-        fi
-        rustup override set stable
-        rustup update stable
+    if [[ $OSTYPE == darwin* ]]; then
+        ok "Installs alacritty terminal"
+        download https://github.com/alacritty/alacritty/releases/download/v0.5.0/Alacritty-v0.5.0.dmg /tmp/alacritty.dmg
+        hdutil attach /tmp/alacritty.dmg
+        cp /Volumes/Alacritty/Alacritty.app/Contents/MacOS/alacritty ~/opt/bin/alacritty
+        hdutil detach /Volumes/Alacritty
+
+    else
+        ok "Installs alacritty terminal. Also needs to install rust"
         (
-            cd $SRC;
-            cargo install cargo-deb --force
-            cargo deb --install
+            set -eoux
+            SRC=$HOME/opt/tmp/alacritty
+            rm -rf $SRC
+            git clone https://github.com/jwilm/alacritty.git $SRC
+
+            # Install rust
+            if [ ! `test "cargo"` ]; then
+                curl https://sh.rustup.rs -sSf | sh
+                source ~/.cargo/env
+            fi
+            rustup override set stable
+            rustup update stable
+            (
+                cd $SRC;
+                cargo install cargo-deb --force
+                cargo deb --install
+            )
         )
-    )
+    fi
 
 elif [ $task == "--install-jq" ]; then
     ok "Installs jq to $HOME/opt/bin"
