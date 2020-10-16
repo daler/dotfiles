@@ -51,6 +51,7 @@ RUN ./setup.sh --install-radian
 RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-tig
 RUN ./setup.sh --install-vd
+RUN ./setup.sh --install-alacritty
 
 
 # Additional for this container: asciinema for screen casts
