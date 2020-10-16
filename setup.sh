@@ -676,6 +676,26 @@ elif [ $task == "--install-tig" ]; then
     check_opt_bin_in_path
 
 
+elif [ $task == "--install-icdiff" ]; then
+    ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
+    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
+    chmod +x ~/opt/bin/icdiff
+    printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
+    check_opt_bin_in_path
+
+
+elif [ $task == "--install-pyp" ]; then
+    ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
+    can_make_conda_env "pyp"
+    conda create -y -n pyp python
+    conda activate pyp
+    pip install pypyp
+    ln -sf $(which pyp) $HOME/opt/bin/pyp
+    conda deactivate
+    printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
+    check_opt_bin_in_path
+
+
 elif [ $task == "--dotfiles" ]; then
 
     # Unique backup directory based on the hash of the current time, all
@@ -713,23 +733,6 @@ elif [ $task == "--dotfiles" ]; then
     fi
     unset doIt
 
-elif [ $task == "--install-icdiff" ]; then
-    ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
-    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
-    chmod +x ~/opt/bin/icdiff
-    printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
-    check_opt_bin_in_path
-
-elif [ $task == "--install-pyp" ]; then
-    ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
-    can_make_conda_env "pyp"
-    conda create -y -n pyp python
-    conda activate pyp
-    pip install pypyp
-    ln -sf $(which pyp) $HOME/opt/bin/pyp
-    conda deactivate
-    printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
-    check_opt_bin_in_path
 
 
 # ----------------------------------------------------------------------------
