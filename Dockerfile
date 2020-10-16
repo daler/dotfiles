@@ -24,7 +24,7 @@ RUN git checkout $BRANCH
 # Run setup in order
 
 ENV DOTFILES_FORCE=true
-RUN ./setup.sh --apt-get-installs-minimal
+RUN ./setup.sh --apt-install-minimal
 RUN ./setup.sh --install-miniconda
 RUN ./setup.sh --dotfiles
 RUN ./setup.sh --set-up-bioconda
