@@ -598,8 +598,12 @@ elif [ $task == "--install-alacritty" ]; then
                 curl https://sh.rustup.rs -sSf | sh
                 source ~/.cargo/env
             fi
-            rustup override set stable
-            rustup update stable
+
+            RUSTUP_Y=""
+            if [ -z "$PS1" ]; then
+                RUSTUP_Y=" -y "
+            rustup override set stable $RUSTUP_Y
+            rustup update stable $RUSTUP_Y
             (
                 cd $SRC;
                 cargo install cargo-deb --force
