@@ -598,9 +598,10 @@ elif [ $task == "--install-alacritty" ]; then
         ALACRITTY_VERSION=0.5.0
         ok "Installs alacritty terminal"
         download https://github.com/alacritty/alacritty/releases/download/v${ALACRITTY_VERSION}/Alacritty-v${ALACRITTY_VERSION}.dmg /tmp/alacritty.dmg
-        hdutil attach /tmp/alacritty.dmg
-        cp /Volumes/Alacritty/Alacritty.app/Contents/MacOS/alacritty ~/opt/bin/alacritty
-        hdutil detach /Volumes/Alacritty
+        hdiutil attach /tmp/alacritty.dmg
+        cp -r /Volumes/Alacritty/Alacritty.app ~/opt/alacritty
+        ln -sf ~/opt/alacritty/Contents/MacOS/alacritty ~/opt/bin/alacritty
+        hdiutil detach /Volumes/Alacritty
 
     else
         ok "Installs alacritty terminal. Also needs to install rust"
