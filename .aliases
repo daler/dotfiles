@@ -25,3 +25,8 @@ alias D="export DISPLAY=:0"
 
 # View syntax-highlighted files in the current directory, live-filtered by fzf.
 alias v='fzf --preview "bat --color \"always\" {}"'
+
+if command -v nvim > /dev/null; then
+    alias vim=nvim
+fi
+
