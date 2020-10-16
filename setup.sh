@@ -610,18 +610,23 @@ elif [ $task == "--install-alacritty" ]; then
             rm -rf $SRC
             git clone https://github.com/jwilm/alacritty.git $SRC
 
-            # Install rust
-            if [ ! `test "cargo"` ]; then
-                curl https://sh.rustup.rs -sSf | sh
-                source ~/.cargo/env
-            fi
-
+            # The Docker tests run in a non-interactive terminal, so we need to
+            # detect and handle that.
             case "$-" in
             *i*)  RUSTUP_Y="" ;;
             *)    RUSTUP_Y=" -y " ;;
             esac
-            rustup override set stable $RUSTUP_Y
-            rustup update stable $RUSTUP_Y
+
+            # Install rust
+            if [ ! `test "cargo"` ]; then
+                curl https://sh.rustup.rs -sSf > alacritty_install.sh
+                sh alacritty_install.sh $RUSTUP_Y
+                source ~/.cargo/env
+                rm alacritty_install.sh
+            fi
+
+            rustup override set stable
+            rustup update stable
             (
                 cd $SRC;
                 cargo install cargo-deb --force
