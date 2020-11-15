@@ -25,8 +25,12 @@ RUN git checkout $BRANCH
 
 ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-install-minimal
-RUN ./setup.sh --install-miniconda
 RUN ./setup.sh --dotfiles
+
+# This one has been prone to problems, so run it first to save CI time
+RUN ./setup.sh --install-alacritty
+
+RUN ./setup.sh --install-miniconda
 RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
@@ -39,9 +43,10 @@ RUN source $HOME/.aliases
 RUN nvim +PlugInstall +qall
 
 # Various installations using ./setup.sh
-RUN ./setup.sh --install-alacritty
+RUN ./setup.sh --install-autojump
 RUN ./setup.sh --install-bat
 RUN ./setup.sh --install-black
+RUN ./setup.sh --install-fd
 RUN ./setup.sh --install-fzf
 RUN ./setup.sh --install-git-cola
 RUN ./setup.sh --install-hub
