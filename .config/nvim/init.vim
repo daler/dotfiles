@@ -35,7 +35,6 @@ call plug#end()
 syntax on                      " Syntax highlighting; also does an implicit filetype on
 filetype plugin indent on      " Enable detection, plugin , and indent for filetype
 set backspace=indent,eol,start " This gets backspace to work in some situations
-set nrformats-=octal           " ?????
 
 " ----------------------------------------------------------------------------
 " Python-specific indentation handling. Use these by default.
