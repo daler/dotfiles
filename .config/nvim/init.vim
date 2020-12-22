@@ -129,6 +129,8 @@ let @l = "I'A',j"
 " Set the working directory to that of the opened file
 autocmd BufEnter * silent! lcd %:p:h
 
+inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d: "<CR>A
+noremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d: "<CR>
 " ----------------------------------------------------------------------------
 " Buffer switching
 " ----------------------------------------------------------------------------
