@@ -349,12 +349,21 @@ Specifically:
 
     * - command
       - description
-    * - :kbd:`:Gdiff`
-      - Split the current buffer, showing the current version on one side and
-        the last-committed version on the other
-    * - :kbd:`Gcommit`
-      - After saving the buffer, commit to git (without having to jump back out
-        the terminal). ``:Gcommit -m "commit message..."`` works too.
+    * - :kbd:`:Gstatus`
+      - Opens the main screen for fugitive (hint: use `vim -c ":Gstatus"` from
+        the command line to jump right into it)
+    * - :kbd:`=`
+      - When the cursor is over a filename, use this to show the diffs of that file
+    * - :kbd:`-` (when over a filename)
+      - Stage or unstage the file
+    * - :kbd:`-` (when in a chunk after using ``=``)
+      - Stage or unstage the chunk
+    * - :kbd:`-` (in visual select mode (``V``))
+      - Stage or unstage just the selected lines
+    * - :kbd:`cc`
+      - Commit, opening up a separate buffer in which to write the commit message
+    * - :kbd:`dd` (when over a file)
+      - Open the file in diff mode
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``:
