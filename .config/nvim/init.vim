@@ -23,7 +23,7 @@ Plug 'vim-pandoc/vim-pandoc'              " Required for vim-rmarkdown
 Plug 'vim-pandoc/vim-pandoc-syntax'       " Required for vim-rmarkdown
 Plug 'dhruvasagar/vim-table-mode'         " Very easily make and work with markdown and restructured text tables
 Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
-Plug 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim'                    " Easily view and browse git history
 call plug#end()
 
 " ============================================================================

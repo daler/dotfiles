@@ -381,6 +381,17 @@ are used heavily when working with ``:Gdiff``:
     * - :kbd:`dp`
       - [P]ut the contents of this diff into the other file
 
+vim.gv
+~~~~~~
+
+Easily view and browse git history.
+
+`homepage: <https://github.com/junegunn/gv.vim>`_
+
+By calling ``:GV``, you'll get a browseable git log and when you hit enter
+you'll see the diffs from that commit. Has other commands for only seeing
+commits affecting the current file.
+
 vim-diff-enhanced
 ~~~~~~~~~~~~~~~~~
 
