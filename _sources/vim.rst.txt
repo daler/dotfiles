@@ -349,12 +349,21 @@ Specifically:
 
     * - command
       - description
-    * - :kbd:`:Gdiff`
-      - Split the current buffer, showing the current version on one side and
-        the last-committed version on the other
-    * - :kbd:`Gcommit`
-      - After saving the buffer, commit to git (without having to jump back out
-        the terminal). ``:Gcommit -m "commit message..."`` works too.
+    * - :kbd:`:Gstatus`
+      - Opens the main screen for fugitive (hint: use `vim -c ":Gstatus"` from
+        the command line to jump right into it)
+    * - :kbd:`=`
+      - When the cursor is over a filename, use this to show the diffs of that file
+    * - :kbd:`-` (when over a filename)
+      - Stage or unstage the file
+    * - :kbd:`-` (when in a chunk after using ``=``)
+      - Stage or unstage the chunk
+    * - :kbd:`-` (in visual select mode (``V``))
+      - Stage or unstage just the selected lines
+    * - :kbd:`cc`
+      - Commit, opening up a separate buffer in which to write the commit message
+    * - :kbd:`dd` (when over a file)
+      - Open the file in diff mode
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``:
@@ -371,6 +380,36 @@ are used heavily when working with ``:Gdiff``:
       - Use the [o]ther file's contents for the current diff
     * - :kbd:`dp`
       - [P]ut the contents of this diff into the other file
+
+vim.gv
+~~~~~~
+
+Easily view and browse git history.
+
+`homepage: <https://github.com/junegunn/gv.vim>`_
+
+By calling ``:GV``, you'll get a browseable git log and when you hit enter
+you'll see the diffs from that commit. Has other commands for only seeing
+commits affecting the current file.
+
+vim-mergetool
+~~~~~~~~~~~~~
+
+Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited.
+
+`homepage: <https://github.com/samoshkin/vim-mergetool>`_
+
+Makes it MUCH easier to work with 3-way diffs, while at the same time allowing
+enough flexibility in configuration to be able to reproduce default behaviors.
+
+.. note::
+
+    You'll need to set the following in your .gitconfig::
+
+        [merge]
+        conflictStyle = diff3
+
+
 
 vim-diff-enhanced
 ~~~~~~~~~~~~~~~~~

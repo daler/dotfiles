@@ -398,13 +398,27 @@ Specifically:</p>
 <tr class="row-odd"><td><p>command</p></td>
 <td><p>description</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:Gdiff</kbd></p></td>
-<td><p>Split the current buffer, showing the current version on one side and
-the last-committed version on the other</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">:Gstatus</kbd></p></td>
+<td><p>Opens the main screen for fugitive (hint: use <cite>vim -c “:Gstatus”</cite> from
+the command line to jump right into it)</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">Gcommit</kbd></p></td>
-<td><p>After saving the buffer, commit to git (without having to jump back out
-the terminal). <code class="docutils literal notranslate"><span class="pre">:Gcommit</span> <span class="pre">-m</span> <span class="pre">&quot;commit</span> <span class="pre">message...&quot;</span></code> works too.</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">=</kbd></p></td>
+<td><p>When the cursor is over a filename, use this to show the diffs of that file</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (when over a filename)</p></td>
+<td><p>Stage or unstage the file</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (when in a chunk after using <code class="docutils literal notranslate"><span class="pre">=</span></code>)</p></td>
+<td><p>Stage or unstage the chunk</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (in visual select mode (<code class="docutils literal notranslate"><span class="pre">V</span></code>))</p></td>
+<td><p>Stage or unstage just the selected lines</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">cc</kbd></p></td>
+<td><p>Commit, opening up a separate buffer in which to write the commit message</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">dd</kbd> (when over a file)</p></td>
+<td><p>Open the file in diff mode</p></td>
 </tr>
 </tbody>
 </table>
@@ -433,6 +447,29 @@ are used heavily when working with <code class="docutils literal notranslate"><s
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="vim-gv">
+<h3>vim.gv<a class="headerlink" href="#vim-gv" title="Permalink to this headline">¶</a></h3>
+<p>Easily view and browse git history.</p>
+<p><a class="reference external" href="https://github.com/junegunn/gv.vim">homepage:</a></p>
+<p>By calling <code class="docutils literal notranslate"><span class="pre">:GV</span></code>, you’ll get a browseable git log and when you hit enter
+you’ll see the diffs from that commit. Has other commands for only seeing
+commits affecting the current file.</p>
+</div>
+<div class="section" id="vim-mergetool">
+<h3>vim-mergetool<a class="headerlink" href="#vim-mergetool" title="Permalink to this headline">¶</a></h3>
+<p>Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited.</p>
+<p><a class="reference external" href="https://github.com/samoshkin/vim-mergetool">homepage:</a></p>
+<p>Makes it MUCH easier to work with 3-way diffs, while at the same time allowing
+enough flexibility in configuration to be able to reproduce default behaviors.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You’ll need to set the following in your .gitconfig:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">merge</span><span class="p">]</span>
+<span class="n">conflictStyle</span> <span class="o">=</span> <span class="n">diff3</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="vim-diff-enhanced">
 <h3>vim-diff-enhanced<a class="headerlink" href="#vim-diff-enhanced" title="Permalink to this headline">¶</a></h3>
