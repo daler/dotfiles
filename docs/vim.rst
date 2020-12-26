@@ -392,6 +392,25 @@ By calling ``:GV``, you'll get a browseable git log and when you hit enter
 you'll see the diffs from that commit. Has other commands for only seeing
 commits affecting the current file.
 
+vim-mergetool
+~~~~~~~~~~~~~
+
+Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited.
+
+`homepage: <https://github.com/samoshkin/vim-mergetool>`_
+
+Makes it MUCH easier to work with 3-way diffs, while at the same time allowing
+enough flexibility in configuration to be able to reproduce default behaviors.
+
+.. note::
+
+    You'll need to set the following in your .gitconfig::
+
+        [merge]
+        conflictStyle = diff3
+
+
+
 vim-diff-enhanced
 ~~~~~~~~~~~~~~~~~
 
