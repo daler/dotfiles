@@ -343,11 +343,14 @@ elif [ $task == "--install-miniconda" ]; then
     # larger than the quota for the home directory. Instead, install to user's
     # data directory which has much more space.
     MINICONDA_DIR=$HOME/miniconda3
-    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
-        MINICONDA_DIR=/data/$USER/miniconda3-test
-    fi
-    if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
-        MINICONDA_DIR=/data/$USER/miniconda3-test
+    if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
+        MINICONDA_DIR=/data/$USER/miniconda3
+
+        # Newer versions of miniconda cannot run from a noexec directory which
+        # may be the case on some hosts.  See discussion at
+        # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
+        export TMPDIR=/data/$USER/miniconda3-tmp
+        mkdir -p $TMPDIR
     fi
 
     ok "Installs Miniconda
