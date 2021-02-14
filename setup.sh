@@ -355,8 +355,8 @@ elif [ $task == "--install-miniconda" ]; then
 
     ok "Installs Miniconda
        - installs to $MINICONDA_DIR
-       - adds $MINICONDA_DIR/bin to the end of ~/.path
-       - sources ~/.path
+       - runs 'conda init bash'
+       - prints notes and recommendations for next steps'
     "
     if [[ $OSTYPE == darwin* ]]; then
         download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
@@ -366,11 +366,20 @@ elif [ $task == "--install-miniconda" ]; then
 
     set -x
     bash miniconda.sh -b -p $MINICONDA_DIR
-    add_line_to_file "export PATH=\"\$PATH:$MINICONDA_DIR/bin\"" ~/.path
-    source ~/.path
-    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR, added to ~/.path, and sourced ~/.path.${UNSET}\n"
-    printf "${YELLOW}If you're not using ~/.path, please add the following to your .bashrc:${UNSET}\n"
-    printf "${YELLOW}   export PATH=\"\$PATH:$MINICONDA_DIR${UNSET}\"\n"
+    rmdir $TMPDIR
+    set +x
+    $MINICONDA_DIR/bin/conda init bash
+
+    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
+    printf "${YELLOW}   and then ran \"$MINICONDA_DIR/bin/conda init bash\", \n${UNSET}"
+    printf "${YELLOW}   which added lines to your .bashrc. You should check out those lines.${UNSET}\n\n"
+    printf "${YELLOW}NOTE: if you ssh in to this machine, that will ${RED}not${YELLOW} source .bashrc \n${UNSET}"
+    printf "${YELLOW}   because that will be a login shell and for login shells only .bash_profile is \n${UNSET}"
+    printf "${YELLOW}   sourced. If you want to have conda immediately available upon sshing to \n${UNSET} "
+    printf "${YELLOW}   this machine, you can add the following line to .bash_profile: \n\n${UNSET} "
+    printf "${YELLOW}       export PATH=\"\$PATH:$MINICONDA_DIR/bin\"${UNSET}\n\n"
+    printt "${YELLOW}Alternatively, you can manually \"source ~/.bashrc\" when you want to have conda available.${UNSET}\n"
+
 
 
 elif [ $task == "--set-up-bioconda" ]; then
