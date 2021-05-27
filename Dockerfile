@@ -17,8 +17,12 @@ ENV SHELL /bin/bash
 # (which otherwise hangs the build)
 RUN DEBIAN_FRONTEND=noninteractive apt-get install tzdata
 
-RUN mkdir -p /tmp
 ENV TMPDIR=/tmp
+ENV USER=dockeruser
+ENV HOME=/root/dockeruser
+RUN mkdir -p $HOME
+RUN mkdir -p $TMPDIR
+
 ADD . dotfiles
 WORKDIR dotfiles
 RUN git checkout $BRANCH
