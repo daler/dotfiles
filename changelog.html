@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Changelog &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>2021-05-27<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>modify requirements.txt: remove R, add conda-pack and mamba</p></li>
+<li><p>clean up miniconda.sh after installation</p></li>
+</ul>
+</div>
+<div class="section" id="tmux">
+<h3>tmux<a class="headerlink" href="#tmux" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>don’t specify shell in tmux</p></li>
+<li><p>don’t set DISPLAY in tmux</p></li>
+<li><p>rm linux-specific tmux copy</p></li>
+<li><p>re-enable screen-256color in tmux conf</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>2021-02-14<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nvim">
+<h3>nvim<a class="headerlink" href="#nvim" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>rm clipboard settings for nvim</p></li>
+<li><p>add vim-mergetool to init.vim and add docs</p></li>
+<li><p>add gv plugin and add docs</p></li>
+<li><p>docs on vim-fugitive</p></li>
+<li><p>add mapping to insert date (<code class="docutils literal notranslate"><span class="pre">,d</span></code>)</p></li>
+<li><p>rm the line exluding octal numbers from incrementing</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>tmux<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>don’t set scrren-256color in tmux conf</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Installation<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add notes for after installing miniconda</p></li>
+<li><p>solve issue with libz.so.1 conda.exe error:</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>2021-10-16<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>Installation<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>minor additions to dockerfile</p></li>
+<li><p>fix alacritty installation on linux and improve testing</p></li>
+<li><p>bump versions of installed tools</p></li>
+<li><p>support for alacritty on mac</p></li>
+<li><p>use conda activate rather than source activate</p></li>
+<li><p>add some missing user feedback</p></li>
+<li><p>support conda activate within script even if user hasn’t run conda init yet</p></li>
+<li><p>support conda env list piped output for new conda versions</p></li>
+<li><p>update docs for aliases</p></li>
+<li><p>nicer command-line docs</p></li>
+<li><p>do not add alias when installing nvim; let aliases handle that</p></li>
+<li><p>let r-base version float to latest available</p></li>
+</ul>
+</div>
+<div class="section" id="bash">
+<h3>bash<a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add alias for ..</p></li>
+<li><p>add vim=nvim only if nvim is found</p></li>
+<li><p>better handling of MacOS ls</p></li>
+<li><p>do not change prompt color on mac</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>2021-05-10<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation-and-docs">
+<h3>Installation and docs<a class="headerlink" href="#installation-and-docs" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>various docs and command-line help improvements</p></li>
+<li><p>add link for alacritty to docs</p></li>
+<li><p>update tmux table</p></li>
+<li><p>add ncurses</p></li>
+<li><p>add installation for pyp</p></li>
+<li><p>add docs for tig</p></li>
+<li><p>strip down README so it points to the generated docs</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>2021-04-26<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>Installation<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>install tig (instead of lazygit)</p></li>
+<li><p>explicitly use bash for installing hub</p></li>
+<li><p>install miniconda to /data directory if run on biowulf</p></li>
+<li><p>use HOME not ~</p></li>
+<li><p>support installation of ripgrep for mac</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>2021-04-06<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3>Installation and docs<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>update docs based on user feedback</p></li>
+<li><p>use OS-specific implementation of hash function</p></li>
+<li><p>add dircolors to mac requirements</p></li>
+<li><p>add sphinx docs</p></li>
+<li><p>specify full path to icdiff</p></li>
+<li><p>dockerfile improvements for testing</p></li>
+<li><p>streamline nvim installation on linux/mac</p></li>
+<li><p>add links to tools directly in setup.sh help</p></li>
+<li><p>install-nvim -&gt; install-neovim</p></li>
+<li><p>only after installing nvim does the alias vim=nvim get created</p></li>
+<li><p>–install-icdiff, and use it for –diffs</p></li>
+<li><p>–dotfiles better behaved</p></li>
+<li><p>install meld in home dir on mac (still needs testing!)</p></li>
+<li><p>rm help for –install-ag (using rg now)</p></li>
+<li><p>unify installation of vim-plug to vim/nvim</p></li>
+<li><p>unified linux/mac conda env</p></li>
+<li><p>ensure destination dir exists before downloading</p></li>
+<li><p>unified nvim installer on linux/mac</p></li>
+<li><p>green hostname if on mac</p></li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h3>bash<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>rm the dircolors complaint in bash_profile</p></li>
+<li><p>fix detection of macos ls</p></li>
+<li><p>clean up some not-commonly-used aliases and functions</p></li>
+</ul>
+</div>
+<div class="section" id="id13">
+<h3>nvim<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>fix brackets in PlugInstall</p></li>
+<li><p>add .vim and .vimrc</p></li>
+<li><p>assume vim-plug in vim and nvim</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>2021-03-31<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h3>Installation and docs<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>rm note column</p></li>
+<li><p>now using ripgrep instead of ag</p></li>
+<li><p>move dotfiles clause</p></li>
+<li><p>add installations for mac and update help</p></li>
+<li><p>rm centos installs</p></li>
+<li><p>overhaul install table</p></li>
+<li><p>clarify conda env creation</p></li>
+<li><p>set SHELL to /bin/bash on Mac</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>2021-02-07<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Using docker for testing</p></li>
+</ul>
+</div>
+<div class="section" id="id17">
+<h3>Installation and docs<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>new tool installation: <code class="docutils literal notranslate"><span class="pre">jq</span></code></p></li>
+<li><p>clean up bat install</p></li>
+<li><p>install miniconda in one step</p></li>
+<li><p>lots of documentation work</p></li>
+<li><p>allow dotfiles copy to be forced</p></li>
+<li><p>use -y for apt minimal</p></li>
+<li><p>allow forcing of installs, useful for dockerfiles</p></li>
+<li><p>add apt minimal</p></li>
+<li><p>add command for apt-installs minimal</p></li>
+<li><p>change location of installed nvim</p></li>
+<li><p>install ripgrep on mac</p></li>
+<li><p>rm redundant ripgrep install</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id18">
+<h2>2019-12-16<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id19">
+<h3>Installation and docs<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>update nvim appimage version</p></li>
+<li><p>add requirements for mac</p></li>
+<li><p>use printf for cross-platform colors</p></li>
+<li><p>install ripgrep</p></li>
+</ul>
+</div>
+<div class="section" id="id20">
+<h3>tmux<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>ensure tmux windows start with bash on mac</p></li>
+<li><p>mac-specific ls</p></li>
+</ul>
+</div>
+<div class="section" id="id21">
+<h3>bash<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>rm “z” as alias so that z.lua can use it</p></li>
+<li><p>export PS1 prevent conda from complaining</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id22">
+<h2>2019-09-30<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id23">
+<h3>Installation and docs<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>install fd, vd, tabview, hub, bat, radian, black</p></li>
+<li><p>add –vim-diffs option</p></li>
+<li><p>add graphical diffs option</p></li>
+<li><p>install git-cola</p></li>
+<li><p>rm xresources</p></li>
+<li><p>add help text on copying in tmux</p></li>
+<li><p>more vim and tmux documentation</p></li>
+<li><p>refactor the installations</p></li>
+<li><p>function to remind sourcing of .aliases</p></li>
+<li><p>function to find conda installation location</p></li>
+<li><p>colored output</p></li>
+<li><p>change command to –install-docker</p></li>
+<li><p>add user prompts for every command</p></li>
+<li><p>add some helper functions</p></li>
+<li><p>move apt installs into separate file</p></li>
+</ul>
+</div>
+<div class="section" id="id24">
+<h3>bash<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>change <cite>la</cite> alias</p></li>
+<li><p>use nvim for editing from vg()</p></li>
+</ul>
+</div>
+<div class="section" id="id25">
+<h3>nvim<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add vis.vim</p></li>
+<li><p>add more terminal &amp; env activating cmds</p></li>
+<li><p>rm flake8 commands</p></li>
+<li><p>let alt-w move to other window in insert mode</p></li>
+<li><p>fix typo in clipboard</p></li>
+<li><p>add fenced code block shortcut</p></li>
+<li><p>add nerd-commenter plugin</p></li>
+<li><p>disable pep8; add more buffers; set clipboard</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id26">
+<h2>2019-03-27<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id27">
+<h3>Installation<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add –force for alacritty build</p></li>
+<li><p>add alacritty and additional apt-get installs</p></li>
+<li><p>fix miniconda path</p></li>
+<li><p>add strict channel priority</p></li>
+<li><p>update requirements</p></li>
+<li><p>add git completion for mac</p></li>
+</ul>
+</div>
+<div class="section" id="id28">
+<h3>nvim<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>get back out of insert mode when leaving terminal</p></li>
+<li><p>improve nvim terminal buffer switching</p></li>
+<li><p>add python folding plugin</p></li>
+<li><p>ensure code blocks can be folded</p></li>
+<li><p>clean up plugin descs</p></li>
+<li><p>settings to make pandoc plugin play nice</p></li>
+<li><p>add command for sending Rmd code chunk to neoterm</p></li>
+<li><p>explanation for additional &lt;Leader&gt;w</p></li>
+<li><p>tweaks to filetype listchars</p></li>
+<li><p>tweak listchars</p></li>
+<li><p>add vim-table-mode plugin</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id29">
+<h2>2019-02-27<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id30">
+<h3>Installation and docs<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>move to next line after sending to terminal</p></li>
+<li><p>add config for python syntax</p></li>
+<li><p>rm neovim compilation commands and fasd installation</p></li>
+</ul>
+</div>
+<div class="section" id="id31">
+<h3>tmux<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add display alias for remote tmux</p></li>
+</ul>
+</div>
+<div class="section" id="id32">
+<h3>nvim<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add vim markdown syntax (with other required pandoc plugins)</p></li>
+<li><p>remap Esc for terminals</p></li>
+<li><p>overhaul init.vim</p></li>
+<li><p>rm old gvim sutff and fasd</p></li>
+<li><p>add commands for neoterm</p></li>
+<li><p>add vim-diff-enhanced and neoterm</p></li>
+<li><p>goodbye nvim-r</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id33">
+<h2>2018-11-28<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id34">
+<h3>Installation and docs<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add installation of fzf, ag, fasd, autojump</p></li>
+<li><p>improve ag installation</p></li>
+<li><p>rm ag tmp dir when done</p></li>
+<li><p>add help for new cmds</p></li>
+<li><p>use https for git; more flexible downloading</p></li>
+<li><p>fix channel order</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id35">
+<h2>2018-09-26<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id36">
+<h3>Installation and docs<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add apt-get and docker installation commands</p></li>
+<li><p>add pythonpy to reqs</p></li>
+<li><p>fix centos installs</p></li>
+<li><p>fix conda channel order</p></li>
+<li><p>add some mac bits</p></li>
+<li><p>use neovim appimage</p></li>
+</ul>
+</div>
+<div class="section" id="id37">
+<h3>nvim<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>fix args for recent rmarkdown::render</p></li>
+<li><p>let nvim-R be installed via normal plugins</p></li>
+<li><p>add fugitive plugin</p></li>
+<li><p>clean up colors; adjust tab character colors</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id38">
+<h2>2017<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id39">
+<h3>Installation and docs<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>update dircolors</p></li>
+<li><p>new command for seeing what changed</p></li>
+</ul>
+</div>
+<div class="section" id="id40">
+<h3>bash<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add host-specific prompts</p></li>
+<li><p>add Xresources and solarized dark</p></li>
+<li><p>add dircolors for solarized</p></li>
+<li><p>disable colored section titles in manpages</p></li>
+</ul>
+</div>
+<div class="section" id="id41">
+<h3>nvim<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add nicer vim linewrapping</p></li>
+<li><p>add snakemake filetype</p></li>
+<li><p>vimwiki updates</p></li>
+<li><p>nvim-R updates</p></li>
+<li><p>update nvim-r config</p></li>
+<li><p>more vim plugins</p></li>
+<li><p>vim-cellmode and settings</p></li>
+<li><p>add more expandtab filetypes</p></li>
+<li><p>nvim-r config</p></li>
+<li><p>pep8 shortcut</p></li>
+<li><p>nvim plugins</p></li>
+</ul>
+</div>
+<div class="section" id="id42">
+<h3>tmux<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>add setenv to tmux.conf</p></li>
+<li><p>tmux conf reorganize</p></li>
+<li><p>default unnamed clipboard</p></li>
+<li><p>add current dir to window create and split</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id43">
+<h2>2016<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>add plugin for python indentation</p></li>
+<li><p>add requirements.txt</p></li>
+<li><p>exclude miniconda from rsync</p></li>
+<li><p>install nvim-r plugin; change option name</p></li>
+<li><p>disable insert mode highlight</p></li>
+<li><p>initial commit</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/changelog.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
