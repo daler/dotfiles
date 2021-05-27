@@ -370,6 +370,10 @@ elif [ $task == "--install-miniconda" ]; then
     set +x
     $MINICONDA_DIR/bin/conda init bash
 
+    if [ -e /data/$USER/miniconda3-tmp ]; then
+        rm -r /dat/$USER/miniconda3-tmp
+    fi
+
     printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
     printf "${YELLOW}   and then ran \"$MINICONDA_DIR/bin/conda init bash\", \n${UNSET}"
     printf "${YELLOW}   which added lines to your .bashrc. You should check out those lines.${UNSET}\n\n"
@@ -378,7 +382,7 @@ elif [ $task == "--install-miniconda" ]; then
     printf "${YELLOW}   sourced. If you want to have conda immediately available upon sshing to \n${UNSET} "
     printf "${YELLOW}   this machine, you can add the following line to .bash_profile: \n\n${UNSET} "
     printf "${YELLOW}       export PATH=\"\$PATH:$MINICONDA_DIR/bin\"${UNSET}\n\n"
-    printt "${YELLOW}Alternatively, you can manually \"source ~/.bashrc\" when you want to have conda available.${UNSET}\n"
+    printf "${YELLOW}Alternatively, you can manually \"source ~/.bashrc\" when you want to have conda available.${UNSET}\n"
 
 
 
