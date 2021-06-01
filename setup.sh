@@ -10,167 +10,214 @@ UNSET="\e[0m"
 
 export PS1=
 
+set -eo pipefail
+
 function showHelp() {
-    # printf "                                         asdf\n"echo
+
+    function header() {
+        # Print a dashed line followed by yellow text
+        echo "----------------------------------------------------------------------------"
+        printf "${YELLOW}$1${UNSET}\n"
+    }
+
+    function cmd() {
+        # Prints nicely-formatted command help.
+        #
+        # First argument is the command (like "--install-prog").
+        #
+        # All subsequent arguments will be joined together and will comprise
+        # the description.
+
+        label="  ${GREEN}$1${UNSET}"
+
+        # Note that "." is used here as a placeholder instead of " ". It was
+        # challenging to get whitespace to work correctly with the sed
+        # commands. So the padding is only converted to spaces at the very end.
+
+        # This converts the provided arg ('--install-prog') into dots
+        pad_cmd=$(echo $1 | sed 's/[a-zA-Z\-]/./g')
+
+        # This is the full size of the padding, used for all lines but the
+        # first.
+        pad_full="........................."
+
+        # Calculate padding for the first line by deleting the number of
+        # characters used by the command, plus two (for the leading 2 spaces
+        # added to $label above)
+        pad1=$(echo $pad_full | sed 's/'"$pad_cmd"'..//' | sed 's/./ /g')
+
+        # The full padding is converted to spaces.
+        pad2=$(echo $pad_full | sed 's/./ /g')
+
+        # Concat all args but the first (${@:2}), format them to 60 spaces
+        # using the built-in `fmt`, and then use awk to use pad1 for the first
+        # line and pad2 for subsequent lines
+        desc=$(echo "${@:2}" \
+            | fmt -w 60 \
+            | awk -v pad1="$pad1" -v pad2="$pad2" \
+            'NR==1{print pad1$0} NR >1 {print pad2$0}')
+        printf "$label$desc\n\n"
+    }
+
     echo
-    echo "Usage:"
-    echo "   $0 [OPTION]"
+    printf "${YELLOW}Usage:${UNSET}\n\n"
+    echo "   $0 [ARGUMENT]"
     echo
-    echo " - Options are intended to be run one-at-a-time."
-    echo " - Each command will prompt if you want to continue."
-    echo " - Set the env var DOTFILES_FORCE=true if you want always say yes."
+    echo "     - Options are intended to be run one-at-a-time."
+    echo "     - Each command will prompt if you want to continue."
+    echo "     - Set the env var DOTFILES_FORCE=true if you want always say yes."
     echo
-    printf "   Documenation: ${BLUE}https://daler.github.io/dotfiles/${UNSET}\n"
+    printf "   ${BLUE}Documentation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
-    echo "----------------------------------------------------------------------------------------------------------"
-    echo "Dotfiles:"
-    printf "  ${GREEN} --diffs                ${YELLOW}Inspect diffs between repo and home${UNSET}\n"
-    printf "  ${GREEN} --vim-diffs            ${YELLOW}Inspect diffs between repo and home, using vim -d${UNSET}\n"
-    printf "  ${GREEN} --graphical-diffs      ${YELLOW}Inspect diffs between repo and home, using meld${UNSET}\n"
+
+    header "dotfiles:"
+
+    cmd "--diffs" \
+        "Inspect diffs between repo and home"
+
+    cmd "--vim-diffs" \
+        "Inspect diffs between repo and home, using vim -d"
+
+    cmd "--graphical-diffs" \
+        "Inspect diffs between repo and home, using meld"
+
+    cmd "--dotfiles" \
+        "Replaces files in $HOME with files from this directory"
+
+    header "General setup:"
+
+    cmd "--apt-install" \
+        "Local Linux only, needs root. Install a bunch of useful Ubuntu" \
+        "packages. See apt-installs.txt for list, and edit if needed."
+
+    cmd "--apt-install-minimal" \
+        "Local Linux only, needs root. Install a smaller set of useful Ubuntu" \
+        "packages. See apt-installs-minimal.txt for list, and edit if needed"
+
+    cmd "--install-neovim" \
+        "neovim is a drop-in replacement for vim, with additional features" \
+        "Homepage: https://neovim.io/"
+
+    cmd "--set-up-vim-plugins" \
+        "vim-plug needs to be installed separately," \
+        "and then all vim plugins can be simply be installed" \
+        "by adding them to .vimrc or init.vim" \
+        "Homepage: https://github.com/junegunn/vim-plug"
+
+    header "conda setup:"
+
+    cmd "--install-miniconda" \
+        "Install Miniconda to $HOME/miniconda3." \
+        "Homepage: https://docs.conda.io/en/latest/miniconda.html" \
+
+    cmd "--set-up-bioconda" \
+        "Set up bioconda channel priorities." \
+        "Homepage: https://bioconda.github.io"
+
+    cmd "--conda-env" \
+        "Install requirements.txt into root conda env." \
+        "Sets up a reasonable base conda env, edit requirements.txt" \
+        "(or requirements-mac.txt on a Mac) to customize."
+
+    header "Installations for local host only"
+
+    cmd "--powerline" \
+        "Install powerline fonts. Powerline fonts include the" \
+        "fancy glyphs used for the vim-airline status bar." \
+        "Only needs to be installed on local machine that is running" \
+        "the terminal app." \
+        "Homepage: https://github.com/vim-airline/vim-airline"
+
+    cmd "--install-alacritty" \
+        "Alacritty is a terminal emulator that is quite fast;" \
+        "its speed is clear when catting a large file in tmux." \
+        "(Only install on local machine)" \
+        "Homepage: https://github.com/alacritty/alacritty"
+
+    cmd "--install-docker" \
+        "Installs docker and adds current user to new docker group." \
+        "(Needs root, Linux only)"
+
+    cmd "--install-git-cola" \
+        "git-cola is a GUI for making incremental git commits" \
+        "Homepage: https://git-cola.github.io/"
+
+    cmd "--install-meld" \
+        "(Mac only). meld is a graphical diff tool, extremely useful" \
+        "for 3-way diffs"
+
+    header "Installations for any host:"
+
+    cmd "--install-bat" \
+        "bat is like cat, but adds things like syntax highlighting," \
+        "showing lines changed based on git, and showing non-printable" \
+        "characters." \
+        "Homepage: https://github.com/sharkdp/bat"
+
+    cmd "--install-black" \
+        "The self-described 'uncompromising' Python formatter." \
+        "Re-formats Python code to match PEP8 guidelines." \
+        "Homepage: https://black.readthedocs.io"
+
+    cmd "--install-fd" \
+        "fd is a fast replacement for find, with additional" \
+        "useful features." \
+        "Homepage: https://github.com/sharkdp/fd"
+
+    cmd "--install-fzf" \
+        "fzf (fuzzy-finder) replaces your bash Ctrl-R reverse" \
+        "history search. You can also can pipe anything into it for" \
+        "on-the-fly fuzzy searches on text" \
+        "Homepage: https://github.com/junegunn/fzf"
+
+    cmd "--install-hub" \
+        "hub is a command-line wrapper for git, which allows" \
+        "you to do things with GitHub like easily check out PRs" \
+        "Homepage: https://github.com/github/hub"
+
+    cmd "--install-icdiff" \
+        "icdiff shows colored diffs side-by-side in the terminal" \
+        "and shows whitespace diffs by default" \
+        "Homepage: https://www.jefftk.com/icdiff"
+
+    cmd "--install-jq" \
+        "jq is a command-line tool for extracting information" \
+        "from json files." \
+        "Homepage: https://stedolan.github.io/jq"
+
+    cmd "--install-pyp" \
+        "pyp lets you run arbitrary python directly from" \
+        "the command line. Great as a calculator, but can also" \
+        "manipulate piped-in text" \
+        "Homepage: https://github.com/hauntsaninja/pyp"
+
+    cmd "--install-radian" \
+        "radian is a wrapper for the R interpreter, which adds" \
+        "syntax highlighting and tab-completion" \
+        "Homepage: https://github.com/randy3k/radian"
+
+    cmd "--install-ripgrep" \
+        "ripgrep (rg) is a very fast grep replacement, especially" \
+        "good for exploring code bases" \
+        "Homepage: https://github.com/BurntSushi/ripgrep/"
+
+    cmd "--install-vd" \
+        "visidata (vd) is great for viewing, searching, sorting" \
+        "tables (TSVs, CSVs, XLS). Only thing it can't do is edit them." \
+        "Homepage: https://visidata.org/"
+
+    cmd "--install-zoxide" \
+        "zoxide keeps track of recent directories you have changed" \
+        "to and provides a convenient interface for jumping directly" \
+        "there." \
+        "Homepage: https://github.com/ajeetdsouza/zoxide"
     echo
-    printf "  ${GREEN} --dotfiles             ${YELLOW}Update dotfiles${UNSET}\n"
-    printf "                            Replaces files in $HOME with files from this directory\n"
-    echo
-    echo "----------------------------------------------------------------------------------------------------------"
-    echo "General setup:"
-    printf "  ${GREEN} --apt-install           ${YELLOW}Install a bunch of useful Ubuntu packages${UNSET}\n"
-    printf "                            See apt-installs.txt for list, and edit if needed\n"
-    printf "                            Linux only, needs root.\n"
-    echo
-    printf "  ${GREEN} --apt-install-minimal   ${YELLOW}Install a smaller set of useful Ubuntu packages${UNSET}\n"
-    printf "                            See apt-installs-minimal.txt for list, and edit if needed\n"
-    printf "                            Linux only, needs root.\n"
-    echo
-    printf "  ${GREEN} --install-neovim        ${YELLOW}Install neovim${UNSET}\n"
-    printf "                            neovim is a drop-in replacement for vim, with additional features\n"
-    printf "                            ${BLUE}https://neovim.io/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --powerline             ${YELLOW}Install powerline fonts${UNSET}\n"
-    printf "                            Fancy glyphs used for the vim-airline status bar,\n"
-    printf "                            ${BLUE}https://github.com/vim-airline/vim-airline${UNSET}\n"
-    printf "                            Only needs to be installed on local machine that is running\n"
-    printf "                            the terminal app.\n"
-    echo
-    printf "  ${GREEN} --set-up-vim-plugins    ${YELLOW}Set up vim-plug${UNSET}\n"
-    printf "                            vim-plug needs to be installed separately,\n"
-    printf "                            and then all vim plugins can be simply be installed\n"
-    printf "                            by adding them to .vimrc or init.vim\n"
-    printf "                            ${BLUE}https://github.com/junegunn/vim-plug${UNSET}\n"
-    echo
-    echo "----------------------------------------------------------------------------------------------------------"
-    echo "conda:"
-    printf "  ${GREEN} --install-miniconda     ${YELLOW}Install Miniconda to $HOME/miniconda3${UNSET}\n"
-    printf "                            ${BLUE}https://docs.conda.io/en/latest/miniconda.html${UNSET}\n"
-    echo
-    printf "  ${GREEN} --set-up-bioconda       ${YELLOW}Set up bioconda channel priorities${UNSET}\n"
-    printf "                            ${BLUE}https://bioconda.github.io/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --conda-env             ${YELLOW}Install requirements.txt into root conda env${UNSET}\n"
-    printf "                            Sets up a reasonable base conda env, edit requirements.txt\n"
-    printf "                            (or requirements-mac.txt on a Mac) to customize.\n"
-    echo
-    echo "----------------------------------------------------------------------------------------------------------"
-    echo "Installations:"
-    printf "  ${GREEN} --install-vd            ${YELLOW}Install visidata${UNSET}\n"
-    printf "                            visidata is great for viewing, searching, sorting\n"
-    printf "                            tables (TSVs, CSVs, XLS). Only thing it can't do is edit them.\n"
-    printf "                            ${BLUE}https://visidata.org/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-fzf           ${YELLOW}Install fzf${UNSET}\n"
-    printf "                            fzf (fuzzy-finder) replaces your bash Ctrl-R reverse\n"
-    printf "                            history search. You can also can pipe anything into it for\n"
-    printf "                            on-the-fly fuzzy searches on text\n"
-    printf "                            ${BLUE}https://github.com/junegunn/fzf${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-ripgrep       ${YELLOW}Install ripgrep (rg)${UNSET}\n"
-    printf "                            ripgrep is a very fast grep replacement, especially\n"
-    printf "                            good for exploring code bases\n"
-    printf "                            ${BLUE}https://github.com/BurntSushi/ripgrep/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-autojump      ${YELLOW}Install autojump${UNSET}\n"
-    printf "                            autojump saves your cd history and provides a mechanism\n"
-    printf "                            for quickly revisiting directories\n"
-    printf "                            ${BLUE}https://github.com/wting/autojump${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-hub           ${YELLOW}Install hub${UNSET}\n"
-    printf "                            hub is a command-line wrapper for git, which allows\n"
-    printf "                            you to do things with GitHub like easily check out PRs\n"
-    printf "                            ${BLUE}https://github.com/github/hub${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-fd            ${YELLOW}Install fd${UNSET}\n"
-    printf "                            fd is a fast replacement for find, with additional\n"
-    printf "                            useful features.\n"
-    printf "                            ${BLUE}https://github.com/sharkdp/fd${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-jq            ${YELLOW}Install jq${UNSET}\n"
-    printf "                            jq is a command-line tool for extracting information\n"
-    printf "                            from json files.\n"
-    printf "                            ${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-tig           ${YELLOW}Install tig${UNSET}\n"
-    printf "                            tig is a tool that runs in the terminal that helps\n"
-    printf "                            make incremental git commits and do other useful things\n"
-    printf "                            with git repositories.\n"
-    printf "                            ${BLUE}https://jonas.github.io/tig/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-icdiff        ${YELLOW}Install icdiff${UNSET}\n"
-    printf "                            icdiff shows colored diffs side-by-side in the terminal\n"
-    printf "                            and shows whitespace diffs by default\n"
-    printf "                            ${BLUE}https://www.jefftk.com/icdiff${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-pyp           ${YELLOW}Install pyp${UNSET}\n"
-    printf "                            pyp lets you run arbitrary python directly from\n"
-    printf "                            the command line. Great as a calculator, but can also\n"
-    printf "                            manipulate piped-in text\n"
-    printf "                            ${BLUE}https://github.com/hauntsaninja/pyp${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-zoxide        ${YELLOW}Install zoxide${UNSET}\n"
-    printf "                            zoxide keeps track of recent directories you have changed\n"
-    printf "                            to and provides a convenient interface for jumping directly\n"
-    printf "                            there.\n"
-    printf "                            ${BLUE}https://github.com/ajeetdsouza/zoxide${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-black         ${YELLOW}Install black${UNSET}\n"
-    printf "                            The self-described 'uncompromising' Python formatter.\n"
-    printf "                            Re-formats Python code to match PEP8 guidelines.\n"
-    printf "                            ${BLUE}https://black.readthedocs.io${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-radian        ${YELLOW}Install radian${UNSET}\n"
-    printf "                            radian is a wrapper for the R interpreter, which adds\n"
-    printf "                            syntax highlighting and tab-completion\n"
-    printf "                            ${BLUE}https://github.com/randy3k/radian${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-git-cola      ${YELLOW}Install git-cola${UNSET}\n"
-    printf "                            git-cola is a GUI for making incremental git commits\n"
-    printf "                            ${BLUE}https://git-cola.github.io/${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-bat           ${YELLOW}Install bat${UNSET}\n"
-    printf "                            bat is like cat, but adds things like syntax highlighting,\n"
-    printf "                            showing lines changed based on git, and showing non-printable\n"
-    printf "                            characters.\n"
-    printf "                            ${BLUE}https://github.com/sharkdp/bat${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-alacritty     ${YELLOW}Install alacritty${UNSET}\n"
-    printf "                            Alacritty is a terminal emulator that is quite fast;\n"
-    printf "                            its speed is clear when catting a large file in tmux.\n"
-    printf "                            (Only install on local machine)\n"
-    printf "                            ${BLUE}https://github.com/alacritty/alacritty${UNSET}\n"
-    echo
-    printf "  ${GREEN} --install-docker        ${YELLOW}Install docker${UNSET}\n"
-    printf "                            Installs docker and adds current user to new docker group.\n"
-    printf "                            (Needs root, Linux only)\n"
-    echo
-    printf "  ${GREEN} --install-meld          ${YELLOW}Install meld (Mac only)${UNSET}\n"
-    printf "                            meld is a graphical diff tool, extremely useful\n"
-    printf "                            for 3-way diffs\n"
-    echo
-    echo
-    exit 0
 }
 
 # Deal with possibly-unset variables before we do set -u
 if [ -z $1 ]; then
-    showHelp
+    showHelp | less -R
+    exit 0
 fi
 
 if [ -z $DOTFILES_FORCE ]; then
@@ -410,16 +457,6 @@ elif [ $task == "--conda-env" ]; then
     fi
 
 
-elif [ $task == "--powerline" ]; then
-    ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
-    git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
-    (cd /tmp/fonts && ./install.sh)
-    rm -rf /tmp/fonts
-    echo
-    printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
-    echo
-
-
 elif [ $task == "--install-neovim" ]; then
     NVIM_VERSION=0.4.4
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
@@ -448,6 +485,18 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     echo
     printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall${UNSET}\n"
     echo
+
+
+elif [ $task == "--powerline" ]; then
+    ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
+    git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
+    (cd /tmp/fonts && ./install.sh)
+    rm -rf /tmp/fonts
+    echo
+    printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
+    echo
+
+
 
 # ----------------------------------------------------------------------------
 # Individual --install commands
@@ -495,18 +544,6 @@ elif [ $task == "--install-ripgrep" ]; then
     cp ripgrep*/rg ~/opt/bin
     printf "${YELLOW}Installed to ~/opt/bin/rg${UNSET}\n"
     check_opt_bin_in_path
-
-
-elif [ $task == "--install-autojump" ]; then
-    ok "Installs autojump (https://github.com/wting/autojump)"
-    (
-        git clone https://github.com/wting/autojump.git /tmp/autojump-repo
-        cd /tmp/autojump-repo
-        python install.py
-    )
-    rm -rf /tmp/autojump-repo
-    printf "${YELLOW}autojump installed to default location of ~/.autojump${UNSET}\n"
-    printf "${YELLOW}If you're not using the .functions file from these dotfiles, follow the instructions above output by autojump.${UNSET}\n"
 
 
 elif [ $task == "--install-fd" ]; then
@@ -677,38 +714,6 @@ elif [ $task == "--install-jq" ]; then
     fi
     chmod +x $HOME/opt/bin/jq
     printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
-    check_opt_bin_in_path
-
-
-elif [ $task == "--install-tig" ]; then
-    TIG_VERSION=2.5.1
-    ok "Installs tig ${TIG_VERSION} to $HOME/opt/bin"
-
-    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
-        printf "${RED}Cannot install on helix -- need ncurses, which is in the gcc module, which needs to be loaded on biowulf.\n\n${UNSET}"
-        exit 1
-    fi
-    if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
-        printf "${YELLOW}Loading gcc module to get ncurses...${UNSET}\n"
-        module load gcc
-    fi
-
-    mkdir -p $HOME/.tig-install
-    (
-        cd $HOME/.tig-install
-        download https://github.com/jonas/tig/releases/download/tig-${TIG_VERSION}/tig-${TIG_VERSION}.tar.gz tig.tar.gz
-        tar -xf tig.tar.gz
-        cd tig-${TIG_VERSION}
-        make prefix=$HOME/opt
-        make install prefix=$HOME/opt
-    )
-
-    if [[ $HOSTNAME == "biowulf" ]]; then
-        printf "${YELLOW}Unloading gcc module...${UNSET}\n"
-        module unload gcc
-    fi
-
-    printf "${YELLOW}Installed to ~/opt/bin/tig${UNSET}\n"
     check_opt_bin_in_path
 
 
