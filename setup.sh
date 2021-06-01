@@ -124,6 +124,12 @@ function showHelp() {
     printf "                            manipulate piped-in text\n"
     printf "                            ${BLUE}https://github.com/hauntsaninja/pyp${UNSET}\n"
     echo
+    printf "  ${GREEN} --install-zoxide        ${YELLOW}Install zoxide${UNSET}\n"
+    printf "                            zoxide keeps track of recent directories you have changed\n"
+    printf "                            to and provides a convenient interface for jumping directly\n"
+    printf "                            there.\n"
+    printf "                            ${BLUE}https://github.com/ajeetdsouza/zoxide${UNSET}\n"
+    echo
     printf "  ${GREEN} --install-black         ${YELLOW}Install black${UNSET}\n"
     printf "                            The self-described 'uncompromising' Python formatter.\n"
     printf "                            Re-formats Python code to match PEP8 guidelines.\n"
@@ -724,6 +730,26 @@ elif [ $task == "--install-pyp" ]; then
     conda deactivate
     printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
     check_opt_bin_in_path
+
+
+elif [ $task == "--install-zoxide" ]; then
+    ok "Install zoxide (https://github.com/ajeetdsouza/zoxide/) into ~/opt/bin?"
+    ZOXIDE_VERSION=0.7.0
+    if [[ $OSTYPE == darwin* ]]; then
+        ZOXIDE_PREFIX=zoxide-x86_64-apple-darwin
+    else
+        ZOXIDE_PREFIX=zoxide-x86_64-unknown-linux-musl
+    fi
+    set -x
+    download https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/${ZOXIDE_PREFIX}.tar.gz ${ZOXIDE_PREFIX}.tar.gz
+    tar -xf ${ZOXIDE_PREFIX}.tar.gz
+    cp ${ZOXIDE_PREFIX}/zoxide $HOME/opt/bin
+    rm -r ${ZOXIDE_PREFIX} ${ZOXIDE_PREFIX}.tar.gz
+    set +x
+    check_opt_bin_in_path
+    printf "${YELLOW}Installed to ~/opt/bin/zoxide.${UNSET}\n\n"
+    printf "${YELLOW}To start using, you need to add the following line to your .bash_profile or .bashrc:${UNSET}\n\n"
+    printf "     ${YELLOW}eval \"\$(zoxide init bash)\"${UNSET}\n\n"
 
 
 elif [ $task == "--dotfiles" ]; then
