@@ -1,13 +1,17 @@
 Changelog
 =========
 
-2021-05-27
+2021-06-01
 ----------
 
 Installation
 ````````````
 - modify requirements.txt: remove R, add conda-pack and mamba
 - clean up miniconda.sh after installation
+- improve commandline help in setup.sh
+- remove installation of tig
+- sort installed programs alphabetically (in setup and in docs)
+- add installation of ``zoxide``
 
 tmux
 ````
@@ -15,6 +19,22 @@ tmux
 - don't set DISPLAY in tmux
 - rm linux-specific tmux copy
 - re-enable screen-256color in tmux conf
+
+docs
+````
+- general cleanup
+
+bash
+````
+- add ``gsv``, ``glv``, ``git-clean-branches``, and ``e`` aliases
+- rm autojump setup from bash_profile
+
+
+nvim 
+````
+- add ``set inccommand=nosplit``
+
+
 
 2021-02-14
 ----------

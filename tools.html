@@ -34,24 +34,101 @@
             
   <div class="section" id="additional-tool-installations">
 <span id="tools"></span><h1>Additional tool installations<a class="headerlink" href="#additional-tool-installations" title="Permalink to this headline">¶</a></h1>
-<p>Run the <code class="docutils literal notranslate"><span class="pre">--install-&lt;toolname&gt;</span></code> for each of the tools below. Each is
-installed (or symlinked) into <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, so you’ll want to make sure
-that’s on your path.</p>
+<p>Run the <code class="docutils literal notranslate"><span class="pre">--install-&lt;toolname&gt;</span></code> for each of the tools below. Each is copied
+into <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, so you’ll want to make sure that’s on your path.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Some of these tools are available in conda. In those cases, they are
-“installed” as follows:</p>
+<p>If a tool below is available in conda, it is “installed” as follows:</p>
 <ul class="simple">
-<li><p>create a conda environment named after the tool</p></li>
-<li><p>symlink the tool’s executable from the conda environment over to ~/opt/bin</p></li>
+<li><p>create a conda environment named after the tool (using the -n argument,
+which will place the env in your miniconda installation directory).</p></li>
+<li><p>symlink the tool’s executable from the conda environment over to
+<code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code></p></li>
 </ul>
-<p>This means that you do <strong>not</strong> have to <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code> an environment to
-use an installed tool. As long as ~/opt/bin is on your path, you can use it
-immediately. This allows for more modular updating of the tools and avoiding
-conflicting dependencies.</p>
+<p>This means that you do <strong>not</strong> have to <strong class="command">conda activate</strong> an environment to
+use an installed tool. As long as <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code> is on your path, you can
+use it immediately. This allows for more modular updating of the tools and
+avoiding conflicting dependencies.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tools are listed alphabetically.</p>
+</div>
+<div class="section" id="alacritty">
+<span id="id1"></span><h2><code class="docutils literal notranslate"><span class="pre">alacritty</span></code><a class="headerlink" href="#alacritty" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-alacritty
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/alacritty/alacritty">alacritty</a> is a
+cross-platform GPU-accelerated terminal emulator. The speed is most
+noticable when catting large files over tmux.</p>
+<p>You can find more details on the benefits of alactritty at
+<a class="reference external" href="https://jwilm.io/blog/announcing-alacritty/">https://jwilm.io/blog/announcing-alacritty/</a>.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>On Mac, iTerm2 or the default Terminal app</p></li>
+<li><p>On Linux, any number of default terminal apps</p></li>
+</ul>
+</div>
+<div class="section" id="bat">
+<span id="id3"></span><h2><code class="docutils literal notranslate"><span class="pre">bat</span></code><a class="headerlink" href="#bat" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-bat
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/sharkdp/bat">bat</a> is a replacement for <code class="docutils literal notranslate"><span class="pre">cat</span></code>,
+with syntax highlighting, line numbers, non-printable characters, and
+git diffs.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>cat</p></li>
+</ul>
+</div>
+<div class="section" id="black">
+<span id="id5"></span><h2><code class="docutils literal notranslate"><span class="pre">black</span></code><a class="headerlink" href="#black" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-black
+</pre></div>
+</div>
+<p><a class="reference external" href="https://black.readthedocs.io">black</a> reformats Python files to conform to
+PEP8 style conventions. I’ll typically run it on a file in vim with <code class="docutils literal notranslate"><span class="pre">!black</span>
+<span class="pre">%</span></code> (the <code class="docutils literal notranslate"><span class="pre">!</span></code> calls out to the shell, and the <code class="docutils literal notranslate"><span class="pre">%</span></code> means “this file”.</p>
+</div>
+<div class="section" id="docker">
+<span id="id7"></span><h2><code class="docutils literal notranslate"><span class="pre">docker</span></code><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-docker
+</pre></div>
+</div>
+<p><a class="reference external" href="https://www.docker.com">docker</a> runs containers. Needs root access, and the
+installation here is currently only supported on Linux.
+.. _fd:</p>
+</div>
+<div class="section" id="fd">
+<h2><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fd
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/sharkdp/fd">fd</a> is a much faster and more ergonomic
+<code class="docutils literal notranslate"><span class="pre">find</span></code>. For example it uses regular expressions by default and defaults to
+skipping directories ignored by git. One place this is useful is in avoiding
+lengthy, unneeded searches through conda envs.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">find</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="fzf">
+<span id="id9"></span><h2><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fzf
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/junegunn/fzf">fzf</a> is a fuzzy-finder interface that works
+with stdin. It integrates with bash so that when you use <code class="docutils literal notranslate"><span class="pre">Ctrl-R</span></code> (the
+standard bash way of reverse-search through history), you’ll instead get the
+fzf interface. Other tools may also look for <code class="docutils literal notranslate"><span class="pre">fzf</span></code> to use as an interface.
+<span class="xref std std-ref">zoxide</span> for example does this. You can also pipe in any arbitrary text to
+<code class="docutils literal notranslate"><span class="pre">fzf</span></code> for a fuzzy search tool.</p>
 </div>
 <div class="section" id="icdiff">
-<span id="id1"></span><h2><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h2>
+<span id="id11"></span><h2><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-icdiff
 </pre></div>
 </div>
@@ -59,19 +136,44 @@ conflicting dependencies.</p>
 colored diff between files. It’s used for <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--diffs</span></code>.</p>
 <p>Alternatives:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">diff</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diff</span></code>, which doesn’t do side-by-side or colored diffs</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">-d</span></code>, which I still use quite often</p></li>
 </ul>
 </div>
-<div class="section" id="fzf">
-<span id="id3"></span><h2><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fzf
+<div class="section" id="jq">
+<span id="id13"></span><h2><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-jq
 </pre></div>
 </div>
-<p><a class="reference external" href="https://github.com/junegunn/fzf">fzf</a> is a fuzzy-finder interface that
-works with stdin. It integrates with bash so that when you use <code class="docutils literal notranslate"><span class="pre">Ctrl-R</span></code> (the
-standard bash way of reverse-search through history), you’ll instead get the
-fzf interface.</p>
+<p><cite>jq &lt;https://stedolan.github.io/jq/&gt;</cite> is like sed or awk for JSON data.</p>
+</div>
+<div class="section" id="pyp">
+<span id="id14"></span><h2><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/hauntsaninja/pyp">pyp</a> lets you run Python right from the
+terminal similar to Perl one-liners.</p>
+<p>I use it most often for a quick calculator (<code class="docutils literal notranslate"><span class="pre">pyp</span> <span class="pre">&quot;(4e6</span> <span class="pre">/</span> <span class="pre">300)</span> <span class="pre">*</span> <span class="pre">3600&quot;</span></code>), and
+am starting to introduce it more into my workflow for arbitrary command-line
+activities. It strikes a nice balance of having enough magic (e.g., implicit
+variable names for lines) while still being understandable (the <code class="docutils literal notranslate"><span class="pre">--explain</span></code>
+flag is a brilliant touch).</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>pythonpy (no longer maintained)</p></li>
+<li><p>opening up a Python interpreter</p></li>
+</ul>
+</div>
+<div class="section" id="radian">
+<span id="id16"></span><h2><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-radian
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/randy3k/radian">radian</a> is a replacement shell for
+R. It has syntax highlighting, multiline editings, and tab completion built in.
+can be used with any version of R, in a conda environment or otherwise.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>plain vanilla R, which doesn’t have the syntax highlighting or tab completion</p></li>
+</ul>
 </div>
 <div class="section" id="ripgrep-rg">
 <span id="rg"></span><h2><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)<a class="headerlink" href="#ripgrep-rg" title="Permalink to this headline">¶</a></h2>
@@ -85,18 +187,6 @@ code-searching tool. It is like grep, but by default skips files in
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">grep</span></code>, or <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">...</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">grep</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ag</span></code>, the Silver Searcher</p></li>
-</ul>
-</div>
-<div class="section" id="fd">
-<span id="id5"></span><h2><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fd
-</pre></div>
-</div>
-<p><a class="reference external" href="https://github.com/sharkdp/fd">fd</a> is a much faster and more
-ergonomic <code class="docutils literal notranslate"><span class="pre">find</span></code>.</p>
-<p>Alternatives:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">find</span></code></p></li>
 </ul>
 </div>
 <div class="section" id="visidata-vd">
@@ -114,155 +204,27 @@ terminal. Any files that pandas can open, visidata can open too.</p>
 the same lines as tabview.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">-S</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vim</span></code> followed by messing with tabstops. You’ll probably need to use vim if
-you have editing to do.</p></li>
+you have a lot of editing to do.</p></li>
 </ul>
 </div>
-<div class="section" id="tig">
-<span id="id6"></span><h2><code class="docutils literal notranslate"><span class="pre">tig</span></code><a class="headerlink" href="#tig" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-tig
+<div class="section" id="zoxide">
+<span id="id18"></span><h2><code class="docutils literal notranslate"><span class="pre">zoxide</span></code><a class="headerlink" href="#zoxide" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-zoxide notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-zoxide
 </pre></div>
 </div>
-<p><a class="reference external" href="https://jonas.github.io/tig/">tig</a> is a terminal user interface (“TUI”) for
-git. It lets you browse changes and stage them in chunks. There is a bit of
-a learning curve and there are a lot of features, but what I’ve been using the
-most is the following workflow:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>command</p></td>
-<td><p>description</p></td>
-</tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">s</kbd></p></td>
-<td><p>enter “status” mode</p></td>
-</tr>
-<tr class="row-odd"><td><p>up/dn arrows</p></td>
-<td><p>move between <em>files</em> in the status window</p></td>
-</tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">enter</kbd> (on a filename in status view)</p></td>
-<td><p>show diffs in file</p></td>
-</tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">j</kbd>, <kbd class="kbd docutils literal notranslate">k</kbd></p></td>
-<td><p>move between <em>lines in the open file</em></p></td>
-</tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">1</kbd></p></td>
-<td><p>stage just the current line. For multiple lines, you’ll need to hit
-<kbd class="kbd docutils literal notranslate">1</kbd> for each one of them.</p></td>
-</tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">u</kbd></p></td>
-<td><p>stage current chunk</p></td>
-</tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">q</kbd></p></td>
-<td><p>quit out of window, view, and program</p></td>
-</tr>
-</tbody>
-</table>
-<p>While there are options for commiting and other fancy things from within <cite>tig</cite>,
-it’s so fast to start and quit that I just use it for incremental staging, then
-pop back out to the terminal to commit as usual.</p>
+<p><a class="reference external" href="https://github.com/ajeetdsouza/zoxide">zoxide</a> is “a smarter cd command”. It
+keeps track of the directories you visit, and makes it easy to jump back to
+them.</p>
+<p>Note that after installation it requires an additional command to be added to
+your <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code>.</p>
+<p>I most commonly use its interactive mode <code class="docutils literal notranslate"><span class="pre">zi</span></code>, which opens up <span class="xref std std-ref">fzf</span> as
+an interface for changing directories via fuzzy search.</p>
 <p>Alternatives:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code>, which I still fall back to for complicated situations</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git-cola</span></code>, but this is a GUI so not that useful for remote work</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lazygit</span></code> is super powerful, but has even more of a learning curve than
-<code class="docutils literal notranslate"><span class="pre">tig</span></code>. With so many keyboard shortcuts, I was worried I’d do something
-terrible to my git repo by accident.</p></li>
+<li><p>fasd</p></li>
+<li><p>autojump</p></li>
+<li><p>z.sh</p></li>
 </ul>
-</div>
-<div class="section" id="pyp">
-<span id="id8"></span><h2><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://github.com/hauntsaninja/pyp">pyp</a> lets you run Python right from the
-terminal similar to Perl one-liners.</p>
-<p>I use it most often for a quick calculator (<code class="docutils literal notranslate"><span class="pre">pyp</span> <span class="pre">&quot;(4e6</span> <span class="pre">/</span> <span class="pre">300)</span> <span class="pre">*</span> <span class="pre">3600&quot;</span></code>), and
-am starting to introduce it more into my workflow for arbitrary command-line
-activities. It strikes a nice balance of having enough magic (e.g., implicit
-variable names for lines) while still being understandable (the <code class="docutils literal notranslate"><span class="pre">--explain</span></code>
-flag is a brilliant touch).</p>
-<p>ALternatives:</p>
-<ul class="simple">
-<li><p>pythonpy (no longer maintained)</p></li>
-</ul>
-</div>
-<div class="section" id="black">
-<span id="id10"></span><h2><code class="docutils literal notranslate"><span class="pre">black</span></code><a class="headerlink" href="#black" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-black
-</pre></div>
-</div>
-<p><a class="reference external" href="https://black.readthedocs.io">black</a> reformats Python files to conform to
-PEP8 style conventions.</p>
-</div>
-<div class="section" id="radian">
-<span id="id12"></span><h2><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-radian
-</pre></div>
-</div>
-<p><a class="reference external" href="https://github.com/randy3k/radian">radian</a> is a replacement shell for
-R. It has syntax highlighting, multiline editings, and tab completion built in.
-can be used with any version of R, in a conda environment or otherwise.</p>
-<p>Alternatives:</p>
-<ul class="simple">
-<li><p>plain vanilla R, which doesn’t have the syntax highlighting or tab completion</p></li>
-</ul>
-</div>
-<div class="section" id="git-cola">
-<span id="id14"></span><h2><code class="docutils literal notranslate"><span class="pre">git-cola</span></code><a class="headerlink" href="#git-cola" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-git-cola
-</pre></div>
-</div>
-<p><a class="reference external" href="https://git-cola.github.io/">git-cola</a> is a graphical tool for
-incrementally making git commits. Very useful, for example, at the end of
-a coding session and you want to make atomic commits from all the changes you
-made.</p>
-<p>Alternatives:</p>
-<ul class="simple">
-<li><p>tig, which I’m using more than git-cola now. It’s a TUI instead of GUI.</p></li>
-</ul>
-</div>
-<div class="section" id="bat">
-<span id="id16"></span><h2><code class="docutils literal notranslate"><span class="pre">bat</span></code><a class="headerlink" href="#bat" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-bat
-</pre></div>
-</div>
-<p><a class="reference external" href="https://github.com/sharkdp/bat">bat</a> is a replacement for <code class="docutils literal notranslate"><span class="pre">cat</span></code>,
-with syntax highlighting, line numbers, non-printable characters, and
-git diffs.</p>
-<p>Alternatives:</p>
-<ul class="simple">
-<li><p>cat</p></li>
-</ul>
-</div>
-<div class="section" id="alacritty">
-<span id="id18"></span><h2><code class="docutils literal notranslate"><span class="pre">alacritty</span></code><a class="headerlink" href="#alacritty" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-alacritty
-</pre></div>
-</div>
-<p><a class="reference external" href="https://github.com/alacritty/alacritty">alacritty</a> is a
-cross-platform GPU-accelerated terminal emulator. The speed is most
-noticable when catting large files over tmux.</p>
-<p>You can find more details on the benefits of alactritty at
-<a class="reference external" href="https://jwilm.io/blog/announcing-alacritty/">https://jwilm.io/blog/announcing-alacritty/</a>.</p>
-<p>Alternatives:</p>
-<ul class="simple">
-<li><p>On Mac, iTerm2 or the default Terminal app</p></li>
-<li><p>On Linux, any number of default terminal apps</p></li>
-</ul>
-</div>
-<div class="section" id="jq">
-<span id="id20"></span><h2><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-jq
-</pre></div>
-</div>
-<p><cite>jq &lt;https://stedolan.github.io/jq/&gt;</cite> is like sed or awk for JSON data.</p>
-</div>
-<div class="section" id="docker">
-<span id="id21"></span><h2><code class="docutils literal notranslate"><span class="pre">docker</span></code><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-docker
-</pre></div>
-</div>
-<p><a class="reference external" href="https://www.docker.com">docker</a> runs containers. Needs root access, and the
-installation here is currently only supported on Linux.</p>
 </div>
 </div>
 
@@ -286,20 +248,19 @@ installation here is currently only supported on Linux.</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Additional tool installations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#icdiff"><code class="docutils literal notranslate"><span class="pre">icdiff</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fzf"><code class="docutils literal notranslate"><span class="pre">fzf</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ripgrep-rg"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fd"><code class="docutils literal notranslate"><span class="pre">fd</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#visidata-vd"><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tig"><code class="docutils literal notranslate"><span class="pre">tig</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pyp"><code class="docutils literal notranslate"><span class="pre">pyp</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#black"><code class="docutils literal notranslate"><span class="pre">black</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#radian"><code class="docutils literal notranslate"><span class="pre">radian</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#git-cola"><code class="docutils literal notranslate"><span class="pre">git-cola</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bat"><code class="docutils literal notranslate"><span class="pre">bat</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#alacritty"><code class="docutils literal notranslate"><span class="pre">alacritty</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#jq"><code class="docutils literal notranslate"><span class="pre">jq</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bat"><code class="docutils literal notranslate"><span class="pre">bat</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#black"><code class="docutils literal notranslate"><span class="pre">black</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker"><code class="docutils literal notranslate"><span class="pre">docker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fd"><code class="docutils literal notranslate"><span class="pre">fd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fzf"><code class="docutils literal notranslate"><span class="pre">fzf</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#icdiff"><code class="docutils literal notranslate"><span class="pre">icdiff</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jq"><code class="docutils literal notranslate"><span class="pre">jq</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pyp"><code class="docutils literal notranslate"><span class="pre">pyp</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#radian"><code class="docutils literal notranslate"><span class="pre">radian</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ripgrep-rg"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visidata-vd"><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zoxide"><code class="docutils literal notranslate"><span class="pre">zoxide</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
