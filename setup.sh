@@ -343,7 +343,7 @@ install_env_and_symlink () {
     EXECUTABLE=$3
 
     can_make_conda_env $ENVNAME
-    conda create -n $ENVNAME $CONDAPKG
+    conda create -y -n $ENVNAME $CONDAPKG
     ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
     printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
@@ -596,7 +596,7 @@ elif [ $task == "--install-radian" ]; then
     set +u
     # Note: radian needs R installed to compile the rchitect dependency. It
     # is unclear whether radian is dependent on a particular R version.
-    conda create -n radian python r
+    conda create -y -n radian python r
     conda activate radian
     pip install radian
     ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
@@ -615,7 +615,7 @@ elif [ $task == "--install-git-cola" ]; then
         printf "${RED}~/opt/git-cola already exists! Exiting.${UNSET}\n"
         exit 1
     fi
-    conda create -n git-cola python=3 pyqt
+    conda create -y -n git-cola python=3 pyqt
     git clone git://github.com/git-cola/git-cola.git ~/opt/git-cola
 
     # The following creates a script called "git-cola" that ensures we run it
