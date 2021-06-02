@@ -1,6 +1,5 @@
 call plug#begin()
 
-" Note: where shortcuts are indicated, they're probably set below in the
 " PLUGIN SETTINGS section.
 "
 Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
@@ -101,6 +100,9 @@ set nohlsearch  " don't highlight search items by default
 set wildmenu            " make tab completion for files/buffers act like bash
 set wildmode=list:full  " show a list when pressing tab; complete first full match
 set wildignore=*.swp,*.bak,*.pyc,*.class  " ignore these when autocompleting
+
+set inccommand=nosplit  " when using :s/ to search and replace, this will give
+                        " a live preview of the proposed changes
 
 " ============================================================================
 " CUSTOM MAPPINGS
