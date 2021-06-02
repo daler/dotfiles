@@ -50,7 +50,7 @@ nvim
 
 tmux
 ````
-- don't set scrren-256color in tmux conf
+- don't set screen-256color in tmux conf
 
 Installation
 ````````````
