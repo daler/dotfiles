@@ -419,6 +419,7 @@ elif [ $task == "--install-miniconda" ]; then
 
     set -x
     bash miniconda.sh -b -p $MINICONDA_DIR
+    rm miniconda.sh
     set +x
     $MINICONDA_DIR/bin/conda init bash
 
@@ -468,6 +469,7 @@ elif [ $task == "--install-neovim" ]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
         tar -xzf nvim-linux64.tar.gz
         mv nvim-linux64 "$HOME/opt/neovim"
+        rm nvim-linux64.tar.gz
     fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
