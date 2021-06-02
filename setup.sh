@@ -419,7 +419,6 @@ elif [ $task == "--install-miniconda" ]; then
 
     set -x
     bash miniconda.sh -b -p $MINICONDA_DIR
-    rmdir $TMPDIR
     set +x
     $MINICONDA_DIR/bin/conda init bash
 
