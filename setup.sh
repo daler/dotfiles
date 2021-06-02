@@ -107,7 +107,7 @@ function showHelp() {
     header "conda setup:"
 
     cmd "--install-miniconda" \
-        "Install Miniconda to $HOME/miniconda3." \
+        "Install Miniconda." \
         "Homepage: https://docs.conda.io/en/latest/miniconda.html" \
 
     cmd "--set-up-bioconda" \
