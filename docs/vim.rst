@@ -333,6 +333,8 @@ usage details. Note that this also requires the `vim-tmux-focus-events
 <https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin as well.
 
 
+.. _vim-fugitive:
+
 vim-fugitive
 ~~~~~~~~~~~~
 
@@ -380,6 +382,8 @@ are used heavily when working with ``:Gdiff``:
       - Use the [o]ther file's contents for the current diff
     * - :kbd:`dp`
       - [P]ut the contents of this diff into the other file
+
+.. _vim-gv:
 
 vim.gv
 ~~~~~~
