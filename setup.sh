@@ -424,7 +424,7 @@ elif [ $task == "--install-miniconda" ]; then
     $MINICONDA_DIR/bin/conda init bash
 
     if [ -e /data/$USER/miniconda3-tmp ]; then
-        rm -r /dat/$USER/miniconda3-tmp
+        rm -r /data/$USER/miniconda3-tmp
     fi
 
     printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
