@@ -7,23 +7,30 @@ Start here
 A couple of preliminary things to get out of the way:
 
 * There are **three general sections**:
-   - :ref:`dotfilessection` for copying over the dotfiles
+   - :ref:`dotfilessection` for copying over the `dotfiles <https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789>`_ in this repo to your home directory
    - :ref:`setupsection` for setting up vim/neovim and conda
    - :ref:`toolsection` for installing useful tools
 
 * **Everything is driven** by :file:`setup.sh`. When in doubt, consult that
-  file!
+  file.
 
-* Everything here is **simply a convenience** to make my life easier setting up
-  a new machine. I spent the work figuring this out, so might as well make it
+* Everything here is **simply a convenience** to make life easier setting up
+  a new machine. Since I spent the work figuring this out, I might as well make it
   available to others. For example:
 
+    * There are some common fixes for things like backspace in vim not working
+      in tmux, spaces instead of tabs for Python code, getting the mouse to
+      work in vim and tmux, and so on.
+
     * To avoid visiting each tool's homepage, downloading for Linux or Mac, and
-      following the particular installation instructions, I can instead use the
+      following the particular installation instructions, you can instead use the
       ``--install-<toolname>`` commands.
 
-    * The ``--diffs`` commands help me figure out if all my dotfiles  on
+    * The ``--diffs`` commands help figure out if all your dotfiles on
       a particular machine are up-to-date with this repo.
+
+    * A centrally available resource for setup and configuration means there's
+      only one place to look for updates.
 
 * **All steps are optional** though there are some dependencies and assumptions
   which are noted as they come up.
@@ -33,7 +40,7 @@ A couple of preliminary things to get out of the way:
 Step 0: Download and check the help
 -----------------------------------
 
-**Already have git installed?** Clone the repo and go to the directory:
+**If you already have git installed,** clone the repo and go to the directory:
 
 .. code-block:: bash
 
@@ -58,6 +65,16 @@ can be run on what kinds of systems.
 
 1. dotfiles
 -----------
+
+There are two options, :ref:`option1` and :ref:`option2`. Choose option 1 if
+you are just starting out in `BSPC <https://bioinformatics.nichd.nih.gov>`_ and
+don't already have your own dotfiles, or if you want the "batteries included"
+experience.
+
+If you choose option 2, it may take some more effort since you will need to
+read through the various files to figure out what to use or keep track of what
+parts are needed from these dotfiles to make the subsequent installations work.
+This is all documented below.
 
 .. _option1:
 
@@ -163,22 +180,23 @@ This:
 - installs neovim to :file:`~/opt/bin`
 - so that `nvim` will run when you type `vim`, this adds an alias `alias
   vim=nvim` to :file:`~/.aliases`. As described in :ref:`bash`, this is sourced
-  each time you start a new shell. If you are using :ref:`option2`, then you
-  may want to manually add that alias to your :file:`.bashrc` or
-  :file:`.bash_profile`.
+  each time you start a new shell. If you are using :ref:`option2` and you are
+  not using the module approach of separate files,  then you may want to
+  manually add that alias to your :file:`.bashrc` or :file:`.bash_profile`.
 
 
 2.1.2 vim/nvim plugin setup
 +++++++++++++++++++++++++++
 
 Do this if you want to use all the plugins in the ``.config/nvim/init.vim``
-file (so, yes if you're going with :ref:`option1`).
+file or if you want to set up vim-plug. If you're going with :ref:`option1`
+then you should do this.
 
 This step sets up `vim-plug <https://github.com/junegunn/vim-plug>`_, placing
-the required files in the locations expected by vim and neovim. If you're using
-:ref:`option1`, then you should do this. There are a lot of vim plugins
-included, which you can read more about at :ref:`vim`. If you're using
-:ref:`option2`, this step is useful if you have plugins managed by vim-plug.
+the required files in the locations expected by vim and neovim. There are a lot
+of vim plugins included, which you can read more about at :ref:`vim`. If you're
+using :ref:`option2`, this step is useful if you have plugins managed by
+vim-plug.
 
 - set up vim-plug:
 
@@ -227,7 +245,7 @@ So this does not need to be run on a remote machine.
 language-agnostic package manager. It's by far the best way to get set up with
 Python, but it also works for many other languages.
 
-2.2.1: install miniconda
+2.2.1: Install miniconda
 ++++++++++++++++++++++++
 
 Do this if you want to use conda.
@@ -236,7 +254,9 @@ The following command:
 
 - downloads the latest version of `Miniconda
   <https://docs.conda.io/en/latest/miniconda.html>`_
-- installs it to :file:`~/miniconda3`
+- installs it to :file:`~/miniconda3`, or if you're on NIH's Biowulf cluster
+  where the home directory is too small to support the installation, it will
+  install to :file:`/data/$USER/miniconda3`
 - adds the line ``export PATH="$PATH:~/miniconda3/bin"`` to the :file:`~/.path`
   (which you can read more about at :ref:`bash`)
 
@@ -280,8 +300,7 @@ fit to match your requirements.
 Do this if you want to install the conda packages in :file:`requirements.txt`
 into the base conda environment. (you may want to edit that file first)
 
-Install the packages listed in :file:`requirements.txt` into the base
-environment, as well as :file:`requirements-mac.txt` if you're on a Mac:
+If you're on a Mac, :file:`requirements-mac.txt` will be used as well:
 
 .. code-block:: bash
 

@@ -6,6 +6,7 @@
 .dircolors
 .exports
 .functions
+.gitconfig
 .path
 .tmux.conf
 .vim/

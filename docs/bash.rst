@@ -72,14 +72,20 @@ included:
       - ``cd ..``
       - faster way of moving up a directory
 
+    * - ``gsv``
+      - ``vim -c ':Gstatus' -c ':bunload 1'``
+      - Opens vim and runs vim-fugitive. See :ref:`vim-fugitive` for details.
+
+    * - ``glv``
+      - ``vim -c ':GV'``
+      - Opens vim and runs vim-gv for browsing git history. See :ref:`vim-gv`
+        for details.
 
 ``.functions``
 --------------
 
 Separate file for bash functions. This is also where fzf and autojump
 are set up. Some notable functions defined here:
-
-
 
 .. list-table::
 

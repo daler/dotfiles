@@ -23,9 +23,6 @@ function tre() {
 # Set up fzf, if it's installed
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# Set up autojump, if it's installed
-[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh 
-
 
 # Select a conda env to activate
 sa() {

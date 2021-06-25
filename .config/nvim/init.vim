@@ -1,6 +1,5 @@
 call plug#begin()
 
-" Note: where shortcuts are indicated, they're probably set below in the
 " PLUGIN SETTINGS section.
 "
 Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
@@ -23,6 +22,8 @@ Plug 'vim-pandoc/vim-pandoc'              " Required for vim-rmarkdown
 Plug 'vim-pandoc/vim-pandoc-syntax'       " Required for vim-rmarkdown
 Plug 'dhruvasagar/vim-table-mode'         " Very easily make and work with markdown and restructured text tables
 Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
+Plug 'junegunn/gv.vim'                    " Easily view and browse git history
+Plug 'samoshkin/vim-mergetool'            " Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited
 call plug#end()
 
 " ============================================================================
@@ -34,7 +35,6 @@ call plug#end()
 syntax on                      " Syntax highlighting; also does an implicit filetype on
 filetype plugin indent on      " Enable detection, plugin , and indent for filetype
 set backspace=indent,eol,start " This gets backspace to work in some situations
-set nrformats-=octal           " ?????
 
 " ----------------------------------------------------------------------------
 " Python-specific indentation handling. Use these by default.
@@ -101,6 +101,9 @@ set wildmenu            " make tab completion for files/buffers act like bash
 set wildmode=list:full  " show a list when pressing tab; complete first full match
 set wildignore=*.swp,*.bak,*.pyc,*.class  " ignore these when autocompleting
 
+set inccommand=nosplit  " when using :s/ to search and replace, this will give
+                        " a live preview of the proposed changes
+
 " ============================================================================
 " CUSTOM MAPPINGS
 " ============================================================================
@@ -129,6 +132,8 @@ let @l = "I'A',j"
 " Set the working directory to that of the opened file
 autocmd BufEnter * silent! lcd %:p:h
 
+inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d: "<CR>A
+noremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d: "<CR>
 " ----------------------------------------------------------------------------
 " Buffer switching
 " ----------------------------------------------------------------------------
@@ -154,9 +159,6 @@ nmap <leader>y "+y
 nmap <leader>Y "+yq
 nmap <leader>p "+p
 nmap <leader>P "+P
-
-" See https://stackoverflow.com/a/30691754
-set clipboard^=unnamed,unnamedplus
 
 " ----------------------------------------------------------------------------
 "  Window navigation
