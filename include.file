@@ -7,6 +7,7 @@
 .exports
 .functions
 .gitconfig
+.git-completion.bash
 .path
 .tmux.conf
 .vim/
