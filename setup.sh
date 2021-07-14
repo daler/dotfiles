@@ -655,13 +655,9 @@ elif [ $task == "--install-bat" ]; then
 elif [ $task == "--install-alacritty" ]; then
 
     if [[ $OSTYPE == darwin* ]]; then
-        ALACRITTY_VERSION=0.5.0
-        ok "Installs alacritty terminal"
-        download https://github.com/alacritty/alacritty/releases/download/v${ALACRITTY_VERSION}/Alacritty-v${ALACRITTY_VERSION}.dmg /tmp/alacritty.dmg
-        hdiutil attach /tmp/alacritty.dmg
-        cp -r /Volumes/Alacritty/Alacritty.app ~/opt/alacritty
-        ln -sf ~/opt/alacritty/Contents/MacOS/alacritty ~/opt/bin/alacritty
-        hdiutil detach /Volumes/Alacritty
+        printf "${YELLOW}Please download the .dmg from https://github.com/alacritty/alacritty/releases "
+        printf "and drag the application either to Applications (if you have access) or to the Desktop.${UNSET}.\n"
+        printf "\n${YELLOW}Then download the alacritty.yml file from that same URL, and place it in ~/.config/alacritty/alacritty.yml${UNSET}\n\n"
 
     else
         ok "Installs alacritty terminal. Also needs to install rust"
