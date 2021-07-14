@@ -32,4 +32,5 @@ Ready? :ref:`starthere`!
     bash
     vim
     tmux
+    post
     why

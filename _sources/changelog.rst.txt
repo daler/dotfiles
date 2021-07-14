@@ -1,6 +1,27 @@
 Changelog
 =========
 
+2021-07-14
+----------
+
+Lessons from setting up a new Mac...
+
+- Instead of `.bashrc` sourcing `.bash_profile`, it is now flipped around to
+  the more conventional (on Linux) `.bash_profile` sourcing `.bashrc`. This is
+  also more convenient when running `conda init bash` which will add lines to
+  `.bashrc`. Note that on Mac, `conda init bash` adds the lines to
+  `.bash_profile.`
+
+- Added some additional notes about configuring Macs (iTerm2 bell, disable zsh warning)
+
+- Added some additional notes about post-setup (ssh keygen and copy-id)
+
+- Added ncurses explicitly to the requirements-mac.txt. Without this, there was
+  a dynamic library loading issue because ncurses falls back to defaults
+  channel (not conda-forge). It's possible that using mamba would fix this.
+
+- Removed dircolors from requirements-mac.txt which is apparently no longer available.
+
 2021-06-01
 ----------
 

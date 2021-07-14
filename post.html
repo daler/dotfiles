@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Post-setup tasks &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Why?" href="why.html" />
+    <link rel="prev" title="tmux configuration" href="tmux.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="post-setup-tasks">
+<h1>Post-setup tasks<a class="headerlink" href="#post-setup-tasks" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> script tries to automate as much as possible, but there are
+some things that have to be manually done. This page documents those additional
+tasks.</p>
+</div>
+<div class="section" id="mac">
+<h1>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>To turn off the iTerm2 audio bell (that “donk!” noise you get after hitting
+TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
+“Silence bell” is checked.</p></li>
+<li><p>To avoid the message abou zsh popping up all the time (and you still want to use bash):</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chsh</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p>and then as <a class="reference external" href="https://support.apple.com/en-us/HT208050">documented at support.apple.com</a> export this env var to disable
+(e.g., in your <cite>~/.extras</cite> file):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">BASH_SILENCE_DEPRECATION_WARNING</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To turn off the application-specific changing of the touch bar: System
+Preferences &gt; Keyboard, then change “Touch Bar shows” to “Expanded Control
+Strip”.</p></li>
+</ul>
+</div>
+<div class="section" id="ssh-config">
+<h1>SSH config<a class="headerlink" href="#ssh-config" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Create your ssh keys, and add them to the various systems.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-keygen
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-copy-id user@hostname
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat ~/.ssh/id_rsa.pub
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-config">
+<h1>Git config<a class="headerlink" href="#git-config" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git config --global user.name <span class="s2">&quot;your name here&quot;</span>
+git config --global user.email <span class="s2">&quot;your email here&quot;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#mac">Mac</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#ssh-config">SSH config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#git-config">Git config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tmux.html" title="previous chapter">tmux configuration</a></li>
+      <li>Next: <a href="why.html" title="next chapter">Why?</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/post.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
