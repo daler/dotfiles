@@ -63,6 +63,24 @@ Alternatives:
 
 - cat
 
+
+.. _bfg:
+
+``bfg``
+~~~~~~~
+
+.. code-block:: bash
+
+    ./setup.sh --install-bfg
+
+The `BFG <https://rtyley.github.io/bfg-repo-cleaner/>`_ is a tool for cleaning
+out mistakenly-committed data from git repos such as very large files or
+sensitive information.
+
+Alternatives:
+
+- ``git-filter-branch``, which is built in to git but is slower and not as feature-rich.
+
 .. _black:
 
 ``black``

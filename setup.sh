@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # All-in-one bash script to perform various setup activities
 
@@ -153,6 +153,11 @@ function showHelp() {
         "showing lines changed based on git, and showing non-printable" \
         "characters." \
         "Homepage: https://github.com/sharkdp/bat"
+
+    cmd "--install-bfg" \
+        "The BFG is a simpler, faster alternative to git-filter-branch" \
+        "for cleaning bad data out of a git repo like big files or" \
+        "senstive information"
 
     cmd "--install-black" \
         "The self-described 'uncompromising' Python formatter." \
@@ -754,6 +759,15 @@ elif [ $task == "--install-zoxide" ]; then
     printf "${YELLOW}To start using, you need to add the following line to your .bash_profile or .bashrc:${UNSET}\n\n"
     printf "     ${YELLOW}eval \"\$(zoxide init bash)\"${UNSET}\n\n"
 
+elif [ $task == "--install-bfg" ]; then
+    BFG_VERSION=1.14.0
+    BFG_WRAPPER=~/opt/bin/bfg
+    download https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar ~/opt/bin/bfg-${BFG_VERSION}.jar
+
+    # Make a convenient wrapper
+    echo "#! /bin/bash" > $BFG_WRAPPER
+    echo "java -jar ~/opt/bin/bfg-${BFG_VERSION}.jar $@" >> $BFG_WRAPPER
+    chmod +x $BFG_WRAPPER
 
 elif [ $task == "--dotfiles" ]; then
 
