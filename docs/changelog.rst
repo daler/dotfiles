@@ -1,6 +1,16 @@
 Changelog
 =========
 
+2021-11-09
+----------
+
+Changed ``zoxide`` installation to use conda env.
+
+2021-09-18
+----------
+
+Added installation of BFG for cleaning git repos
+
 2021-07-14
 ----------
 
