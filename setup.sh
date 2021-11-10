@@ -760,14 +760,17 @@ elif [ $task == "--install-zoxide" ]; then
     printf "     ${YELLOW}eval \"\$(zoxide init bash)\"${UNSET}\n\n"
 
 elif [ $task == "--install-bfg" ]; then
+    ok "Install BFG (https://rtyley.github.io/bfg-repo-cleaner/) git repo cleaner to ~/opt/bin?"
     BFG_VERSION=1.14.0
     BFG_WRAPPER=~/opt/bin/bfg
     download https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar ~/opt/bin/bfg-${BFG_VERSION}.jar
 
     # Make a convenient wrapper
     echo "#! /bin/bash" > $BFG_WRAPPER
-    echo "java -jar ~/opt/bin/bfg-${BFG_VERSION}.jar $@" >> $BFG_WRAPPER
+    echo "java -jar ~/opt/bin/bfg-${BFG_VERSION}.jar" '$@' >> $BFG_WRAPPER
     chmod +x $BFG_WRAPPER
+    check_opt_bin_in_path
+    printf "${YELLOW}Installed jar file to ~/opt/bin, and created wrapper script ~/opt/bin/bfg.${UNSET}\n\n"
 
 elif [ $task == "--dotfiles" ]; then
 
