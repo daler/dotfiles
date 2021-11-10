@@ -742,17 +742,10 @@ elif [ $task == "--install-pyp" ]; then
 
 elif [ $task == "--install-zoxide" ]; then
     ok "Install zoxide (https://github.com/ajeetdsouza/zoxide/) into ~/opt/bin?"
-    ZOXIDE_VERSION=0.7.0
-    if [[ $OSTYPE == darwin* ]]; then
-        ZOXIDE_PREFIX=zoxide-x86_64-apple-darwin
-    else
-        ZOXIDE_PREFIX=zoxide-x86_64-unknown-linux-musl
-    fi
-    set -x
-    download https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/${ZOXIDE_PREFIX}.tar.gz ${ZOXIDE_PREFIX}.tar.gz
-    tar -xf ${ZOXIDE_PREFIX}.tar.gz
-    cp ${ZOXIDE_PREFIX}/zoxide $HOME/opt/bin
-    rm -r ${ZOXIDE_PREFIX} ${ZOXIDE_PREFIX}.tar.gz
+
+    install_env_and_symlink zoxide zoxide zoxide
+    printf "${YELLOW}Installed to ~/opt/bin/zoxide${UNSET}\n"
+
     set +x
     check_opt_bin_in_path
     printf "${YELLOW}Installed to ~/opt/bin/zoxide.${UNSET}\n\n"
