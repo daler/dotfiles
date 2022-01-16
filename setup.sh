@@ -463,7 +463,7 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
-    NVIM_VERSION=0.4.4
+    NVIM_VERSION=0.6.1
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
