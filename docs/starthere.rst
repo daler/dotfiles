@@ -117,7 +117,7 @@ installed:
 .. code-block:: bash
 
     # add to .bashrc or .bash_profile
-    export PATH="$HOME/miniconda3/bin:$HOME/opt/bin:$PATH"
+    export PATH="$HOME/opt/bin:$PATH"
 
 If you've used this repo before and want to update, but aren't sure what's
 changed and whether you have custom stuff that you want to keep, the setup
@@ -137,19 +137,16 @@ and then use it with
     ./setup.sh --diffs
 
 There are also some other ways of viewing the diffs to decide what to add. If
-you're familiar with vimdiff:
+you're familiar with vimdiff, this will open up diffs of all the files included
+in this repo to compare to what you already have:
 
 .. code-block:: bash
 
     # shows diffs in vimdiff
     ./setup.sh --vim-diffs
 
-If you have :program:`meld` installed:
-
-.. code-block:: bash
-
-    # shows diffs in meld, if installed
-    ./setup.sh --graphical-diffs
+Alternatively you can browse the files and read the comments in them to see
+what might be useful.
 
 In any case, once you're done with your dotfiles you can move on to the next
 step.
@@ -168,8 +165,8 @@ plugins.
 2.1.1 neovim
 ++++++++++++
 
-Do this if you want to use `neovim <https://neovim.io/>`_. See :ref:`why` for
-more help on deciding.
+Do this if you want to use `neovim <https://neovim.io/>`_. See
+:ref:`why` for more help on deciding.
 
 .. code-block::
 
@@ -189,8 +186,8 @@ This:
 +++++++++++++++++++++++++++
 
 Do this if you want to use all the plugins in the ``.config/nvim/init.vim``
-file or if you want to set up vim-plug. If you're going with :ref:`option1`
-then you should do this.
+file or if you want to set up vim-plug at all for any plugins. If you're going
+with :ref:`option1` then you should do this.
 
 This step sets up `vim-plug <https://github.com/junegunn/vim-plug>`_, placing
 the required files in the locations expected by vim and neovim. There are a lot
@@ -212,7 +209,8 @@ vim-plug.
 +++++++++++++++
 
 Do this if you want the fancy `vim-airline
-<https://github.com/vim-airline/vim-airline>`_ status bar in vim.
+<https://github.com/vim-airline/vim-airline>`_ status bar in vim; these are
+special fonts to make that work.
 
 The vim-airline plugin uses fancy glyphs (see the documentation for some nice
 demos). Those arrow shapes for buffers, line number glyphs, and so on need
@@ -248,7 +246,8 @@ Python, but it also works for many other languages.
 2.2.1: Install miniconda
 ++++++++++++++++++++++++
 
-Do this if you want to use conda.
+Do this if you want to use conda to create environments that are
+isolated from the rest of your system.
 
 The following command:
 
@@ -277,9 +276,9 @@ to allow the use of ``conda activate`` to activate environments.
 2.2.2: set up bioconda
 ++++++++++++++++++++++
 
-Do this if you want to use `Bioconda
-<https://bioconda.github.io>`_. It sets up the channels in the proper order as
-recommended by the bioconda docs.
+Do this if you want to use `Bioconda <https://bioconda.github.io>`_ and you
+have installed conda (see above). It sets up the channels in the proper order
+as recommended by the bioconda docs.
 
 .. code-block:: bash
 
