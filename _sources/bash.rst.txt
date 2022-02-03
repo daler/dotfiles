@@ -12,8 +12,8 @@ organized and modular. They work like this:
 
 ::
 
-   .bashrc # sources .bash_profile
-      --> .bash_profile  # sources the following files
+   .bash_profile  # sources .bashrc
+   .bashrc        # sources the following files:
             --> .path         # all "export PATH=..." goes in here
             --> .aliases      # add your aliases here
             --> .functions    # add your functions here

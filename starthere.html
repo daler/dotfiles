@@ -28,6 +28,21 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">daler dotfiles</a>
+        </li>
+        <li>
+          <a href="tools.html" title="Next document">Additional tool installations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
           
 
           <div class="body" role="main">
@@ -124,7 +139,7 @@ of the relevant config files that may be useful to you.</p>
 <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>, which adds the directories into which later tools will be
 installed:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># add to .bashrc or .bash_profile</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3/bin:</span><span class="nv">$HOME</span><span class="s2">/opt/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/opt/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
 <p>If you’ve used this repo before and want to update, but aren’t sure what’s
@@ -141,16 +156,14 @@ it to <code class="file docutils literal notranslate"><span class="pre">~/opt/bi
 </pre></div>
 </div>
 <p>There are also some other ways of viewing the diffs to decide what to add. If
-you’re familiar with vimdiff:</p>
+you’re familiar with vimdiff, this will open up diffs of all the files included
+in this repo to compare to what you already have:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shows diffs in vimdiff</span>
 ./setup.sh --vim-diffs
 </pre></div>
 </div>
-<p>If you have <strong class="program">meld</strong> installed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shows diffs in meld, if installed</span>
-./setup.sh --graphical-diffs
-</pre></div>
-</div>
+<p>Alternatively you can browse the files and read the comments in them to see
+what might be useful.</p>
 <p>In any case, once you’re done with your dotfiles you can move on to the next
 step.</p>
 </div>
@@ -163,8 +176,8 @@ step.</p>
 plugins.</p>
 <div class="section" id="neovim">
 <h4>2.1.1 neovim<a class="headerlink" href="#neovim" title="Permalink to this headline">¶</a></h4>
-<p>Do this if you want to use <a class="reference external" href="https://neovim.io/">neovim</a>. See <a class="reference internal" href="why.html#why"><span class="std std-ref">Why?</span></a> for
-more help on deciding.</p>
+<p>Do this if you want to use <a class="reference external" href="https://neovim.io/">neovim</a>. See
+<a class="reference internal" href="why.html#why"><span class="std std-ref">Why?</span></a> for more help on deciding.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">neovim</span>
 </pre></div>
 </div>
@@ -181,8 +194,8 @@ manually add that alias to your <code class="file docutils literal notranslate">
 <div class="section" id="vim-nvim-plugin-setup">
 <h4>2.1.2 vim/nvim plugin setup<a class="headerlink" href="#vim-nvim-plugin-setup" title="Permalink to this headline">¶</a></h4>
 <p>Do this if you want to use all the plugins in the <code class="docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>
-file or if you want to set up vim-plug. If you’re going with <a class="reference internal" href="#option1"><span class="std std-ref">Option 1: Use everything</span></a>
-then you should do this.</p>
+file or if you want to set up vim-plug at all for any plugins. If you’re going
+with <a class="reference internal" href="#option1"><span class="std std-ref">Option 1: Use everything</span></a> then you should do this.</p>
 <p>This step sets up <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>, placing
 the required files in the locations expected by vim and neovim. There are a lot
 of vim plugins included, which you can read more about at <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Vim / Neovim</span></a>. If you’re
@@ -202,7 +215,8 @@ and run <strong class="command">:PlugInstall</strong>. This will install the plu
 </div>
 <div class="section" id="powerline">
 <h4>2.1.3 powerline<a class="headerlink" href="#powerline" title="Permalink to this headline">¶</a></h4>
-<p>Do this if you want the fancy <a class="reference external" href="https://github.com/vim-airline/vim-airline">vim-airline</a> status bar in vim.</p>
+<p>Do this if you want the fancy <a class="reference external" href="https://github.com/vim-airline/vim-airline">vim-airline</a> status bar in vim; these are
+special fonts to make that work.</p>
 <p>The vim-airline plugin uses fancy glyphs (see the documentation for some nice
 demos). Those arrow shapes for buffers, line number glyphs, and so on need
 a patched font, and your terminal needs to be set to use those font.</p>
@@ -234,7 +248,8 @@ language-agnostic package manager. It’s by far the best way to get set up with
 Python, but it also works for many other languages.</p>
 <div class="section" id="install-miniconda">
 <h4>2.2.1: Install miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h4>
-<p>Do this if you want to use conda.</p>
+<p>Do this if you want to use conda to create environments that are
+isolated from the rest of your system.</p>
 <p>The following command:</p>
 <ul class="simple">
 <li><p>downloads the latest version of <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a></p></li>
@@ -256,8 +271,9 @@ install to <code class="file docutils literal notranslate"><span class="pre">/da
 </div>
 <div class="section" id="set-up-bioconda">
 <h4>2.2.2: set up bioconda<a class="headerlink" href="#set-up-bioconda" title="Permalink to this headline">¶</a></h4>
-<p>Do this if you want to use <a class="reference external" href="https://bioconda.github.io">Bioconda</a>. It sets up the channels in the proper order as
-recommended by the bioconda docs.</p>
+<p>Do this if you want to use <a class="reference external" href="https://bioconda.github.io">Bioconda</a> and you
+have installed conda (see above). It sets up the channels in the proper order
+as recommended by the bioconda docs.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --set-up-bioconda
 </pre></div>
 </div>
@@ -307,6 +323,21 @@ descriptions of tools and the commands to install them.</p>
 
 
           </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">daler dotfiles</a>
+        </li>
+        <li>
+          <a href="tools.html" title="Next document">Additional tool installations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
           
         </div>
       </div>
@@ -339,6 +370,7 @@ descriptions of tools and the commands to install them.</p>
 <li class="toctree-l1"><a class="reference internal" href="post.html#ssh-config">SSH config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html#git-config">Git config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 <div class="relations">

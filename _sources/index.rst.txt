@@ -18,8 +18,10 @@ If you don’t want “batteries included”, you can select only what is most
 useful to you because:
 
 -  the ``setup.sh`` script is modular
--  this README documents everything
+-  these docs have all the details so you are informed about options
 -  the config files themselves are documented
+
+See the :ref:`changelog` for changes.
 
 Ready? :ref:`starthere`!
 
@@ -34,3 +36,4 @@ Ready? :ref:`starthere`!
     tmux
     post
     why
+    changelog

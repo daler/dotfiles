@@ -28,6 +28,21 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="starthere.html" title="Previous document">Start here</a>
+        </li>
+        <li>
+          <a href="bash.html" title="Next document">Bash dotfiles</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
           
 
           <div class="body" role="main">
@@ -111,11 +126,15 @@ PEP8 style conventions. I’ll typically run it on a file in vim with <code clas
 </pre></div>
 </div>
 <p><a class="reference external" href="https://www.docker.com">docker</a> runs containers. Needs root access, and the
-installation here is currently only supported on Linux.
-.. _fd:</p>
+installation here is currently only supported on Linux.</p>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>Singularity, though this requires a Linux machine to build and is a bit more
+involved to install.</p></li>
+</ul>
 </div>
 <div class="section" id="fd">
-<h2><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h2>
+<span id="id11"></span><h2><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fd
 </pre></div>
 </div>
@@ -129,7 +148,7 @@ lengthy, unneeded searches through conda envs.</p>
 </ul>
 </div>
 <div class="section" id="fzf">
-<span id="id11"></span><h2><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h2>
+<span id="id12"></span><h2><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fzf
 </pre></div>
 </div>
@@ -141,7 +160,7 @@ fzf interface. Other tools may also look for <code class="docutils literal notra
 <code class="docutils literal notranslate"><span class="pre">fzf</span></code> for a fuzzy search tool.</p>
 </div>
 <div class="section" id="icdiff">
-<span id="id13"></span><h2><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h2>
+<span id="id14"></span><h2><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-icdiff
 </pre></div>
 </div>
@@ -154,14 +173,14 @@ colored diff between files. It’s used for <code class="docutils literal notran
 </ul>
 </div>
 <div class="section" id="jq">
-<span id="id15"></span><h2><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h2>
+<span id="id16"></span><h2><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-jq
 </pre></div>
 </div>
-<p><cite>jq &lt;https://stedolan.github.io/jq/&gt;</cite> is like sed or awk for JSON data.</p>
+<p><a class="reference external" href="https://stedolan.github.io/jq/">jq</a> is like sed or awk for JSON data.</p>
 </div>
 <div class="section" id="pyp">
-<span id="id16"></span><h2><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Permalink to this headline">¶</a></h2>
+<span id="id18"></span><h2><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/hauntsaninja/pyp">pyp</a> lets you run Python right from the
 terminal similar to Perl one-liners.</p>
 <p>I use it most often for a quick calculator (<code class="docutils literal notranslate"><span class="pre">pyp</span> <span class="pre">&quot;(4e6</span> <span class="pre">/</span> <span class="pre">300)</span> <span class="pre">*</span> <span class="pre">3600&quot;</span></code>), and
@@ -176,7 +195,7 @@ flag is a brilliant touch).</p>
 </ul>
 </div>
 <div class="section" id="radian">
-<span id="id18"></span><h2><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Permalink to this headline">¶</a></h2>
+<span id="id20"></span><h2><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-radian
 </pre></div>
 </div>
@@ -221,7 +240,7 @@ you have a lot of editing to do.</p></li>
 </ul>
 </div>
 <div class="section" id="zoxide">
-<span id="id20"></span><h2><code class="docutils literal notranslate"><span class="pre">zoxide</span></code><a class="headerlink" href="#zoxide" title="Permalink to this headline">¶</a></h2>
+<span id="id22"></span><h2><code class="docutils literal notranslate"><span class="pre">zoxide</span></code><a class="headerlink" href="#zoxide" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-zoxide notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-zoxide
 </pre></div>
 </div>
@@ -243,6 +262,21 @@ an interface for changing directories via fuzzy search.</p>
 
 
           </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="starthere.html" title="Previous document">Start here</a>
+        </li>
+        <li>
+          <a href="bash.html" title="Next document">Bash dotfiles</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
           
         </div>
       </div>
@@ -285,6 +319,7 @@ an interface for changing directories via fuzzy search.</p>
 <li class="toctree-l1"><a class="reference internal" href="post.html#ssh-config">SSH config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html#git-config">Git config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 <div class="relations">

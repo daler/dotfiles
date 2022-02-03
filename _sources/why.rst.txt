@@ -28,9 +28,9 @@ packages, which simplifies things, but not all tools are available on
 conda. Those install commands keep things modular (only install what you
 want) and simple. And of course the end result is lots of useful tools.
 
-**Why use conda and then symlink to ``~/opt/bin``?** I wanted the tools
+**Why use conda and then symlink to** ``~/opt/bin``? I wanted the tools
 to be available no matter what conda environment I was in.
 
-**Why bash for ``setup.sh``?** There are a lot of system calls, which
+**Why bash for** ``setup.sh`` ? There are a lot of system calls, which
 gets awkward in Python. This way everything is straightforwardly (if
 verbosely) captured in a single script without any other dependencies.
