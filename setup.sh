@@ -536,7 +536,7 @@ elif [ $task == "--install-fzf" ]; then
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
     mkdir -p /tmp/rg
-    RG_VERSION=12.1.1
+    RG_VERSION=13.0.0
 
     if [[ $OSTYPE == darwin* ]]; then
         URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-apple-darwin.tar.gz
@@ -637,7 +637,7 @@ elif [ $task == "--install-git-cola" ]; then
 
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
-    BAT_VERSION=0.16.0
+    BAT_VERSION=0.19.0
     BAT_TARBALL="/tmp/bat-${BAT_VERSION}.tar.gz"
     if [[ $OSTYPE == darwin* ]]; then
         download \
@@ -722,7 +722,8 @@ elif [ $task == "--install-jq" ]; then
 
 elif [ $task == "--install-icdiff" ]; then
     ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
-    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
+    ICDIFF_VERSION=2.0.4
+    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-${ICDIFF_VERSION}/icdiff ~/opt/bin/icdiff
     chmod +x ~/opt/bin/icdiff
     printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
     check_opt_bin_in_path
