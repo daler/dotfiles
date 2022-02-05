@@ -12,6 +12,12 @@ export PS1=
 
 set -eo pipefail
 
+# Since some commands affect .bashrc, it's most convenient to source it within
+# this script
+if [ -e ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
 function showHelp() {
 
     function header() {
@@ -435,14 +441,6 @@ elif [ $task == "--install-miniconda" ]; then
     printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
     printf "${YELLOW}   and then ran \"$MINICONDA_DIR/bin/conda init bash\", \n${UNSET}"
     printf "${YELLOW}   which added lines to your .bashrc. You should check out those lines.${UNSET}\n\n"
-    printf "${YELLOW}NOTE: if you ssh in to this machine, that will ${RED}not${YELLOW} source .bashrc \n${UNSET}"
-    printf "${YELLOW}   because that will be a login shell and for login shells only .bash_profile is \n${UNSET}"
-    printf "${YELLOW}   sourced. If you want to have conda immediately available upon sshing to \n${UNSET} "
-    printf "${YELLOW}   this machine, you can add the following line to .bash_profile: \n\n${UNSET} "
-    printf "${YELLOW}       export PATH=\"\$PATH:$MINICONDA_DIR/bin\"${UNSET}\n\n"
-    printf "${YELLOW}Alternatively, you can manually \"source ~/.bashrc\" when you want to have conda available.${UNSET}\n"
-
-
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
@@ -767,6 +765,7 @@ elif [ $task == "--install-bfg" ]; then
     printf "${YELLOW}Installed jar file to ~/opt/bin, and created wrapper script ~/opt/bin/bfg.${UNSET}\n\n"
 
 elif [ $task == "--dotfiles" ]; then
+    set -x
 
     # Unique backup directory based on the hash of the current time, all
     # lowercase
@@ -789,7 +788,6 @@ elif [ $task == "--dotfiles" ]; then
 
     function doIt() {
         rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -avh --files-from=include.file . $HOME
-        source ~/.bash_profile
     }
 
     if [ $DOTFILES_FORCE == "true" ]; then
