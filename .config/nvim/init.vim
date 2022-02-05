@@ -133,8 +133,26 @@ let @l = "I'A',j"
 " Set the working directory to that of the opened file
 autocmd BufEnter * silent! lcd %:p:h
 
-inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d: "<CR>A
-noremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d: "<CR>
+" Insert an ReST-formatted title for today's date
+inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
+noremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
+
+" Fill the rest of the line with dashes
+nnoremap <leader>- 80A-<Esc>d80<bar>
+
+" Hard-wrap at 80 columns. Mnemonic is md = 'markdown', a common filetype where
+" this is useful
+nnoremap <leader>md :set tw=80 fo+=t<CR>
+
+" Unset the hard-wrap. Mnemonic is 'not markdown', to indicate the opposite of
+" the ,md above.
+nnoremap <leader>nd :set tw=80 fo-=t<CR>
+
+" Slightly saner behavior with long TSV lines. Leaves the cursor in the command
+" bar so you can type in an appropriate tab stop value. Mnemonic of <tab> should
+" be self-explanatory!
+nnoremap <leader><tab> :set nowrap tabstop=
+
 " ----------------------------------------------------------------------------
 " Buffer switching
 " ----------------------------------------------------------------------------
@@ -186,6 +204,7 @@ tnoremap <M-q> <C-\><C-n>:wincmd h<CR>
 " ============================================================================
 autocmd! FileType html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
 autocmd! FileType yaml,yml set shiftwidth=2 tabstop=2
+autocmd! FileType r,rmarkdown set shiftwidth=2 tabstop=2
 
 " Consider any files with these names to be Python
 au BufRead,BufNewFile Snakefile setfiletype python
@@ -263,7 +282,10 @@ xmap gx <Plug>(neoterm-repl-send)`><CR>
 nmap gxx <Plug>(neoterm-repl-send-line)<CR>
 
 " Render the current RMarkdown file to HTML (named after the current file)
-nmap <Leader>k :T rmarkdown::render("%")<CR>
+:autocmd FileType rmarkdown nmap <Leader>k :T rmarkdown::render("%")<CR>
+
+" Use the same mnemonic when working in IPython
+:autocmd FileType python nmap <Leader>k :T run %<CR>
 
 " Have Neoterm scroll to the end of its buffer after running a command
 let g:neoterm_autoscroll = 1

@@ -4,6 +4,25 @@
 Changelog
 =========
 
+2021-02-05
+----------
+
+Changes to init.vim:
+
+- Change ``<leader>d`` to insert a ReST-formatted date title
+- ``<leader>-`` will fill the rest of the line with dashes (useful for making
+  important comments stand out more)
+- ``<leader>md`` to set hard-wrap at 80 columns. Mnemonic is "markdown" since
+  this is especially useful when writing markdown. There is a corresponding
+  ``<leader>nd`` ("no markdown") to turn that off.
+- Set shiftwidth and tabstop to 2 spaces for R and RMarkdown, consistent with
+  common R style guides
+- The ``<leader>k`` command has been used for rendering RMarkdown; now if
+  a file is detected as Python ``<leader>k`` will assume you're running IPython
+  in the neoterm terminal and will call ``run <filename>``
+- ``<leader><TAB>`` will fill out ``:set nowrap tabstop=`` and then leave the
+  cursor at the vim command bar so you can fill in a reasonble tabstop for the
+  file you're looking at.
 
 
 2021-11-09
