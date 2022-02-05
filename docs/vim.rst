@@ -81,7 +81,23 @@ Here are some general shortcuts that are defined in the included config:
       - normal
       - macro to surround the line with quotes and add a trailing comma, making
         it easy to make Python or R lists out of pasted text
-
+    * - :kbd:`,d`
+      - normal or insert
+      - Insert the current date as a ReST-formatted title
+    * - :kbd:`,-`
+      - normal
+      - Fills in the rest of the line with "-", out to column 80
+    * - :kbd:`,md`
+      - normal
+      - Sets hard-wrap to 80, useful for writing markdown.
+    * - :kbd:`,nd`
+      - normal
+      - Opposite of :kbd:`,md`
+    * - :kbd:`,<TAB>`
+      - normal
+      - Writes ``:set nowrap tabstop=`` and then leaves the cursor at the vim
+        command bar so you can fill in a reasonble tabstop for the file you're
+        looking at.
 
 Plugins
 -------
@@ -147,7 +163,11 @@ that affect the terminal use:
       - normal
       - Render the current RMarkdown file to HTML using `knitr::render()`.
         Assumes you have knitr installed and you're running R in a neoterm
-        buffer
+        buffer.
+    * - :kbd:`,k`
+      - normal
+      - Run the current Python scrip in IPython. Assumes you're running IPython
+        in a neoterm buffer.
     * - :kbd:`,te`
       - normal
       - Open neoterm terminal to the right, and immediately activate the conda environment in the `./env` directory

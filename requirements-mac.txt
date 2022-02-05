@@ -1,4 +1,4 @@
 coreutils
-dircolors
 git
+ncurses
 tmux

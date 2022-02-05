@@ -63,6 +63,24 @@ Alternatives:
 
 - cat
 
+
+.. _bfg:
+
+``bfg``
+~~~~~~~
+
+.. code-block:: bash
+
+    ./setup.sh --install-bfg
+
+The `BFG <https://rtyley.github.io/bfg-repo-cleaner/>`_ is a tool for cleaning
+out mistakenly-committed data from git repos such as very large files or
+sensitive information.
+
+Alternatives:
+
+- ``git-filter-branch``, which is built in to git but is slower and not as feature-rich.
+
 .. _black:
 
 ``black``
@@ -87,6 +105,12 @@ PEP8 style conventions. I'll typically run it on a file in vim with ``!black
 
 `docker <https://www.docker.com>`_ runs containers. Needs root access, and the
 installation here is currently only supported on Linux.
+
+Alternatives:
+
+- Singularity, though this requires a Linux machine to build and is a bit more
+  involved to install.
+
 .. _fd:
 
 
@@ -148,7 +172,7 @@ Alternatives:
 
     ./setup.sh --install-jq
 
-`jq <https://stedolan.github.io/jq/>` is like sed or awk for JSON data.
+`jq <https://stedolan.github.io/jq/>`_ is like sed or awk for JSON data.
 
 .. _pyp:
 

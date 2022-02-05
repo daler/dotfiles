@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # All-in-one bash script to perform various setup activities
 
@@ -153,6 +153,11 @@ function showHelp() {
         "showing lines changed based on git, and showing non-printable" \
         "characters." \
         "Homepage: https://github.com/sharkdp/bat"
+
+    cmd "--install-bfg" \
+        "The BFG is a simpler, faster alternative to git-filter-branch" \
+        "for cleaning bad data out of a git repo like big files or" \
+        "senstive information"
 
     cmd "--install-black" \
         "The self-described 'uncompromising' Python formatter." \
@@ -458,7 +463,7 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
-    NVIM_VERSION=0.4.4
+    NVIM_VERSION=0.6.1
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
@@ -655,13 +660,9 @@ elif [ $task == "--install-bat" ]; then
 elif [ $task == "--install-alacritty" ]; then
 
     if [[ $OSTYPE == darwin* ]]; then
-        ALACRITTY_VERSION=0.5.0
-        ok "Installs alacritty terminal"
-        download https://github.com/alacritty/alacritty/releases/download/v${ALACRITTY_VERSION}/Alacritty-v${ALACRITTY_VERSION}.dmg /tmp/alacritty.dmg
-        hdiutil attach /tmp/alacritty.dmg
-        cp -r /Volumes/Alacritty/Alacritty.app ~/opt/alacritty
-        ln -sf ~/opt/alacritty/Contents/MacOS/alacritty ~/opt/bin/alacritty
-        hdiutil detach /Volumes/Alacritty
+        printf "${YELLOW}Please download the .dmg from https://github.com/alacritty/alacritty/releases "
+        printf "and drag the application either to Applications (if you have access) or to the Desktop.${UNSET}.\n"
+        printf "\n${YELLOW}Then download the alacritty.yml file from that same URL, and place it in ~/.config/alacritty/alacritty.yml${UNSET}\n\n"
 
     else
         ok "Installs alacritty terminal. Also needs to install rust"
@@ -741,23 +742,28 @@ elif [ $task == "--install-pyp" ]; then
 
 elif [ $task == "--install-zoxide" ]; then
     ok "Install zoxide (https://github.com/ajeetdsouza/zoxide/) into ~/opt/bin?"
-    ZOXIDE_VERSION=0.7.0
-    if [[ $OSTYPE == darwin* ]]; then
-        ZOXIDE_PREFIX=zoxide-x86_64-apple-darwin
-    else
-        ZOXIDE_PREFIX=zoxide-x86_64-unknown-linux-musl
-    fi
-    set -x
-    download https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/${ZOXIDE_PREFIX}.tar.gz ${ZOXIDE_PREFIX}.tar.gz
-    tar -xf ${ZOXIDE_PREFIX}.tar.gz
-    cp ${ZOXIDE_PREFIX}/zoxide $HOME/opt/bin
-    rm -r ${ZOXIDE_PREFIX} ${ZOXIDE_PREFIX}.tar.gz
+
+    install_env_and_symlink zoxide zoxide zoxide
+    printf "${YELLOW}Installed to ~/opt/bin/zoxide${UNSET}\n"
+
     set +x
     check_opt_bin_in_path
     printf "${YELLOW}Installed to ~/opt/bin/zoxide.${UNSET}\n\n"
     printf "${YELLOW}To start using, you need to add the following line to your .bash_profile or .bashrc:${UNSET}\n\n"
     printf "     ${YELLOW}eval \"\$(zoxide init bash)\"${UNSET}\n\n"
 
+elif [ $task == "--install-bfg" ]; then
+    ok "Install BFG (https://rtyley.github.io/bfg-repo-cleaner/) git repo cleaner to ~/opt/bin?"
+    BFG_VERSION=1.14.0
+    BFG_WRAPPER=~/opt/bin/bfg
+    download https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar ~/opt/bin/bfg-${BFG_VERSION}.jar
+
+    # Make a convenient wrapper
+    echo "#! /bin/bash" > $BFG_WRAPPER
+    echo "java -jar ~/opt/bin/bfg-${BFG_VERSION}.jar" '$@' >> $BFG_WRAPPER
+    chmod +x $BFG_WRAPPER
+    check_opt_bin_in_path
+    printf "${YELLOW}Installed jar file to ~/opt/bin, and created wrapper script ~/opt/bin/bfg.${UNSET}\n\n"
 
 elif [ $task == "--dotfiles" ]; then
 
