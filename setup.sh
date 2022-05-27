@@ -12,6 +12,12 @@ export PS1=
 
 set -eo pipefail
 
+# Since some commands affect .bashrc, it's most convenient to source it within
+# this script
+if [ -e ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
 function showHelp() {
 
     function header() {
@@ -435,14 +441,6 @@ elif [ $task == "--install-miniconda" ]; then
     printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
     printf "${YELLOW}   and then ran \"$MINICONDA_DIR/bin/conda init bash\", \n${UNSET}"
     printf "${YELLOW}   which added lines to your .bashrc. You should check out those lines.${UNSET}\n\n"
-    printf "${YELLOW}NOTE: if you ssh in to this machine, that will ${RED}not${YELLOW} source .bashrc \n${UNSET}"
-    printf "${YELLOW}   because that will be a login shell and for login shells only .bash_profile is \n${UNSET}"
-    printf "${YELLOW}   sourced. If you want to have conda immediately available upon sshing to \n${UNSET} "
-    printf "${YELLOW}   this machine, you can add the following line to .bash_profile: \n\n${UNSET} "
-    printf "${YELLOW}       export PATH=\"\$PATH:$MINICONDA_DIR/bin\"${UNSET}\n\n"
-    printf "${YELLOW}Alternatively, you can manually \"source ~/.bashrc\" when you want to have conda available.${UNSET}\n"
-
-
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
@@ -536,7 +534,7 @@ elif [ $task == "--install-fzf" ]; then
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
     mkdir -p /tmp/rg
-    RG_VERSION=12.1.1
+    RG_VERSION=13.0.0
 
     if [[ $OSTYPE == darwin* ]]; then
         URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-apple-darwin.tar.gz
@@ -637,7 +635,7 @@ elif [ $task == "--install-git-cola" ]; then
 
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
-    BAT_VERSION=0.16.0
+    BAT_VERSION=0.19.0
     BAT_TARBALL="/tmp/bat-${BAT_VERSION}.tar.gz"
     if [[ $OSTYPE == darwin* ]]; then
         download \
@@ -722,7 +720,8 @@ elif [ $task == "--install-jq" ]; then
 
 elif [ $task == "--install-icdiff" ]; then
     ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
-    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-1.9.2/icdiff ~/opt/bin/icdiff
+    ICDIFF_VERSION=2.0.4
+    download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-${ICDIFF_VERSION}/icdiff ~/opt/bin/icdiff
     chmod +x ~/opt/bin/icdiff
     printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
     check_opt_bin_in_path
@@ -766,6 +765,7 @@ elif [ $task == "--install-bfg" ]; then
     printf "${YELLOW}Installed jar file to ~/opt/bin, and created wrapper script ~/opt/bin/bfg.${UNSET}\n\n"
 
 elif [ $task == "--dotfiles" ]; then
+    set -x
 
     # Unique backup directory based on the hash of the current time, all
     # lowercase
@@ -788,7 +788,6 @@ elif [ $task == "--dotfiles" ]; then
 
     function doIt() {
         rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -avh --files-from=include.file . $HOME
-        source ~/.bash_profile
     }
 
     if [ $DOTFILES_FORCE == "true" ]; then

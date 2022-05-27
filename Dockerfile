@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-SHELL ["/bin/bash", "--login", "-c"]
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y git wget curl sudo rsync locales
 
@@ -41,12 +41,9 @@ RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
 
-RUN echo $HOME
-RUN source $HOME/.aliases
-
 # Don't know why yet, but the alias isn't sticking. But this installs plugins
 # without interaction
-RUN nvim +PlugInstall +qall
+RUN source ~/.bashrc; nvim +PlugInstall +qall
 
 # Various installations using ./setup.sh
 RUN ./setup.sh --install-autojump
@@ -61,13 +58,11 @@ RUN ./setup.sh --install-jq
 RUN ./setup.sh --install-pyp
 RUN ./setup.sh --install-radian
 RUN ./setup.sh --install-ripgrep
-RUN ./setup.sh --install-tig
 RUN ./setup.sh --install-vd
 
-
 # Additional for this container: asciinema for screen casts
-RUN pip install asciinema
-RUN conda install r-base
-RUN conda install ipython
+RUN source ~/.bashrc \
+    pip install asciinema \
+    conda install -n base r-base ipython
 
 ENTRYPOINT ["/bin/bash"]
