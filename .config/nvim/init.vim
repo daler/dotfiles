@@ -308,6 +308,20 @@ let g:neoterm_auto_repl_cmd = 0
 " /```{r<CR>                      -> go to the start of the next chunk
 nmap <Leader>cd /```{<CR>NjV/```\n<CR>k<Plug>(neoterm-repl-send)<CR>/```{r<CR>
 
+" This adds commonly-used YAML front matter to RMarkdown documents
+" ---
+" output:
+"   html_document:
+"     code_folding: hide
+"     toc: true
+"     toc_float: true
+"     toc_depth: 3
+" ---
+nmap <Leader>-- i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
+
+" Insert a knitr global options chunk.
+nmap <Leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
+
 
 " ----------------------------------------------------------------------------
 " powerline
