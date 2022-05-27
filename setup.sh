@@ -816,10 +816,6 @@ elif [ $task == "--diffs" ]; then
     cmd="$HOME/opt/bin/icdiff --recursive --line-numbers"
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
-elif [ $task == "--graphical-diffs" ]; then
-    ok "Opens up meld to display differences between files in this repo and your home directory"
-    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do meld $i ~/$i; done
-
 elif [ $task == "--vim-diffs" ]; then
     ok "Opens up vim -d to display differences between files in this repo and your home directory"
     for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do nvim -d $i ~/$i; done
