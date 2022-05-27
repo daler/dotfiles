@@ -158,6 +158,15 @@ it easy to make Python or R lists out of pasted text</p></td>
 command bar so you can fill in a reasonble tabstop for the file you’re
 looking at.</p></td>
 </tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,ko</kbd></p></td>
+<td><p>normal</p></td>
+<td><p>Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
+global options.</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,`</kbd></p></td>
+<td><p>insert or normal</p></td>
+<td><p>Adds a new RMarkdown chunk and places the cursor inside it</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -236,7 +245,7 @@ buffer.</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,k</kbd></p></td>
 <td><p>normal</p></td>
-<td><p>Run the current Python scrip in IPython. Assumes you’re running IPython
+<td><p>Run the current Python script in IPython. Assumes you’re running IPython
 in a neoterm buffer.</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,te</kbd></p></td>
@@ -254,6 +263,11 @@ in a neoterm buffer.</p></td>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,t3e</kbd></p></td>
 <td><p>normal</p></td>
 <td><p>Same as above, but 3 dir above in  <cite>../../../env</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">,tcd</kbd></p></td>
+<td><p>normal</p></td>
+<td><p>Change the working directory of the neoterm terminal to the working
+directory of the buffer where this command was called</p></td>
 </tr>
 </tbody>
 </table>

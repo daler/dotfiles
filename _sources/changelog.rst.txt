@@ -4,10 +4,19 @@
 Changelog
 =========
 
-2021-02-05
+2022-05-27
 ----------
 
-Changes to init.vim:
+Changes to :file:`init.vim`:
+
+- add shortcut to add commonly-used YAML front matter to RMarkdown (``<leader>ry``, mnemonic is "RMarkdown YAML")
+- add shortcut to add commonly-used ``knitr::opts`` option-setting chunk for
+  RMarkdown (``<leader>ko``, mnemonic is "knitr options"
+
+2022-02-05
+----------
+
+Changes to :file:`init.vim`:
 
 - Change ``<leader>d`` to insert a ReST-formatted date title
 - ``<leader>-`` will fill the rest of the line with dashes (useful for making

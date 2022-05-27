@@ -98,6 +98,13 @@ Here are some general shortcuts that are defined in the included config:
       - Writes ``:set nowrap tabstop=`` and then leaves the cursor at the vim
         command bar so you can fill in a reasonble tabstop for the file you're
         looking at.
+    * - :kbd:`,ko`
+      - normal
+      - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
+        global options.
+    * - :kbd:`,\``
+      - insert or normal
+      - Adds a new RMarkdown chunk and places the cursor inside it
 
 Plugins
 -------
@@ -166,7 +173,7 @@ that affect the terminal use:
         buffer.
     * - :kbd:`,k`
       - normal
-      - Run the current Python scrip in IPython. Assumes you're running IPython
+      - Run the current Python script in IPython. Assumes you're running IPython
         in a neoterm buffer.
     * - :kbd:`,te`
       - normal
@@ -180,6 +187,10 @@ that affect the terminal use:
     * - :kbd:`,t3e`
       - normal
       - Same as above, but 3 dir above in  `../../../env`
+    * - :kbd:`,tcd`
+      - normal
+      - Change the working directory of the neoterm terminal to the working
+        directory of the buffer where this command was called
 
 
 
