@@ -7,7 +7,7 @@ Changelog
 2022-05-27
 ----------
 
-Changes to :file:`init.vim`:
+Changes to :file:`init.vim` (thanks @mitraak)
 
 - add shortcut to add commonly-used YAML front matter to RMarkdown (``<leader>ry``, mnemonic is "RMarkdown YAML")
 - add shortcut to add commonly-used ``knitr::opts`` option-setting chunk for
