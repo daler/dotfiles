@@ -67,10 +67,6 @@ Here are some general shortcuts that are defined in the included config:
     * - :kbd:`,H`
       - normal
       - Toggle highlighted search
-    * - :kbd:`,\``
-      - normal or insert
-      - When editing RMarkdown, creates a new code chunk and enters it, ready
-        to type
     * - :kbd:`,W`
       - normal
       - clean up all trailing spaces
