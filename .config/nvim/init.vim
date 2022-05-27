@@ -342,3 +342,7 @@ let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
 let g:pandoc#folding#fold_fenced_codeblocks = 1
+
+" Change the working directory of the terminal to be that of the buffer from
+" which this is called
+nmap <Leader>d :T cd "$( dirname % )"<CR>
