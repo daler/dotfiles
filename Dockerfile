@@ -51,7 +51,6 @@ RUN ./setup.sh --install-bat
 RUN ./setup.sh --install-black
 RUN ./setup.sh --install-fd
 RUN ./setup.sh --install-fzf
-RUN ./setup.sh --install-git-cola
 RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq

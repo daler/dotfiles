@@ -144,10 +144,6 @@ function showHelp() {
         "Installs docker and adds current user to new docker group." \
         "(Needs root, Linux only)"
 
-    cmd "--install-git-cola" \
-        "git-cola is a GUI for making incremental git commits" \
-        "Homepage: https://git-cola.github.io/"
-
     cmd "--install-meld" \
         "(Mac only). meld is a graphical diff tool, extremely useful" \
         "for 3-way diffs"
@@ -608,28 +604,6 @@ elif [ $task == "--install-radian" ]; then
     conda deactivate
     set -u
     printf "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}\n"
-    check_opt_bin_in_path
-
-
-elif [ $task == "--install-git-cola" ]; then
-    ok "Installs git-cola (https://git-cola.github.io/). Clone to ~/opt/git-cola, create a new conda env, and symlink the binary to ~/opt/bin"
-    # NOTE: git-cola has vendored-in PyQt. We may not actually need it in the
-    # conda env?
-    can_make_conda_env "git-cola"
-    if [ -e ~/opt/git-cola ]; then
-        printf "${RED}~/opt/git-cola already exists! Exiting.${UNSET}\n"
-        exit 1
-    fi
-    conda create -y -n git-cola python=3 pyqt
-    git clone git://github.com/git-cola/git-cola.git ~/opt/git-cola
-
-    # The following creates a script called "git-cola" that ensures we run it
-    # using the just-installed conda env
-    echo "#!/bin/bash" > ~/opt/bin/git-cola
-    echo "$CONDA_LOCATION/envs/git-cola/bin/python $HOME/opt/git-cola/bin/git-cola" >> ~/opt/bin/git-cola
-    chmod +x ~/opt/bin/git-cola
-
-    printf "${YELLOW}Installed to ~/opt/bin/git-cola${UNSET}\n"
     check_opt_bin_in_path
 
 
