@@ -317,7 +317,7 @@ nmap <Leader>cd /```{<CR>NjV/```\n<CR>k<Plug>(neoterm-repl-send)<CR>/```{r<CR>
 "     toc_float: true
 "     toc_depth: 3
 " ---
-nmap <Leader>-- i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
+nmap <Leader>ry i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
 
 " Insert a knitr global options chunk.
 nmap <Leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
@@ -359,4 +359,4 @@ let g:pandoc#folding#fold_fenced_codeblocks = 1
 
 " Change the working directory of the terminal to be that of the buffer from
 " which this is called
-nmap <Leader>d :T cd "$( dirname % )"<CR>
+nmap <Leader>tcd :T cd "$( dirname % )"<CR>

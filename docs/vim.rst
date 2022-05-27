@@ -101,7 +101,10 @@ Here are some general shortcuts that are defined in the included config:
     * - :kbd:`,ko`
       - normal
       - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
-        global options.
+        global options (mnemonic: knitr options)
+    * - :kbd:`,ry`
+      - normal
+      - Used for RMarkdown; writes commonly-used YAML front matter (mnemonic: rmarkdown yaml)
     * - :kbd:`,\``
       - insert or normal
       - Adds a new RMarkdown chunk and places the cursor inside it
@@ -190,7 +193,7 @@ that affect the terminal use:
     * - :kbd:`,tcd`
       - normal
       - Change the working directory of the neoterm terminal to the working
-        directory of the buffer where this command was called
+        directory of the buffer where this command was called (mnemonic: terminal change directory)
 
 
 
