@@ -12,6 +12,9 @@ Changes to :file:`init.vim` (thanks @mitraak)
 - add shortcut to add commonly-used YAML front matter to RMarkdown (``<leader>ry``, mnemonic is "RMarkdown YAML")
 - add shortcut to add commonly-used ``knitr::opts`` option-setting chunk for
   RMarkdown (``<leader>ko``, mnemonic is "knitr options"
+- add shortcut to change working directory of neoterm terminal to that of the
+  buffer the command is called from (``<leader>tcd``, mnemonic is "terminal
+  change directory")
 
 2022-02-05
 ----------
