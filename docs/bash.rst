@@ -99,6 +99,9 @@ are set up. Some notable functions defined here:
     * - ``sa``
       - Open :ref:`fzf` to search across all conda environments, and activates the
         selected one
+    * - ``prsetup``
+      - When run in a clone of a repo with a pull request from a fork, get set up
+        to push changes back to the contributor's branch
 
 ``.bash_prompt``
 ----------------
