@@ -31,3 +31,41 @@ sa() {
     eval "source activate $env";
 }
 
+
+
+function prsetup {
+    if [ -z $1 ]; then
+        echo "Run this function in a clone of a repo with a pull request to set up"
+        echo "to push back to the contributor's fork. When creating the PR, the "
+        echo "contributor must have checked the box, 'Allow edits from maintainers'."
+        echo "The first argument can be determined by looking at the top of the "
+        echo "PR and copying the <contributor:branch>."
+        echo
+        echo "Usage: prsetup <contributor:branch>"
+        echo
+        echo "(assumes same name of repo as current origin)"
+        echo
+        return 1
+    fi
+    current_remote=$(git remote -v | grep "^origin" | grep "(fetch)" | cut -f2 | cut -f1 -d " ")
+    current_repo_name=$(basename $current_remote)
+
+    contributor=$(echo $1 | cut -f1 -d ":")
+    contributor_branch=$(echo $1 | cut -f2 -d ":")
+
+    contributor_fork=git@github.com:$contributor/$current_repo_name.git
+
+    echo "The following are the detected variables:"
+    echo "current_remote: " $current_remote
+    echo "current_repo_name: " $current_repo_name
+    echo "contributor_branch: " $contributor_branch
+    echo "contributor: " $contributor
+    echo "contributor_fork: " $contributor_fork
+
+    git remote add $contributor $contributor_fork
+    git fetch $contributor
+    git checkout -b $contributor-$contributor_branch $contributor/$contributor_branch
+
+    echo "Now make changes, and run:"
+    echo "  git push $contributor HEAD:$contributor_branch"
+}
