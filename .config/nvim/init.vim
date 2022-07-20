@@ -3,7 +3,7 @@ call plug#begin()
 " PLUGIN SETTINGS section.
 "
 Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
-Plug 'scrooloose/nerdcommenter'           " Comment large blocks of text
+Plug 'preservim/nerdcommenter'            " Comment large blocks of text
 Plug 'preservim/nerdtree'                 " File browser for vim <Leader>n
 Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
 Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
