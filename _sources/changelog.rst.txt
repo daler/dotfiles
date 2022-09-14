@@ -4,6 +4,23 @@
 Changelog
 =========
 
+2022-09-14
+----------
+
+- conda setup now sets the recommended `strict channel priority <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-channels.html#strict-channel-priority>`_
+- made some fixes to correctly run on recent Mac OS versions
+
+
+2022-07-22
+----------
+
+- updated git repo for nerdtree and nerdcommenter plugins in ``init.vim`` (thanks @njohnso6)
+
+2022-07-09
+----------
+
+- added new ``prsetup`` function for working on contributed pull requests
+
 2022-05-27
 ----------
 
