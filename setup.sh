@@ -416,7 +416,7 @@ elif [ $task == "--install-miniconda" ]; then
     ok "Installs Miniconda
        - installs to $MINICONDA_DIR
        - runs 'conda init bash'
-       - prints notes and recommendations for next steps'
+       - prints notes and recommendations for next steps
     "
     if [[ $OSTYPE == darwin* ]]; then
         download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
@@ -437,6 +437,11 @@ elif [ $task == "--install-miniconda" ]; then
     printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
     printf "${YELLOW}   and then ran \"$MINICONDA_DIR/bin/conda init bash\", \n${UNSET}"
     printf "${YELLOW}   which added lines to your .bashrc. You should check out those lines.${UNSET}\n\n"
+
+    if [[ $OSTYPE == darwin* ]]; then
+        printf "${YELLOW}Looks like you're on a Mac: in this case, look in ~/.bash_profile for the\n"
+        printf "lines added by conda init bash. Move them from ~/.bash_profile to ~/.bashrc.${UNSET}\n\n"
+    fi
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
