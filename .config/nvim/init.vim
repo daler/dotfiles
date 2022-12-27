@@ -25,7 +25,10 @@ Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
 Plug 'junegunn/gv.vim'                    " Easily view and browse git history
 Plug 'samoshkin/vim-mergetool'            " Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited
 Plug 'snakemake/snakemake', {'rtp': 'misc/vim', 'branch': 'main'} " Snakemake syntax and folding
+Plug 'ggandor/leap.nvim'                  " Jump around in a buffer with low mental effort
 call plug#end()
+
+lua require('leap').set_default_keymaps()
 
 " ============================================================================
 " SETTINGS
