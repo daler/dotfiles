@@ -51,6 +51,7 @@ set tabstop=4     " number of spaces <Tab> represents.  For Python.
 set shiftwidth=4  " number of spaces for indentation.  Same as tabstop. For Python.
 set smarttab      " at the beginning of the line, insert spaces according to shiftwidth
 set expandtab     " <Tab> inserts spaces, not '\t'
+set whichwrap+=<,>,h,l " allows arrows and h/l to move to next line when at the end of one
 
 " ----------------------------------------------------------------------------
 " Visual display settings
