@@ -139,9 +139,18 @@ let @l = "I'A',j"
 " Set the working directory to that of the opened file
 autocmd BufEnter * silent! lcd %:p:h
 
+" Insert timestamp. Useful when writing logs
+inoremap <leader>dt <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
+noremap <leader>dt <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
+
 " Insert an ReST-formatted title for today's date
-inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
-noremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
+autocmd FileType rst inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
+autocmd FileType rst noremap  <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
+
+" Same, but markdown header
+autocmd FileType markdown inoremap <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
+autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
+
 
 " Fill the rest of the line with dashes
 nnoremap <leader>- 80A-<Esc>d80<bar>
