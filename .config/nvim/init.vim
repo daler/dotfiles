@@ -237,13 +237,13 @@ autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>
 " ,- to fill the rest of the line with dashes
 nnoremap <leader>- 80A-<Esc>d80<bar>
 
-" Hard-wrap at 80 columns. Mnemonic is md = 'markdown', a common filetype where
-" this is useful
-nnoremap <leader>md :set tw=80 fo+=t<CR>
+" ,md to hard-wrap at 80 columns and reformat paragraphs as they are written.
+" Mnemonic is md = 'markdown', a common filetype where this is useful
+nnoremap <leader>md :set tw=80 fo+=ta<CR>
 
-" Unset the hard-wrap. Mnemonic is 'not markdown', to indicate the opposite of
-" the ,md above.
-nnoremap <leader>nd :set tw=80 fo-=t<CR>
+" ,nd to unset the hard-wrap. Mnemonic is 'not markdown', to indicate the
+" opposite of the ,md above.
+nnoremap <leader>nd :set tw=80 fo-=ta<CR>
 
 " ,<TAB> for slightly saner behavior with long TSV lines. Leaves the cursor in
 " the command bar so you can type in an appropriate tab stop value. Mnemonic of
