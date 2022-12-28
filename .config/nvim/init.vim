@@ -341,14 +341,6 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 " ----------------------------------------------------------------------------
 " ToggleTerm
 " ----------------------------------------------------------------------------
-
-" In many cases we have a conda environment nearby named 'env', here are some
-" easy ways to open a terminal and activate it.
-nmap <Leader>te :vert rightb Tnew<CR>:wincmd l<CR>source activate ./env<CR>
-nmap <Leader>t1e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../env<CR>
-nmap <Leader>t2e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../env<CR>
-nmap <Leader>t3e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../../env<CR>
-
 " ,t to open a terminal to the right (ToggleTerm)
 nmap <leader>t :ToggleTerm direction=vertical<CR>
 
