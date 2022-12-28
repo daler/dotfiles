@@ -160,6 +160,9 @@ set hidden
 " Disable swap file creation. Keep enabled for huge files (:set swapfile)
 set noswapfile
 
+" Set the working directory to that of the opened file
+autocmd BufEnter * silent! lcd %:p:h
+
 
 " ----------------------------------------------------------------------------
 " Searching
@@ -173,6 +176,10 @@ set smartcase
 " Don't highlight search items by default
 set nohlsearch
 
+" When using :s/ to search and replace, this will give a live preview of the
+" proposed changes
+set inccommand=nosplit
+
 " ----------------------------------------------------------------------------
 " Tab completion settings
 " ----------------------------------------------------------------------------
@@ -185,8 +192,6 @@ set wildmode=list:full
 " Ignore these when autocompleting
 set wildignore=*.swp,*.bak,*.pyc,*.class
 
-set inccommand=nosplit  " when using :s/ to search and replace, this will give
-                        " a live preview of the proposed changes
 
 " ============================================================================
 " CUSTOM MAPPINGS
@@ -215,8 +220,6 @@ inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 " for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
-" Set the working directory to that of the opened file
-autocmd BufEnter * silent! lcd %:p:h
 
 " ,ts to insert timestamp. Useful when writing logs
 inoremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
