@@ -6,7 +6,7 @@ call plug#begin()
 
 Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
 Plug 'preservim/nerdcommenter'            " Comment large blocks of text
-Plug 'preservim/nerdtree'                 " File browser for vim <Leader>n
+Plug 'preservim/nerdtree'                 " File browser for vim <leader>n
 Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
 Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
 Plug 'roxma/vim-tmux-clipboard'           " Copy yanked text from vim into tmux's clipboard and vice versa.
@@ -176,8 +176,8 @@ set inccommand=nosplit  " when using :s/ to search and replace, this will give
 " re-map mapleader from \ to ,
 let mapleader=","
 
-" Toggle search highlight
-noremap <Leader>H :set hlsearch!<CR>
+" ,H to toggle search highlight
+noremap <leader>H :set hlsearch!<CR>
 
 " Helper for pep8: cleans up trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -233,15 +233,15 @@ nnoremap <leader><tab> :set nowrap tabstop=
 " ,l       : list buffers
 " ,b ,f ,g : go back/forward/last-used
 " ,1 ,2 ,3 : go to buffer 1/2/3 etc
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
+nnoremap <leader>1 :1b<CR>
+nnoremap <leader>2 :2b<CR>
+nnoremap <leader>3 :3b<CR>
+nnoremap <leader>4 :4b<CR>
+nnoremap <leader>5 :5b<CR>
+nnoremap <leader>6 :6b<CR>
+nnoremap <leader>7 :7b<CR>
+nnoremap <leader>8 :8b<CR>
+nnoremap <leader>9 :9b<CR>
 
 " ----------------------------------------------------------------------------
 " Copy/paste
@@ -399,8 +399,8 @@ let g:neoterm_auto_repl_cmd = 0
 " ---
 nmap <Leader>ry i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
 
-nmap <Leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
 " ,ko to insert a knitr global options chunk. Mnemonic is 'knitr options'
+nmap <leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
 
 
 " ----------------------------------------------------------------------------
