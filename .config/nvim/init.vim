@@ -192,45 +192,47 @@ set inccommand=nosplit  " when using :s/ to search and replace, this will give
 " ============================================================================
 " CUSTOM MAPPINGS
 " ============================================================================
-
-" re-map mapleader from \ to ,
+"
+" Re-map mapleader from \ to , (comma). Any time <leader> is used below, it
+" now means comma.
 let mapleader=","
 
 " ,H to toggle search highlight
 noremap <leader>H :set hlsearch!<CR>
 
-" Helper for pep8: cleans up trailing whitespace
+" ,W to clean up trailing whitespace in entire file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" Refresh syntax highlighting
+" ,R to refresh syntax highlighting
 noremap <leader>R <Esc>:syntax sync fromstart<CR>
 inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
-" When editing RMarkdown, <leader>` creates a new fenced code block, ready to
-" type in. This works in insert or normal mode.
+" ,` (comma backtick) creates a new fenced RMarkdown code block, ready to type
+" in. This works in insert or normal mode.
 noremap <leader>` i```{r}<CR>```<Esc>O
 inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 
-" 'Listify': for easily making Python lists out of pasted text.
+" @l will 'listify', surrounding with quotes and adding a trailing comma. Used
+" for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
 " Set the working directory to that of the opened file
 autocmd BufEnter * silent! lcd %:p:h
 
-" Insert timestamp. Useful when writing logs
-inoremap <leader>dt <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
-noremap <leader>dt <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
+" ,ts to insert timestamp. Useful when writing logs
+inoremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
+noremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 
-" Insert an ReST-formatted title for today's date
+" ,d to insert a ReST-formatted title for today's date. Only works in ReST
+" files.
 autocmd FileType rst inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
 autocmd FileType rst noremap  <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
 
-" Same, but markdown header
+" ,d to insert a Markdown header for today's date. Only work in markdown files.
 autocmd FileType markdown inoremap <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 
-
-" Fill the rest of the line with dashes
+" ,- to fill the rest of the line with dashes
 nnoremap <leader>- 80A-<Esc>d80<bar>
 
 " Hard-wrap at 80 columns. Mnemonic is md = 'markdown', a common filetype where
@@ -241,9 +243,9 @@ nnoremap <leader>md :set tw=80 fo+=t<CR>
 " the ,md above.
 nnoremap <leader>nd :set tw=80 fo-=t<CR>
 
-" Slightly saner behavior with long TSV lines. Leaves the cursor in the command
-" bar so you can type in an appropriate tab stop value. Mnemonic of <tab> should
-" be self-explanatory!
+" ,<TAB> for slightly saner behavior with long TSV lines. Leaves the cursor in
+" the command bar so you can type in an appropriate tab stop value. Mnemonic of
+" <tab> should be self-explanatory!
 nnoremap <leader><tab> :set nowrap tabstop=
 
 " ----------------------------------------------------------------------------
@@ -298,13 +300,14 @@ tnoremap <M-q> <C-\><C-n>:wincmd h<CR>
 " ============================================================================
 " FILE-TYPE SPECIFIC SETTINGS
 " ============================================================================
-autocmd! FileType html,xml set listchars-=tab:>. " disable tabs for other filetypes that don't care
-autocmd! FileType yaml,yml set shiftwidth=2 tabstop=2
-autocmd! FileType r,rmarkdown set shiftwidth=2 tabstop=2
+" disable tabs for other filetypes that don't care
+autocmd! FileType html,xml set listchars-=tab:>.
+
+" Override the shiftwidth and tabstops for some file types
+autocmd! FileType yaml,yml,r,rmarkdown,*.Rmd,*.rmd set shiftwidth=2 tabstop=2
 
 " Consider any files with these names to be Python
-au BufRead,BufNewFile Snakefile setfiletype python
-au BufRead,BufNewFile *.snakefile setfiletype python
+au BufRead,BufNewFile Snakefile,*.snakefile setfiletype python
 
 " ============================================================================
 " RELATIVE NUMBERING
@@ -335,7 +338,7 @@ let g:python_highlight_all = 1
 " ----------------------------------------------------------------------------
 " NERDTree
 " ----------------------------------------------------------------------------
-" Toggle NERDTree window
+" ,n to toggle NERDTree window
 nnoremap <leader>n :NERDTreeToggle<cr>
 
 " ----------------------------------------------------------------------------
