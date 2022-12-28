@@ -4,6 +4,22 @@
 Changelog
 =========
 
+2022-12-27
+----------
+Lots of updates to the neovim config, ``.config/nvim/init.vim``:
+
+- The neoterm plugin is no longer actively developed; switched to using
+  ToggleTerm and updated all shortcuts and commands
+- Now ``,q`` from a terminal doesn't need <Esc> first, making switching back to
+  the text buffer much nicer
+- Major improvements in the comments in init.vim to make it easier to learn
+  what does what, and to improve discoverability of features. This includes
+  a brief description of oft-used commands provided by plugins as well as what
+  to search the help for in order to learn more.
+- Using an updated zenburn color scheme
+- Added the "leap" plugin.
+- change ``,ry`` to ``,yr`` for better mnemonic of "YAML for R"
+
 2022-09-14
 ----------
 
