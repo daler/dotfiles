@@ -2,34 +2,211 @@ call plug#begin()
 
 " Plugins come from GitHub. Plug 'username/repo' can be found at
 " https://github.com/user/repo.
-" These use vim-plug syntax.
 
-Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
-Plug 'preservim/nerdcommenter'            " Comment large blocks of text
-Plug 'preservim/nerdtree'                 " File browser for vim <leader>n
-Plug 'vim-airline/vim-airline'            " Nice statusline. Install powerline fonts for full effect.
-Plug 'vim-airline/vim-airline-themes'     " Themes for the statusline
-Plug 'roxma/vim-tmux-clipboard'           " Copy yanked text from vim into tmux's clipboard and vice versa.
-Plug 'tmux-plugins/vim-tmux-focus-events' " Makes tmux and vim play nicer together.
-Plug 'vim-python/python-syntax'           " Sophisticated python syntax highlighting.
-Plug 'Vimjas/vim-python-pep8-indent'      " Indent python using pep8 recommendations
-Plug 'ervandew/supertab'                  " Autocomplete most things
-Plug 'tpope/vim-fugitive'                 " Run git from vim
-Plug 'chrisbra/vim-diff-enhanced'         " Provides additional diff algorithms
-Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
-Plug 'felixhummel/setcolors.vim'          " Easily set colorschemes
-Plug 'vim-pandoc/vim-rmarkdown'           " Syntax highlighting for RMarkdown
-Plug 'vim-pandoc/vim-pandoc'              " Required for vim-rmarkdown
-Plug 'vim-pandoc/vim-pandoc-syntax'       " Required for vim-rmarkdown
-Plug 'dhruvasagar/vim-table-mode'         " Very easily make and work with markdown and restructured text tables
-Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
-Plug 'junegunn/gv.vim'                    " Easily view and browse git history
-Plug 'samoshkin/vim-mergetool'            " Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited
-Plug 'snakemake/snakemake', {'rtp': 'misc/vim', 'branch': 'main'} " Snakemake syntax and folding
-Plug 'ggandor/leap.nvim'                  " Jump around in a buffer with low mental effort
+" Vis
+" ---
+" Makes operations in visual block mode respect selection.
+"
+"   Use :B in front of commands (like s/) to make them use the current visual
+"   block selection, which perhaps surprisingly does not happen by default
+Plug 'vim-scripts/vis'
+
+" NERDCommenter
+" -------------
+" Comments blocks of text.
+"
+"   Use ,cc to comment visual selection
+"   Use ,ci to invert comment on selection
+"
+" See :help nerdcommenter for more
+Plug 'preservim/nerdcommenter'
+
+" NERDTree
+" --------
+" A file browser for vim.
+"
+"   Use ,n to toggle
+"
+" See :help NERDTree for much more
+Plug 'preservim/nerdtree'
+
+" vim-airline
+" -----------
+" Adds a nice statusline at the bottom and bufferline along the top.
+"
+" See the 'vim-airline' configuration section below. Use a powerline-enabled
+" font for full effect.
+Plug 'vim-airline/vim-airline'
+
+" vim-airline-themes
+" ------------------
+" Used for the statusline and bufferline provided by vim-airline.
+"
+" See https://github.com/vim-airline/vim-airline/wiki/Screenshots for themes,
+" and use :AirlineTheme <themename> to test them live.
+Plug 'vim-airline/vim-airline-themes'
+
+" vim-tmux-clipboard
+" ------------------
+" Automatically shares vim and tmux clipboards
+"
+" No added commands, but allows you to:
+"   - Yank text in vim, and paste it into a tmux terminal elsewhere.
+"   - Copy text anywhere in tmux, and paste it into any vim (that is also
+"   running this plugin)
+"
+" Need to add 'set -g focus-events on' to your .tmux.conf
+Plug 'roxma/vim-tmux-clipboard'
+
+" python-syntax
+" -------------
+" Improved python syntax highlighting (does not add any commands).
+Plug 'vim-python/python-syntax'
+
+" vim-python-pep8-indent
+" ----------------------
+" Indent python using pep8 recommendations (does not add any commands).
+Plug 'Vimjas/vim-python-pep8-indent'
+
+" Autocomplete most things.
+"
+Plug 'ervandew/supertab'
+
+" fugitive
+" --------
+" Run git interactively from vim.
+"
+"   Use :Git to get a text interface for incrementally making commits.
+"   Use = when over a filename to toggle visibility of its changes
+"   Use - in a chunk to stage it
+"   Use - on a selection to stage just that selection
+"   Use = over the staged section to toggle visibility of staged chunks
+"   Use - over staged lines or chunks to unstage them
+"   Use cc to commit, which opens a buffer to write in like normal git commits
+Plug 'tpope/vim-fugitive'
+
+" vim-diff-enhanced
+" -----------------
+" Provides additional diff algorithms
+"   See :help EnhancedDiff for more
+Plug 'chrisbra/vim-diff-enhanced'
+
+" vim-rmarkdown, vim-pandoc, vim-pandoc-syntax
+" --------------------------------------------
+" These three plugins jointly provide syntax highlighting for RMarkdown. This
+" allows R chunks to be formatted as R code.
+"
+" See vim-pandoc config section below.
+Plug 'vim-pandoc/vim-rmarkdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+
+" vim-table-mode
+" --------------
+" Very easily make and work with markdown and restructured text tables.
+"
+"   Use ,tm to toggle table mode (or use :TableModeEnable).
+"   Type the header, separated by |
+"   Use || on a new line to complete the header
+"   Type subsequent rows, fields delimited by |
+"   Complete the table with || above the first (header) line.
+"
+" Markdown or ReST format will be detected based on file type. See :help
+" table-mode for more.
+Plug 'dhruvasagar/vim-table-mode'
+
+" SimpylFold
+" ----------
+" Nice folding for Python. Folds functions and classes; leaves loops and
+" conditionals alone.
+"
+"   Use standard zc and zo to close and open folds
+"   Use standard zM and zN to fold and unfold all
+"
+" See :help SimpylFold for more.
+Plug 'tmhedberg/SimpylFold'
+
+" gv.vim
+" ------
+" Easily view and browse git history
+"
+"  Use :GV to open commit browser
+"  Use Enter on a commit to see it
+"  Use :GV in visual mode to see commits affecting those lines
+"  Use q to close the commit
+"  Use q again to close gv.vim
+Plug 'junegunn/gv.vim'
+
+" vim-mergetool
+" -------------
+" Makes 3-way merge conflicts easier by only focusing on what needs to be
+" manually edited. This requires the diff3 style following lines in your
+" .gitconfig:
+"
+"   [merge]
+"   conflictStyle = diff3
+"
+" Open a file with conflicts (like from a git merge). Then:
+"   Use :MergetoolStart to start this tool
+"   Either leave as-is, use :diffget to pull 'theirs', or manually edit each
+"   diff.
+"   When done, use :MergetoolStop
+"
+" See https://github.com/samoshkin/vim-mergetool for more.
+Plug 'samoshkin/vim-mergetool'
+
+" leap
+" ----
+" Jump around in a buffer with low mental effort
+"
+"   Look in the file where you want to go.
+"
+"   Use s to go below the current line
+"   Use S to go above the current line
+"
+"   After hitting s or S, type two of the characters you want to leap to. You
+"   will see highlighted letters pop up at all the possible destinations. Tap
+"   the highlighted letter of the one corresponding to where you want to jump.
+"
+" This works best when your eyes are looking where you want to jump.
+"
+" See :help leap for more.
+Plug 'ggandor/leap.nvim'
+
+" vim-surround
+" ------------
+" Change surrounding characters.
+"
+"   Use cs"' when inside something with double quotes to change " to '.
+"   Use ysiw" to add quotes around a word
+"
+" For a nice set of examples, see https://github.com/tpope/vim-surround, and
+" see :help surround for more.
 Plug 'tpope/vim-surround'
+
+" ToggleTerm
+" ----------
+" Easily interact with a terminal within vim.
+"
+" This opens a terminal and allows you to send lines to it. Very useful for
+" interactive Python and R work. See below ToggleTerm config for keymappings
+" configured here, but briefly:
+"
+"   Use ,t to open a terminal to the right
+"   Use ,w in normal mode to jump to the terminal
+"   Use ,q in terminal to jump back to text buffer
+"   Use ,gx on a selection to send it to the terminal
+"   Use ,gxx on a line to send it to the terminal
+"   Use ,cd to send an RMarkdown code chunk to the terminal (which is expected
+"   to be running an R interpreter)
+"
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
+" zenburn.nvim
+" ------------
+" The classic colorscheme, updated to support various widely-used plugins.
 Plug 'phha/zenburn.nvim'
+
 call plug#end()
 
 " ============================================================================
