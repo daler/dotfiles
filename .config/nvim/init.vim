@@ -213,12 +213,14 @@ call plug#end()
 " LUA SETUP
 " ============================================================================
 " The 'lua' command runs a line of Lua.
-" The 'lua <<EOF .... EOF' syntax embeds Lua in this vimscript file.
+" The 'lua <<EOF .... EOF' syntax allows multiple Lua lines.
+" Here, we run all of the Lua in one block.
 
 lua <<EOF
+
 -- Some Lua packages need to have their setup() function run.
-require('leap').set_default_keymaps()
 require("zenburn").setup()
+require('leap').set_default_keymaps()
 
 -- Override the ToggleTerm setting for vertical split terminal
 require('toggleterm').setup{
@@ -231,8 +233,10 @@ require('toggleterm').setup{
   end
 }
 
--- When yanking text, flash a highlight color over the yanked text
--- See `:help vim.highlight.on_yank()`
+-- Highlight when yanking text
+-- ---------------------------
+-- Flash a highlight color over the yanked text, see
+-- :help vim.highlight.on_yank()
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
@@ -255,9 +259,6 @@ filetype plugin indent on
 " This gets backspace to work in some situations
 set backspace=indent,eol,start
 
-" ----------------------------------------------------------------------------
-" Python-specific indentation handling. Use these by default.
-" ----------------------------------------------------------------------------
 " Number of spaces <Tab> represents
 set tabstop=4
 
@@ -273,9 +274,6 @@ set expandtab
 " Allows arrows and h/l to move to next line when at the end of one
 set whichwrap+=<,>,h,l
 
-" ----------------------------------------------------------------------------
-" Visual display settings
-" ----------------------------------------------------------------------------
 " Keep some lines above and below the cursor to keep context visible
 set scrolloff=3
 
@@ -295,54 +293,48 @@ set wrap
 set noshowmode
 
 " Allow mouse usage.
-" - Mouse-enabled motions: left-click to place the cursor. Type 'y' then
-"   left-click to yank from current cursor to where you next clicked.
+"   In addition to allowing clicking and scrolling:
+" - Support mouse-enabled motions: left-click to place the cursor. Type 'y'
+"   then left-click to yank from current cursor to where you next clicked.
 " - Drag the status-line or vertical separator to resize
 " - Double-click to select word; triple-click for line
 set mouse=a
 
-" Color the current line in insert mode
+" Color the current line in insert mode and remove color when leaving insert
+" mode
 :autocmd InsertEnter * set cul
-
-" Remove color when leaving insert mode
 :autocmd InsertLeave * set nocul
 
-" ----------------------------------------------------------------------------
-" Display nonprinting characters (tab characters and trailing spaces)
-" ----------------------------------------------------------------------------
-" Differentiating between tabs and spaces is extremely helpful in tricky
-" debugging situations.
+" Display nonprinting characters (tab characters and trailing spaces).
+"   Differentiating between tabs and spaces is extremely helpful in tricky
+"   debugging situations.
 "
-" With these settings <TAB> characters look like >••••.
+"   With these settings <TAB> characters look like >••••.
 "
-" Trailing spaces show up as dots like ∙∙∙∙∙.
+"   Trailing spaces show up as dots like ∙∙∙∙∙.
 "
-" The autocmds here mean that we only show the trailing spaces when we're
-" outside of insert mode, so that every space typed doesn't show up as
-" trailing.
+"   The autocmds here mean that we only show the trailing spaces when we're
+"   outside of insert mode, so that every space typed doesn't show up as
+"   trailing.
 "
-" When wrap is off, extends and precedes indicate that there's text offscreen
+"   When wrap is off, extends and precedes indicate that there's text offscreen
 :autocmd InsertEnter * set listchars=tab:>•
 :autocmd InsertLeave * set listchars=tab:>•,trail:∙,nbsp:•,extends:⟩,precedes:⟨
 
-" ----------------------------------------------------------------------------
 " Format options
-" ----------------------------------------------------------------------------
-"  Changes the behavior of various formatting
-"  See :h formatoptions
+"  Changes the behavior of various formatting; see :h formatoptions.
+"  Explanation of these options:
+"
+"    q: gq also formats comments
+"    r: insert comment leader after <Enter> in insert mode
+"    n: recognize numbered lists
+"    1: don't break a line after a 1-letter word
+"    c: autoformat comments
+"    o: automatically insert comment leader afer 'o' or 'O' in Normal mode.
+"       Use Ctrl-u to quickly delete it if you didn't want it.
+"    j: where it makes sense, remove a comment leader when joining lines
 set formatoptions=qrn1coj
-" q: gq also formats comments
-" r: insert comment leader after <Enter> in insert mode
-" n: recognize numbered lists
-" 1: don't break a line after a 1-letter word
-" c: autoformat comments
-" o: automatically insert comment leader afer 'o' or 'O' in Normal mode.
-"    Use Ctrl-u to quickly delete it if you didn't want it.
-" j: where it makes sense, remove a comment leader when joining lines
 
-" ----------------------------------------------------------------------------
-" General behavior
-" ----------------------------------------------------------------------------
 " Open a new buffer without having to save first
 set hidden
 
@@ -352,10 +344,6 @@ set noswapfile
 " Set the working directory to that of the opened file
 autocmd BufEnter * silent! lcd %:p:h
 
-
-" ----------------------------------------------------------------------------
-" Searching
-" ----------------------------------------------------------------------------
 " Ignore case when searching...
 set ignorecase
 
@@ -369,9 +357,6 @@ set nohlsearch
 " proposed changes
 set inccommand=nosplit
 
-" ----------------------------------------------------------------------------
-" Tab completion settings
-" ----------------------------------------------------------------------------
 " Make tab completion for files/buffers act like bash
 set wildmenu
 
@@ -386,8 +371,9 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " CUSTOM MAPPINGS
 " ============================================================================
 "
-" Re-map mapleader from \ to , (comma). Any time <leader> is used below, it
-" now means comma.
+" Re-map leader from \ to , (comma). Any time <leader> is used below, it
+" now means comma. For succinctness, the comments in this document use
+" , instead of <leader>.
 let mapleader=","
 
 " ,H to toggle search highlight
@@ -409,7 +395,6 @@ inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 " for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
-
 " ,ts to insert timestamp. Useful when writing logs
 inoremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 noremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
@@ -419,7 +404,7 @@ noremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 autocmd FileType rst inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
 autocmd FileType rst noremap  <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
 
-" ,d to insert a Markdown header for today's date. Only work in markdown files.
+" ,d to insert a Markdown header for today's date. Only works in markdown files.
 autocmd FileType markdown inoremap <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 
@@ -438,6 +423,18 @@ nnoremap <leader>nd :set tw=80 fo-=ta<CR>
 " the command bar so you can type in an appropriate tab stop value. Mnemonic of
 " <tab> should be self-explanatory!
 nnoremap <leader><tab> :set nowrap tabstop=
+
+" ,r to toggle relative numbering -- useful for choosing how many lines to
+" delete, for example.
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set nornu
+    set number
+  else
+    set rnu
+  endif
+endfunc
+nnoremap <leader>r :call NumberToggle()<cr>
 
 " ----------------------------------------------------------------------------
 " Buffer switching
@@ -482,10 +479,10 @@ noremap <silent> ,q :wincmd h<cr>
 tnoremap <silent> ,q <C-\><C-n>:wincmd h<cr>
 
 
-" ============================================================================
-" FILE-TYPE SPECIFIC SETTINGS
-" ============================================================================
-" disable tabs for other filetypes that don't care
+" ----------------------------------------------------------------------------
+" Filetype-specific settings
+" ----------------------------------------------------------------------------
+" Disable tab visibility for other filetypes that don't care
 autocmd! FileType html,xml set listchars-=tab:>.
 
 " Override the shiftwidth and tabstops for some file types
@@ -494,24 +491,9 @@ autocmd! FileType yaml,yml,r,rmarkdown,*.Rmd,*.rmd set shiftwidth=2 tabstop=2
 " Consider any files with these names to be Python
 au BufRead,BufNewFile Snakefile,*.snakefile setfiletype python
 
-" ============================================================================
-" RELATIVE NUMBERING
-" ============================================================================
-" ,r to enable relative numbering -- useful for choosing how many lines to
-" delete, for example.
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set nornu
-    set number
-  else
-    set rnu
-  endif
-endfunc
-nnoremap <leader>r :call NumberToggle()<cr>
 
 " ============================================================================
 " PLUGIN SETTINGS AND MAPPINGS
-" Settings that require particular plugins to be installed. Grouped by plugin.
 " ============================================================================
 "
 " ----------------------------------------------------------------------------
@@ -520,11 +502,13 @@ nnoremap <leader>r :call NumberToggle()<cr>
 let g:python_highlight_space_errors = 0
 let g:python_highlight_all = 1
 
+
 " ----------------------------------------------------------------------------
 " NERDTree
 " ----------------------------------------------------------------------------
 " ,n to toggle NERDTree window
 nnoremap <leader>n :NERDTreeToggle<cr>
+
 
 " ----------------------------------------------------------------------------
 " ToggleTerm
@@ -582,14 +566,29 @@ nmap <leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALS
 
 
 " ----------------------------------------------------------------------------
-" powerline
+" vim-airline
 " ----------------------------------------------------------------------------
-let g:airline#extensions#tabline#enabled = 2
+" Enable the display of open buffers along the top, in neovim you can click
+" on them to select or use ,1 ,2 ,3 etc to switch to them. See :help
+" airline-tabline for more.
+let g:airline#extensions#tabline#enabled = 1
+
+" Show the buffer number next to the filename for easier switching. See :help
+" airline-tabline for more.
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" When showing buffers in the top bufferline, show only the filename and not
+" the full path. See :help filename-modifiers for more info.
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme = "powerlineish"
-set laststatus=2
+
+" See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose
+" other themes, and use :AirlineTheme <themename> to test live.
+let g:airline_theme = "hybridline"
+
+" If you are using a powerline-enabled font in your terminal application, set
+" this to 1. Otherwise set to 0. See :help airline-configuration for more.
 let g:airline_powerline_fonts = 1
-let g:bufferline_echo = 0
+
 
 " ----------------------------------------------------------------------------
 " vim-pandoc and vim-pandoc-syntax
