@@ -31,8 +31,6 @@ Plug 'tpope/vim-surround'
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 call plug#end()
 
-lua require('leap').set_default_keymaps()
-
 " ============================================================================
 " LUA SETUP
 " ============================================================================
@@ -41,6 +39,7 @@ lua require('leap').set_default_keymaps()
 
 lua <<EOF
 -- Some Lua packages need to have their setup() function run.
+require('leap').set_default_keymaps()
 -- Override the ToggleTerm setting for vertical split terminal
 require('toggleterm').setup{
   size = function(term)
