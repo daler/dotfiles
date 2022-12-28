@@ -1,7 +1,9 @@
 call plug#begin()
 
-" PLUGIN SETTINGS section.
-"
+" Plugins come from GitHub. Plug 'username/repo' can be found at
+" https://github.com/user/repo.
+" These use vim-plug syntax.
+
 Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
 Plug 'preservim/nerdcommenter'            " Comment large blocks of text
 Plug 'preservim/nerdtree'                 " File browser for vim <Leader>n
@@ -35,78 +37,134 @@ lua require('leap').set_default_keymaps()
 " ============================================================================
 " SETTINGS
 " ============================================================================
-" ----------------------------------------------------------------------------
-" Syntax and file types
-" ----------------------------------------------------------------------------
-syntax on                      " Syntax highlighting; also does an implicit filetype on
-filetype plugin indent on      " Enable detection, plugin , and indent for filetype
-set backspace=indent,eol,start " This gets backspace to work in some situations
+" Syntax highlighting; also does an implicit filetype on
+syntax on
+
+" Enable detection, plugin , and indent for filetype
+filetype plugin indent on
+
+" This gets backspace to work in some situations
+set backspace=indent,eol,start
 
 " ----------------------------------------------------------------------------
 " Python-specific indentation handling. Use these by default.
 " ----------------------------------------------------------------------------
-set foldlevel=99  " go deep
-set autoindent    " maintain indentation from prev line
-set tabstop=4     " number of spaces <Tab> represents.  For Python.
-set shiftwidth=4  " number of spaces for indentation.  Same as tabstop. For Python.
-set smarttab      " at the beginning of the line, insert spaces according to shiftwidth
-set expandtab     " <Tab> inserts spaces, not '\t'
-set whichwrap+=<,>,h,l " allows arrows and h/l to move to next line when at the end of one
+" Number of spaces <Tab> represents
+set tabstop=4
+
+" Number of spaces for indentation. Same as tabstop.
+set shiftwidth=4
+
+" At the beginning of the line, insert spaces according to shiftwidth
+set smarttab
+
+" <Tab> inserts spaces, not '\t'
+set expandtab
+
+" Allows arrows and h/l to move to next line when at the end of one
+set whichwrap+=<,>,h,l
 
 " ----------------------------------------------------------------------------
 " Visual display settings
 " ----------------------------------------------------------------------------
 colorscheme zenburn              " colorscheme to use
-set scrolloff=3                  " keep some lines above and below the cursor to keep context visible
-set list                         " show non-printing chars
-set showmatch                    " show matching parentheses
-set nu                           " display line numbers
-set wrap                         " wrap lines
-set noshowmode                   " for use with vim-airline, which has its own
-set mouse=a                      " allow mouse usage
-set encoding=utf-8               " default encoding
-:autocmd InsertEnter * set cul   " color the current line in insert mode
-:autocmd InsertLeave * set nocul " remove color when leaving insert mode
+" Keep some lines above and below the cursor to keep context visible
+set scrolloff=3
 
-" Display nonprinting characters
-" <TAB> characters become >...
-" Trailing spaces show up as dots
+" Show non-printing chars
+set list
+
+" Show matching parentheses
+set showmatch
+
+" Display line numbers
+set nu
+
+" Wrap lines
+set wrap
+
+" For use with vim-airline, which has its own
+set noshowmode
+
+" Allow mouse usage.
+" - Mouse-enabled motions: left-click to place the cursor. Type 'y' then
+"   left-click to yank from current cursor to where you next clicked.
+" - Drag the status-line or vertical separator to resize
+" - Double-click to select word; triple-click for line
+set mouse=a
+
+" Color the current line in insert mode
+:autocmd InsertEnter * set cul
+
+" Remove color when leaving insert mode
+:autocmd InsertLeave * set nocul
+
+" ----------------------------------------------------------------------------
+" Display nonprinting characters (tab characters and trailing spaces)
+" ----------------------------------------------------------------------------
+" Differentiating between tabs and spaces is extremely helpful in tricky
+" debugging situations.
+"
+" With these settings <TAB> characters look like >••••.
+"
+" Trailing spaces show up as dots like ∙∙∙∙∙.
+"
+" The autocmds here mean that we only show the trailing spaces when we're
+" outside of insert mode, so that every space typed doesn't show up as
+" trailing.
+"
 " When wrap is off, extends and precedes indicate that there's text offscreen
-" The autocmds here only show the trailing spaces when we're outside of insert
-" mode, so that every space typed doesn't show up as trailing.
-:autocmd InsertEnter * set listchars=tab:>.
-:autocmd InsertLeave * set listchars=tab:>.,trail:∙,nbsp:•,extends:⟩,precedes:⟨
+:autocmd InsertEnter * set listchars=tab:>•
+:autocmd InsertLeave * set listchars=tab:>•,trail:∙,nbsp:•,extends:⟩,precedes:⟨
 
 " ----------------------------------------------------------------------------
 " Format options
 " ----------------------------------------------------------------------------
-set formatoptions=qrn1c   " q: gq also formats comments
-                          " r: insert comment leader after <Enter> in insert mode
-                          " n: recognize numbered lists
-                          " 1: don't break a line after a 1-letter word
-                          " c: autoformat comments
+"  Changes the behavior of various formatting
+"  See :h formatoptions
+set formatoptions=qrn1coj
+" q: gq also formats comments
+" r: insert comment leader after <Enter> in insert mode
+" n: recognize numbered lists
+" 1: don't break a line after a 1-letter word
+" c: autoformat comments
+" o: automatically insert comment leader afer 'o' or 'O' in Normal mode.
+"    Use Ctrl-u to quickly delete it if you didn't want it.
+" j: where it makes sense, remove a comment leader when joining lines
 
 " ----------------------------------------------------------------------------
 " General behavior
 " ----------------------------------------------------------------------------
-set hidden           " open a new buffer without having to save first
-set history=1000     " remember more commands and search history
-set undolevels=1000  " use many levels of undo
-set noswapfile       " disable swap file creation. Keep enabled for huge files
+" Open a new buffer without having to save first
+set hidden
+
+" Disable swap file creation. Keep enabled for huge files (:set swapfile)
+set noswapfile
+
 
 " ----------------------------------------------------------------------------
 " Searching
 " ----------------------------------------------------------------------------
-set ignorecase  " ignore case when searching...
-set smartcase   " ...unless at least one character is uppercase
-set nohlsearch  " don't highlight search items by default
+" Ignore case when searching...
+set ignorecase
+
+" ...unless at least one character is uppercase
+set smartcase
+
+" Don't highlight search items by default
+set nohlsearch
 
 " ----------------------------------------------------------------------------
 " Tab completion settings
 " ----------------------------------------------------------------------------
-set wildmenu            " make tab completion for files/buffers act like bash
-set wildmode=list:full  " show a list when pressing tab; complete first full match
-set wildignore=*.swp,*.bak,*.pyc,*.class  " ignore these when autocompleting
+" Make tab completion for files/buffers act like bash
+set wildmenu
+
+" Show a list when pressing tab; complete first full match
+set wildmode=list:full
+"
+" Ignore these when autocompleting
+set wildignore=*.swp,*.bak,*.pyc,*.class
 
 set inccommand=nosplit  " when using :s/ to search and replace, this will give
                         " a live preview of the proposed changes
@@ -202,6 +260,9 @@ noremap <silent> ,j :wincmd j<cr>
 noremap <silent> ,k :wincmd k<cr>
 noremap <silent> ,l :wincmd l<cr>
 
+" ,q and ,w move to left and right windows respectively. Useful when working
+" with a terminal. ,q will go back to text buffer even in insert mode in
+" a terminal buffer. Can be more ergonomic than ,h and ,l defined above.
 noremap <silent> ,w :wincmd l<cr>
 noremap <silent> ,q :wincmd h<cr>
 
@@ -228,8 +289,8 @@ au BufRead,BufNewFile *.snakefile setfiletype python
 " ============================================================================
 " RELATIVE NUMBERING
 " ============================================================================
-" Relative numbering. Use <Leader>r to turn on relative line numbering --
-" useful for choosing how many lines to delete, for example.
+" ,r to enable relative numbering -- useful for choosing how many lines to
+" delete, for example.
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
@@ -272,13 +333,15 @@ nmap <Leader>t3e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../../env<
 
 
 " When in a terminal, by default Esc does not go back to normal mode and
-" instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
+" instead you need to use Ctrl-\ Ctrl-n. That's pretty awkward; this remaps to
+" use Esc.
 tnoremap <Esc> <C-\><C-n>
 
 " Any time a terminal is entered, go directly into Insert mode. This makes it
 " behave a little more like a typical terminal.
 :au BufEnter,FocusGained,BufWinEnter,WinEnter * if &buftype == 'terminal' | :startinsert | endif
 :au BufLeave,FocusLost,BufWinLeave,WinLeave * if &buftype == 'terminal' | :stopinsert | endif
+" ,gxx to send current line to terminal
 
 " The above autocommand triggers a bug so we need a workaround.
 "
@@ -301,29 +364,31 @@ nmap gxx <Plug>(neoterm-repl-send-line)<CR>
 
 " Use the same mnemonic when working in IPython
 :autocmd FileType python nmap <Leader>k :T run %<CR>
+" ,gx to send current selection (line or visual) to terminal
 
 " Have Neoterm scroll to the end of its buffer after running a command
 let g:neoterm_autoscroll = 1
+" ,k to render the current RMarkdown file to HTML (named after the current file)
+:autocmd FileType rmarkdown nmap <leader>k :T rmarkdown::render("%")<CR>
 
 " Let the user determine what REPL to load
 let g:neoterm_auto_repl_cmd = 0
 
-" Send RMarkdown code chunk.
+" ,cd to send RMarkdown code chunk and move to the next one.
 "
-" When inside a code chunk, <Leader>cd selects the chunk and sends to neoterm.
 " Breaking this down...
 "
-" /```{<CR>                       -> search for chunk delimiter (recall <CR> is Enter)
-" N                               -> find the *previous* match to ```{
-" j                               -> move down one line from the previous match
-" V                               -> enter visual line-select mode
-" /^```\n<CR>                     -> select until the next chunk delimiter by itself on the line (which should be the end)
-" k                               -> go up one line from that match so we don't include that line
-" <Plug>(neoterm-repl-send)<CR>   -> send the selection to the neoterm terminal
-" /```{r<CR>                      -> go to the start of the next chunk
-nmap <Leader>cd /```{<CR>NjV/```\n<CR>k<Plug>(neoterm-repl-send)<CR>/```{r<CR>
-
-" This adds commonly-used YAML front matter to RMarkdown documents
+" /```{<CR>                                 -> search for chunk delimiter (recall <CR> is Enter)
+" N                                         -> find the *previous* match to ```{
+" j                                         -> move down one line from the previous match
+" V                                         -> enter visual line-select mode
+" /^```\n<CR>                               -> select until the next chunk delimiter by itself on the line (which should be the end)
+" k                                         -> go up one line from that match so we don't include that line
+" <Esc>:ToggleTermSendVisualSelection<CR>   -> send the selection to the terminal
+" /```{r<CR>                                -> go to the start of the next chunk
+" ,yr to add commonly-used YAML front matter to RMarkdown documents. Mnemonic is
+" 'YAML for RMarkdown'. It adds this:
+"
 " ---
 " output:
 "   html_document:
@@ -334,8 +399,8 @@ nmap <Leader>cd /```{<CR>NjV/```\n<CR>k<Plug>(neoterm-repl-send)<CR>/```{r<CR>
 " ---
 nmap <Leader>ry i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
 
-" Insert a knitr global options chunk.
 nmap <Leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
+" ,ko to insert a knitr global options chunk. Mnemonic is 'knitr options'
 
 
 " ----------------------------------------------------------------------------
@@ -347,17 +412,6 @@ let g:airline_theme = "powerlineish"
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:bufferline_echo = 0
-
-" These might be useful later -- in case you're not using a powerline font
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
-" let g:airline#extensions#tabline#right_sep = ' '
-" let g:airline#extensions#tabline#right_alt_sep = '|'
-" let g:airline_left_sep = ' '
-" let g:airline_left_alt_sep = '|'
-" let g:airline_right_sep = ' '
-" let g:airline_right_alt_sep = '|'
-" let g:airline_theme= 'gruvbox'
 
 " ----------------------------------------------------------------------------
 " vim-pandoc and vim-pandoc-syntax
