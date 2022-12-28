@@ -291,6 +291,7 @@ nmap <leader>P "+P
 " ----------------------------------------------------------------------------
 "  Window navigation
 " ----------------------------------------------------------------------------
+" ,h ,j ,k and ,l to navigate windows
 noremap <silent> ,h :wincmd h<cr>
 noremap <silent> ,j :wincmd j<cr>
 noremap <silent> ,k :wincmd k<cr>
@@ -301,14 +302,7 @@ noremap <silent> ,l :wincmd l<cr>
 " a terminal buffer. Can be more ergonomic than ,h and ,l defined above.
 noremap <silent> ,w :wincmd l<cr>
 noremap <silent> ,q :wincmd h<cr>
-
-" The above mppings for ,w and ,q to move between windows requires being in
-" Normal mode first. The following commands let you use Alt-w and Alt-q to
-" switch -- even while in Insert mode.
-noremap <M-w> <Esc>:wincmd l<CR>
-inoremap <M-w> <Esc>:wincmd l<CR>
-
-tnoremap <M-q> <C-\><C-n>:wincmd h<CR>
+tnoremap <silent> ,q <C-\><C-n>:wincmd h<cr>
 
 
 " ============================================================================
