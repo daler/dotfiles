@@ -29,6 +29,7 @@ Plug 'snakemake/snakemake', {'rtp': 'misc/vim', 'branch': 'main'} " Snakemake sy
 Plug 'ggandor/leap.nvim'                  " Jump around in a buffer with low mental effort
 Plug 'tpope/vim-surround'
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+Plug 'phha/zenburn.nvim'
 call plug#end()
 
 " ============================================================================
@@ -40,6 +41,8 @@ call plug#end()
 lua <<EOF
 -- Some Lua packages need to have their setup() function run.
 require('leap').set_default_keymaps()
+require("zenburn").setup()
+
 -- Override the ToggleTerm setting for vertical split terminal
 require('toggleterm').setup{
   size = function(term)
@@ -86,7 +89,6 @@ set whichwrap+=<,>,h,l
 " ----------------------------------------------------------------------------
 " Visual display settings
 " ----------------------------------------------------------------------------
-colorscheme zenburn              " colorscheme to use
 " Keep some lines above and below the cursor to keep context visible
 set scrolloff=3
 
