@@ -16,7 +16,6 @@ Plug 'Vimjas/vim-python-pep8-indent'      " Indent python using pep8 recommendat
 Plug 'ervandew/supertab'                  " Autocomplete most things
 Plug 'tpope/vim-fugitive'                 " Run git from vim
 Plug 'chrisbra/vim-diff-enhanced'         " Provides additional diff algorithms
-Plug 'kassio/neoterm'                     " Provides a separate terminal in vim <Leader>t
 Plug 'flazz/vim-colorschemes'             " Pile 'o colorschemes
 Plug 'felixhummel/setcolors.vim'          " Easily set colorschemes
 Plug 'vim-pandoc/vim-rmarkdown'           " Syntax highlighting for RMarkdown
@@ -29,10 +28,31 @@ Plug 'samoshkin/vim-mergetool'            " Makes 3-way merge conflicts easier b
 Plug 'snakemake/snakemake', {'rtp': 'misc/vim', 'branch': 'main'} " Snakemake syntax and folding
 Plug 'ggandor/leap.nvim'                  " Jump around in a buffer with low mental effort
 Plug 'tpope/vim-surround'
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 call plug#end()
 
 lua require('leap').set_default_keymaps()
 
+" ============================================================================
+" LUA SETUP
+" ============================================================================
+" The 'lua' command runs a line of Lua.
+" The 'lua <<EOF .... EOF' syntax embeds Lua in this vimscript file.
+
+lua <<EOF
+-- Some Lua packages need to have their setup() function run.
+-- Override the ToggleTerm setting for vertical split terminal
+require('toggleterm').setup{
+  size = function(term)
+    if term.direction == "horizontal" then
+      return 15
+    elseif term.direction == "vertical" then
+      return vim.o.columns * 0.5
+    end
+  end
+}
+
+EOF
 
 " ============================================================================
 " SETTINGS
@@ -319,10 +339,8 @@ let g:python_highlight_all = 1
 nnoremap <leader>n :NERDTreeToggle<cr>
 
 " ----------------------------------------------------------------------------
-" neoterm
+" ToggleTerm
 " ----------------------------------------------------------------------------
-" Open a terminal to the right (neoterm plugin)
-nmap <Leader>t :vert rightb Tnew<CR>
 
 " In many cases we have a conda environment nearby named 'env', here are some
 " easy ways to open a terminal and activate it.
@@ -331,48 +349,25 @@ nmap <Leader>t1e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../env<CR>
 nmap <Leader>t2e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../env<CR>
 nmap <Leader>t3e :vert rightb Tnew<CR>:wincmd l<CR>source activate ../../../env<CR>
 
+" ,t to open a terminal to the right (ToggleTerm)
+nmap <leader>t :ToggleTerm direction=vertical<CR>
 
 " When in a terminal, by default Esc does not go back to normal mode and
 " instead you need to use Ctrl-\ Ctrl-n. That's pretty awkward; this remaps to
 " use Esc.
 tnoremap <Esc> <C-\><C-n>
 
-" Any time a terminal is entered, go directly into Insert mode. This makes it
-" behave a little more like a typical terminal.
-:au BufEnter,FocusGained,BufWinEnter,WinEnter * if &buftype == 'terminal' | :startinsert | endif
-:au BufLeave,FocusLost,BufWinLeave,WinLeave * if &buftype == 'terminal' | :stopinsert | endif
 " ,gxx to send current line to terminal
+nmap gxx :ToggleTermSendCurrentLine<CR>
 
-" The above autocommand triggers a bug so we need a workaround.
-"
-" There's a Vim and NeoVim bug where terminal buffers don't respect the
-" autocmd when using the mouse to enter a buffer. Based on the following
-" comment in the neovim repo, the workaround is to disable left mouse release,
-" specifically in the terminal buffer (!)
-" https://github.com/neovim/neovim/issues/9483#issuecomment-461865773
-tmap <LeftRelease> <Nop>
-
-" Send text to open neoterm terminal (neoterm plugin)
-nmap gx <Plug>(neoterm-repl-send)<CR>
-
-" Send selection, and go to the terminal in insert mode
-xmap gx <Plug>(neoterm-repl-send)`><CR>
-nmap gxx <Plug>(neoterm-repl-send-line)<CR>
-
-" Render the current RMarkdown file to HTML (named after the current file)
-:autocmd FileType rmarkdown nmap <Leader>k :T rmarkdown::render("%")<CR>
-
-" Use the same mnemonic when working in IPython
-:autocmd FileType python nmap <Leader>k :T run %<CR>
 " ,gx to send current selection (line or visual) to terminal
+xmap gx :ToggleTermSendVisualSelection<CR>
 
-" Have Neoterm scroll to the end of its buffer after running a command
-let g:neoterm_autoscroll = 1
 " ,k to render the current RMarkdown file to HTML (named after the current file)
-:autocmd FileType rmarkdown nmap <leader>k :T rmarkdown::render("%")<CR>
+:autocmd FileType rmarkdown nmap <leader>k :TermExec cmd='rmarkdown::render("%:p")'<CR>
 
-" Let the user determine what REPL to load
-let g:neoterm_auto_repl_cmd = 0
+" ,k to run the file in IPython when working in Python.
+:autocmd FileType python nmap <leader>k :TermExec cmd='run %:p'<CR>
 
 " ,cd to send RMarkdown code chunk and move to the next one.
 "
@@ -386,6 +381,8 @@ let g:neoterm_auto_repl_cmd = 0
 " k                                         -> go up one line from that match so we don't include that line
 " <Esc>:ToggleTermSendVisualSelection<CR>   -> send the selection to the terminal
 " /```{r<CR>                                -> go to the start of the next chunk
+nmap <leader>cd /```{<CR>NjV/```\n<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>
+
 " ,yr to add commonly-used YAML front matter to RMarkdown documents. Mnemonic is
 " 'YAML for RMarkdown'. It adds this:
 "
@@ -425,7 +422,3 @@ let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
 let g:pandoc#folding#fold_fenced_codeblocks = 1
-
-" Change the working directory of the terminal to be that of the buffer from
-" which this is called
-nmap <Leader>tcd :T cd "$( dirname % )"<CR>
