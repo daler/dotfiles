@@ -104,6 +104,12 @@ function showHelp() {
         "neovim is a drop-in replacement for vim, with additional features" \
         "Homepage: https://neovim.io/"
 
+    cmd "--compile-neovim" \
+        "If installing Neovim doesn't work or you want a more recent version," \
+        "use this command. You will need the prequisites " \
+        " (https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites) " \
+        "installed."
+
     cmd "--set-up-vim-plugins" \
         "vim-plug needs to be installed separately," \
         "and then all vim plugins can be simply be installed" \
@@ -480,6 +486,28 @@ elif [ $task == "--install-neovim" ]; then
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
+
+elif [ $task == "--compile-neovim" ]; then
+    NVIM_VERSION=stable
+    ok "Clones the stable branch of the neovim repo, compiles it, and installs it into $HOME/opt/bin/nvim"
+    if [ -e "$HOME/opt/neovim" ];
+    then
+        ok "Warning, need to delete $HOME/opt/neovim, is that ok?"
+        rm -rv "$HOME/opt/neovim"
+    fi
+    download https://github.com/neovim/neovim/archive/refs/tags/stable.zip neovim-stable.zip
+    unzip neovim-stable.zip
+    (
+        cd neovim-stable
+        make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/opt/neovim"
+        make install
+        mkdir -p "$HOME/opt/bin"
+        ln -sf "$HOME/opt/neovim/bin/nvim" "$HOME/opt/bin/nvim"
+    )
+    rm -rf neovim-stable.zip neovim-stable
+    printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
+    printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
+    check_opt_bin_in_path
 
 
 elif [ $task == "--set-up-vim-plugins" ]; then
