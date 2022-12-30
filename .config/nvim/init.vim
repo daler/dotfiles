@@ -256,6 +256,17 @@ syntax on
 " Enable detection, plugin , and indent for filetype
 filetype plugin indent on
 
+" Files will open with everything unfolded; fold commands like zc will
+" re-enable it.
+set nofoldenable
+
+" Support this many levels of nested folds. Use standard commands:
+"   zm to fold everything
+"   zn to unfold everything
+"   zc to fold section
+"   zi to unfold section
+set foldlevel=99
+
 " This gets backspace to work in some situations
 set backspace=indent,eol,start
 
