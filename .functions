@@ -16,13 +16,12 @@ function start_agent {
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 function tre() {
-    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+    tree -aC -I '.git|env|.snakemake|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
 
 # Set up fzf, if it's installed
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 
 # Select a conda env to activate
 sa() {
