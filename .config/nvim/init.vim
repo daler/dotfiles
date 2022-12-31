@@ -594,7 +594,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 " See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose
 " other themes, and use :AirlineTheme <themename> to test live.
-let g:airline_theme = "hybridline"
+let g:airline_theme = "ayu_dark"
 
 " If you are using a powerline-enabled font in your terminal application, set
 " this to 1. Otherwise set to 0. See :help airline-configuration for more.
