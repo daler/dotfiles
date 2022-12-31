@@ -533,10 +533,10 @@ nmap <leader>t :ToggleTerm direction=vertical<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " ,gxx to send current line to terminal
-nmap gxx :ToggleTermSendCurrentLine<CR>
+nmap gxx :ToggleTermSendCurrentLine<CR><CR>
 
 " ,gx to send current selection (line or visual) to terminal
-xmap gx :ToggleTermSendVisualSelection<CR>
+xmap gx :ToggleTermSendVisualSelection<CR><CR>
 
 " ,k to render the current RMarkdown file to HTML (named after the current file)
 :autocmd FileType rmarkdown nmap <leader>k :TermExec cmd='rmarkdown::render("%:p")'<CR>
@@ -594,7 +594,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 " See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose
 " other themes, and use :AirlineTheme <themename> to test live.
-let g:airline_theme = "hybridline"
+let g:airline_theme = "ayu_dark"
 
 " If you are using a powerline-enabled font in your terminal application, set
 " this to 1. Otherwise set to 0. See :help airline-configuration for more.

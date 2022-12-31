@@ -20,6 +20,15 @@ Lots of updates to the neovim config, ``.config/nvim/init.vim``:
 - Added the "leap" plugin.
 - change ``,ry`` to ``,yr`` for better mnemonic of "YAML for R"
 
+Other changes:
+
+- in ``setup.sh``, add an option to compile neovim, in cases where the system's
+  GLIBC is out of date (e.g. on older Linux systems) but you want to use the
+  latest neovim version
+
+- add ``.snakemake`` and ``env`` to the ignored patterns in the ``tre``
+  function (found in the ``.functions`` file)
+
 2022-09-14
 ----------
 
