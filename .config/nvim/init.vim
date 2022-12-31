@@ -533,10 +533,10 @@ nmap <leader>t :ToggleTerm direction=vertical<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " ,gxx to send current line to terminal
-nmap gxx :ToggleTermSendCurrentLine<CR>
+nmap gxx :ToggleTermSendCurrentLine<CR><CR>
 
 " ,gx to send current selection (line or visual) to terminal
-xmap gx :ToggleTermSendVisualSelection<CR>
+xmap gx :ToggleTermSendVisualSelection<CR><CR>
 
 " ,k to render the current RMarkdown file to HTML (named after the current file)
 :autocmd FileType rmarkdown nmap <leader>k :TermExec cmd='rmarkdown::render("%:p")'<CR>
