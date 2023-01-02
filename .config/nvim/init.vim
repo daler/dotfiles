@@ -202,11 +202,6 @@ Plug 'tpope/vim-surround'
 "
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
-" zenburn.nvim
-" ------------
-" The classic colorscheme, updated to support various widely-used plugins.
-Plug 'phha/zenburn.nvim'
-
 call plug#end()
 
 " ============================================================================
@@ -219,7 +214,6 @@ call plug#end()
 lua <<EOF
 
 -- Some Lua packages need to have their setup() function run.
-require("zenburn").setup()
 require('leap').set_default_keymaps()
 
 -- Override the ToggleTerm setting for vertical split terminal
@@ -252,6 +246,9 @@ EOF
 " ============================================================================
 " Syntax highlighting; also does an implicit filetype on
 syntax on
+
+" Set colorscheme here
+colorscheme zenburn
 
 " Enable detection, plugin , and indent for filetype
 filetype plugin indent on
