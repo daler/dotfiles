@@ -16,7 +16,6 @@ Lots of updates to the neovim config, ``.config/nvim/init.vim``:
   what does what, and to improve discoverability of features. This includes
   a brief description of oft-used commands provided by plugins as well as what
   to search the help for in order to learn more.
-- Using an updated zenburn color scheme
 - Added the "leap" plugin.
 - change ``,ry`` to ``,yr`` for better mnemonic of "YAML for R"
 
