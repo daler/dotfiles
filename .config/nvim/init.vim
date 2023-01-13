@@ -202,6 +202,11 @@ Plug 'tpope/vim-surround'
 "
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
+" vim-colorschemes
+" ----------------
+" Lots of colorschemes, including 'zenburn' which is configured below
+Plug 'flazz/vim-colorschemes'
+
 call plug#end()
 
 " ============================================================================
