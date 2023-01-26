@@ -364,6 +364,9 @@ check_opt_bin_in_path () {
 # All of these may be the same, but there is flexibility to handle cases where
 # they are not
 install_env_and_symlink () {
+
+    # sometimes conda can complain about env vars being unset
+    set +u
     ENVNAME=$1
     CONDAPKG=$2
     EXECUTABLE=$3
@@ -373,6 +376,7 @@ install_env_and_symlink () {
     ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
     printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
+    set -u
 }
 
 # TASKS ----------------------------------------------------------------------
@@ -744,6 +748,7 @@ elif [ $task == "--install-icdiff" ]; then
 
 elif [ $task == "--install-pyp" ]; then
     ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
+    set +u
     can_make_conda_env "pyp"
     conda create -y -n pyp python
     conda activate pyp
@@ -752,6 +757,7 @@ elif [ $task == "--install-pyp" ]; then
     conda deactivate
     printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
     check_opt_bin_in_path
+    set -u
 
 
 elif [ $task == "--install-zoxide" ]; then
