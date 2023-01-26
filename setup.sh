@@ -18,6 +18,19 @@ if [ -e ~/.bashrc ]; then
     source ~/.bashrc
 fi
 
+# Change tool versions here
+VISIDATA_VERSION=2.8
+HUB_VERSION=2.14.2
+NVIM_VERSION=0.7.0
+RG_VERSION=13.0.0
+BAT_VERSION=0.19.0
+JQ_VERSION=1.6
+ICDIFF_VERSION=2.0.4
+BFG_VERSION=1.14.0
+FD_VERSION=8.5.3
+BLACK_VERSION=22.6.0
+PYP_VERSION=1.1.0
+
 function showHelp() {
 
     function header() {
@@ -469,7 +482,6 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
-    NVIM_VERSION=0.7.0
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
@@ -564,7 +576,6 @@ elif [ $task == "--install-fzf" ]; then
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
     mkdir -p /tmp/rg
-    RG_VERSION=13.0.0
 
     if [[ $OSTYPE == darwin* ]]; then
         URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-apple-darwin.tar.gz
@@ -582,21 +593,20 @@ elif [ $task == "--install-ripgrep" ]; then
 
 elif [ $task == "--install-fd" ]; then
     ok "Install fd (https://github.com/sharkdp/fd) into a new conda env and symlink to ~/opt/bin/fd"
-    install_env_and_symlink fd fd-find fd
+    install_env_and_symlink fd fd-find="${FD_VERSION}" fd
     printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
     check_opt_bin_in_path
 
 
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
-    install_env_and_symlink visidata visidata vd
+    install_env_and_symlink visidata visidata="${VISIDATA_VERSION}" vd
     printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
 
 
 elif [ $task == "--install-hub" ]; then
     ok "Installs hub to $HOME/opt (https://github.com/github/hub)"
-    HUB_VERSION=2.14.2
     if [[ $OSTYPE == darwin* ]]; then
         (
             download https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-darwin-amd64-${HUB_VERSION}.tgz /tmp/hub.tar.gz
@@ -620,7 +630,7 @@ elif [ $task == "--install-hub" ]; then
 
 elif [ $task == "--install-black" ]; then
     ok "Install black (https://black.readthedocs.io) into a new conda env and symlink to ~/opt/bin/black"
-    install_env_and_symlink black black black
+    install_env_and_symlink black black="${BLACK_VERSION}" black
     printf "${YELLOW}Installed to ~/opt/bin/black${UNSET}\n"
     check_opt_bin_in_path
 
@@ -643,7 +653,6 @@ elif [ $task == "--install-radian" ]; then
 
 elif [ $task == "--install-bat" ]; then
     ok "Installs bat (https://github.com/sharkdp/bat). Extracts the binary to ~/opt/bin"
-    BAT_VERSION=0.19.0
     BAT_TARBALL="/tmp/bat-${BAT_VERSION}.tar.gz"
     if [[ $OSTYPE == darwin* ]]; then
         download \
@@ -714,7 +723,6 @@ elif [ $task == "--install-alacritty" ]; then
 
 
 elif [ $task == "--install-jq" ]; then
-    JQ_VERSION=1.6
     ok "Installs jq to $HOME/opt/bin"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-osx-amd64 $HOME/opt/bin/jq
@@ -728,7 +736,6 @@ elif [ $task == "--install-jq" ]; then
 
 elif [ $task == "--install-icdiff" ]; then
     ok "Install icdiff (https://github.com/jeffkaufman/icdiff) into ~/opt/bin"
-    ICDIFF_VERSION=2.0.4
     download https://raw.githubusercontent.com/jeffkaufman/icdiff/release-${ICDIFF_VERSION}/icdiff ~/opt/bin/icdiff
     chmod +x ~/opt/bin/icdiff
     printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
@@ -740,7 +747,7 @@ elif [ $task == "--install-pyp" ]; then
     can_make_conda_env "pyp"
     conda create -y -n pyp python
     conda activate pyp
-    pip install pypyp
+    pip install pypyp==${PYP_VERSION}
     ln -sf $(which pyp) $HOME/opt/bin/pyp
     conda deactivate
     printf "${YELLOW}Installed to ~/opt/bin/pyp${UNSET}\n"
@@ -761,7 +768,6 @@ elif [ $task == "--install-zoxide" ]; then
 
 elif [ $task == "--install-bfg" ]; then
     ok "Install BFG (https://rtyley.github.io/bfg-repo-cleaner/) git repo cleaner to ~/opt/bin?"
-    BFG_VERSION=1.14.0
     BFG_WRAPPER=~/opt/bin/bfg
     download https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar ~/opt/bin/bfg-${BFG_VERSION}.jar
 
