@@ -5,6 +5,7 @@
 .config/nvim/
 .dircolors
 .exports
+.extra
 .functions
 .gitconfig
 .git-completion.bash
