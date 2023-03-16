@@ -10,13 +10,14 @@ UNSET="\e[0m"
 
 export PS1=
 
-set -eo pipefail
 
 # Since some commands affect .bashrc, it's most convenient to source it within
 # this script
 if [ -e ~/.bashrc ]; then
     source ~/.bashrc
 fi
+
+set -eo pipefail
 
 # Change tool versions here
 VISIDATA_VERSION=2.8
