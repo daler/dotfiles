@@ -147,6 +147,9 @@ function showHelp() {
 
     header "Installations for local host only"
 
+    cmd "--mac-stuff" \
+        "Make some Mac-specific settings"
+
     cmd "--powerline" \
         "Install powerline fonts. Powerline fonts include the" \
         "fancy glyphs used for the vim-airline status bar." \
@@ -516,6 +519,10 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall${UNSET}\n"
     echo
 
+elif [ $task == "--mac-stuff" ]; then
+    ok "Sets the shell to be bash, and silences the warning about zsh being the default by adding an env var to ~/.extra"
+    chsh -s /bin/bash
+    echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
 
 elif [ $task == "--powerline" ]; then
     ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
