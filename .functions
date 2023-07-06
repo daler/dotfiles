@@ -68,3 +68,22 @@ function prsetup {
     echo "Now make changes, and run:"
     echo "  git push $contributor HEAD:$contributor_branch"
 }
+
+function ca() {
+    # This function allows you only activate the base env when you're ready to
+    # (and don't activate it on EVERY new shell).
+    #
+    # You can also provide an env name or path to activate it.
+    eval "$(conda shell.bash hook 2> /dev/null)"
+    conda activate "$@"
+}
+
+
+function conda_deactivate_all() {
+    # Keep deactivating until we no longer have a CONDA_PREFIX env var (which
+    # might be a few times, if we had activated the base env and then another
+    # env)
+    while [ -n "$CONDA_PREFIX" ]; do
+        conda deactivate;
+    done
+}
