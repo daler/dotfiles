@@ -366,6 +366,8 @@ check_opt_bin_in_path () {
 # they are not
 install_env_and_symlink () {
 
+    eval "$(conda shell.bash hook)"
+
     # sometimes conda can complain about env vars being unset
     set +u
     ENVNAME=$1
@@ -373,7 +375,7 @@ install_env_and_symlink () {
     EXECUTABLE=$3
 
     can_make_conda_env $ENVNAME
-    conda create -y -n $ENVNAME $CONDAPKG
+    mamba create -y -n $ENVNAME $CONDAPKG
     ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
     printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
