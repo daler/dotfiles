@@ -170,6 +170,9 @@ function showHelp() {
 
     header "Installations for any host:"
 
+    cmd "--install-tmux" \
+        "Install tmux"
+
     cmd "--install-bat" \
         "bat is like cat, but adds things like syntax highlighting," \
         "showing lines changed based on git, and showing non-printable" \
@@ -528,6 +531,7 @@ elif [ $task == "--powerline" ]; then
 # ----------------------------------------------------------------------------
 # Individual --install commands
 
+
 elif [ $task == "--install-meld" ]; then
     ok "Downloads .dmg for meld, install into ~/opt/meld and then writes ~/opt/bin/meld wrapper"
     if [[ $OSTYPE == darwin* ]]; then
@@ -578,6 +582,11 @@ elif [ $task == "--install-fd" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
     check_opt_bin_in_path
 
+elif [ $task == "--install-tmux" ]; then
+    ok "Install tmux into a new conda env and symlink to ~/opt/bin/tmux"
+    install_env_and_symlink tmux tmux tmux
+    printf "${YELLOW}Installed to ~/opt/bin/tmux${UNSET}\n"
+    check_opt_bin_in_path
 
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
