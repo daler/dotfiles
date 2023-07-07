@@ -34,6 +34,7 @@ Ready? :ref:`starthere`!
     bash
     vim
     tmux
+    conda
     post
     why
     changelog

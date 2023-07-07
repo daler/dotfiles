@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>conda &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Post-setup tasks" href="post.html" />
+    <link rel="prev" title="tmux configuration" href="tmux.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tmux.html" title="Previous document">tmux configuration</a>
+        </li>
+        <li>
+          <a href="post.html" title="Next document">Post-setup tasks</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="conda">
+<h1>conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-conda">
+<h2>Installing conda<a class="headerlink" href="#installing-conda" title="Permalink to this headline">¶</a></h2>
+<p>To install conda, we use <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>. This installation sets conda-forge
+as the default (and only) channel, and it includes <code class="docutils literal notranslate"><span class="pre">mamba</span></code>, a drop-in
+replacement for conda that is faster and more feature-complete.</p>
+</div>
+<div class="section" id="conda-activate-and-tmux">
+<h2>conda activate, and tmux<a class="headerlink" href="#conda-activate-and-tmux" title="Permalink to this headline">¶</a></h2>
+<p>Typically, after installing conda, you run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">init</span> <span class="pre">bash</span></code>. This adds lines
+to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file (if on Linux) or your <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> file (if on
+Mac). Thereafter, every new bash session will run that code, which involves
+importing some Python libraries and running conda itself. The conda Python
+module loads other modules, and those modules load still others, so that many
+files are touched.</p>
+<p>This is totally fine when on a personal machine, since it’s unlikely that you’ll
+be starting so many bash sessions that you notice any sort of slowdown from the
+I/O load of many files. But this kind of I/O slowdown could easily happen in
+a high-performance computing environment (like NIH’s Biowulf) when many jobs are
+kicked off simultaneously.</p>
+<p>At the same time, using conda within tmux can get frustrating (on a personal
+computer or HPC system). You may find that on tmux, when you create a new pane
+or window, your prompt still indicates that you’re in a conda environment, but
+running <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">python</span></code> returns the <em>system</em> Python. It turns out that this is
+because tmux prepends the system path to the PATH when creating a new pane or
+window. The solution is to run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">deactivate</span></code> a bunch of times, until the
+prompt no longer has the <code class="docutils literal notranslate"><span class="pre">(env_name)</span></code> indicator in it, and <em>then</em> activate the
+environment you want.</p>
+</div>
+<div class="section" id="the-solution">
+<h2>The solution<a class="headerlink" href="#the-solution" title="Permalink to this headline">¶</a></h2>
+<p>These dotfiles provide a function, <code class="docutils literal notranslate"><span class="pre">ca</span></code> (short for “conda activate”). It’s
+defined in the <code class="docutils literal notranslate"><span class="pre">~/.functions</span></code> file which in turn is sourced in <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>.
+This function runs <code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">&quot;$(conda</span> <span class="pre">shell.bash</span> <span class="pre">hook)&quot;</span></code>, which is a way of
+running the same commands that <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">init</span> <span class="pre">bash</span></code> would add to your
+<code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>. But it runs it on demand, not every shell.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> also has a <code class="docutils literal notranslate"><span class="pre">conda_deactivate_all</span></code> function, which keeps
+running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">deactivate</span></code> until there’s no activated environment.</p>
+<p>Last, theres a line in <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> that runs <code class="docutils literal notranslate"><span class="pre">conda_deactivate_all</span></code> if we’re
+in a tmux session.</p>
+<p><strong>Activate the base envirnoment</strong> with <code class="docutils literal notranslate"><span class="pre">ca</span></code>.</p>
+<p><strong>Activate an environment</strong> with <code class="docutils literal notranslate"><span class="pre">ca</span> <span class="pre">envname</span></code> or <code class="docutils literal notranslate"><span class="pre">ca</span> <span class="pre">./env</span></code></p>
+<p>Start tmux. You’ll notice that the environment indicators in the prompt
+disappear. That’s because <code class="docutils literal notranslate"><span class="pre">conda_deactivate_all</span></code> is run on every new bash
+shell started under tmux, to avoid that annoying path munging that breaks conda
+envs. <strong>You will need to activate the environment again</strong> in tmux, and in any
+subsequent tmux window or pane that you create.</p>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tmux.html" title="Previous document">tmux configuration</a>
+        </li>
+        <li>
+          <a href="post.html" title="Next document">Post-setup tasks</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">conda</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-conda">Installing conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conda-activate-and-tmux">conda activate, and tmux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-solution">The solution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tmux.html" title="previous chapter">tmux configuration</a></li>
+      <li>Next: <a href="post.html" title="next chapter">Post-setup tasks</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ryan Dale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/conda.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

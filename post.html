@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Why?" href="why.html" />
-    <link rel="prev" title="tmux configuration" href="tmux.html" />
+    <link rel="prev" title="conda" href="conda.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,7 +34,7 @@
     <ul>
         <li>
           &larr;
-          <a href="tmux.html" title="Previous document">tmux configuration</a>
+          <a href="conda.html" title="Previous document">conda</a>
         </li>
         <li>
           <a href="why.html" title="Next document">Why?</a>
@@ -52,9 +52,8 @@
 <p>The <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> script tries to automate as much as possible, but there are
 some things that have to be manually done. This page documents those additional
 tasks.</p>
-</div>
 <div class="section" id="mac">
-<h1>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h1>
+<h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>To turn off the iTerm2 audio bell (that “donk!” noise you get after hitting
 TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
@@ -69,17 +68,27 @@ TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">BASH_SILENCE_DEPRECATION_WARNING</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 </div>
-<ul class="simple">
+<ul>
 <li><p>To turn off the application-specific changing of the touch bar: System
 Preferences &gt; Keyboard, then change “Touch Bar shows” to “Expanded Control
 Strip”.</p></li>
+<li><p>In iTerm preferences:
+- click the “General” icon, and check “Applications in terminal may access</p>
+<blockquote>
+<div><p>clipboard”</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>click the “Profiles” icon, and in the “Text” “Use built-in
+Powerline glyphs”</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="ssh-config">
-<h1>SSH config<a class="headerlink" href="#ssh-config" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p>Create your ssh keys, and add them to the various systems.</p></li>
-</ul>
+<h2>SSH config<a class="headerlink" href="#ssh-config" title="Permalink to this headline">¶</a></h2>
+<p>Create your ssh keys, and add them to the various systems.</p>
+<p>See <a class="reference external" href="https://nichd-bspc.github.io/training/ssh.html">https://nichd-bspc.github.io/training/ssh.html</a> for more details and for
+more specific commands.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-keygen
 </pre></div>
 </div>
@@ -91,10 +100,11 @@ Strip”.</p></li>
 </div>
 </div>
 <div class="section" id="git-config">
-<h1>Git config<a class="headerlink" href="#git-config" title="Permalink to this headline">¶</a></h1>
+<h2>Git config<a class="headerlink" href="#git-config" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git config --global user.name <span class="s2">&quot;your name here&quot;</span>
 git config --global user.email <span class="s2">&quot;your email here&quot;</span>
 </pre></div>
+</div>
 </div>
 </div>
 
@@ -106,7 +116,7 @@ git config --global user.email <span class="s2">&quot;your email here&quot;</spa
     <ul>
         <li>
           &larr;
-          <a href="tmux.html" title="Previous document">tmux configuration</a>
+          <a href="conda.html" title="Previous document">conda</a>
         </li>
         <li>
           <a href="why.html" title="Next document">Why?</a>
@@ -136,10 +146,13 @@ git config --global user.email <span class="s2">&quot;your email here&quot;</spa
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Post-setup tasks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#mac">Mac</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#ssh-config">SSH config</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#git-config">Git config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Post-setup tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mac">Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssh-config">SSH config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-config">Git config</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
@@ -148,7 +161,7 @@ git config --global user.email <span class="s2">&quot;your email here&quot;</spa
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="tmux.html" title="previous chapter">tmux configuration</a></li>
+      <li>Previous: <a href="conda.html" title="previous chapter">conda</a></li>
       <li>Next: <a href="why.html" title="next chapter">Why?</a></li>
   </ul></li>
 </ul>

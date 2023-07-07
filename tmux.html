@@ -14,7 +14,7 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Post-setup tasks" href="post.html" />
+    <link rel="next" title="conda" href="conda.html" />
     <link rel="prev" title="Vim / Neovim" href="vim.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -37,7 +37,7 @@
           <a href="vim.html" title="Previous document">Vim / Neovim</a>
         </li>
         <li>
-          <a href="post.html" title="Next document">Post-setup tasks</a>
+          <a href="conda.html" title="Next document">conda</a>
           &rarr;
         </li>
     </ul>
@@ -49,6 +49,10 @@
             
   <div class="section" id="tmux-configuration">
 <span id="tmux"></span><h1>tmux configuration<a class="headerlink" href="#tmux-configuration" title="Permalink to this headline">¶</a></h1>
+<p>If you’re on a Mac and don’t have tmux installed, you can use <code class="docutils literal notranslate"><span class="pre">./setup.sh</span>
+<span class="pre">--install-tmux</span></code>. This will create a new environment with tmux and symlink the
+executable to your <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code> directory. This expects that you’ve already
+set up conda (with <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--install-mambaforge</span></code>).</p>
 <p>Here are the general features of the <code class="docutils literal notranslate"><span class="pre">.tmux.conf</span></code> file:</p>
 <ul class="simple">
 <li><p>Set the prefix to be <code class="docutils literal notranslate"><span class="pre">Ctrl-j</span></code> (instead of the default <code class="docutils literal notranslate"><span class="pre">Ctrl-b</span></code>)</p></li>
@@ -108,7 +112,7 @@ quit out of vim and just cat the file</p></li>
           <a href="vim.html" title="Previous document">Vim / Neovim</a>
         </li>
         <li>
-          <a href="post.html" title="Next document">Post-setup tasks</a>
+          <a href="conda.html" title="Next document">conda</a>
           &rarr;
         </li>
     </ul>
@@ -138,10 +142,8 @@ quit out of vim and just cat the file</p></li>
 <li class="toctree-l2"><a class="reference internal" href="#copy-paste-in-vim-and-tmux">Copy/paste in vim and tmux</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="post.html#mac">Mac</a></li>
-<li class="toctree-l1"><a class="reference internal" href="post.html#ssh-config">SSH config</a></li>
-<li class="toctree-l1"><a class="reference internal" href="post.html#git-config">Git config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
@@ -151,7 +153,7 @@ quit out of vim and just cat the file</p></li>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="vim.html" title="previous chapter">Vim / Neovim</a></li>
-      <li>Next: <a href="post.html" title="next chapter">Post-setup tasks</a></li>
+      <li>Next: <a href="conda.html" title="next chapter">conda</a></li>
   </ul></li>
 </ul>
 </div>

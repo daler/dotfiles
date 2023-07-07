@@ -3,6 +3,11 @@
 tmux configuration
 ==================
 
+If you're on a Mac and don't have tmux installed, you can use ``./setup.sh
+--install-tmux``. This will create a new environment with tmux and symlink the
+executable to your ``~/opt/bin`` directory. This expects that you've already
+set up conda (with ``./setup.sh --install-mambaforge``).
+
 Here are the general features of the ``.tmux.conf`` file:
 
 -  Set the prefix to be ``Ctrl-j`` (instead of the default ``Ctrl-b``)
