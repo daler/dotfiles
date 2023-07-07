@@ -255,7 +255,7 @@ endif
 syntax on
 
 " Set colorscheme here
-colorscheme zenburn
+:silent! colorscheme zenburn
 
 " Enable detection, plugin , and indent for filetype
 filetype plugin indent on
