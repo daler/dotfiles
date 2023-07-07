@@ -36,7 +36,12 @@ RUN ./setup.sh --dotfiles
 RUN ./setup.sh --install-conda
 RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
-RUN ./setup.sh --set-up-vim-plugins
+
+RUN source ~/.bashrc; nvim +PlugInstall +qall
+RUN source ~/.bashrc; $(which vim) +PlugInstall +qall
+
+# Has issues with not being a TTY when running in Docker
+# RUN ./setup.sh --set-up-vim-plugins
 
 # Various installations using ./setup.sh
 RUN ./setup.sh --install-autojump
