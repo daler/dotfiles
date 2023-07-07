@@ -147,8 +147,8 @@ function showHelp() {
 
     header "conda setup:"
 
-    cmd "--install-mambaforge" \
-        "Install Mambaforge (conda installation)" \
+    cmd "--install-conda" \
+        "Install conda using the Mambaforge installation" \
         "Homepage: https://github.com/conda-forge/miniforge"
 
     cmd "--set-up-bioconda" \
@@ -439,8 +439,8 @@ elif [ $task == "--install-docker" ]; then
     echo
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
-elif [ $task == "--install-mambaforge" ]; then
-    ok "Installs mambaforge"
+elif [ $task == "--install-conda" ]; then
+    ok "Installs conda using the Mambaforge installation"
 
     # On Biowulf/Helix, if we install into $HOME then the installation might
     # larger than the quota for the home directory. Instead, install to user's
