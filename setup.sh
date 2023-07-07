@@ -528,15 +528,18 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
 
-    echo
-    ok "vim (/usr/bin/vim) will now open, install plugins by running :PlugInstall, and then quit."
-    echo
-    /usr/bin/vim -c ':PlugInstall' -c ':bunload 1' -c ':q'
+    VIM=$(which vim)
+    NVIM=$(which nvim)
 
     echo
-    ok "nvim (~/opt/bin/nvim) will now open, install plugins by running :PlugInstall, and then quit"
+    ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
     echo
-    ~/opt/bin/nvim -c ':PlugInstall' -c ':bunload 1' -c ':q'
+    $VIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+
+    echo
+    ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall, and then quit"
+    echo
+    $NVIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
     printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
 
