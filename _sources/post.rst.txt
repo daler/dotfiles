@@ -31,8 +31,10 @@ and then as `documented at support.apple.com
   Strip".
 
 - In iTerm preferences:
+
   - click the "General" icon, and check "Applications in terminal may access
     clipboard"
+
   - click the "Profiles" icon, and in the "Text" "Use built-in
     Powerline glyphs"
 

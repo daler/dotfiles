@@ -532,12 +532,16 @@ Once you have the terminal up and running, write some R code in the text file
 buffer. To test, you can send lines over using any of the following methods:
 
 1. ``gxx`` to send the current line to R
+
 2. Highlight some lines (``Shift-V`` in vim gets you to visual select
    mode), ``gx`` sends them and then jumps to the terminal.
-4. Inside a code chunk, ``,cd`` sends the entire code chunk and then
-3  jumps to the next one. This way you can ``,cd`` your way through an
+
+3. Inside a code chunk, ``,cd`` sends the entire code chunk and then
+
+4  jumps to the next one. This way you can ``,cd`` your way through an
    Rmd
-4. ``,k`` to render the current Rmd to HTML.
+
+5. ``,k`` to render the current Rmd to HTML.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~

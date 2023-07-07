@@ -54,7 +54,7 @@ This is by far the most annoying part about using tmux and vim together.
     - cmd-shift-v
   * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
       this inside vim.
-  * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
+    - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
       this inside vim.
     - tmux clipboard
     - :kbd:`ctrl-j`:kbd:`]`

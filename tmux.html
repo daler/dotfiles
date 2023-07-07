@@ -88,6 +88,43 @@ directory of the current window or pane.</p></li>
 <p>In general, if things seem strange, try adding Shift to select/copy/paste
 commands.</p>
 <p>This is by far the most annoying part about using tmux and vim together.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>copy method (Linux)</p></td>
+<td><p>copy method (Mac)</p></td>
+<td><p>where does it go</p></td>
+<td><p>how to paste (Linux)</p></td>
+<td><p>how to paste (Mac)</p></td>
+</tr>
+<tr class="row-even"><td><p>shift-select text</p></td>
+<td></td>
+<td><p>middle-click buffer</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">shift-middle click</kbd></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>shift-select text, then Ctrl-shift-C</p></td>
+<td><p>shift-select text, then Cmd-shift-C</p></td>
+<td><p>clipboard</p></td>
+<td><p>ctrl-shift-v</p></td>
+<td><p>cmd-shift-v</p></td>
+</tr>
+<tr class="row-even"><td><p>tmux copy mode (<kbd class="kbd docutils literal notranslate">ctrl-j</kbd><kbd class="kbd docutils literal notranslate">[</kbd>). You probably want to avoid using
+this inside vim.</p></td>
+<td><p>tmux copy mode (<kbd class="kbd docutils literal notranslate">ctrl-j</kbd><kbd class="kbd docutils literal notranslate">[</kbd>). You probably want to avoid using
+this inside vim.</p></td>
+<td><p>tmux clipboard</p></td>
+<td><p><kbd class="kbd docutils literal notranslate">ctrl-j</kbd><kbd class="kbd docutils literal notranslate">]</kbd></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">ctrl-j</kbd><kbd class="kbd docutils literal notranslate">]</kbd></p></td>
+</tr>
+</tbody>
+</table>
 <p>Another annoying situation is when copying text from the terminal into
 an email. In this case, we cannot use tmux copy mode, because X windows
 doesn’t know about it. Instead:</p>
