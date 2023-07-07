@@ -90,6 +90,24 @@ function showHelp() {
     printf "   ${BLUE}Documentation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
 
+    header "RECOMMENDED ORDER:"
+    echo "    1)  ./setup.sh --dotfiles"
+    echo "    2)  CLOSE TERMINAL, OPEN A NEW ONE"
+    echo "    3)  ./setup.sh --install-neovim"
+    echo "    4)  ./setup.sh --set-up-vim-plugins"
+    echo "    5)  ./setup.sh --install-conda"
+    echo "    6)  ./setup.sh --set-up-bioconda"
+    echo "    7)  ./setup.sh --install-fzf"
+    echo "    8)  ./setup.sh --install-ripgrep"
+    echo "    9)  ./setup.sh --install-visidata"
+    echo "    10) ./setup.sh --install-fzf"
+    echo
+    echo "  On Mac:"
+    echo "       ./setup.sh --mac-stuff"
+    echo "       ./setup.sh --install-tmux"
+    echo ""
+    echo "  Then browse the other options below to see what else is available/useful."
+
     header "dotfiles:"
 
     cmd "--diffs" \
