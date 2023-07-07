@@ -36,14 +36,10 @@ RUN ./setup.sh --dotfiles
 # This one has been prone to problems, so run it first to save CI time
 RUN ./setup.sh --install-alacritty
 
-RUN ./setup.sh --install-miniconda
+RUN ./setup.sh --install-conda
 RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
-
-# Don't know why yet, but the alias isn't sticking. But this installs plugins
-# without interaction
-RUN source ~/.bashrc; nvim +PlugInstall +qall
 
 # Various installations using ./setup.sh
 RUN ./setup.sh --install-autojump
@@ -58,6 +54,7 @@ RUN ./setup.sh --install-pyp
 RUN ./setup.sh --install-radian
 RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-vd
+RUN ./setup.sh --install-tmux
 
 # Additional for this container: asciinema for screen casts
 RUN source ~/.bashrc \
