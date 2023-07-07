@@ -4,6 +4,27 @@
 Changelog
 =========
 
+2023-07-06
+----------
+
+Updates to support new MacOS and arm64 architecture, and general improvements:
+
+- add ``ca``, ``conda_deactivate_all``, and automatic deactivation within tmux,
+  as well as new documentation to describe the rationale and how to use
+- ``--install-miniconda`` is now ``--install-conda``, and uses Mambaforge
+  instead of Miniconda3. This sets the conda-forge channel and includes mamba.
+  This also now supports all architectures supported by Mambaforge
+- various ``--install-pkgname`` commands use mamba to install rather than conda
+- ``--set-up-vim-plugins`` now runs ``:PlugInstall`` automatically, and does so for both vim and nvim
+- nvim config now protects nvim-only configuration so that you don't get errors opening vim
+- new command for post-installation stuff for mac (``--mac-stuff``)
+- added recommended order of operations to the top of the help
+- add alias for ``start_agent``
+- new ``--install-tmux`` useful for Mac
+- rm installation options for meld as well as the ``--graphical-diffs`` command
+- improved ``start_agent`` function that works well on Mac
+- add docs for mac ssh
+
 2022-12-27
 ----------
 Lots of updates to the neovim config, ``.config/nvim/init.vim``:
