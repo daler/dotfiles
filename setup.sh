@@ -116,9 +116,6 @@ function showHelp() {
     cmd "--vim-diffs" \
         "Inspect diffs between repo and home, using vim -d"
 
-    cmd "--graphical-diffs" \
-        "Inspect diffs between repo and home, using meld"
-
     cmd "--dotfiles" \
         "Replaces files in $HOME with files from this directory"
 
@@ -184,10 +181,6 @@ function showHelp() {
     cmd "--install-docker" \
         "Installs docker and adds current user to new docker group." \
         "(Needs root, Linux only)"
-
-    cmd "--install-meld" \
-        "(Mac only). meld is a graphical diff tool, extremely useful" \
-        "for 3-way diffs"
 
     header "Installations for any host:"
 
@@ -557,24 +550,6 @@ elif [ $task == "--powerline" ]; then
 # ----------------------------------------------------------------------------
 # Individual --install commands
 
-
-elif [ $task == "--install-meld" ]; then
-    ok "Downloads .dmg for meld, install into ~/opt/meld and then writes ~/opt/bin/meld wrapper"
-    if [[ $OSTYPE == darwin* ]]; then
-        download https://github.com/yousseb/meld/releases/download/osx-14/meldmerge.dmg /tmp/meldmerge.dmg
-        set -x
-        mounted=$(hdiutil attach /tmp/meldmerge.dmg | tail -1 | cut -f3)
-        cp -r "$mounted" ~/opt/meld
-        echo "~/opt/meld/Meld.app/Contents/MacOS/Meld \"\$@\"" > ~/opt/bin/meld
-        hdiutil detach "$mounted"
-        set +x
-    else
-        echo
-        printf "${RED}--install-meld currently only supported on Mac.\n"
-        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf${UNSET}\n"
-    fi
-
-
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
     (
@@ -608,11 +583,13 @@ elif [ $task == "--install-fd" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
     check_opt_bin_in_path
 
+
 elif [ $task == "--install-tmux" ]; then
     ok "Install tmux into a new conda env and symlink to ~/opt/bin/tmux"
     install_env_and_symlink tmux tmux tmux
     printf "${YELLOW}Installed to ~/opt/bin/tmux${UNSET}\n"
     check_opt_bin_in_path
+
 
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
