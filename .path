@@ -1,3 +1,2 @@
 export PATH=$PATH:$HOME/opt/bin
-export PATH=$PATH:$HOME/miniconda3/bin
-export PATH=$PATH:$HOME/mambaforge/bin
+export PATH=$PATH:$HOME/mambaforge/condabin

@@ -448,6 +448,7 @@ elif [ $task == "--install-mambaforge" ]; then
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
     bash mambaforge.sh -b -p $MAMBAFORGE_DIR
     rm mambaforge.sh
+    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. Make sure it's on your path.${UNSET}\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
