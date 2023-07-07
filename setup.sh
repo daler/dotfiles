@@ -531,17 +531,23 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     VIM=$(which vim)
     NVIM=$(which nvim)
 
-    echo
-    ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
-    echo
-    $VIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+    if [ $MANUAL_PLUG_INSTALL != 1 ]; then
+        echo
+        ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
+        echo
+        $VIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
-    echo
-    ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall, and then quit"
-    echo
-    $NVIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+        echo
+        ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall, and then quit"
+        echo
+        $NVIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
-    printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
+        printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
+    else
+        printf "${YELLOW}Please open vim and/or nvim, run :PlugInstall${UNSET}\n"
+    fi
+
+
 
 elif [ $task == "--mac-stuff" ]; then
     ok "Sets the shell to be bash, and silences the warning about zsh being the default by adding an env var to ~/.extra"
