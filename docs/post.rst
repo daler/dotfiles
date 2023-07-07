@@ -30,10 +30,16 @@ and then as `documented at support.apple.com
   Preferences > Keyboard, then change "Touch Bar shows" to "Expanded Control
   Strip".
 
+- In iTerm preferences:
+  - click the "General" icon, and check "Applications in terminal may access
+    clipboard"
+  - click the "Profiles" icon, and in the "Text" "Use built-in
+    Powerline glyphs"
+
 SSH config
 ----------
 
-Create your ssh keys, and add them to the various systems. 
+Create your ssh keys, and add them to the various systems.
 
 See https://nichd-bspc.github.io/training/ssh.html for more details and for
 more specific commands.
