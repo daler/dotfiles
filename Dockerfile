@@ -33,9 +33,6 @@ ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-install-minimal
 RUN ./setup.sh --dotfiles
 
-# This one has been prone to problems, so run it first to save CI time
-RUN ./setup.sh --install-alacritty
-
 RUN ./setup.sh --install-conda
 RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
