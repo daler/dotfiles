@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 
-# start the ssh-agent
-SSH_ENV=$HOME/.ssh/environment
+# Start the ssh-agent and add keys to the agent.
+# Detects if on Mac; if so detects the macOS version and provides the
+# appropriate pargs to add keys to the keychain
 function start_agent {
     echo "Initializing new SSH agent..."
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add
+    eval "$(ssh-agent)"
+
+    additional_arg=""
+    if [[ $OSTYPE == darwin* ]]; then
+        if [[ $(sw_vers -productVersion | cut -f1 -d '.') -lt 12 ]]; then
+            additional_arg="-K"
+        else
+            additional_arg="--apple-use-keychain"
+        fi
+    fi
+    ssh-add "$additional_arg"
 }
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
