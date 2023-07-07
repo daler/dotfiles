@@ -527,9 +527,18 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     vim_dest=~/.vim/autoload/plug.vim
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
+
     echo
-    printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall${UNSET}\n"
+    ok "vim (/usr/bin/vim) will now open, install plugins by running :PlugInstall, and then quit."
     echo
+    /usr/bin/vim -c ':PlugInstall' -c ':bunload 1' -c ':q'
+
+    echo
+    ok "nvim (~/opt/bin/nvim) will now open, install plugins by running :PlugInstall, and then quit"
+    echo
+    ~/opt/bin/nvim -c ':PlugInstall' -c ':bunload 1' -c ':q'
+
+    printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
 
 elif [ $task == "--mac-stuff" ]; then
     ok "Sets the shell to be bash, and silences the warning about zsh being the default by adding an env var to ~/.extra"
