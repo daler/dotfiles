@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && apt-get install -y git wget curl sudo rsync locales
+RUN apt-get update && apt-get install -y git wget curl sudo rsync locales vim
 
 # Locale is set in .bash_profile; needs to be created
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
