@@ -6,7 +6,7 @@ some things that have to be manually done. This page documents those additional
 tasks.
 
 Mac
-===
+---
 
 - To turn off the iTerm2 audio bell (that "donk!" noise you get after hitting
   TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
@@ -31,9 +31,12 @@ and then as `documented at support.apple.com
   Strip".
 
 SSH config
-==========
+----------
 
-- Create your ssh keys, and add them to the various systems.
+Create your ssh keys, and add them to the various systems. 
+
+See https://nichd-bspc.github.io/training/ssh.html for more details and for
+more specific commands.
 
 .. code-block:: bash
 
@@ -48,7 +51,7 @@ SSH config
     cat ~/.ssh/id_rsa.pub
 
 Git config
-==========
+----------
 
 .. code-block:: bash
 
