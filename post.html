@@ -98,6 +98,17 @@ more specific commands.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat ~/.ssh/id_rsa.pub
 </pre></div>
 </div>
+<p>On Mac, add this to your <code class="docutils literal notranslate"><span class="pre">~/.ssh/config</span></code> file (creating it if it doesn’t
+exist). Then, by using the <code class="docutils literal notranslate"><span class="pre">s</span></code> alias, your SSH key will be added to the
+session using your login to MacOS as the authentication, without needing to
+type in your passphrase</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this goes in ~/.ssh/config</span>
+<span class="n">Host</span> <span class="o">*</span>
+  <span class="n">UseKeychain</span> <span class="n">yes</span>
+  <span class="n">AddKeysToAgent</span> <span class="n">yes</span>
+  <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_ed25519</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="git-config">
 <h2>Git config<a class="headerlink" href="#git-config" title="Permalink to this headline">¶</a></h2>

@@ -56,6 +56,19 @@ more specific commands.
 
     cat ~/.ssh/id_rsa.pub
 
+On Mac, add this to your ``~/.ssh/config`` file (creating it if it doesn't
+exist). Then, by using the ``s`` alias, your SSH key will be added to the
+session using your login to MacOS as the authentication, without needing to
+type in your passphrase
+
+.. code-block::
+
+    # this goes in ~/.ssh/config
+    Host *
+      UseKeychain yes
+      AddKeysToAgent yes
+      IdentityFile ~/.ssh/id_ed25519
+
 Git config
 ----------
 
