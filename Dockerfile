@@ -51,7 +51,10 @@ RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
 RUN ./setup.sh --install-pyp
-RUN ./setup.sh --install-radian
+
+# Not working on --platform=linux/amd64
+# RUN ./setup.sh --install-radian
+
 RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-vd
 RUN ./setup.sh --install-tmux
