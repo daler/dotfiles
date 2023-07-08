@@ -269,7 +269,7 @@ if [ -z $DOTFILES_FORCE ]; then
     DOTFILES_FORCE=false
 fi
 
-set -eou pipefail
+set -eo pipefail
 
 # The CLI is pretty minimal -- we're just doing an exact string match
 task=$1
