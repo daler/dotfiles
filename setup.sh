@@ -22,7 +22,7 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.7.0
+NVIM_VERSION=0.9.0
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -486,7 +486,7 @@ elif [ $task == "--install-neovim" ]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
         tar -xzf nvim-macos.tar.gz
         mkdir -p "$HOME/opt/bin"
-        mv nvim-osx64 "$HOME/opt/neovim"
+        mv nvim-macos "$HOME/opt/neovim"
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
         tar -xzf nvim-linux64.tar.gz
@@ -531,7 +531,7 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     VIM=$(which vim)
     NVIM=$(which nvim)
 
-    if [ $MANUAL_PLUG_INSTALL != 1 ]; then
+    if [ ${MANUAL_PLUG_INSTALL:=0} != 1 ]; then
         echo
         ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
         echo
