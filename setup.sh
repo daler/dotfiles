@@ -20,7 +20,7 @@ fi
 set -eo pipefail
 
 # Change tool versions here
-VISIDATA_VERSION=2.8
+VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
 NVIM_VERSION=0.7.0
 RG_VERSION=13.0.0
