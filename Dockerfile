@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && apt-get install -y git wget curl sudo rsync locales
+RUN apt-get update && apt-get install -y git wget curl sudo rsync locales vim
 
 # Locale is set in .bash_profile; needs to be created
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
@@ -33,17 +33,13 @@ ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-install-minimal
 RUN ./setup.sh --dotfiles
 
-# This one has been prone to problems, so run it first to save CI time
-RUN ./setup.sh --install-alacritty
-
-RUN ./setup.sh --install-miniconda
+RUN ./setup.sh --install-conda
 RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
-RUN ./setup.sh --set-up-vim-plugins
 
-# Don't know why yet, but the alias isn't sticking. But this installs plugins
-# without interaction
+RUN MANUAL_PLUG_INSTALL=1 ./setup.sh --set-up-vim-plugins
 RUN source ~/.bashrc; nvim +PlugInstall +qall
+RUN source ~/.bashrc; $(which vim) +PlugInstall +qall
 
 # Various installations using ./setup.sh
 RUN ./setup.sh --install-autojump
@@ -55,9 +51,13 @@ RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
 RUN ./setup.sh --install-pyp
-RUN ./setup.sh --install-radian
+
+# Not working on --platform=linux/amd64
+# RUN ./setup.sh --install-radian
+
 RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-vd
+RUN ./setup.sh --install-tmux
 
 # Additional for this container: asciinema for screen casts
 RUN source ~/.bashrc \

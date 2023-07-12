@@ -215,6 +215,7 @@ call plug#end()
 " The 'lua' command runs a line of Lua.
 " The 'lua <<EOF .... EOF' syntax allows multiple Lua lines.
 " Here, we run all of the Lua in one block.
+if has('nvim')
 
 lua <<EOF
 
@@ -245,6 +246,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 EOF
+endif
 
 " ============================================================================
 " SETTINGS
@@ -253,7 +255,7 @@ EOF
 syntax on
 
 " Set colorscheme here
-colorscheme zenburn
+:silent! colorscheme zenburn
 
 " Enable detection, plugin , and indent for filetype
 filetype plugin indent on
@@ -366,9 +368,11 @@ set smartcase
 " Don't highlight search items by default
 set nohlsearch
 
-" When using :s/ to search and replace, this will give a live preview of the
-" proposed changes
-set inccommand=nosplit
+if has('nvim')
+    " When using :s/ to search and replace, this will give a live preview of the
+    " proposed changes
+    set inccommand=nosplit
+endif
 
 " Make tab completion for files/buffers act like bash
 set wildmenu

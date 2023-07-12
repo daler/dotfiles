@@ -20,9 +20,9 @@ fi
 set -eo pipefail
 
 # Change tool versions here
-VISIDATA_VERSION=2.8
+VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.7.0
+NVIM_VERSION=0.9.0
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -90,6 +90,25 @@ function showHelp() {
     printf "   ${BLUE}Documentation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
 
+    header "RECOMMENDED ORDER:"
+    echo "    1)  ./setup.sh --dotfiles"
+    echo "    2)  CLOSE TERMINAL, OPEN A NEW ONE"
+    echo "    3)  ./setup.sh --install-neovim"
+    echo "    4)  ./setup.sh --set-up-vim-plugins"
+    echo "    5)  ./setup.sh --install-conda"
+    echo "    6)  ./setup.sh --set-up-bioconda"
+    echo "    7)  ./setup.sh --install-fzf"
+    echo "    8)  ./setup.sh --install-ripgrep"
+    echo "    9)  ./setup.sh --install-visidata"
+    echo "    10) ./setup.sh --install-fzf"
+    echo "    11) ./setup.sh --install-pyp"
+    echo
+    echo "  On Mac:"
+    echo "       ./setup.sh --mac-stuff"
+    echo "       ./setup.sh --install-tmux"
+    echo ""
+    echo "  Then browse the other options below to see what else is available/useful."
+
     header "dotfiles:"
 
     cmd "--diffs" \
@@ -97,9 +116,6 @@ function showHelp() {
 
     cmd "--vim-diffs" \
         "Inspect diffs between repo and home, using vim -d"
-
-    cmd "--graphical-diffs" \
-        "Inspect diffs between repo and home, using meld"
 
     cmd "--dotfiles" \
         "Replaces files in $HOME with files from this directory"
@@ -132,9 +148,9 @@ function showHelp() {
 
     header "conda setup:"
 
-    cmd "--install-miniconda" \
-        "Install Miniconda." \
-        "Homepage: https://docs.conda.io/en/latest/miniconda.html" \
+    cmd "--install-conda" \
+        "Install conda using the Mambaforge installation" \
+        "Homepage: https://github.com/conda-forge/miniforge"
 
     cmd "--set-up-bioconda" \
         "Set up bioconda channel priorities." \
@@ -146,6 +162,9 @@ function showHelp() {
         "(or requirements-mac.txt on a Mac) to customize."
 
     header "Installations for local host only"
+
+    cmd "--mac-stuff" \
+        "Make some Mac-specific settings"
 
     cmd "--powerline" \
         "Install powerline fonts. Powerline fonts include the" \
@@ -164,11 +183,10 @@ function showHelp() {
         "Installs docker and adds current user to new docker group." \
         "(Needs root, Linux only)"
 
-    cmd "--install-meld" \
-        "(Mac only). meld is a graphical diff tool, extremely useful" \
-        "for 3-way diffs"
-
     header "Installations for any host:"
+
+    cmd "--install-tmux" \
+        "Install tmux"
 
     cmd "--install-bat" \
         "bat is like cat, but adds things like syntax highlighting," \
@@ -251,7 +269,7 @@ if [ -z $DOTFILES_FORCE ]; then
     DOTFILES_FORCE=false
 fi
 
-set -eou pipefail
+set -eo pipefail
 
 # The CLI is pretty minimal -- we're just doing an exact string match
 task=$1
@@ -366,6 +384,8 @@ check_opt_bin_in_path () {
 # they are not
 install_env_and_symlink () {
 
+    eval "$(conda shell.bash hook)"
+
     # sometimes conda can complain about env vars being unset
     set +u
     ENVNAME=$1
@@ -373,7 +393,7 @@ install_env_and_symlink () {
     EXECUTABLE=$3
 
     can_make_conda_env $ENVNAME
-    conda create -y -n $ENVNAME $CONDAPKG
+    mamba create -y -n $ENVNAME $CONDAPKG
     ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
     printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
@@ -420,52 +440,27 @@ elif [ $task == "--install-docker" ]; then
     echo
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
-
-elif [ $task == "--install-miniconda" ]; then
+elif [ $task == "--install-conda" ]; then
+    ok "Installs conda using the Mambaforge installation"
 
     # On Biowulf/Helix, if we install into $HOME then the installation might
     # larger than the quota for the home directory. Instead, install to user's
     # data directory which has much more space.
-    MINICONDA_DIR=$HOME/miniconda3
+    MAMBAFORGE_DIR=$HOME/mambaforge
     if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
-        MINICONDA_DIR=/data/$USER/miniconda3
+        MAMBAFORGE_DIR=/data/$USER/mambaforge
 
-        # Newer versions of miniconda cannot run from a noexec directory which
-        # may be the case on some hosts.  See discussion at
+        # Newer versions of the installer cannot run from a noexec directory
+        # which may be the case on some hosts.  See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
-        export TMPDIR=/data/$USER/miniconda3-tmp
+        export TMPDIR=/data/$USER/mambaforge
         mkdir -p $TMPDIR
     fi
 
-    ok "Installs Miniconda
-       - installs to $MINICONDA_DIR
-       - runs 'conda init bash'
-       - prints notes and recommendations for next steps
-    "
-    if [[ $OSTYPE == darwin* ]]; then
-        download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
-    else
-        download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
-    fi
-
-    set -x
-    bash miniconda.sh -b -p $MINICONDA_DIR
-    rm miniconda.sh
-    set +x
-    $MINICONDA_DIR/bin/conda init bash
-
-    if [ -e /data/$USER/miniconda3-tmp ]; then
-        rm -r /data/$USER/miniconda3-tmp
-    fi
-
-    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR.${UNSET}\n"
-    printf "${YELLOW}   and then ran \"$MINICONDA_DIR/bin/conda init bash\", \n${UNSET}"
-    printf "${YELLOW}   which added lines to your .bashrc. You should check out those lines.${UNSET}\n\n"
-
-    if [[ $OSTYPE == darwin* ]]; then
-        printf "${YELLOW}Looks like you're on a Mac: in this case, look in ~/.bash_profile for the\n"
-        printf "lines added by conda init bash. Move them from ~/.bash_profile to ~/.bashrc.${UNSET}\n\n"
-    fi
+    download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
+    bash mambaforge.sh -b -p $MAMBAFORGE_DIR
+    rm mambaforge.sh
+    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. Make sure it's on your path.${UNSET}\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
@@ -492,7 +487,7 @@ elif [ $task == "--install-neovim" ]; then
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
         tar -xzf nvim-macos.tar.gz
         mkdir -p "$HOME/opt/bin"
-        mv nvim-osx64 "$HOME/opt/neovim"
+        mv nvim-macos "$HOME/opt/neovim"
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
         tar -xzf nvim-linux64.tar.gz
@@ -533,10 +528,32 @@ elif [ $task == "--set-up-vim-plugins" ]; then
     vim_dest=~/.vim/autoload/plug.vim
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
     download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
-    echo
-    printf "${YELLOW}Please open nvim and/or vim and run :PlugInstall${UNSET}\n"
-    echo
 
+    VIM=$(which vim)
+    NVIM=$(which nvim)
+
+    if [ ${MANUAL_PLUG_INSTALL:=0} != 1 ]; then
+        echo
+        ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
+        echo
+        $VIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+
+        echo
+        ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall, and then quit"
+        echo
+        $NVIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+
+        printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
+    else
+        printf "${YELLOW}Please open vim and/or nvim, run :PlugInstall${UNSET}\n"
+    fi
+
+
+
+elif [ $task == "--mac-stuff" ]; then
+    ok "Sets the shell to be bash, and silences the warning about zsh being the default by adding an env var to ~/.extra"
+    chsh -s /bin/bash
+    echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
 
 elif [ $task == "--powerline" ]; then
     ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
@@ -551,23 +568,6 @@ elif [ $task == "--powerline" ]; then
 
 # ----------------------------------------------------------------------------
 # Individual --install commands
-
-elif [ $task == "--install-meld" ]; then
-    ok "Downloads .dmg for meld, install into ~/opt/meld and then writes ~/opt/bin/meld wrapper"
-    if [[ $OSTYPE == darwin* ]]; then
-        download https://github.com/yousseb/meld/releases/download/osx-14/meldmerge.dmg /tmp/meldmerge.dmg
-        set -x
-        mounted=$(hdiutil attach /tmp/meldmerge.dmg | tail -1 | cut -f3)
-        cp -r "$mounted" ~/opt/meld
-        echo "~/opt/meld/Meld.app/Contents/MacOS/Meld \"\$@\"" > ~/opt/bin/meld
-        hdiutil detach "$mounted"
-        set +x
-    else
-        echo
-        printf "${RED}--install-meld currently only supported on Mac.\n"
-        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf${UNSET}\n"
-    fi
-
 
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
@@ -600,6 +600,13 @@ elif [ $task == "--install-fd" ]; then
     ok "Install fd (https://github.com/sharkdp/fd) into a new conda env and symlink to ~/opt/bin/fd"
     install_env_and_symlink fd fd-find="${FD_VERSION}" fd
     printf "${YELLOW}Installed to ~/opt/bin/fd${UNSET}\n"
+    check_opt_bin_in_path
+
+
+elif [ $task == "--install-tmux" ]; then
+    ok "Install tmux into a new conda env and symlink to ~/opt/bin/tmux"
+    install_env_and_symlink tmux tmux tmux
+    printf "${YELLOW}Installed to ~/opt/bin/tmux${UNSET}\n"
     check_opt_bin_in_path
 
 
@@ -646,7 +653,7 @@ elif [ $task == "--install-radian" ]; then
     set +u
     # Note: radian needs R installed to compile the rchitect dependency. It
     # is unclear whether radian is dependent on a particular R version.
-    conda create -y -n radian python r
+    mamba create -y -n radian python r
     conda activate radian
     pip install radian
     ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
@@ -751,7 +758,7 @@ elif [ $task == "--install-pyp" ]; then
     ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
     set +u
     can_make_conda_env "pyp"
-    conda create -y -n pyp python
+    mamba create -y -n pyp python
     conda activate pyp
     pip install pypyp==${PYP_VERSION}
     ln -sf $(which pyp) $HOME/opt/bin/pyp

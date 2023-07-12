@@ -3,6 +3,11 @@
 tmux configuration
 ==================
 
+If you're on a Mac and don't have tmux installed, you can use ``./setup.sh
+--install-tmux``. This will create a new environment with tmux and symlink the
+executable to your ``~/opt/bin`` directory. This expects that you've already
+set up conda (with ``./setup.sh --install-mambaforge``).
+
 Here are the general features of the ``.tmux.conf`` file:
 
 -  Set the prefix to be ``Ctrl-j`` (instead of the default ``Ctrl-b``)
@@ -49,7 +54,7 @@ This is by far the most annoying part about using tmux and vim together.
     - cmd-shift-v
   * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
       this inside vim.
-  * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
+    - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
       this inside vim.
     - tmux clipboard
     - :kbd:`ctrl-j`:kbd:`]`

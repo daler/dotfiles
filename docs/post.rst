@@ -6,7 +6,7 @@ some things that have to be manually done. This page documents those additional
 tasks.
 
 Mac
-===
+---
 
 - To turn off the iTerm2 audio bell (that "donk!" noise you get after hitting
   TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
@@ -30,10 +30,21 @@ and then as `documented at support.apple.com
   Preferences > Keyboard, then change "Touch Bar shows" to "Expanded Control
   Strip".
 
-SSH config
-==========
+- In iTerm preferences:
 
-- Create your ssh keys, and add them to the various systems.
+  - click the "General" icon, and check "Applications in terminal may access
+    clipboard"
+
+  - click the "Profiles" icon, and in the "Text" "Use built-in
+    Powerline glyphs"
+
+SSH config
+----------
+
+Create your ssh keys, and add them to the various systems.
+
+See https://nichd-bspc.github.io/training/ssh.html for more details and for
+more specific commands.
 
 .. code-block:: bash
 
@@ -47,8 +58,21 @@ SSH config
 
     cat ~/.ssh/id_rsa.pub
 
+On Mac, add this to your ``~/.ssh/config`` file (creating it if it doesn't
+exist). Then, by using the ``s`` alias, your SSH key will be added to the
+session using your login to MacOS as the authentication, without needing to
+type in your passphrase
+
+.. code-block::
+
+    # this goes in ~/.ssh/config
+    Host *
+      UseKeychain yes
+      AddKeysToAgent yes
+      IdentityFile ~/.ssh/id_ed25519
+
 Git config
-==========
+----------
 
 .. code-block:: bash
 

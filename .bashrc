@@ -32,3 +32,13 @@ fi
 if [[ $OSTYPE == darwin* ]]; then
     test -f ~/.git-completion.bash && source ~/.git-completion.bash
 fi
+
+# New bash shells spawned by tmux will silently break conda environments by
+# placing the system path in front of the conda env path -- even though the
+# prompt still indicates an active environment. This can be quite confusing.
+#
+# So if we're starting a bash shell under tmux, deactivate all environments.
+#
+# The `ca` and `conda_deactivate_all` functions used here are defined in the
+# .functions file, which in turn was sourced at the beginning of this file.
+[[ -z $TMUX ]] || ca; conda_deactivate_all
