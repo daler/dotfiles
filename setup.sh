@@ -454,7 +454,6 @@ elif [ $task == "--install-conda" ]; then
         # which may be the case on some hosts.  See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
         export TMPDIR=/data/$USER/mambaforge
-        mkdir -p $TMPDIR
     fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
