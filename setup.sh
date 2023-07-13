@@ -536,12 +536,12 @@ elif [ $task == "--set-up-vim-plugins" ]; then
         echo
         ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
         echo
-        $VIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+        vim -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
         echo
         ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall, and then quit"
         echo
-        $NVIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+        nvim -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
         printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
     else
