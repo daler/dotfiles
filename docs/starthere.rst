@@ -252,7 +252,7 @@ isolated from the rest of your system.
 The following command:
 
 - downloads the latest version of `Mambaforge
-<https://github.com/conda-forge/miniforge>`.
+  <https://github.com/conda-forge/miniforge>`_
 - installs conda and mamba to :file:`~/mambaforge/condabin/conda` and :file:`~/mambaforge/condabin/mamba`, or if you're on NIH's Biowulf cluster
   where the home directory is too small to support the installation, it will
   install to :file:`/data/$USER/mambaforge/condabin`
