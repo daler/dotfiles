@@ -99,9 +99,8 @@ function showHelp() {
     echo "    6)  ./setup.sh --set-up-bioconda"
     echo "    7)  ./setup.sh --install-fzf"
     echo "    8)  ./setup.sh --install-ripgrep"
-    echo "    9)  ./setup.sh --install-visidata"
-    echo "    10) ./setup.sh --install-fzf"
-    echo "    11) ./setup.sh --install-pyp"
+    echo "    9)  ./setup.sh --install-vd"
+    echo "    10) ./setup.sh --install-pyp"
     echo
     echo "  On Mac:"
     echo "       ./setup.sh --mac-stuff"
