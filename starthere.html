@@ -246,17 +246,17 @@ Mac, you’ll also need to set the font for non-ASCII characters.</p>
 <p><a class="reference external" href="https://docs.conda.io/en/latest/">conda</a> is a cross-platform,
 language-agnostic package manager. It’s by far the best way to get set up with
 Python, but it also works for many other languages.</p>
-<div class="section" id="install-miniconda">
-<h4>2.2.1: Install miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="install-conda">
+<h4>2.2.1: Install conda<a class="headerlink" href="#install-conda" title="Permalink to this headline">¶</a></h4>
 <p>Do this if you want to use conda to create environments that are
 isolated from the rest of your system.</p>
 <p>The following command:</p>
 <ul class="simple">
-<li><p>downloads the latest version of <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a></p></li>
-<li><p>installs it to <code class="file docutils literal notranslate"><span class="pre">~/miniconda3</span></code>, or if you’re on NIH’s Biowulf cluster
+<li><p>downloads the latest version of <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a></p></li>
+<li><p>installs conda and mamba to <code class="file docutils literal notranslate"><span class="pre">~/mambaforge/condabin/conda</span></code> and <code class="file docutils literal notranslate"><span class="pre">~/mambaforge/condabin/mamba</span></code>, or if you’re on NIH’s Biowulf cluster
 where the home directory is too small to support the installation, it will
-install to <code class="file docutils literal notranslate"><span class="pre">/data/$USER/miniconda3</span></code></p></li>
-<li><p>adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/miniconda3/bin&quot;</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code>
+install to <code class="file docutils literal notranslate"><span class="pre">/data/$USER/mambaforge/condabin</span></code></p></li>
+<li><p>adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/mambaforge/condabin&quot;</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code>
 (which you can read more about at <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>)</p></li>
 </ul>
 <p>If you went with <a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, you should add this to your path manually.</p>
