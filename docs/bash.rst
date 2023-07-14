@@ -29,7 +29,7 @@ some notable features.
 
 This file ends up being lots of ``export PATH="$PATH:/some/other/path"``
 lines. It is initially populated to put ``~/opt/bin`` and
-``~/miniconda3/bin`` on the path. As you install more software in other
+``~/mambaforge/condabin`` on the path. As you install more software in other
 locations, this is a tidy place to put the various exports.
 
 ``.aliases``

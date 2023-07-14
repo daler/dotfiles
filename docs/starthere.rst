@@ -243,20 +243,20 @@ So this does not need to be run on a remote machine.
 language-agnostic package manager. It's by far the best way to get set up with
 Python, but it also works for many other languages.
 
-2.2.1: Install miniconda
-++++++++++++++++++++++++
+2.2.1: Install conda
+++++++++++++++++++++
 
 Do this if you want to use conda to create environments that are
 isolated from the rest of your system.
 
 The following command:
 
-- downloads the latest version of `Miniconda
-  <https://docs.conda.io/en/latest/miniconda.html>`_
-- installs it to :file:`~/miniconda3`, or if you're on NIH's Biowulf cluster
+- downloads the latest version of `Mambaforge
+  <https://github.com/conda-forge/miniforge>`_
+- installs conda and mamba to :file:`~/mambaforge/condabin/conda` and :file:`~/mambaforge/condabin/mamba`, or if you're on NIH's Biowulf cluster
   where the home directory is too small to support the installation, it will
-  install to :file:`/data/$USER/miniconda3`
-- adds the line ``export PATH="$PATH:~/miniconda3/bin"`` to the :file:`~/.path`
+  install to :file:`/data/$USER/mambaforge/condabin`
+- adds the line ``export PATH="$PATH:~/mambaforge/condabin"`` to the :file:`~/.path`
   (which you can read more about at :ref:`bash`)
 
 If you went with :ref:`option2`, you should add this to your path manually.

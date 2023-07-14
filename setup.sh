@@ -22,7 +22,7 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.9.0
+NVIM_VERSION=0.9.1
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -99,9 +99,8 @@ function showHelp() {
     echo "    6)  ./setup.sh --set-up-bioconda"
     echo "    7)  ./setup.sh --install-fzf"
     echo "    8)  ./setup.sh --install-ripgrep"
-    echo "    9)  ./setup.sh --install-visidata"
-    echo "    10) ./setup.sh --install-fzf"
-    echo "    11) ./setup.sh --install-pyp"
+    echo "    9)  ./setup.sh --install-vd"
+    echo "    10) ./setup.sh --install-pyp"
     echo
     echo "  On Mac:"
     echo "       ./setup.sh --mac-stuff"
@@ -454,7 +453,6 @@ elif [ $task == "--install-conda" ]; then
         # which may be the case on some hosts.  See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
         export TMPDIR=/data/$USER/mambaforge
-        mkdir -p $TMPDIR
     fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
@@ -536,12 +534,12 @@ elif [ $task == "--set-up-vim-plugins" ]; then
         echo
         ok "vim ($VIM) will now open, install plugins by running :PlugInstall, and then quit."
         echo
-        $VIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+        vim -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
         echo
         ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall, and then quit"
         echo
-        $NVIM -c ':PlugInstall' -c ':bunload 1' -c ':q'
+        nvim -c ':PlugInstall' -c ':bunload 1' -c ':q'
 
         printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
     else
