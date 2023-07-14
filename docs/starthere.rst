@@ -244,7 +244,7 @@ language-agnostic package manager. It's by far the best way to get set up with
 Python, but it also works for many other languages.
 
 2.2.1: Install conda
-++++++++++++++++++++++++
+++++++++++++++++++++
 
 Do this if you want to use conda to create environments that are
 isolated from the rest of your system.
