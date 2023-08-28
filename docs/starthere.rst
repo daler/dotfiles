@@ -263,7 +263,7 @@ If you went with :ref:`option2`, you should add this to your path manually.
 
 .. code-block:: bash
 
-  ./setup.sh --install-miniconda
+  ./setup.sh --install-conda
 
 After installation, run the following:
 
