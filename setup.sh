@@ -445,9 +445,11 @@ elif [ $task == "--install-conda" ]; then
     # On Biowulf/Helix, if we install into $HOME then the installation might
     # larger than the quota for the home directory. Instead, install to user's
     # data directory which has much more space.
+    # Also, .path needs to reflect this change.
     MAMBAFORGE_DIR=$HOME/mambaforge
     if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
         MAMBAFORGE_DIR=/data/$USER/mambaforge
+        sed -i 's|export PATH="$PATH:$HOME/mambaforge/condabin"|export PATH="$PATH:~/data/$USER/mambaforge/condabin"|' .path
 
         # Newer versions of the installer cannot run from a noexec directory
         # which may be the case on some hosts.  See discussion at
