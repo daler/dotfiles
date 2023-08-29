@@ -449,12 +449,26 @@ elif [ $task == "--install-conda" ]; then
     MAMBAFORGE_DIR=$HOME/mambaforge
     if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
         MAMBAFORGE_DIR=/data/$USER/mambaforge
-        sed -i 's|export PATH="$PATH:$HOME/mambaforge/condabin"|export PATH="$PATH:~/data/$USER/mambaforge/condabin"|' .path
 
         # Newer versions of the installer cannot run from a noexec directory
         # which may be the case on some hosts.  See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
         export TMPDIR=/data/$USER/mambaforge
+        sed -i 's|export PATH="$PATH:$HOME/mambaforge/condabin"|export PATH="$PATH:~/data/$USER/mambaforge/condabin"|' .path
+
+        # Ask if user is in BPSC and append BSPC tools to PATH if so
+        while true; do
+            read -p "Are you in BSPC? (y/n): " response
+            if [[ "$response" == "y" || "$response" == "Y" ]]; then
+                echo "Adding BSPC tools to .path."
+                echo "export PATH=$PATH:/data/NICHD-core1/bin" >> $HOME/.path
+                break
+           elif [[ "$response" == "n" || "$response" == "N" ]]; then
+                break
+           else
+               echo "Invalid response. Please answer with y or n."
+           fi
+        done
     fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
