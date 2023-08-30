@@ -456,20 +456,7 @@ elif [ $task == "--install-conda" ]; then
         export TMPDIR=/data/$USER/mambaforge
         sed -i 's|export PATH="$PATH:$HOME/mambaforge/condabin"|export PATH="$PATH:~/data/$USER/mambaforge/condabin"|' .path
 
-        # Ask if user is in BPSC and append BSPC tools to PATH if so
-        while true; do
-            read -p "Are you in BSPC? (y/n): " response
-            if [[ "$response" == "y" || "$response" == "Y" ]]; then
-                echo "Adding BSPC tools to .path."
-                echo "export PATH=$PATH:/data/NICHD-core1/bin" >> $HOME/.path
-                break
-           elif [[ "$response" == "n" || "$response" == "N" ]]; then
-                break
-           else
-               echo "Invalid response. Please answer with y or n."
-           fi
-        done
-    fi
+   fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
     bash mambaforge.sh -b -p $MAMBAFORGE_DIR
