@@ -353,6 +353,10 @@ set wildmode=list:full
 " Ignore these when autocompleting
 set wildignore=*.swp,*.bak,*.pyc,*.class
 
+" Always use block cursor. In some terminals and fonts (like iTerm), it can be
+" hard to see the cursor when it changes to a line.
+set guicursor=i:block
+
 
 " ============================================================================
 " CUSTOM MAPPINGS
