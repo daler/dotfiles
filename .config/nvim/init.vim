@@ -480,6 +480,9 @@ noremap <silent> ,w :wincmd l<cr>
 noremap <silent> ,q :wincmd h<cr>
 tnoremap <silent> ,q <C-\><C-n>:wincmd h<cr>
 
+" No matter what, when entering a terminal buffer, always use insert mode.
+" Works even when clicking with mouse.
+autocmd BufEnter * if &buftype ==# 'terminal' | startinsert | endif
 
 " ----------------------------------------------------------------------------
 " Filetype-specific settings
@@ -492,7 +495,6 @@ autocmd! FileType yaml,yml,r,rmarkdown,*.Rmd,*.rmd set shiftwidth=2 tabstop=2
 
 " Consider any files with these names to be Python
 au BufRead,BufNewFile Snakefile,*.snakefile,*.smk setfiletype python
-
 
 " ============================================================================
 " PLUGIN SETTINGS AND MAPPINGS
