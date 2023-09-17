@@ -491,7 +491,7 @@ autocmd! FileType html,xml set listchars-=tab:>.
 autocmd! FileType yaml,yml,r,rmarkdown,*.Rmd,*.rmd set shiftwidth=2 tabstop=2
 
 " Consider any files with these names to be Python
-au BufRead,BufNewFile Snakefile,*.snakefile setfiletype python
+au BufRead,BufNewFile Snakefile,*.snakefile,*.smk setfiletype python
 
 
 " ============================================================================
