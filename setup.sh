@@ -445,20 +445,23 @@ elif [ $task == "--install-conda" ]; then
     # On Biowulf/Helix, if we install into $HOME then the installation might
     # larger than the quota for the home directory. Instead, install to user's
     # data directory which has much more space.
+    # Also, .path needs to reflect this change.
     MAMBAFORGE_DIR=$HOME/mambaforge
     if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
         MAMBAFORGE_DIR=/data/$USER/mambaforge
 
         # Newer versions of the installer cannot run from a noexec directory
-        # which may be the case on some hosts.  See discussion at
+        # which may be the case on some hosts. See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
         export TMPDIR=/data/$USER/mambaforge
-    fi
+
+   fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
     bash mambaforge.sh -b -p $MAMBAFORGE_DIR
     rm mambaforge.sh
-    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. Make sure it's on your path.${UNSET}\n"
+    echo "export PATH=\$PATH:$MAMBAFORGE_DIR/condabin" >> ~/.path
+    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path.${UNSET}\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
