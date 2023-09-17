@@ -56,35 +56,35 @@ ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-install-minimal
 RUN ./setup.sh --dotfiles
 
-RUN ./setup.sh --install-conda
-RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
-
 RUN MANUAL_PLUG_INSTALL=1 ./setup.sh --set-up-vim-plugins
 RUN source ~/.bashrc; nvim +PlugInstall +qall
 RUN source ~/.bashrc; $(which vim) +PlugInstall +qall
 
+RUN ./setup.sh --install-conda
+RUN ./setup.sh --set-up-bioconda
+
 # Various installations using ./setup.sh
+RUN ./setup.sh --install-fzf
+RUN ./setup.sh --install-ripgrep
+RUN ./setup.sh --install-vd
+RUN ./setup.sh --install-pyp
+RUN ./setup.sh --install-tmux
 RUN ./setup.sh --install-autojump
 RUN ./setup.sh --install-bat
 RUN ./setup.sh --install-black
 RUN ./setup.sh --install-fd
-RUN ./setup.sh --install-fzf
 RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
-RUN ./setup.sh --install-pyp
 
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian
 
-RUN ./setup.sh --install-ripgrep
-RUN ./setup.sh --install-vd
-RUN ./setup.sh --install-tmux
 
 # Additional for this container: asciinema for screen casts
 RUN source ~/.bashrc \
     pip install asciinema \
     conda install -n base r-base ipython
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c"]
