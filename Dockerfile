@@ -70,7 +70,6 @@ RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-vd
 RUN ./setup.sh --install-pyp
 RUN ./setup.sh --install-tmux
-RUN ./setup.sh --install-autojump
 RUN ./setup.sh --install-bat
 RUN ./setup.sh --install-black
 RUN ./setup.sh --install-fd
