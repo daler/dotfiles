@@ -357,6 +357,11 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " hard to see the cursor when it changes to a line.
 set guicursor=i:block
 
+" Enable 24-bit RGB color. Enables things like:
+" - ToggleTerm is darker color to better differentiate from text buffter
+" - Subtly changes the color of the zenburn colorscheme, including the
+"   higlighted line number
+set termguicolors
 
 " ============================================================================
 " CUSTOM MAPPINGS
