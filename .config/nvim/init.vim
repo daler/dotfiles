@@ -358,23 +358,22 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " CUSTOM MAPPINGS
 " ============================================================================
 "
-" Re-map leader from \ to , (comma). Any time <leader> is used below, it
-" now means comma. For succinctness, the comments in this document use
-" , instead of <leader>.
+" Re-map leader from \ to , (comma). Any time <leader> is used below, it now
+" means comma.
 let mapleader=","
 
-" ,H to toggle search highlight
+" <leader>H to toggle search highlight
 noremap <leader>H :set hlsearch!<CR>
 
-" ,W to clean up trailing whitespace in entire file
+" <leader>W to clean up trailing whitespace in entire file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" ,R to refresh syntax highlighting
+" <leader>R to refresh syntax highlighting
 noremap <leader>R <Esc>:syntax sync fromstart<CR>
 inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
-" ,` (comma backtick) creates a new fenced RMarkdown code block, ready to type
-" in. This works in insert or normal mode.
+" <leader>` (backtick) creates a new fenced RMarkdown code block, ready to
+" type in. This works in insert or normal mode.
 noremap <leader>` i```{r}<CR>```<Esc>O
 inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 
@@ -382,37 +381,37 @@ inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 " for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
-" ,ts to insert timestamp. Useful when writing logs
+" <leader>ts to insert timestamp. Useful when writing logs
 inoremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 noremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 
-" ,d to insert a ReST-formatted title for today's date. Only works in ReST
-" files.
+" <leader>d to insert a ReST-formatted title for today's date. Only works in
+" ReST files.
 autocmd FileType rst inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
 autocmd FileType rst noremap  <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
 
-" ,d to insert a Markdown header for today's date. Only works in markdown files.
+" <leader>d to insert a Markdown header for today's date. Only works in markdown files.
 autocmd FileType markdown inoremap <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 
-" ,- to fill the rest of the line with dashes
+" <leader>- to fill the rest of the line with dashes
 nnoremap <leader>- 80A-<Esc>d80<bar>
 
-" ,md to hard-wrap at 80 columns and reformat paragraphs as they are written.
-" Mnemonic is md = 'markdown', a common filetype where this is useful
+" <leader>md to hard-wrap at 80 columns and reformat paragraphs as they are
+" written. Mnemonic is md = 'markdown', a common filetype where this is useful
 nnoremap <leader>md :set tw=80 fo+=ta<CR>
 
-" ,nd to unset the hard-wrap. Mnemonic is 'not markdown', to indicate the
-" opposite of the ,md above.
+" <leader>nd to unset the hard-wrap. Mnemonic is 'not markdown', to indicate
+" the opposite of the ,md above.
 nnoremap <leader>nd :set tw=80 fo-=ta<CR>
 
-" ,<TAB> for slightly saner behavior with long TSV lines. Leaves the cursor in
-" the command bar so you can type in an appropriate tab stop value. Mnemonic of
-" <tab> should be self-explanatory!
+" <leader> <TAB> for slightly saner behavior with long TSV lines. Leaves the
+" cursor in the command bar so you can type in an appropriate tab stop value.
+" Mnemonic of <tab> should be self-explanatory!
 nnoremap <leader><tab> :set nowrap tabstop=
 
-" ,r to toggle relative numbering -- useful for choosing how many lines to
-" delete, for example.
+" <leader>r to toggle relative numbering -- useful for choosing how many lines
+" to delete, for example.
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
@@ -458,9 +457,10 @@ noremap <silent> ,j :wincmd j<cr>
 noremap <silent> ,k :wincmd k<cr>
 noremap <silent> ,l :wincmd l<cr>
 
-" ,q and ,w move to left and right windows respectively. Useful when working
-" with a terminal. ,q will go back to text buffer even in insert mode in
-" a terminal buffer. Can be more ergonomic than ,h and ,l defined above.
+" <leader>q and <leader>w move to left and right windows respectively. Useful
+" when working with a terminal.
+" <leader>q will go back to text buffer even in insert mode in a terminal
+" buffer.
 noremap <silent> ,w :wincmd l<cr>
 noremap <silent> ,q :wincmd h<cr>
 tnoremap <silent> ,q <C-\><C-n>:wincmd h<cr>
@@ -495,7 +495,6 @@ let g:python_highlight_all = 1
 " ----------------------------------------------------------------------------
 " ,n to toggle NERDTree window
 nnoremap <leader>n :NERDTreeToggle<cr>
-
 
 " ----------------------------------------------------------------------------
 " ToggleTerm
@@ -589,3 +588,4 @@ let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
 let g:pandoc#folding#fold_fenced_codeblocks = 1
+
