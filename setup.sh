@@ -451,17 +451,17 @@ elif [ $task == "--install-conda" ]; then
         MAMBAFORGE_DIR=/data/$USER/mambaforge
 
         # Newer versions of the installer cannot run from a noexec directory
-        # which may be the case on some hosts.  See discussion at
+        # which may be the case on some hosts. See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
         export TMPDIR=/data/$USER/mambaforge
-        sed -i 's|export PATH="$PATH:$HOME/mambaforge/condabin"|export PATH="$PATH:~/data/$USER/mambaforge/condabin"|' .path
 
    fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
     bash mambaforge.sh -b -p $MAMBAFORGE_DIR
     rm mambaforge.sh
-    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. Make sure it's on your path.${UNSET}\n"
+    echo "export PATH=\$PATH:$MAMBAFORGE_DIR/condabin" >> ~/.path
+    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path.${UNSET}\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
