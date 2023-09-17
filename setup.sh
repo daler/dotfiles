@@ -445,6 +445,7 @@ elif [ $task == "--install-conda" ]; then
     # On Biowulf/Helix, if we install into $HOME then the installation might
     # larger than the quota for the home directory. Instead, install to user's
     # data directory which has much more space.
+    # Also, .path needs to reflect this change.
     MAMBAFORGE_DIR=$HOME/mambaforge
     if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
         MAMBAFORGE_DIR=/data/$USER/mambaforge
@@ -453,7 +454,9 @@ elif [ $task == "--install-conda" ]; then
         # which may be the case on some hosts.  See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
         export TMPDIR=/data/$USER/mambaforge
-    fi
+        sed -i 's|export PATH="$PATH:$HOME/mambaforge/condabin"|export PATH="$PATH:~/data/$USER/mambaforge/condabin"|' .path
+
+   fi
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
     bash mambaforge.sh -b -p $MAMBAFORGE_DIR
