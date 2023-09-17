@@ -258,9 +258,11 @@ where the home directory is too small to support the installation, it will
 install to <code class="file docutils literal notranslate"><span class="pre">/data/$USER/mambaforge/condabin</span></code></p></li>
 <li><p>adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/mambaforge/condabin&quot;</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code>
 (which you can read more about at <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>)</p></li>
+<li><p>or if you’re on NIH’s HPC:
+adds the line export PATH=”$PATH:~/data/$USER/mambaforge/condabin” to the :<a class="reference external" href="file:~/.path">file:~/.path</a></p></li>
 </ul>
 <p>If you went with <a class="reference internal" href="#option2"><span class="std std-ref">Option 2: Selective usage</span></a>, you should add this to your path manually.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-miniconda
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-conda
 </pre></div>
 </div>
 <p>After installation, run the following:</p>

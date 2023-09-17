@@ -258,12 +258,14 @@ The following command:
   install to :file:`/data/$USER/mambaforge/condabin`
 - adds the line ``export PATH="$PATH:~/mambaforge/condabin"`` to the :file:`~/.path`
   (which you can read more about at :ref:`bash`)
+- or if you're on NIH's HPC:
+  adds the line export PATH="$PATH:~/data/$USER/mambaforge/condabin" to the :file:~/.path
 
 If you went with :ref:`option2`, you should add this to your path manually.
 
 .. code-block:: bash
 
-  ./setup.sh --install-miniconda
+  ./setup.sh --install-conda
 
 After installation, run the following:
 
