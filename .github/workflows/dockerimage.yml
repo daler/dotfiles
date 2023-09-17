@@ -15,4 +15,5 @@ jobs:
 
     - name: Test the docker image
       run: |
-        docker run --rm daler-dotfiles:test "source ~/.bashrc; which mamba"
+        cd tests
+        bash run-tests.sh
