@@ -366,7 +366,7 @@ set termguicolors
 " When termguicolors is set, text highlighted in visual mode has teal
 " background. This changes the highlight colour when termguicolors is set to
 " be more like when termguicolors is not set
-hi Visual guibg=#4a4a4a guifg=none
+hi Visual guibg=#4a4a4a guifg=NONE
 
 
 " ============================================================================
