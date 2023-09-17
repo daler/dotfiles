@@ -23,9 +23,32 @@ ENV HOME=/root/dockeruser
 RUN mkdir -p $HOME
 RUN mkdir -p $TMPDIR
 
-ADD . dotfiles
 WORKDIR dotfiles
-RUN git checkout $BRANCH
+ADD \
+.aliases \
+.bash_profile \
+.bash_prompt \
+.bashrc \
+.dircolors \
+.dircolors \
+.exports \
+.extra \
+.functions \
+.git-completion.bash \
+.gitconfig \
+.path \
+.tmux.conf \
+.vimrc \
+apt-installs-minimal.txt \
+apt-installs.txt \
+include.file \
+requirements-mac.txt \
+requirements.txt \
+setup.sh \
+.
+
+ADD .config ./.config
+ADD .vim ./.vim
 
 # Run setup in order
 
