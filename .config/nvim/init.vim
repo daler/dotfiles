@@ -441,9 +441,9 @@ nnoremap <leader>r :call NumberToggle()<cr>
 " Buffer switching
 " ----------------------------------------------------------------------------
 " buffer switching
-" ,l       : list buffers
-" ,b ,f ,g : go back/forward/last-used
-" ,1 ,2 ,3 : go to buffer 1/2/3 etc
+" <leader>1 go to buffer 1
+" <leader>2 go to buffer 2
+" etc
 nnoremap <leader>1 :1b<CR>
 nnoremap <leader>2 :2b<CR>
 nnoremap <leader>3 :3b<CR>
