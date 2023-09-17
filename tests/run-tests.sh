@@ -9,7 +9,7 @@ OLDIFS=$IFS; IFS=$'\n';
 while read line; do
     tst=$(echo $line | awk -F "\t" '{print $1}')
     exp=$(echo $line | awk -F "\t" '{print $2}')
-    obs=$(docker run --rm --platform linux/amd64 daler-dotfiles:test "source .bashrc; $tst")
+    obs=$(docker run --rm --platform linux/amd64 daler-dotfiles "source .bashrc; $tst")
     if [[ $exp != $obs ]]; then
         printf "${RED}[FAIL]${UNSET} $tst; $obs != $exp\n"
         FAILURES=1

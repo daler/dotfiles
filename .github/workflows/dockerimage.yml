@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --build-arg BRANCH=${GITHUB_REF##*/} --file Dockerfile --tag daler-dotfiles:test
+      run: docker build . --build-arg BRANCH=${GITHUB_REF##*/} --file Dockerfile --tag daler-dotfiles
 
     - name: Test the docker image
       run: |
