@@ -170,10 +170,10 @@ nmap <leader>p "+p
 nmap <leader>P "+P
 
 " <leader>q and <leader>w move to left and right windows respectively. Useful
-" when working with a terminal.
-" <leader>q will go back to text buffer even in insert mode in a terminal
-" buffer.
+" when working with a terminal. These will work even if you're in insert mode.
+" If you need to enter a literal ',w', then type more slowly after the leader.
 noremap <silent> <leader>w :wincmd l<cr>
+inoremap <silent> <leader>w <Esc>:wincmd l<cr>
 noremap <silent> <leader>q :wincmd h<cr>
 tnoremap <silent> <leader>q <C-\><C-n>:wincmd h<cr>
 
