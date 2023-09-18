@@ -95,3 +95,14 @@ function conda_deactivate_all() {
         conda deactivate;
     done
 }
+
+function hostlist() {
+    # Parse ~/.ssh/config and print out a nicely-formatted table of configured
+    # hosts. Useful for when you're trying to remember how to log in to an
+    # infrequently-accessed host.
+    paste \
+        <(grep -i "^Host" ~/.ssh/config | grep -v "*" | awk '{print $2}') \
+        <(grep -i "Hostname" ~/.ssh/config | grep -v "*" | awk '{print $2}') \
+        | column -t \
+        | sort
+}
