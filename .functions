@@ -90,6 +90,7 @@ function conda_deactivate_all() {
     # Keep deactivating until we no longer have a CONDA_PREFIX env var (which
     # might be a few times, if we had activated the base env and then another
     # env)
+    eval "$(conda shell.bash hook 2> /dev/null)"
     while [ -n "$CONDA_PREFIX" ]; do
         conda deactivate;
     done
