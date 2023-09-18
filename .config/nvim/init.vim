@@ -4,14 +4,15 @@ call plug#begin()
 " each plugin. Search this config for the plugin name to find config options
 " for it.
 
-Plug 'Vimjas/vim-python-pep8-indent' " Indent python using pep8 recommendations (does not add any commands).
 Plug 'akinsho/toggleterm.nvim' " Easily interact with a terminal within vim.
+Plug 'Vimjas/vim-python-pep8-indent' " Indent python using pep8 recommendations (does not add any commands).
 Plug 'chrisbra/vim-diff-enhanced' " Provides additional diff algorithms
 Plug 'dhruvasagar/vim-table-mode' " Very easily make and work with markdown and restructured text tables.
 Plug 'ervandew/supertab' " Autocomplete most things.
 Plug 'flazz/vim-colorschemes' " Lots of colorschemes, including 'zenburn' which is configured below
 Plug 'ggandor/leap.nvim' " Jump around in a buffer with low mental effort
 Plug 'junegunn/gv.vim' " Easily view and browse git history
+Plug 'phha/zenburn.nvim' " updated zenburn colorscheme
 Plug 'preservim/nerdtree' " A file browser for vim.
 Plug 'roxma/vim-tmux-clipboard' " Automatically shares vim and tmux clipboards
 Plug 'samoshkin/vim-mergetool' " Makes dealing with 3-way merge conflicts much easier
@@ -74,10 +75,6 @@ set wildignore=*.swp,*.bak,*.pyc,*.class " Ignore these when autocompleting
 :silent! colorscheme zenburn " Set colorscheme here
 set guicursor=i:block " Always use block cursor. In some terminals and fonts (like iTerm), it can be hard to see the cursor when it changes to a line.
 set termguicolors " 24-bit color. Subtly changes some colors, like terminal and highlights
-
-" The following line adjusts visual select colors
-hi Visual guibg=#4a4a4a guifg=NONE
-
 
 " CUSTOM MAPPINGS ============================================================
 " NOTE: Comments cannot be on the same line when remapping.
