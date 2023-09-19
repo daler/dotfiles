@@ -41,4 +41,8 @@ fi
 #
 # The `ca` and `conda_deactivate_all` functions used here are defined in the
 # .functions file, which in turn was sourced at the beginning of this file.
-[[ -z $TMUX ]] || ca; conda_deactivate_all
+if command -v conda > /dev/null; then
+    if [ ! -z $TMUX ]; then
+        conda_deactivate_all
+    fi
+fi

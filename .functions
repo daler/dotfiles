@@ -77,8 +77,8 @@ function prsetup {
 }
 
 function ca() {
-    # This function allows you only activate the base env when you're ready to
-    # (and don't activate it on EVERY new shell).
+    # This function allows you to activate the base env only when you're ready
+    # to (and don't activate it on EVERY new shell).
     #
     # You can also provide an env name or path to activate it.
     eval "$(conda shell.bash hook 2> /dev/null)"
