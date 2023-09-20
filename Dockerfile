@@ -23,7 +23,18 @@ ENV HOME=/root/dockeruser
 RUN mkdir -p $HOME
 RUN mkdir -p $TMPDIR
 
+# Don't prompt for user input when using setup.sh
+ENV DOTFILES_FORCE=true
+
 WORKDIR dotfiles
+
+# These apt installs typically take the longest time, so run early before
+# adding other files, which may otherwise invalidate the cache even though they
+# are unrelated.
+ADD apt-installs-minimal.txt setup.sh .
+RUN ./setup.sh --apt-install-minimal
+
+# Now add the rest of the files
 ADD \
 .aliases \
 .bash_profile \
@@ -39,32 +50,26 @@ ADD \
 .path \
 .tmux.conf \
 .vimrc \
-apt-installs-minimal.txt \
 apt-installs.txt \
 include.file \
 requirements-mac.txt \
 requirements.txt \
-setup.sh \
 .
 
+# Directories have to be ADDed one at a time
 ADD .config ./.config
 ADD .vim ./.vim
 
 # Run setup in order
-
-ENV DOTFILES_FORCE=true
-RUN ./setup.sh --apt-install-minimal
 RUN ./setup.sh --dotfiles
-
 RUN ./setup.sh --install-neovim
 RUN MANUAL_PLUG_INSTALL=1 ./setup.sh --set-up-vim-plugins
 RUN source ~/.bashrc; nvim +PlugInstall +qall
 RUN source ~/.bashrc; $(which vim) +PlugInstall +qall
-
 RUN ./setup.sh --install-conda
 RUN ./setup.sh --set-up-bioconda
 
-# Various installations using ./setup.sh
+# Various tool installations using ./setup.sh
 RUN ./setup.sh --install-fzf
 RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-vd
@@ -79,7 +84,6 @@ RUN ./setup.sh --install-jq
 
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian
-
 
 # Additional for this container: asciinema for screen casts
 RUN source ~/.bashrc \
