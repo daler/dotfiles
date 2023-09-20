@@ -101,6 +101,7 @@ function showHelp() {
     echo "    8)  ./setup.sh --install-ripgrep"
     echo "    9)  ./setup.sh --install-vd"
     echo "    10) ./setup.sh --install-pyp"
+    echo "    11) ./setup.sh --install-fd"
     echo
     echo "  On Mac:"
     echo "       ./setup.sh --mac-stuff"
