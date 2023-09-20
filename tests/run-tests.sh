@@ -13,7 +13,7 @@ while read line; do
     exp=$(echo $line | awk -F "\t" '{print $2}')
     obs=$(docker run --rm --platform linux/amd64 daler-dotfiles "source .bashrc; $tst")
     if [[ $exp != $obs ]]; then
-        printf "${RED}[FAIL]${UNSET} $tst; $obs != $exp\n"
+        printf "${RED}[FAIL]${UNSET} $tst; '$obs' != '$exp'\n"
         FAILURES=1
     else
         printf "${GREEN}[PASS]${UNSET} $tst = $exp\n"
