@@ -77,7 +77,7 @@ set guicursor=i:block " Always use block cursor. In some terminals and fonts (li
 set termguicolors " 24-bit color. Subtly changes some colors, like terminal background and highlights. Also allows comments to be italic.
 
 " In some circumstances, the background highlight when selecting text can be bright teal when using zenburn. This fixes it to light gray.
-hi Visual guibg=#555555 guifg=none
+hi Visual guibg=#555555 guifg=NONE
 
 " CUSTOM MAPPINGS ============================================================
 " NOTE: Comments cannot be on the same line when remapping.
