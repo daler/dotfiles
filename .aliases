@@ -36,5 +36,4 @@ alias git-clean-branches-main="git branch --merged main | grep -v \"\* main\" | 
 
 alias gsv="vim -c ':Git' -c ':bunload 1'"
 alias glv="vim -c ':GV'"
-alias e="conda activate ./env"
 alias s="start_agent"
