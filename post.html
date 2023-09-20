@@ -53,7 +53,7 @@
 some things that have to be manually done. This page documents those additional
 tasks.</p>
 <div class="section" id="mac">
-<h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
+<span id="macpostinstall"></span><h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>To turn off the iTerm2 audio bell (that “donk!” noise you get after hitting
 TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
@@ -196,21 +196,16 @@ git config --global user.email <span class="s2">&quot;your email here&quot;</spa
         </div>
       </div>
       <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Ryan Dale.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/post.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
   </body>
 </html>

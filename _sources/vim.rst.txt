@@ -46,6 +46,59 @@ pick-and-choose at will.
 -  Searches will be case-sensitive only if at least letter is a capital
 -  Plugins for working more easily within tmux
 
+Using the mouse
+---------------
+
+In addition to allowing clicking and scrolling, ``set mouse=a`` also:
+
+- Supports mouse-enabled motions. To try this, left-click to place the cursor.
+  Type :kbd:`y` then left-click to yank from current cursor to where you next
+  clicked.
+- Drag the status-line or vertical separator to resize
+- Double-click to select word; triple-click for line
+
+Non-printing characters
+-----------------------
+Non-printing characters (tab characters and trailing spaces) are displayed.
+Differentiating between tabs and spaces is extremely helpful in tricky
+debugging situations.
+
+The vim config has these lines:
+
+.. code-block:: vim
+
+    :autocmd InsertEnter * set listchars=tab:>•
+    :autocmd InsertLeave * set listchars=tab:>•,trail:∙,nbsp:•,extends:⟩,precedes:⟨
+
+With these settings <TAB> characters look like ``>••••``. Trailing spaces show up
+as dots like ``∙∙∙∙∙``.
+
+The autocmds here mean that we only show the trailing spaces when we're outside
+of insert mode, so that every space typed doesn't show up as trailing. When
+wrap is off, the characters for "extends" and "precedes" indicate that there's
+text offscreen.
+
+Format options explanation
+--------------------------
+
+The following options change the behavior of various formatting; see ``:h formatoptions``:
+
+.. code-block:: vim
+
+    set formatoptions=qrn1coj
+
+Explanation of these options:
+
+- q: gq also formats comments
+- r: insert comment leader after <Enter> in insert mode
+- n: recognize numbered lists
+- 1: don't break a line after a 1-letter word
+- c: autoformat comments
+- o: automatically insert comment leader afer 'o' or 'O' in Normal mode.
+-    Use Ctrl-u to quickly delete it if you didn't want it.
+- j: where it makes sense, remove a comment leader when joining lines
+
+
 Shortcuts
 ---------
 
@@ -58,52 +111,55 @@ Here are some general shortcuts that are defined in the included config:
       - description
     * - :kbd:`,`
       -
-      - Remapped leader. Below, when you see :kbd:`,` it means :kbd:`<leader>`.
-        E.g., :kbd:`<leader>3` becomes :kbd:`,3`
-    * - :kbd:`,r`
+      - Remapped leader. Below, when you see :kbd:`<leader>` it means :kbd:`,`.
+    * - :kbd:`<leader>r`
       - normal
       - Toggle relative line numbering (makes it easier to jump around lines
         with motion operators).
-    * - :kbd:`,H`
+    * - :kbd:`<leader>H`
       - normal
-      - Toggle highlighted search
-    * - :kbd:`,W`
+      - Toggle highlighted search. Sometimes it's distracting to have all the
+        highlights stick around.
+    * - :kbd:`<leader>W`
       - normal
-      - clean up all trailing spaces
-    * - :kbd:`,R`
+      - Remove all trailing spaces in the file. Useful when cleaning up code to
+        commit.
+    * - :kbd:`<leader>R`
       - normal or insert
-      - refresh syntax highlighting
+      - Refresh syntax highlighting. Useful when syntax highlighting gets wonky.
     * - :kbd:`@l`
       - normal
-      - macro to surround the line with quotes and add a trailing comma, making
-        it easy to make Python or R lists out of pasted text
-    * - :kbd:`,d`
+      - Macro to surround the line with quotes and add a trailing comma. Useful
+        for making Python or R lists out of pasted text
+    * - :kbd:`<leader>d`
       - normal or insert
-      - Insert the current date as a ReST-formatted title
-    * - :kbd:`,-`
+      - Insert the current date as a ReST-formatted title. Useful when writing
+        logs.
+    * - :kbd:`<leader>-`
       - normal
-      - Fills in the rest of the line with "-", out to column 80
-    * - :kbd:`,md`
+      - Fills in the rest of the line with "-", out to column 80. Useful for
+        making section separators.
+    * - :kbd:`<leader>md`
       - normal
       - Sets hard-wrap to 80, useful for writing markdown.
-    * - :kbd:`,nd`
+    * - :kbd:`<leader>nd`
       - normal
       - Opposite of :kbd:`,md`
-    * - :kbd:`,<TAB>`
+    * - :kbd:`<leader><TAB>`
       - normal
-      - Writes ``:set nowrap tabstop=`` and then leaves the cursor at the vim
-        command bar so you can fill in a reasonble tabstop for the file you're
-        looking at.
-    * - :kbd:`,ko`
+      - Useful for working with TSVs. Writes ``:set nowrap tabstop=`` and then
+        leaves the cursor at the vim command bar so you can fill in a reasonble
+        tabstop for the file you're looking at.
+    * - :kbd:`<leader>ko`
       - normal
       - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
         global options (mnemonic: knitr options)
-    * - :kbd:`,ry`
+    * - :kbd:`<leader>ry`
       - normal
       - Used for RMarkdown; writes commonly-used YAML front matter (mnemonic: rmarkdown yaml)
-    * - :kbd:`,\``
+    * - :kbd:`<leader>\``
       - insert or normal
-      - Adds a new RMarkdown chunk and places the cursor inside it
+      - (that's a backtick) Adds a new RMarkdown chunk and places the cursor inside it
 
 Plugins
 -------
@@ -113,292 +169,99 @@ and lots of options. Here I’m only highlighting the options I use the most, bu
 definitely check out each homepage to see all the other weird and wonderful
 ways they can be used.
 
+Here, plugins are sorted roughly so that the ones that provide additional
+commands come first.
 
-neoterm
-~~~~~~~
+.. contents::
+    :local:
 
-Provides a separate terminal in vim.
+``toggleterm``
+~~~~~~~~~~~~~~
+`ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
+interact with a terminal within vim.
 
-`homepage <https://github.com/kassio/neoterm>`_
-
-With a terminal inside vim, you can send text between that terminal and a file
-you have open. As described in the “Using R with nvim” section, this lets you
-reproduce an RStudio-like environment purely from the terminal.
+The greatest benefit of this is that you can send text from a text buffer
+(Python script, RMarkdown file, etc) over to a terminal. This lets you
+reproduce an IDE-like environment purely from the terminal. The following
+commands are custom mappings set in :file:`.config/nvim/init.vim` that affect
+the terminal use.
 
 .. note::
 
-    This method works great to send lines to IPython from a Python script, but
-    to avoid issues with indentation, you should start IPython like this in the
-    neoterm terminal::
+    The terminal will jump to insert mode when you switch to it (either using
+    keyboard shortcuts or mouse), but **clicking the mouse a second time will
+    enter visual mode**, just like in a text buffer. This can get confusing if
+    you're not expecting it.
 
-        ipython --no-autoindent
-
-The following commands are custom mappings set in :file:`.config/nvim/init.vim`
-that affect the terminal use:
+    You can either click to the text buffer and immediately back in the
+    terminal, or use :kbd:`a` or :kbd:`i` in the terminal to get back to insert
+    mode.
 
 .. list-table::
 
     * - command
       - mode
       - description
-    * - :kbd:`,t`
+    * - :kbd:`<leader>t`
       - normal
-      - Open neoterm terminal to the right.
-    * - :kbd:`Alt-w`
+      - Open terminal to the right.
+    * - :kbd:`<leader>w`
+      - normal
+      - Move to the right window (assumes it's terminal), and enter insert mode
+    * - :kbd:`<leader>q`
       - normal or insert
-      - Move to terminal on right and enter insert mode
-    * - :kbd:`,w`
+      - Move to the text buffer to the left, and enter normal mode
+    * - :kbd:`<leader>cd`
       - normal
-      - Same as above, but normal mode only
-    * - :kbd:`Alt-q`
-      - normal or insert
-      - Move to buffer on left and enter normal mode
-    * - :kbd:`,q`
-      - normal
-      - Same as above, but normal mode only
-    * - :kbd:`,cd`
-      - normal
-      - Send the current RMarkdown code chunk to the neoterm buffer, and jump to the next chunk
+      - Send the current RMarkdown code chunk to the terminal, and jump to the next chunk
     * - :kbd:`gxx`
       - normal
-      - Send the current *line* to the neoterm buffer
+      - Send the current *line* to the terminal buffer
     * - :kbd:`gx`
       - visual
-      - Send the current *selection* to the neoterm buffer
-    * - :kbd:`,k`
+      - Send the current *selection* to the terminal buffer
+    * - :kbd:`<leader>k`
       - normal
       - Render the current RMarkdown file to HTML using `knitr::render()`.
-        Assumes you have knitr installed and you're running R in a neoterm
+        Assumes you have knitr installed and you're running R in the terminal
         buffer.
-    * - :kbd:`,k`
+    * - :kbd:`<leader>k`
       - normal
       - Run the current Python script in IPython. Assumes you're running IPython
-        in a neoterm buffer.
-    * - :kbd:`,te`
-      - normal
-      - Open neoterm terminal to the right, and immediately activate the conda environment in the `./env` directory
-    * - :kbd:`,t1e`
-      - normal
-      - Same as above, but 1 dir above in  `../env`
-    * - :kbd:`,t2e`
-      - normal
-      - Same as above, but 2 dir above in  `../../env`
-    * - :kbd:`,t3e`
-      - normal
-      - Same as above, but 3 dir above in  `../../../env`
-    * - :kbd:`,tcd`
-      - normal
-      - Change the working directory of the neoterm terminal to the working
-        directory of the buffer where this command was called (mnemonic: terminal change directory)
+        in the terminal buffer.
 
 
+.. _vimfugitive:
 
-supertab
-~~~~~~~~
+``vim-fugitive``
+~~~~~~~~~~~~~~~~
+`vim-fugitive <https://github.com/tpope/vim-fugitive>`_ provides a git interface in vim.
 
-Autocomplete most things with ``TAB`` in insert mode.
-
-`homepage <https://github.com/ervandew/supertab>`_
-
-This is enabled automatically when the plugin is installed.
-
-python-syntax
-~~~~~~~~~~~~~
-Sophisticated Python syntax highlighting.
-
-`homepage <https://github.com/vim-python/python-syntax>`_
-
-This happens automatically when editing Python files.
-The syntax highlighting works for example within format
-strings, within docstrings, reserved keywords. Happens automatically when
-editing Python files.
-
-SimpylFold
-~~~~~~~~~~
-
-Nice code folding for Python.
-
-`homepage <https://github.com/tmhedberg/SimpylFold>`_
-
-
-Use built-in vim commands for folding like ``zc``, ``zn``, ``zM`` as follows:
+This is wonderful for making incremental commits from within vim. This makes it
+a terminal-only version of git-cola or an alternative to tig. Specifically:
 
 .. list-table::
 
     * - command
       - description
-    * - :kbd:`zn`
-      - unfold everything
-    * - :kbd:`zM`
-      - fold everything
-    * - :kbd:`zc`
-      - toggle folding of current block
-
-vim-python-pep8-indent
-~~~~~~~~~~~~~~~~~~~~~~
-
-Auto-indent Python using pep8 recommendations.
-
-`homepage <https://github.com/Vimjas/vim-python-pep8-indent>`_
-
-This happens as you’re typing, or when you use :kbd:`gq` on a selection to wrap
-it.
-
-vim-rmarkdown
-~~~~~~~~~~~~~
-
-Syntax highlight R within RMarkdown code chunks.
-
-`homepage <https://github.com/vim-pandoc/vim-rmarkdown>`_
-
-Requires both ``vim-pandoc`` and ``vim-pandoc-syntax``, described below.
-
-vim-pandoc
-~~~~~~~~~~
-
-Integration with `pandoc <http://johnmacfarlane.net/pandoc/>`_.
-
-`homepage <https://github.com/vim-pandoc/vim-pandoc>`_
-
-Includes folding and formatting. Lots of shortcuts defined, see `this section
-of the help
-<https://github.com/vim-pandoc/vim-pandoc/blob/master/doc/pandoc.txt#L390>`_
-for more.
-
-Uses vim-pandoc-syntax (see below) for syntax highlighting.
-
-.. list-table::
-
-    * - command
-      - description
-    * - :kbd:`:TOC`
-      - Open a table of contents for the current document that you can use to
-        navigate
-
-vim-pandoc-syntax
-~~~~~~~~~~~~~~~~~
-
-Used by vim-pandoc (above)
-
-`homepage <https://github.com/vim-pandoc/vim-pandoc-syntax>`_
-
-vis
-~~~
-Better behavior on visual blocks.
-
-`homepage <vim-scripts/vis>`_
-
-Did you know that by default in vim and neovim, when selecting things in visual
-block mode, operations (substitutions, sorting) operate on the entire line --
-not just the block, as you might expect. However sometimes you want to edit
-just the visual block selection, for example when editing TSV files.
-
-.. list-table::
-
-    * - command
-      - description
-    * - :kbd:`Ctrl-v`, then use `:B` instead of `:`
-      - Operates on visual block selection only
-
-nerdcommenter
-~~~~~~~~~~~~~
-
-Easily comment blocks of text.
-
-`homepage <https://github.com/scrooloose/nerdcommenter>`_
-
-.. list-table::
-
-    * - command
-      - description
-    * - :kbd:`,cc`
-      - Comment current or selected lines
-
-
-nerdtree
-~~~~~~~~
-
-Open up a file browser for finding/selecting files to edit.
-
-`homepage <https://github.com/scrooloose/nerdtree>`_
-
-
-Open up a file browser, navigate it with vim movement keys, and hit ``Enter``
-to open the file in a new buffer.
-
-.. list-table::
-
-    * - command
-      - description
-    * - :kbd:`,n`
-      - toggle file browser
-
-
-vim-airline
-~~~~~~~~~~~
-Nice statusline, plus "tabs" that allow you to easily switch between open files
-and copy/paste between them.
-
-`homepage <https://github.com/vim-airline/vim-airline>`_
-
-Install powerline fonts for full effect (``./setup.sh --powerline``). See below
-for themes.
-
-vim-airline-themes
-~~~~~~~~~~~~~~~~~~
-Themes for use with vim-airline.
-
-`homepage <https://github.com/vim-airline/vim-airline/wiki/Screenshots>`_
-
-
-vim-tmux-clipboard
-~~~~~~~~~~~~~~~~~~
-
-Automatically copy yanked text from vim into the tmux clipboard.
-
-`homepage <https://github.com/roxma/vim-tmux-clipboard>`_
-
-See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
-usage details. Note that this also requires the `vim-tmux-focus-events
-<https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin as well.
-
-
-.. _vim-fugitive:
-
-vim-fugitive
-~~~~~~~~~~~~
-
-Run git from vim.
-
-`homepage <https://github.com/tpope/vim-fugitive>`_
-
-I mostly use this for making incremental commits from within vim. This makes it
-a terminal-only version of :ref:`git-cola` or an alternativel to :ref:`tig`.
-Specifically:
-
-
-.. list-table::
-
-    * - command
-      - description
-    * - :kbd:`:Gstatus`
-      - Opens the main screen for fugitive (hint: use `vim -c ":Gstatus"` from
+    * - :kbd:`:Git`
+      - Opens the main screen for fugitive (hint: use `vim -c ":Git"` from
         the command line to jump right into it)
     * - :kbd:`=`
-      - When the cursor is over a filename, use this to show the diffs of that file
+      - Toggle visibility of changes
     * - :kbd:`-` (when over a filename)
       - Stage or unstage the file
     * - :kbd:`-` (when in a chunk after using ``=``)
       - Stage or unstage the chunk
     * - :kbd:`-` (in visual select mode (``V``))
-      - Stage or unstage just the selected lines
+      - Stage or unstage **just the selected lines**. Perfect for making incremental commits.
     * - :kbd:`cc`
       - Commit, opening up a separate buffer in which to write the commit message
     * - :kbd:`dd` (when over a file)
       - Open the file in diff mode
 
 The following commands are built-in vim commands when in diff mode, but
-are used heavily when working with ``:Gdiff``:
+are used heavily when working with ``:Gdiff``, so here is a reminder:
 
 .. list-table::
 
@@ -415,23 +278,25 @@ are used heavily when working with ``:Gdiff``:
 
 .. _vim-gv:
 
-vim.gv
-~~~~~~
+``vim.gv``
+~~~~~~~~~~
+`vim.gv <https://github.com/junegunn/gv.vim>`_ provides an interface to easily
+view and browse git history.
 
-Easily view and browse git history.
+.. list-table::
 
-`homepage: <https://github.com/junegunn/gv.vim>`_
+    * - command
+      - description
+    * - :kbd:`:GV` in visual mode
+      - View commits affecting selection
+    * - :kbd:`GV`
+      - Open a commit browser, hit :kbd:`Enter` on a commit to view
 
-By calling ``:GV``, you'll get a browseable git log and when you hit enter
-you'll see the diffs from that commit. Has other commands for only seeing
-commits affecting the current file.
-
-vim-mergetool
-~~~~~~~~~~~~~
-
-Makes 3-way merge conflicts easier by only focusing on what needs to be manually edited.
-
-`homepage: <https://github.com/samoshkin/vim-mergetool>`_
+``vim-mergetool``
+~~~~~~~~~~~~~~~~~
+`vim-mergetool <https://github.com/samoshkin/vim-mergetool>`_ makes 3-way merge
+conflicts much easier to deal with by only focusing on what needs to be
+manually edited.
 
 Makes it MUCH easier to work with 3-way diffs, while at the same time allowing
 enough flexibility in configuration to be able to reproduce default behaviors.
@@ -443,15 +308,25 @@ enough flexibility in configuration to be able to reproduce default behaviors.
         [merge]
         conflictStyle = diff3
 
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`:MergetoolStart`
+      - Starts the tool
+    * - :kbd:`:diffget`
+      - Pulls "theirs" (that is, assume the remote is correct)
+    * - :kbd:`do`, :kbd:`dp`
+      - Used as in vim diff mode
+
+Save and quit, or use :kbd:`:MergetoolStop`.
 
 
-vim-diff-enhanced
-~~~~~~~~~~~~~~~~~
-
-Provides additional diff algorithms that work better on certain kinds of
-files.
-
-`homepage: <https://github.com/chrisbra/vim-diff-enhanced>`_
+``vim-diff-enhanced``
+~~~~~~~~~~~~~~~~~~~~~
+`vim-diff-enhanced <https://github.com/chrisbra/vim-diff-enhanced>`_ provides
+additional diff algorithms that work better on certain kinds of files. If your
+diffs are not looking right, try changing the algorithm with this plugin:
 
 .. list-table::
 
@@ -479,16 +354,19 @@ The following algorithms are available:
       - Histogram is similar to patience but slightly faster
 
 
-vim-table-mode
-~~~~~~~~~~~~~~
-
-Easy formatting of tables in Markdown and Restructured Text.
-
-`homepage <https://github.com/vim-pandoc/vim-pandoc-syntax>`_
+``vim-table-mode``
+~~~~~~~~~~~~~~~~~~
+`vim-table-mode <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ provides
+easy formatting of tables in Markdown and Restructured Text
 
 Nice Markdown tables are a pain to format. This plugin makes it easy, by
 auto-padding table cells and adding the header lines as needed.
 
+* With table mode enabled, :kbd:`||` on a new line to start the header.
+* Type the header, separated by :kbd:`|`.
+* On a new line, use :kbd:`||` to fill in the header underline.
+* On subsequent rows, delimit fields by :kbd:`|`.
+* Complete the table with :kbd:`||` on a new line.
 
 .. list-table::
 
@@ -505,6 +383,171 @@ auto-padding table cells and adding the header lines as needed.
       - Realigns an existing table, adding padding as necessary
 
 See the homepage for, e.g., using ``||`` to auto-create header lines.
+
+
+``leap.nvim``
+~~~~~~~~~~~~~
+`leap <https://github.com/ggandor/leap.nvim>`_ lets you jump around in a buffer
+with low mental effort.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`s` in normal mode
+      - jump below (see details)
+    * - :kbd:`S` in normal mode
+      - jump above (see details)
+
+After hitting :kbd:`s` or :kbd:`S`, type two of the characters you want to leap
+to. You will see highlighted letters pop up at all the possible destinations.
+These label possible jump points. Hit the letter corresponding to the jump
+point to go right there.
+
+This works best when keeping your eyes on the place you want to jump to.
+
+``vim-surround``
+~~~~~~~~~~~~~~~~
+`vim-surround <https://github.com/tpope/vim-surround>`_ lets you easily change
+surrounding characters.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`cs"'`
+      - change surrounding ``"`` to ``'``
+
+``vim-commentary``
+~~~~~~~~~~~~~~~~~~
+`vim-commentary <https://github.com/tpope/vim-commentary>`_ lets you easily
+toggle comments on lines or blocks of code.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`gc` on a visual selection
+      - toggle comment
+    * - :kbd:`gcc` on a single line
+      - toggle comment
+
+
+``vis``
+~~~~~~~
+`vis <https://github.com/vim-scripts/vis>`_ provides better behavior on visual
+blocks.
+
+Did you know that by default in vim and neovim, when selecting things in visual
+block mode, operations (substitutions, sorting) operate on the entire line --
+not just the block, as you might expect. However sometimes you want to edit
+just the visual block selection, for example when editing TSV files.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`Ctrl-v`, then use :kbd:`:B` instead of :kbd:`:`
+      - Operates on visual block selection only
+
+``nerdtree``
+~~~~~~~~~~~~
+`nerdtree <https://github.com/scrooloose/nerdtree>`_ provides a file browser
+for finding/selecting files to edit. Navigate it with vim movement keys, and
+hit ``Enter`` to open the file in a new buffer.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`<leader>n`
+      - toggle file browser
+
+``supertab``
+~~~~~~~~~~~~
+`Supertab <https://github.com/ervandew/supertab>`_ lets you autocomplete most
+things with ``TAB`` in insert mode. This is enabled automatically when the
+plugin is installed. 
+
+No additional configuration is performed here, but see ``:help supertab`` for
+available options.
+
+``python-syntax``
+~~~~~~~~~~~~~~~~~
+`python-syntax <https://github.com/vim-python/python-syntax>`_ provides
+improved Python syntax highlighting.
+
+This happens automatically when editing Python files. The syntax highlighting
+is improved within format strings, within docstrings, reserved keywords.
+Happens automatically when editing Python files; no additional commands.
+
+``simpylfold``
+~~~~~~~~~~~~~~
+`SimpylFold <https://github.com/tmhedberg/SimpylFold>`_ provides improved code folding for Python.
+
+Built-in vim folding for Python will also fold for-loops and if-blocks; this
+only folds function, method, and class definitions using built-in vim commands
+for folding like ``zc``, ``zn``, ``zM``.
+
+``vim-python-pep8-indent``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+`vim-python-pep8-indent <https://github.com/Vimjas/vim-python-pep8-indent>`_
+auto-indents Python using pep8 recommendations. This happens as you’re typing,
+or when you use :kbd:`gq` on a selection to wrap. No additional commands
+configured.
+
+``vim-rmarkdown``
+~~~~~~~~~~~~~~~~~
+`vim-rmarkdown <https://github.com/vim-pandoc/vim-rmarkdown>`_ provides syntax
+highlighting for R within RMarkdown code chunks. Requires both ``vim-pandoc``
+and ``vim-pandoc-syntax``, described below.
+
+No additional commands configured.
+
+``vim-pandoc``
+~~~~~~~~~~~~~~
+`vim-pandoc <https://github.com/vim-pandoc/vim-pandoc>`_ Integration with
+`pandoc <http://johnmacfarlane.net/pandoc/>`_. Uses vim-pandoc-syntax (see
+below) for syntax highlighting.
+
+Includes folding and formatting. Lots of shortcuts are defined by this plugin,
+see ``:help vim-pandoc`` for much more.
+
+``vim-pandoc-syntax``
+~~~~~~~~~~~~~~~~~~~~~
+`vim-pandoc-syntax <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ is used
+by vim-pandoc (above). It is a separate plugin because the authors found it
+easier to track bugs separately.
+
+No additional commands configured.
+
+
+``vim-airline``
+~~~~~~~~~~~~~~~
+`vim-airline <https://github.com/vim-airline/vim-airline>`_ provides a nice
+statusline, plus "tabs" that allow you to easily switch between open files and
+copy/paste between them.
+
+Install powerline fonts for full effect (``./setup.sh --powerline``). See below
+for themes.
+
+``vim-airline-themes``
+~~~~~~~~~~~~~~~~~~~~~~
+`vim-airline-themes
+<https://github.com/vim-airline/vim-airline/wiki/Screenshots>`_ provides themes
+for use with vim-airline.
+
+
+``vim-tmux-clipboard``
+~~~~~~~~~~~~~~~~~~~~~~
+`vim-tmux-clipboard <https://github.com/roxma/vim-tmux-clipboard>`_
+automatically copies yanked text from vim into the tmux clipboard. Similarly,
+anything copied in tmux makes it into the vim clipboard.
+
+See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
+usage details. Note that this also requires the `vim-tmux-focus-events
+<https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin. You'll need
+to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
 
 Working with R in nvim
 ----------------------

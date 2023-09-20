@@ -1,1 +1,31 @@
-/* This file intentionally left blank. */
+div.details p {
+    font-style: italic;
+    font-size: 90%;
+    color: #aaaaaa;
+    padding: 5px;
+    margin: 5px;
+}
+
+div.details a {
+    color: #aaaaaa;
+}
+
+div.details code {
+    background: none;
+    color: #aaaaaa;
+}
+
+
+summary {
+    font-style: italic;
+    color: #3a51a0;
+}
+
+div.admonition {
+    background: none;
+}
+
+div.admonition p.admonition-title {
+    font-size: 20px;
+}
+

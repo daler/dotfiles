@@ -44,17 +44,24 @@
             
   <div class="section" id="daler-dotfiles">
 <h1>daler dotfiles<a class="headerlink" href="#daler-dotfiles" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://github.com/daler/dotfiles">This repo</a> captures hard-won settings and
+<details><summary>What are dofiles?</summary><div class="details"><p><i>What are dofiles?</i></p><p>Linux and macOS have user-specific configuration files for things like bash,
+vim, tmux, and more. Since these files traditionally start with a <code class="docutils literal notranslate"><span class="pre">.</span></code>, they
+are collectively called dotfiles.</p>
+</div></details><p><a class="reference external" href="https://github.com/daler/dotfiles">This repo</a> captures hard-won settings and
 tool installations that I have accumulated over time. Using the included
 modular setup script, starting from a fresh installation of Ubuntu Linux or
-MacOS I can have everything I’m used to – programs and all – in a few minutes.</p>
-<p>It doubles as a “batteries included” set of configuration files that can
-be used by others just starting out. It includes:</p>
+macOS I can have everything I’m used to a few minutes. It can be useful for different audiences:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="bash.html#bash"><span class="std std-ref">bash config</span></a></p></li>
-<li><p><a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux config</span></a></p></li>
-<li><p><a class="reference internal" href="vim.html#vim"><span class="std std-ref">vim/neovim config</span></a></p></li>
-<li><p>various <a class="reference internal" href="tools.html#tools"><span class="std std-ref">tool installation commands</span></a></p></li>
+<li><p><strong>Just starting out?</strong> This is a “batteries included” configuration you can use
+as a launching point.</p></li>
+<li><p><strong>Already maintain your own dotfiles?</strong> Browse around to see if there’s anything
+you want to add to your own setup, everything here is documented.</p></li>
+</ul>
+<p>The repo includes the following, all driven by the <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> script:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="bash.html#bash"><span class="std std-ref">bash config</span></a>, <a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux config</span></a>, and <a class="reference internal" href="vim.html#vim"><span class="std std-ref">vim/neovim config</span></a> files.</p></li>
+<li><p>conda installation and setup commands</p></li>
+<li><p><a class="reference internal" href="tools.html#tools"><span class="std std-ref">tool installation commands</span></a></p></li>
 </ul>
 <p>If you don’t want “batteries included”, you can select only what is most
 useful to you because:</p>
@@ -138,21 +145,16 @@ useful to you because:</p>
         </div>
       </div>
       <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Ryan Dale.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
   </body>
 </html>

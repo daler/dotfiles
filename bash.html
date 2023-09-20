@@ -49,11 +49,12 @@
             
   <div class="section" id="bash-dotfiles">
 <span id="bash"></span><h1>Bash dotfiles<a class="headerlink" href="#bash-dotfiles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bashrc">
+<h2><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code><a class="headerlink" href="#bashrc" title="Permalink to this headline">¶</a></h2>
 <p>The modular organization for bash configuration is inspired by <a class="reference external" href="https://github.com/mathiasbynens/dotfiles">this
 repo</a>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> sources <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>, which in turn sources the
-following files if they’re present. This keeps things a little more
-organized and modular. They work like this:</p>
+<p><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> sources the following files if they’re present. This keeps things
+a little more organized and modular. They work like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">bash_profile</span>  <span class="c1"># sources .bashrc</span>
 <span class="o">.</span><span class="n">bashrc</span>        <span class="c1"># sources the following files:</span>
          <span class="o">--&gt;</span> <span class="o">.</span><span class="n">path</span>         <span class="c1"># all &quot;export PATH=...&quot; goes in here</span>
@@ -66,6 +67,25 @@ organized and modular. They work like this:</p>
 </div>
 <p>Below is a little more detail on the contents of each of these files and
 some notable features.</p>
+<p>Other notable parts of the <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
+<ul class="simple">
+<li><p>Update terminal size after commands</p></li>
+<li><p>Enables <cite>autocd</cite> if available. When enabled, just the name of a directory
+will be sufficient to cd to it.</p></li>
+<li><p>Enables <cite>globstar</cite> if available. When enabled, the pattern <code class="docutils literal notranslate"><span class="pre">**</span></code> used in
+a filename expansion context will match all files and zero or more
+directories and subdirectories. If the pattern is followed by a ‘/’, only
+directories and subdirectories match.</p></li>
+<li><p>Enables bash completion and git completion</p></li>
+<li><p>Enables color support for <code class="docutils literal notranslate"><span class="pre">ls</span></code></p></li>
+<li><p>If running under tmux, always deactivate environments when creating a new
+bash shell (see <a class="reference internal" href="conda.html#conda"><span class="std std-ref">conda</span></a> for more details on this)</p></li>
+</ul>
+</div>
+<div class="section" id="bash-profile">
+<h2><code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code><a class="headerlink" href="#bash-profile" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> does only one thing: it sources <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>.</p>
+</div>
 <div class="section" id="path">
 <h2><code class="docutils literal notranslate"><span class="pre">.path</span></code><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h2>
 <p>This file ends up being lots of <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:/some/other/path&quot;</span></code>
@@ -75,55 +95,55 @@ locations, this is a tidy place to put the various exports.</p>
 </div>
 <div class="section" id="aliases">
 <h2><code class="docutils literal notranslate"><span class="pre">.aliases</span></code><a class="headerlink" href="#aliases" title="Permalink to this headline">¶</a></h2>
-<p>This file keeps aliases separate. Some notable aliases that are
-included:</p>
+<p>This file keeps aliase separate for easier maintenance. See <code class="file docutils literal notranslate"><span class="pre">.aliases</span></code>
+for the commands set for each alias.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>alias</p></td>
-<td><p>command</p></td>
 <td><p>description</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">nvim</span></code></p></td>
 <td><p>always use neovim (this is added only if nvim is found on the path)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">D</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">DISPLAY=:0</span></code></p></td>
 <td><p>sometimes when using tmux the display is not set, causing GUI programs
 launched from the terminal to complain. This sets the display variable.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ll</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lrth</span> <span class="pre">--color=auto</span></code></p></td>
 <td><p>useful <cite>ls</cite> arguments (long format, human-readable sizes, sorted by
 time (latest at bottom), use color). MacOS has different options, so
 this alias tries to handle that correctly.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">la</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lrthA</span> <span class="pre">--color=auto</span></code></p></td>
 <td><p>same as above, but also show hidden files</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">v</span></code></p></td>
-<td><p>(see .aliases file)</p></td>
 <td><p>Live, searchable, syntax-highlighted preview of files in a directory.
 Needs <span class="xref std std-ref">fzf</span> and <span class="xref std std-ref">bat</span> installed</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">..</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code></p></td>
 <td><p>faster way of moving up a directory</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gsv</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">-c</span> <span class="pre">':Gstatus'</span> <span class="pre">-c</span> <span class="pre">':bunload</span> <span class="pre">1'</span></code></p></td>
-<td><p>Opens vim and runs vim-fugitive. See <a class="reference internal" href="vim.html#vim-fugitive"><span class="std std-ref">vim-fugitive</span></a> for details.</p></td>
+<td><p>Opens vim and runs vim-fugitive. See <a class="reference internal" href="vim.html#vimfugitive"><span class="std std-ref">vim-fugitive</span></a> for details.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">glv</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">-c</span> <span class="pre">':GV'</span></code></p></td>
 <td><p>Opens vim and runs vim-gv for browsing git history. See <a class="reference internal" href="vim.html#vim-gv"><span class="std std-ref">vim.gv</span></a>
 for details.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p>Runs the start_agent function (see <code class="file docutils literal notranslate"><span class="pre">.functions</span></code> below)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">git-clean-branches-master</span></code></p></td>
+<td><p>Deletes any git branches that have been merged into the master branch</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">git-clean-branches-main</span></code></p></td>
+<td><p>Similar to above, but used for repos where <code class="docutils literal notranslate"><span class="pre">main</span></code> is the default
+branch instead of <code class="docutils literal notranslate"><span class="pre">master</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -156,6 +176,19 @@ selected one</p></td>
 <td><p>When run in a clone of a repo with a pull request from a fork, get set up
 to push changes back to the contributor’s branch</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ca</span></code></p></td>
+<td><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code>, but done in such a way that you don’t
+<em>always</em> need to have conda activated. See <a class="reference internal" href="conda.html#conda"><span class="std std-ref">conda</span></a> for details.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">conda_deactivate_all</span></code></p></td>
+<td><p>Deactivate all conda environments. Useful when running under tmux; see
+<a class="reference internal" href="conda.html#conda"><span class="std std-ref">conda</span></a> for more details.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hostlist</span></code></p></td>
+<td><p>Print out a nice table of hostnames and aliases from your
+<code class="file docutils literal notranslate"><span class="pre">.ssh/config</span></code> file. Useful for when you’re trying to remember how
+to log in to an infrequently-accessed host.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -165,6 +198,57 @@ to push changes back to the contributor’s branch</p></td>
 here you can add any other hosts or colors. See
 <a class="reference external" href="https://misc.flogisoft.com/bash/tip_colors_and_formatting">https://misc.flogisoft.com/bash/tip_colors_and_formatting</a> for color
 options.</p>
+</div>
+<div class="section" id="extra">
+<h2><code class="docutils literal notranslate"><span class="pre">.extra</span></code><a class="headerlink" href="#extra" title="Permalink to this headline">¶</a></h2>
+<p>Nothing is in here by default. This is a good place to store host-specific
+details.</p>
+</div>
+<div class="section" id="exports">
+<h2><code class="docutils literal notranslate"><span class="pre">.exports</span></code><a class="headerlink" href="#exports" title="Permalink to this headline">¶</a></h2>
+<p>Exported environment variables.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>env var</p></td>
+<td><p>value and description</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">EDITOR</span></code></p></td>
+<td><p>set <code class="docutils literal notranslate"><span class="pre">nvim</span></code> as the default editor if it exists, otherwise use <code class="docutils literal notranslate"><span class="pre">vim</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LC_ALL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">en_US.UTF-8</span></code>, localization setting for US English. <code class="docutils literal notranslate"><span class="pre">$LANG</span></code> and
+<code class="docutils literal notranslate"><span class="pre">$LANGUAGE</span></code> <a class="reference external" href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html#The-LANGUAGE-variable">should also be set</a>
+(see below)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LC_LANG</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">en_US.UTF-8</span></code>, localization setting for US English</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LC_LANGUAGE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">en_US.UTF-8</span></code>, localization setting for US English</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HISTSIZE</span></code></p></td>
+<td><p>Set a large history size</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HISTFILESIZE</span></code></p></td>
+<td><p>Same for history file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LESS_TERMCAP_se</span></code>, <code class="docutils literal notranslate"><span class="pre">LESS_TERMCAP_so</span></code></p></td>
+<td><p>In tmux, default is to italicize identified search terms. This
+highlights instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MANGPAGER</span></code></p></td>
+<td><p>Uses <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">-X</span></code>, which does not clear the screen after exiting.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SHELL</span></code></p></td>
+<td><p>Exports shell as <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code> if on Mac. See <a class="reference internal" href="post.html#macpostinstall"><span class="std std-ref">Mac</span></a> for
+details on newer Macs</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -204,10 +288,14 @@ options.</p>
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Bash dotfiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bashrc"><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bash-profile"><code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#path"><code class="docutils literal notranslate"><span class="pre">.path</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#aliases"><code class="docutils literal notranslate"><span class="pre">.aliases</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#functions"><code class="docutils literal notranslate"><span class="pre">.functions</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bash-prompt"><code class="docutils literal notranslate"><span class="pre">.bash_prompt</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extra"><code class="docutils literal notranslate"><span class="pre">.extra</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exports"><code class="docutils literal notranslate"><span class="pre">.exports</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
@@ -248,21 +336,16 @@ options.</p>
         </div>
       </div>
       <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Ryan Dale.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/bash.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
   </body>
 </html>

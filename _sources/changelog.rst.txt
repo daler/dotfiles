@@ -4,6 +4,31 @@
 Changelog
 =========
 
+2023-09-19
+----------
+
+- split ``git-clean-branches`` into ``git-clean-branches-master`` and ``git-clean-branches-main``
+- improve ``ca`` and ``conda_deactivate_all`` behavior (check conda is installed first; source the init in ``conda_deactivate_all``).
+- make ``init.vim`` more condensed, and move plugin information over to HTML
+  docs. This makes it less intimidating to look through the file and discover
+  useful bits
+- split out Lua-specific config code into :file:`.config/nvim/lua/plugin-config.lua`
+- use ``set termguicolors`` to improve the zenburn colorscheme
+- vim settings have comments on same line for more streamlined reading/discovery
+- generalized comments to say <leader> instead of typing the overridden leader ","
+- improved behavior when switching to a terminal in vim: when going to
+  terminal, always enter insert mode. <leader>q and <leader>w work even in
+  insert mode.
+- detect ``*.smk`` as Snakemake files
+- only set ``alias vim=nvim`` if nvim exists
+- new ``hostlist`` bash function for listing hosts in ssh config
+- tests now run in the docker container using a new testing framework
+- a few rounds of docs cleanup
+- fix Biowulf PATH for mambaforge installation (thanks @menoldmt)
+- fix vim plugin installation to not use aliases (thanks @aliciaaevans)
+- fix mambaforge complaining if tmpdir exists (thanks @aliciaaevans)
+
+
 2023-07-06
 ----------
 

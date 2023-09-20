@@ -72,10 +72,15 @@ packages, which simplifies things, but not all tools are available on
 conda. Those install commands keep things modular (only install what you
 want) and simple. And of course the end result is lots of useful tools.</p>
 <p><strong>Why use conda and then symlink to</strong> <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code>? I wanted the tools
-to be available no matter what conda environment I was in.</p>
-<p><strong>Why bash for</strong> <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> ? There are a lot of system calls, which
-gets awkward in Python. This way everything is straightforwardly (if
-verbosely) captured in a single script without any other dependencies.</p>
+to be available no matter what conda environment I was in, and didn’t want to
+have to install them into each environment. Plus, it can get messy if
+everything is in the same environment and I just want to upgrade one tool –
+conda/mamba might decide it needs to upgrade other tools as well. This way,
+with everything in its own independent conda environment, I can maintain and
+upgrade independently, and still have them on my path.</p>
+<p><strong>Why use bash for</strong> <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> ? There are a lot of system calls, which gets
+awkward in Python. Using bash, everything is straightforwardly (if verbosely)
+captured in a single script without any other dependencies.</p>
 </div>
 
 
@@ -152,21 +157,16 @@ verbosely) captured in a single script without any other dependencies.</p>
         </div>
       </div>
       <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Ryan Dale.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/why.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
   </body>
 </html>
