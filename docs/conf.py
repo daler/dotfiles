@@ -30,6 +30,7 @@ author = 'Ryan Dale'
 import sys
 sys.path.insert(0, ".")
 extensions = [
+    "sphinx.ext.autosectionlabel",
     "details_ext"
 ]
 
