@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-export EDITOR="vim"
+if command -v nvim > /dev/null; then
+    export EDITOR="vim"
+else
+    export EDITOR="vim"
+fi
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"

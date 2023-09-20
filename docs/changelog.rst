@@ -1,23 +1,64 @@
-
-.. _changelog:
-
 Changelog
 =========
+
+2023-09-19
+----------
+
+**vim/nvim**
+
+- make ``init.vim`` more condensed, and move plugin information over to HTML
+  docs. This makes it less intimidating to look through the file and discover
+  useful bits
+- split out Lua-specific config code into :file:`.config/nvim/lua/plugin-config.lua`
+- use ``set termguicolors`` to improve the zenburn colorscheme
+- vim settings have comments on same line for more streamlined reading/discovery
+- generalized comments to say <leader> instead of typing the overridden leader ","
+- improved behavior when switching to a terminal in vim: when going to
+  terminal, always enter insert mode. <leader>q and <leader>w work even in
+  insert mode.
+- detect ``*.smk`` as Snakemake files
+
+**bash**
+
+- split ``git-clean-branches`` into ``git-clean-branches-master`` and ``git-clean-branches-main``
+- improve ``ca`` and ``conda_deactivate_all`` behavior (check conda is installed first; source the init in ``conda_deactivate_all``).
+- only set ``alias vim=nvim`` if nvim exists
+- new ``hostlist`` bash function for listing hosts in ssh config
+
+**general**
+
+- tests now run in the docker container using a new testing framework
+- a few rounds of docs cleanup
+
+**installation**
+
+- fix Biowulf PATH for mambaforge installation (thanks @menoldmt)
+- fix vim plugin installation to not use aliases (thanks @aliciaaevans)
+- fix mambaforge complaining if tmpdir exists (thanks @aliciaaevans)
+
 
 2023-07-06
 ----------
 
 Updates to support new MacOS and arm64 architecture, and general improvements:
 
+**bash**
+
 - add ``ca``, ``conda_deactivate_all``, and automatic deactivation within tmux,
   as well as new documentation to describe the rationale and how to use
+
+**installation**
+
 - ``--install-miniconda`` is now ``--install-conda``, and uses Mambaforge
   instead of Miniconda3. This sets the conda-forge channel and includes mamba.
   This also now supports all architectures supported by Mambaforge
 - various ``--install-pkgname`` commands use mamba to install rather than conda
 - ``--set-up-vim-plugins`` now runs ``:PlugInstall`` automatically, and does so for both vim and nvim
-- nvim config now protects nvim-only configuration so that you don't get errors opening vim
 - new command for post-installation stuff for mac (``--mac-stuff``)
+
+**vim/nvim**
+
+- nvim config now protects nvim-only configuration so that you don't get errors opening vim
 - added recommended order of operations to the top of the help
 - add alias for ``start_agent``
 - new ``--install-tmux`` useful for Mac
@@ -133,8 +174,8 @@ Lessons from setting up a new Mac...
 2021-06-01
 ----------
 
-Installation
-````````````
+**installation**
+
 - modify requirements.txt: remove R, add conda-pack and mamba
 - clean up miniconda.sh after installation
 - improve commandline help in setup.sh
@@ -142,25 +183,25 @@ Installation
 - sort installed programs alphabetically (in setup and in docs)
 - add installation of ``zoxide``
 
-tmux
-````
+**tmux**
+
 - don't specify shell in tmux
 - don't set DISPLAY in tmux
 - rm linux-specific tmux copy
 - re-enable screen-256color in tmux conf
 
-docs
-````
+**docs**
+
 - general cleanup
 
-bash
-````
+**bash**
+
 - add ``gsv``, ``glv``, ``git-clean-branches``, and ``e`` aliases
 - rm autojump setup from bash_profile
 
 
-nvim 
-````
+**nvim**
+
 - add ``set inccommand=nosplit``
 
 
@@ -168,8 +209,8 @@ nvim
 2021-02-14
 ----------
 
-nvim
-````
+**nvim**
+
 - rm clipboard settings for nvim
 - add vim-mergetool to init.vim and add docs
 - add gv plugin and add docs
@@ -177,12 +218,12 @@ nvim
 - add mapping to insert date (``,d``)
 - rm the line exluding octal numbers from incrementing
 
-tmux
-````
+**tmux**
+
 - don't set screen-256color in tmux conf
 
-Installation
-````````````
+**installation**
+
 - add notes for after installing miniconda
 - solve issue with libz.so.1 conda.exe error:
 
@@ -190,8 +231,8 @@ Installation
 2021-10-16
 ----------
 
-Installation
-````````````
+**installation**
+
 - minor additions to dockerfile
 - fix alacritty installation on linux and improve testing
 - bump versions of installed tools
@@ -205,8 +246,8 @@ Installation
 - do not add alias when installing nvim; let aliases handle that
 - let r-base version float to latest available
 
-bash
-````
+**bash**
+
 - add alias for ..
 - add vim=nvim only if nvim is found
 - better handling of MacOS ls
@@ -215,8 +256,8 @@ bash
 2021-05-10
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 
 - various docs and command-line help improvements
 - add link for alacritty to docs
@@ -230,8 +271,8 @@ Installation and docs
 2021-04-26
 ----------
 
-Installation
-````````````
+**Installation**
+
 
 - install tig (instead of lazygit)
 - explicitly use bash for installing hub
@@ -242,8 +283,8 @@ Installation
 2021-04-06
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - update docs based on user feedback
 - use OS-specific implementation of hash function
 - add dircolors to mac requirements
@@ -264,14 +305,14 @@ Installation and docs
 - unified nvim installer on linux/mac
 - green hostname if on mac
 
-bash
-````
+**bash**
+
 - rm the dircolors complaint in bash_profile
 - fix detection of macos ls
 - clean up some not-commonly-used aliases and functions
 
-nvim
-````
+**nvim**
+
 - fix brackets in PlugInstall
 - add .vim and .vimrc
 - assume vim-plug in vim and nvim
@@ -279,8 +320,8 @@ nvim
 2021-03-31
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - rm note column
 - now using ripgrep instead of ag
 - move dotfiles clause
@@ -293,12 +334,12 @@ Installation and docs
 2021-02-07
 ----------
 
-Testing
-```````
+**Testing**
+
 - Using docker for testing
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - new tool installation: ``jq``
 - clean up bat install
 - install miniconda in one step
@@ -315,29 +356,29 @@ Installation and docs
 2019-12-16
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 
 - update nvim appimage version
 - add requirements for mac
 - use printf for cross-platform colors
 - install ripgrep
 
-tmux
-````
+**tmux**
+
 - ensure tmux windows start with bash on mac
 - mac-specific ls
 
-bash
-````
+**bash**
+
 - rm "z" as alias so that z.lua can use it
 - export PS1 prevent conda from complaining
 
 2019-09-30
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - install fd, vd, tabview, hub, bat, radian, black
 - add --vim-diffs option
 - add graphical diffs option
@@ -354,13 +395,13 @@ Installation and docs
 - add some helper functions
 - move apt installs into separate file
 
-bash
-````
+**bash**
+
 - change `la` alias
 - use nvim for editing from vg()
 
-nvim
-````
+**nvim**
+
 - add vis.vim
 - add more terminal & env activating cmds
 - rm flake8 commands
@@ -373,8 +414,8 @@ nvim
 2019-03-27
 ----------
 
-Installation
-````````````
+**Installation**
+
 - add --force for alacritty build
 - add alacritty and additional apt-get installs
 - fix miniconda path
@@ -382,8 +423,8 @@ Installation
 - update requirements
 - add git completion for mac
 
-nvim
-````
+**nvim**
+
 - get back out of insert mode when leaving terminal
 - improve nvim terminal buffer switching
 - add python folding plugin
@@ -399,18 +440,18 @@ nvim
 2019-02-27
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - move to next line after sending to terminal
 - add config for python syntax
 - rm neovim compilation commands and fasd installation
 
-tmux
-````
+**tmux**
+
 - add display alias for remote tmux
 
-nvim
-````
+**nvim**
+
 - add vim markdown syntax (with other required pandoc plugins)
 - remap Esc for terminals
 - overhaul init.vim
@@ -422,8 +463,8 @@ nvim
 2018-11-28
 ----------
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - add installation of fzf, ag, fasd, autojump
 - improve ag installation
 - rm ag tmp dir when done
@@ -434,8 +475,8 @@ Installation and docs
 
 2018-09-26
 ----------
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - add apt-get and docker installation commands
 - add pythonpy to reqs
 - fix centos installs
@@ -443,8 +484,8 @@ Installation and docs
 - add some mac bits
 - use neovim appimage
 
-nvim
-````
+**nvim**
+
 - fix args for recent rmarkdown::render
 - let nvim-R be installed via normal plugins
 - add fugitive plugin
@@ -453,20 +494,20 @@ nvim
 2017
 ----
 
-Installation and docs
-`````````````````````
+**Installation and docs**
+
 - update dircolors
 - new command for seeing what changed
 
-bash
-````
+**bash**
+
 - add host-specific prompts
 - add Xresources and solarized dark
 - add dircolors for solarized
 - disable colored section titles in manpages
 
-nvim
-````
+**nvim**
+
 - add nicer vim linewrapping
 - add snakemake filetype
 - vimwiki updates
@@ -479,8 +520,8 @@ nvim
 - pep8 shortcut
 - nvim plugins
 
-tmux
-````
+**tmux**
+
 - add setenv to tmux.conf
 - tmux conf reorganize
 - default unnamed clipboard

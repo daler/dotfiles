@@ -29,8 +29,13 @@ conda. Those install commands keep things modular (only install what you
 want) and simple. And of course the end result is lots of useful tools.
 
 **Why use conda and then symlink to** ``~/opt/bin``? I wanted the tools
-to be available no matter what conda environment I was in.
+to be available no matter what conda environment I was in, and didn't want to
+have to install them into each environment. Plus, it can get messy if
+everything is in the same environment and I just want to upgrade one tool --
+conda/mamba might decide it needs to upgrade other tools as well. This way,
+with everything in its own independent conda environment, I can maintain and
+upgrade independently, and still have them on my path.
 
-**Why bash for** ``setup.sh`` ? There are a lot of system calls, which
-gets awkward in Python. This way everything is straightforwardly (if
-verbosely) captured in a single script without any other dependencies.
+**Why use bash for** ``setup.sh`` ? There are a lot of system calls, which gets
+awkward in Python. Using bash, everything is straightforwardly (if verbosely)
+captured in a single script without any other dependencies.

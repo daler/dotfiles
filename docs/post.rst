@@ -5,6 +5,8 @@ The ``setup.sh`` script tries to automate as much as possible, but there are
 some things that have to be manually done. This page documents those additional
 tasks.
 
+.. _macpostinstall:
+
 Mac
 ---
 

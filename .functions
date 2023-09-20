@@ -77,8 +77,8 @@ function prsetup {
 }
 
 function ca() {
-    # This function allows you only activate the base env when you're ready to
-    # (and don't activate it on EVERY new shell).
+    # This function allows you to activate the base env only when you're ready
+    # to (and don't activate it on EVERY new shell).
     #
     # You can also provide an env name or path to activate it.
     eval "$(conda shell.bash hook 2> /dev/null)"
@@ -90,7 +90,19 @@ function conda_deactivate_all() {
     # Keep deactivating until we no longer have a CONDA_PREFIX env var (which
     # might be a few times, if we had activated the base env and then another
     # env)
+    eval "$(conda shell.bash hook 2> /dev/null)"
     while [ -n "$CONDA_PREFIX" ]; do
         conda deactivate;
     done
+}
+
+function hostlist() {
+    # Parse ~/.ssh/config and print out a nicely-formatted table of configured
+    # hosts. Useful for when you're trying to remember how to log in to an
+    # infrequently-accessed host.
+    paste \
+        <(grep -i "^Host" ~/.ssh/config | grep -v "*" | awk '{print $2}') \
+        <(grep -i "Hostname" ~/.ssh/config | grep -v "*" | awk '{print $2}') \
+        | column -t \
+        | sort
 }

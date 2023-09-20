@@ -3,10 +3,52 @@
 Additional tool installations
 =============================
 
+Base conda packages
+-------------------
+Do this if you want to install the conda packages in :file:`requirements.txt`
+into the base conda environment. (you may want to edit that file first)
+
+If you're on a Mac, :file:`requirements-mac.txt` will be used as well:
+
+.. code-block:: bash
+
+   ./setup.sh --conda-env
+
+``apt`` packages
+----------------
+Do this if you want to install a large or small set of packages on an Ubuntu
+machine. (you may want to edit the files mentioned below first).
+
+If you're on Ubuntu and have root privileges, this is a quick way to install
+"the works" or optionally a minimal set of packages. You can inspect the files
+:file:`apt-installs.txt` or :file:`apt-installs-minimal.txt` for what will be
+installed. These are packages I find to be most useful (git, build-essential,
+meld, and so on).
+
+.. code-block::
+
+    ./setup.sh --apt-install
+    # or
+    ./setup.sh --apt-install-minimal
+
+Tool installation
+-----------------
+
 Run the ``--install-<toolname>`` for each of the tools below. Each is copied
 into ``~/opt/bin``, so you’ll want to make sure that’s on your path.
 
-.. note::
+Tools are listed alphabetically.
+
+The help for ``setup.sh`` suggests some to start with (fzf, ripgrep, visidata,
+pyp, and fd)::
+
+    ./setup.sh --install-fzf
+    ./setup.sh --install-ripgrep
+    ./setup.sh --install-vd
+    ./setup.sh --install-pyp
+    ./setup.sh --install-fd
+
+.. details:: Details
 
    If a tool below is available in conda, it is "installed" as follows:
 
@@ -20,11 +62,6 @@ into ``~/opt/bin``, so you’ll want to make sure that’s on your path.
    use it immediately. This allows for more modular updating of the tools and
    avoiding conflicting dependencies.
 
-.. note::
-
-    Tools are listed alphabetically.
-
-.. _alacritty:
 
 ``alacritty``
 ~~~~~~~~~~~~~
@@ -46,7 +83,7 @@ Alternatives:
 - On Linux, any number of default terminal apps
 
 
-.. _bat:
+.. _bat_ref:
 
 ``bat``
 ~~~~~~~
@@ -64,8 +101,6 @@ Alternatives:
 - cat
 
 
-.. _bfg:
-
 ``bfg``
 ~~~~~~~
 
@@ -81,8 +116,6 @@ Alternatives:
 
 - ``git-filter-branch``, which is built in to git but is slower and not as feature-rich.
 
-.. _black:
-
 ``black``
 ~~~~~~~~~
 
@@ -94,7 +127,6 @@ Alternatives:
 PEP8 style conventions. I'll typically run it on a file in vim with ``!black
 %`` (the ``!`` calls out to the shell, and the ``%`` means "this file".
 
-.. _docker:
 
 ``docker``
 ~~~~~~~~~~
@@ -111,8 +143,6 @@ Alternatives:
 - Singularity, though this requires a Linux machine to build and is a bit more
   involved to install.
 
-.. _fd:
-
 
 ``fd``
 ~~~~~~
@@ -122,7 +152,7 @@ Alternatives:
     ./setup.sh --install-fd
 
 `fd <https://github.com/sharkdp/fd>`__ is a much faster and more ergonomic
-``find``. For example it uses regular expressions by default and defaults to
+``find``. For example, it uses regular expressions by default and defaults to
 skipping directories ignored by git. One place this is useful is in avoiding
 lengthy, unneeded searches through conda envs.
 
@@ -130,7 +160,7 @@ Alternatives:
 
 - ``find``
 
-.. _fzf:
+.. _fzf_ref:
 
 ``fzf``
 ~~~~~~~
@@ -143,10 +173,9 @@ Alternatives:
 with stdin. It integrates with bash so that when you use ``Ctrl-R`` (the
 standard bash way of reverse-search through history), you’ll instead get the
 fzf interface. Other tools may also look for ``fzf`` to use as an interface.
-:ref:`zoxide` for example does this. You can also pipe in any arbitrary text to
+``zoxide`` for example does this. You can also pipe in any arbitrary text to
 ``fzf`` for a fuzzy search tool.
 
-.. _icdiff:
 
 ``icdiff``
 ~~~~~~~~~~
@@ -163,7 +192,6 @@ Alternatives:
 - ``diff``, which doesn't do side-by-side or colored diffs
 - ``vim -d``, which I still use quite often
 
-.. _jq:
 
 ``jq``
 ~~~~~~
@@ -174,7 +202,6 @@ Alternatives:
 
 `jq <https://stedolan.github.io/jq/>`_ is like sed or awk for JSON data.
 
-.. _pyp:
 
 ``pyp``
 ~~~~~~~
@@ -193,7 +220,6 @@ Alternatives:
 - pythonpy (no longer maintained)
 - opening up a Python interpreter
 
-.. _radian:
 
 ``radian``
 ~~~~~~~~~~
@@ -205,6 +231,11 @@ Alternatives:
 `radian <https://github.com/randy3k/radian>`_ is a replacement shell for
 R. It has syntax highlighting, multiline editings, and tab completion built in.
 can be used with any version of R, in a conda environment or otherwise.
+
+Note that if you are intending to use it with R and Python mixed together via
+reticulate, you should not use this method to install. Instead, you'll need to
+install radian in the same environment as the Python installation you plan on
+using.
 
 Alternatives:
 
@@ -219,9 +250,9 @@ Alternatives:
 
     ./setup.sh --install-ripgrep
 
-`ripgrep <https://github.com/BurntSushi/ripgrep/>`_ is a fast
-code-searching tool. It is like grep, but by default skips files in
-.gitignore, binary files, and hidden files.
+`ripgrep <https://github.com/BurntSushi/ripgrep/>`_ is a fast code-searching
+tool. It is like grep, but by default skips files in .gitignore, binary files,
+and hidden files.
 
 Alternatives:
 
@@ -238,9 +269,9 @@ Alternatives:
 
     ./setup.sh --install-vd
 
-`visidata <https://visidata.org/>`__ is a powerful spreadsheet-like tool
-for viewing, sorting, searching, and manipulating data directly in the
-terminal. Any files that pandas can open, visidata can open too.
+`visidata <https://visidata.org/>`__ is a powerful spreadsheet-like tool for
+viewing, sorting, searching, and manipulating data directly in the terminal.
+Any files that pandas can open, visidata can open too.
 
 Waaaaay nicer than ``less -S`` or ``vim`` followed by messing with tabstops.
 
@@ -253,12 +284,10 @@ Alternatives:
   you have a lot of editing to do.
 
 
-.. _zoxide:
-
 ``zoxide``
 ~~~~~~~~~~
 
-.. code-block:: zoxide
+.. code-block::
 
     ./setup.sh --install-zoxide
 
@@ -269,7 +298,7 @@ them.
 Note that after installation it requires an additional command to be added to
 your :file:`.bashrc`.
 
-I most commonly use its interactive mode ``zi``, which opens up :ref:`fzf` as
+I most commonly use its interactive mode ``zi``, which opens up :ref:`fzf_ref` as
 an interface for changing directories via fuzzy search.
 
 Alternatives:

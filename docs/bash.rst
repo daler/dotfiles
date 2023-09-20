@@ -3,12 +3,14 @@
 Bash dotfiles
 =============
 
+``.bashrc``
+-----------
+
 The modular organization for bash configuration is inspired by `this
 repo <https://github.com/mathiasbynens/dotfiles>`__.
 
-``.bashrc`` sources ``.bash_profile``, which in turn sources the
-following files if they’re present. This keeps things a little more
-organized and modular. They work like this:
+``.bashrc`` sources the following files if they’re present. This keeps things
+a little more organized and modular. They work like this:
 
 ::
 
@@ -24,6 +26,25 @@ organized and modular. They work like this:
 Below is a little more detail on the contents of each of these files and
 some notable features.
 
+Other notable parts of the :file:`.bashrc`:
+
+- Update terminal size after commands
+- Enables `autocd` if available. When enabled, just the name of a directory
+  will be sufficient to cd to it.
+- Enables `globstar` if available. When enabled, the pattern ``**`` used in
+  a filename expansion context will match all files and zero or more
+  directories and subdirectories. If the pattern is followed by a ‘/’, only
+  directories and subdirectories match.
+- Enables bash completion and git completion
+- Enables color support for ``ls``
+- If running under tmux, always deactivate environments when creating a new
+  bash shell (see :ref:`conda` for more details on this)
+
+``.bash_profile``
+-----------------
+
+``.bash_profile`` does only one thing: it sources ``.bashrc``.
+
 ``.path``
 ---------
 
@@ -35,51 +56,52 @@ locations, this is a tidy place to put the various exports.
 ``.aliases``
 ------------
 
-This file keeps aliases separate. Some notable aliases that are
-included:
+This file keeps aliase separate for easier maintenance. See :file:`.aliases`
+for the commands set for each alias.
 
 .. list-table::
 
     * - alias
-      - command
       - description
 
     * - ``vim``
-      - ``nvim``
       - always use neovim (this is added only if nvim is found on the path)
 
     * - ``D``
-      - ``export DISPLAY=:0``
       - sometimes when using tmux the display is not set, causing GUI programs
         launched from the terminal to complain. This sets the display variable.
 
     * - ``ll``
-      - ``ls -lrth --color=auto``
       - useful `ls` arguments (long format, human-readable sizes, sorted by
         time (latest at bottom), use color). MacOS has different options, so
         this alias tries to handle that correctly.
 
     * - ``la``
-      - ``ls -lrthA --color=auto``
       - same as above, but also show hidden files
 
     * - ``v``
-      - (see .aliases file)
       - Live, searchable, syntax-highlighted preview of files in a directory.
-        Needs :ref:`fzf` and :ref:`bat` installed
+        Needs ref:`fzf_ref` and :ref:`bat_ref` installed
 
     * - ``..``
-      - ``cd ..``
       - faster way of moving up a directory
 
     * - ``gsv``
-      - ``vim -c ':Gstatus' -c ':bunload 1'``
-      - Opens vim and runs vim-fugitive. See :ref:`vim-fugitive` for details.
+      - Opens vim and runs vim-fugitive. See :ref:`vimfugitive` for details.
 
     * - ``glv``
-      - ``vim -c ':GV'``
       - Opens vim and runs vim-gv for browsing git history. See :ref:`vim-gv`
         for details.
+
+    * - ``s``
+      - Runs the start_agent function (see :file:`.functions` below)
+
+    * - ``git-clean-branches-master``
+      - Deletes any git branches that have been merged into the master branch
+
+    * - ``git-clean-branches-main``
+      - Similar to above, but used for repos where ``main`` is the default
+        branch instead of ``master``.
 
 ``.functions``
 --------------
@@ -97,11 +119,24 @@ are set up. Some notable functions defined here:
     * - ``tre``
       - Nicer ``tree`` output, colored and piped to less
     * - ``sa``
-      - Open :ref:`fzf` to search across all conda environments, and activates the
+      - Open ``fzf`` to search across all conda environments, and activates the
         selected one
     * - ``prsetup``
       - When run in a clone of a repo with a pull request from a fork, get set up
         to push changes back to the contributor's branch
+
+    * - ``ca``
+      - Equivalent to ``conda activate``, but done in such a way that you don't
+        *always* need to have conda activated. See :ref:`conda` for details.
+
+    * - ``conda_deactivate_all``
+      - Deactivate all conda environments. Useful when running under tmux; see
+        :ref:`conda` for more details.
+
+    * - ``hostlist``
+      - Print out a nice table of hostnames and aliases from your
+        :file:`.ssh/config` file. Useful for when you're trying to remember how
+        to log in to an infrequently-accessed host.
 
 ``.bash_prompt``
 ----------------
@@ -110,3 +145,43 @@ This file changes the prompt color for Biowulf or Helix (NIH HPC), but
 here you can add any other hosts or colors. See
 https://misc.flogisoft.com/bash/tip_colors_and_formatting for color
 options.
+
+``.extra``
+----------
+
+Nothing is in here by default. This is a good place to store host-specific
+details.
+
+``.exports``
+------------
+
+Exported environment variables.
+
+.. list-table::
+
+    * - env var
+      - value and description
+    * - ``EDITOR``
+      - set ``nvim`` as the default editor if it exists, otherwise use ``vim``
+
+    * - ``LC_ALL``
+      - ``en_US.UTF-8``, localization setting for US English. ``$LANG`` and
+        ``$LANGUAGE`` `should also be set
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html#The-LANGUAGE-variable>`_
+        (see below)
+    * - ``LC_LANG``
+      - ``en_US.UTF-8``, localization setting for US English
+    * - ``LC_LANGUAGE``
+      - ``en_US.UTF-8``, localization setting for US English
+    * - ``HISTSIZE``
+      - Set a large history size
+    * - ``HISTFILESIZE``
+      - Same for history file
+    * - ``LESS_TERMCAP_se``, ``LESS_TERMCAP_so``
+      - In tmux, default is to italicize identified search terms. This
+        highlights instead.
+    * - ``MANGPAGER``
+      - Uses ``less -X``, which does not clear the screen after exiting.
+    * - ``SHELL``
+      - Exports shell as ``/bin/bash`` if on Mac. See :ref:`macpostinstall` for
+        details on newer Macs
