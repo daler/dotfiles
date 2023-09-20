@@ -164,17 +164,16 @@ nmap <leader>Y "+yq
 nmap <leader>p "+p
 nmap <leader>P "+P
 
-" <leader>q and <leader>w move to left and right windows respectively. Useful
-" when working with a terminal. These will work even if you're in insert mode.
-" If you need to enter a literal ',w', then type more slowly after the leader.
+" <leader>q and <leader>w move to left and right windows respectively.
+" Useful when working with a terminal.
+" Works even in insert mode; to enter a literal ',w' type more slowly after the leader.
 noremap <silent> <leader>w :wincmd l<cr>
 inoremap <silent> <leader>w <Esc>:wincmd l<cr>
 noremap <silent> <leader>q :wincmd h<cr>
 tnoremap <silent> <leader>q <C-\><C-n>:wincmd h<cr>
 
-" No matter what, when entering a terminal buffer, always use insert mode.
-" Works even when clicking with mouse. However, clicking with a mouse a second
-" time enters visual select mode, just like in a text buffer.
+" Always use insert mode when entering a terminal buffer, even with mouse click.
+" NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.
 autocmd BufEnter * if &buftype == 'terminal' | startinsert | endif
 
 " Filetype-specific settings -------------------------------------------------
@@ -194,31 +193,30 @@ let g:python_highlight_space_errors = 0
 let g:python_highlight_all = 1
 
 " plugin: NERDTree -----------------------------------------------------------
-" ,n to toggle NERDTree window
+" <leader>n toggles NERDTree window
 nnoremap <leader>n :NERDTreeToggle<cr>
 
 " plugin: ToggleTerm ---------------------------------------------------------
-" ,t to open a terminal to the right (ToggleTerm)
+" <leader>t opens a terminal to the right (ToggleTerm)
 nmap <leader>t :ToggleTerm direction=vertical<CR>
 
-" When in a terminal, by default Esc does not go back to normal mode and
-" instead you need to use Ctrl-\ Ctrl-n. That's pretty awkward; this remaps to
-" use Esc.
+" When in a terminal, by default Esc does not go back to normal mode.
+" Instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
 tnoremap <Esc> <C-\><C-n>
 
-" ,gxx to send current line to terminal
+" <leader>gxx sends current line to terminal
 nmap gxx :ToggleTermSendCurrentLine<CR><CR>
 
-" ,gx to send current selection (line or visual) to terminal
+" <leader>gx sends current selection (line or visual) to terminal
 xmap gx :ToggleTermSendVisualSelection<CR><CR>
 
-" ,k to render the current RMarkdown file to HTML (named after the current file)
+" <leader>k renders the current RMarkdown file to HTML (named after the current file)
 :autocmd FileType rmarkdown nmap <leader>k :TermExec cmd='rmarkdown::render("%:p")'<CR>
 
-" ,k to run the file in IPython when working in Python.
+" <leader>k runs the file in IPython when working in Python.
 :autocmd FileType python nmap <leader>k :TermExec cmd='run %:p'<CR>
 
-" <leader>cd to send RMarkdown code chunk and move to the next one.
+" <leader>cd sends RMarkdown code chunk and move to the next one.
 "
 " Breaking this down...
 "
@@ -232,8 +230,8 @@ xmap gx :ToggleTermSendVisualSelection<CR><CR>
 " /```{r<CR>                                -> go to the start of the next chunk
 nmap <leader>cd /```{<CR>NjV/```\n<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>
 
-" <leader>yr to add commonly-used YAML front matter to RMarkdown documents. Mnemonic is
-" 'YAML for RMarkdown'. It adds the following:
+" <leader>yr adds commonly-used YAML front matter to RMarkdown documents.
+" Mnemonic is 'YAML for RMarkdown'. It adds the following:
 " ---
 " output:
 "   html_document:
@@ -245,37 +243,36 @@ nmap <leader>cd /```{<CR>NjV/```\n<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/`
 "
 nmap <leader>yr i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
 
-" <leader>ko to insert a knitr global options chunk. Mnemonic is 'knitr options'
+" <leader>ko inserts a knitr global options chunk. Mnemonic is 'knitr options'
 nmap <leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
 
 " plugin: vim-airline --------------------------------------------------------
-" Enable the display of open buffers along the top Click on them or use
-" <leader>1, <leader>2, etc to switch to them. See :help airline-tabline for
-" more.
+" Enable the display of open buffers along the top.
+" Click on them or use <leader>1, <leader>2, etc to switch to them.
+" See :help airline-tabline for more.
 let g:airline#extensions#tabline#enabled = 1
 
-" Show the buffer number next to the filename for easier switching. See :help
-" airline-tabline for more.
+" Show the buffer number next to the filename for easier switching.
+" See :help airline-tabline for more.
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-" When showing buffers in the top bufferline, show only the filename and not
-" the full path. See :help filename-modifiers for more info.
+" Show only the filename and not the full path in buffer tabs.
+" See :help filename-modifiers for more info.
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose
-" other themes, and use :AirlineTheme <themename> to test live.
+" See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose other themes.
+" Use :AirlineTheme <themename> to test live.
 let g:airline_theme = "ayu_dark"
 
-" If you are using a powerline-enabled font in your terminal application, set
-" this to 1. Otherwise set to 0. See :help airline-configuration for more.
+" If you are using a powerline-enabled font in your terminal application, set this to 1. Otherwise set to 0.
+" See :help airline-configuration for more.
 let g:airline_powerline_fonts = 1
 
 " plugin: vim-pandoc and vim-pandoc-syntax -----------------------------------
 " By default, keep spell-check off. Turn on with `set spell`
 let g:pandoc#spell#enabled = 0
 
-" Disable the conversion of ``` to lambda and other fancy
-" concealment/conversion that ends up confusing me
+" Disable the conversion of ``` to lambda and other fancy concealment/conversion that ends up confusing me
 let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
