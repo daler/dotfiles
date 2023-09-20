@@ -74,7 +74,10 @@ set wildignore=*.swp,*.bak,*.pyc,*.class " Ignore these when autocompleting
 " COLORS =====================================================================
 :silent! colorscheme zenburn " Set colorscheme here
 set guicursor=i:block " Always use block cursor. In some terminals and fonts (like iTerm), it can be hard to see the cursor when it changes to a line.
-set termguicolors " 24-bit color. Subtly changes some colors, like terminal and highlights
+set termguicolors " 24-bit color. Subtly changes some colors, like terminal background and highlights. Also allows comments to be italic.
+
+" In some circumstances, the background highlight when selecting text can be bright teal when using zenburn. This fixes it to light gray.
+hi Visual guibg=#555555 guifg=NONE
 
 " CUSTOM MAPPINGS ============================================================
 " NOTE: Comments cannot be on the same line when remapping.
@@ -89,54 +92,49 @@ let maplocalleader = "\\"
 " <leader>H to toggle search highlight
 noremap <leader>H :set hlsearch!<CR>
 
-" <leader>W to clean up trailing whitespace in entire file
+" <leader>W cleans up trailing whitespace in entire file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" <leader>R to refresh syntax highlighting. Useful when syntax highlighting
-" seems wonky.
+" <leader>R refreshes syntax highlighting. Useful when syntax highlighting seems wonky.
 noremap <leader>R <Esc>:syntax sync fromstart<CR>
 inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
-" <leader>` (backtick) creates a new fenced RMarkdown code block, ready to
-" type in. This works in insert or normal mode.
+" <leader>` (backtick) creates a new fenced RMarkdown code block, ready to type in. This works in insert or normal mode.
 noremap <leader>` i```{r}<CR>```<Esc>O
 inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 
-" @l will 'listify', surrounding with quotes and adding a trailing comma. Used
-" for easily making Python lists out of pasted text.
+" @l will 'listify', surrounding with quotes and adding a trailing comma. Used for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
-" <leader>ts to insert timestamp. Useful when writing logs.
+" <leader>ts inserts a timestamp. Useful when writing logs.
 inoremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 noremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 
-" <leader>d to insert a ReST-formatted title for today's date. Only works in
-" ReST files.
+" <leader>d inserts a ReST-formatted title for today's date. Only works in ReST files.
 autocmd FileType rst inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
 autocmd FileType rst noremap  <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
 
-" <leader>d to insert a Markdown header for today's date. Only works in markdown files.
+" <leader>d inserts a Markdown header for today's date. Only works in markdown files.
 autocmd FileType markdown inoremap <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 
-" <leader>- to fill the rest of the line with dashes
+" <leader>- fills in the rest of the line with dashes
 nnoremap <leader>- 80A-<Esc>d80<bar>
 
-" <leader>md to hard-wrap at 80 columns and reformat paragraphs as they are
-" written. Mnemonic is md = 'markdown', a common filetype where this is useful
+" <leader>md hard-wraps at 80 columns and reformats paragraphs as they are written.
+" Mnemonic is md = 'markdown', a common filetype where this is useful
 nnoremap <leader>md :set tw=80 fo+=ta<CR>
 
-" <leader>nd to unset the hard-wrap. Mnemonic is 'not markdown', to indicate
-" the opposite of the ,md above.
+" <leader>nd unsets the hard-wrap from <leader>md.
+" Mnemonic is 'not markdown', to indicate the opposite of the ,md above.
 nnoremap <leader>nd :set tw=80 fo-=ta<CR>
 
-" <leader> <TAB> for slightly saner behavior with long TSV lines. Leaves the
-" cursor in the command bar so you can type in an appropriate tab stop value.
+" <leader> <TAB> gives slightly saner behavior with long TSV lines.
+" Leaves the cursor in the command bar so you can type in an appropriate tab stop value.
 " Mnemonic of <tab> should be self-explanatory!
 nnoremap <leader><tab> :set nowrap tabstop=
 
-" <leader>r to toggle relative numbering -- useful for choosing how many lines
-" to delete, for example.
+" <leader>r toggles relative numbering, useful for choosing how many lines to delete
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
@@ -148,7 +146,7 @@ endfunc
 nnoremap <leader>r :call NumberToggle()<cr>
 
 " Buffer switching ----------------------------------------------------------
-" <leader>1 go to buffer 1, <leader>2 go to buffer 2, etc
+" <leader>1 switches to buffer 1, <leader>2 to buffer 2, etc
 nnoremap <leader>1 :1b<CR>
 nnoremap <leader>2 :2b<CR>
 nnoremap <leader>3 :3b<CR>
@@ -166,17 +164,16 @@ nmap <leader>Y "+yq
 nmap <leader>p "+p
 nmap <leader>P "+P
 
-" <leader>q and <leader>w move to left and right windows respectively. Useful
-" when working with a terminal. These will work even if you're in insert mode.
-" If you need to enter a literal ',w', then type more slowly after the leader.
+" <leader>q and <leader>w move to left and right windows respectively.
+" Useful when working with a terminal.
+" Works even in insert mode; to enter a literal ',w' type more slowly after the leader.
 noremap <silent> <leader>w :wincmd l<cr>
 inoremap <silent> <leader>w <Esc>:wincmd l<cr>
 noremap <silent> <leader>q :wincmd h<cr>
 tnoremap <silent> <leader>q <C-\><C-n>:wincmd h<cr>
 
-" No matter what, when entering a terminal buffer, always use insert mode.
-" Works even when clicking with mouse. However, clicking with a mouse a second
-" time enters visual select mode, just like in a text buffer.
+" Always use insert mode when entering a terminal buffer, even with mouse click.
+" NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.
 autocmd BufEnter * if &buftype == 'terminal' | startinsert | endif
 
 " Filetype-specific settings -------------------------------------------------
@@ -196,31 +193,30 @@ let g:python_highlight_space_errors = 0
 let g:python_highlight_all = 1
 
 " plugin: NERDTree -----------------------------------------------------------
-" ,n to toggle NERDTree window
+" <leader>n toggles NERDTree window
 nnoremap <leader>n :NERDTreeToggle<cr>
 
 " plugin: ToggleTerm ---------------------------------------------------------
-" ,t to open a terminal to the right (ToggleTerm)
+" <leader>t opens a terminal to the right (ToggleTerm)
 nmap <leader>t :ToggleTerm direction=vertical<CR>
 
-" When in a terminal, by default Esc does not go back to normal mode and
-" instead you need to use Ctrl-\ Ctrl-n. That's pretty awkward; this remaps to
-" use Esc.
+" When in a terminal, by default Esc does not go back to normal mode.
+" Instead you need to use Ctrl-\ Ctrl-n. This remaps to use Esc.
 tnoremap <Esc> <C-\><C-n>
 
-" ,gxx to send current line to terminal
+" <leader>gxx sends current line to terminal
 nmap gxx :ToggleTermSendCurrentLine<CR><CR>
 
-" ,gx to send current selection (line or visual) to terminal
+" <leader>gx sends current selection (line or visual) to terminal
 xmap gx :ToggleTermSendVisualSelection<CR><CR>
 
-" ,k to render the current RMarkdown file to HTML (named after the current file)
+" <leader>k renders the current RMarkdown file to HTML (named after the current file)
 :autocmd FileType rmarkdown nmap <leader>k :TermExec cmd='rmarkdown::render("%:p")'<CR>
 
-" ,k to run the file in IPython when working in Python.
+" <leader>k runs the file in IPython when working in Python.
 :autocmd FileType python nmap <leader>k :TermExec cmd='run %:p'<CR>
 
-" <leader>cd to send RMarkdown code chunk and move to the next one.
+" <leader>cd sends RMarkdown code chunk and move to the next one.
 "
 " Breaking this down...
 "
@@ -234,8 +230,8 @@ xmap gx :ToggleTermSendVisualSelection<CR><CR>
 " /```{r<CR>                                -> go to the start of the next chunk
 nmap <leader>cd /```{<CR>NjV/```\n<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>
 
-" <leader>yr to add commonly-used YAML front matter to RMarkdown documents. Mnemonic is
-" 'YAML for RMarkdown'. It adds the following:
+" <leader>yr adds commonly-used YAML front matter to RMarkdown documents.
+" Mnemonic is 'YAML for RMarkdown'. It adds the following:
 " ---
 " output:
 "   html_document:
@@ -247,37 +243,36 @@ nmap <leader>cd /```{<CR>NjV/```\n<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/`
 "
 nmap <leader>yr i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>toc: true<CR>toc_float: true<CR>toc_depth: 3<CR><BS>---<Esc>0
 
-" <leader>ko to insert a knitr global options chunk. Mnemonic is 'knitr options'
+" <leader>ko inserts a knitr global options chunk. Mnemonic is 'knitr options'
 nmap <leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
 
 " plugin: vim-airline --------------------------------------------------------
-" Enable the display of open buffers along the top Click on them or use
-" <leader>1, <leader>2, etc to switch to them. See :help airline-tabline for
-" more.
+" Enable the display of open buffers along the top.
+" Click on them or use <leader>1, <leader>2, etc to switch to them.
+" See :help airline-tabline for more.
 let g:airline#extensions#tabline#enabled = 1
 
-" Show the buffer number next to the filename for easier switching. See :help
-" airline-tabline for more.
+" Show the buffer number next to the filename for easier switching.
+" See :help airline-tabline for more.
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-" When showing buffers in the top bufferline, show only the filename and not
-" the full path. See :help filename-modifiers for more info.
+" Show only the filename and not the full path in buffer tabs.
+" See :help filename-modifiers for more info.
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose
-" other themes, and use :AirlineTheme <themename> to test live.
+" See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose other themes.
+" Use :AirlineTheme <themename> to test live.
 let g:airline_theme = "ayu_dark"
 
-" If you are using a powerline-enabled font in your terminal application, set
-" this to 1. Otherwise set to 0. See :help airline-configuration for more.
+" If you are using a powerline-enabled font in your terminal application, set this to 1. Otherwise set to 0.
+" See :help airline-configuration for more.
 let g:airline_powerline_fonts = 1
 
 " plugin: vim-pandoc and vim-pandoc-syntax -----------------------------------
 " By default, keep spell-check off. Turn on with `set spell`
 let g:pandoc#spell#enabled = 0
 
-" Disable the conversion of ``` to lambda and other fancy
-" concealment/conversion that ends up confusing me
+" Disable the conversion of ``` to lambda and other fancy concealment/conversion that ends up confusing me
 let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
