@@ -74,7 +74,10 @@ set wildignore=*.swp,*.bak,*.pyc,*.class " Ignore these when autocompleting
 " COLORS =====================================================================
 :silent! colorscheme zenburn " Set colorscheme here
 set guicursor=i:block " Always use block cursor. In some terminals and fonts (like iTerm), it can be hard to see the cursor when it changes to a line.
-set termguicolors " 24-bit color. Subtly changes some colors, like terminal and highlights
+set termguicolors " 24-bit color. Subtly changes some colors, like terminal background and highlights. Also allows comments to be italic.
+
+" In some circumstances, the background highlight when selecting text can be bright teal when using zenburn. This fixes it to light gray.
+hi Visual guibg=#555555 guifg=none
 
 " CUSTOM MAPPINGS ============================================================
 " NOTE: Comments cannot be on the same line when remapping.
@@ -89,54 +92,49 @@ let maplocalleader = "\\"
 " <leader>H to toggle search highlight
 noremap <leader>H :set hlsearch!<CR>
 
-" <leader>W to clean up trailing whitespace in entire file
+" <leader>W cleans up trailing whitespace in entire file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" <leader>R to refresh syntax highlighting. Useful when syntax highlighting
-" seems wonky.
+" <leader>R refreshes syntax highlighting. Useful when syntax highlighting seems wonky.
 noremap <leader>R <Esc>:syntax sync fromstart<CR>
 inoremap <leader>R <C-o>:syntax sync fromstart<CR>
 
-" <leader>` (backtick) creates a new fenced RMarkdown code block, ready to
-" type in. This works in insert or normal mode.
+" <leader>` (backtick) creates a new fenced RMarkdown code block, ready to type in. This works in insert or normal mode.
 noremap <leader>` i```{r}<CR>```<Esc>O
 inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 
-" @l will 'listify', surrounding with quotes and adding a trailing comma. Used
-" for easily making Python lists out of pasted text.
+" @l will 'listify', surrounding with quotes and adding a trailing comma. Used for easily making Python lists out of pasted text.
 let @l = "I'A',j"
 
-" <leader>ts to insert timestamp. Useful when writing logs.
+" <leader>ts inserts a timestamp. Useful when writing logs.
 inoremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 noremap <leader>ts <Esc>o<Esc>:r! date "+[\%Y-\%m-\%d \%H:\%M] "<CR>A
 
-" <leader>d to insert a ReST-formatted title for today's date. Only works in
-" ReST files.
+" <leader>d inserts a ReST-formatted title for today's date. Only works in ReST files.
 autocmd FileType rst inoremap <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR>
 autocmd FileType rst noremap  <leader>d <Esc>:r! date "+\%Y-\%m-\%d"<CR>A<CR>----------<CR><Esc>
 
-" <leader>d to insert a Markdown header for today's date. Only works in markdown files.
+" <leader>d inserts a Markdown header for today's date. Only works in markdown files.
 autocmd FileType markdown inoremap <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 autocmd FileType markdown noremap  <leader>d <Esc>:r! date "+\# \%Y-\%m-\%d"<CR>A
 
-" <leader>- to fill the rest of the line with dashes
+" <leader>- fills in the rest of the line with dashes
 nnoremap <leader>- 80A-<Esc>d80<bar>
 
-" <leader>md to hard-wrap at 80 columns and reformat paragraphs as they are
-" written. Mnemonic is md = 'markdown', a common filetype where this is useful
+" <leader>md hard-wraps at 80 columns and reformats paragraphs as they are written.
+" Mnemonic is md = 'markdown', a common filetype where this is useful
 nnoremap <leader>md :set tw=80 fo+=ta<CR>
 
-" <leader>nd to unset the hard-wrap. Mnemonic is 'not markdown', to indicate
-" the opposite of the ,md above.
+" <leader>nd unsets the hard-wrap from <leader>md.
+" Mnemonic is 'not markdown', to indicate the opposite of the ,md above.
 nnoremap <leader>nd :set tw=80 fo-=ta<CR>
 
-" <leader> <TAB> for slightly saner behavior with long TSV lines. Leaves the
-" cursor in the command bar so you can type in an appropriate tab stop value.
+" <leader> <TAB> gives slightly saner behavior with long TSV lines.
+" Leaves the cursor in the command bar so you can type in an appropriate tab stop value.
 " Mnemonic of <tab> should be self-explanatory!
 nnoremap <leader><tab> :set nowrap tabstop=
 
-" <leader>r to toggle relative numbering -- useful for choosing how many lines
-" to delete, for example.
+" <leader>r toggles relative numbering, useful for choosing how many lines to delete
 function! NumberToggle()
   if(&relativenumber == 1)
     set nornu
@@ -148,7 +146,7 @@ endfunc
 nnoremap <leader>r :call NumberToggle()<cr>
 
 " Buffer switching ----------------------------------------------------------
-" <leader>1 go to buffer 1, <leader>2 go to buffer 2, etc
+" <leader>1 switches to buffer 1, <leader>2 to buffer 2, etc
 nnoremap <leader>1 :1b<CR>
 nnoremap <leader>2 :2b<CR>
 nnoremap <leader>3 :3b<CR>
