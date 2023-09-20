@@ -63,8 +63,6 @@ pyp, and fd)::
    avoiding conflicting dependencies.
 
 
-.. _alacritty:
-
 ``alacritty``
 ~~~~~~~~~~~~~
 
@@ -85,7 +83,7 @@ Alternatives:
 - On Linux, any number of default terminal apps
 
 
-.. _bat:
+.. _bat_ref:
 
 ``bat``
 ~~~~~~~
@@ -103,8 +101,6 @@ Alternatives:
 - cat
 
 
-.. _bfg:
-
 ``bfg``
 ~~~~~~~
 
@@ -120,8 +116,6 @@ Alternatives:
 
 - ``git-filter-branch``, which is built in to git but is slower and not as feature-rich.
 
-.. _black:
-
 ``black``
 ~~~~~~~~~
 
@@ -133,7 +127,6 @@ Alternatives:
 PEP8 style conventions. I'll typically run it on a file in vim with ``!black
 %`` (the ``!`` calls out to the shell, and the ``%`` means "this file".
 
-.. _docker:
 
 ``docker``
 ~~~~~~~~~~
@@ -149,8 +142,6 @@ Alternatives:
 
 - Singularity, though this requires a Linux machine to build and is a bit more
   involved to install.
-
-.. _fd:
 
 
 ``fd``
@@ -169,7 +160,7 @@ Alternatives:
 
 - ``find``
 
-.. _fzf:
+.. _fzf_ref:
 
 ``fzf``
 ~~~~~~~
@@ -182,10 +173,9 @@ Alternatives:
 with stdin. It integrates with bash so that when you use ``Ctrl-R`` (the
 standard bash way of reverse-search through history), you’ll instead get the
 fzf interface. Other tools may also look for ``fzf`` to use as an interface.
-:ref:`zoxide` for example does this. You can also pipe in any arbitrary text to
+``zoxide`` for example does this. You can also pipe in any arbitrary text to
 ``fzf`` for a fuzzy search tool.
 
-.. _icdiff:
 
 ``icdiff``
 ~~~~~~~~~~
@@ -202,7 +192,6 @@ Alternatives:
 - ``diff``, which doesn't do side-by-side or colored diffs
 - ``vim -d``, which I still use quite often
 
-.. _jq:
 
 ``jq``
 ~~~~~~
@@ -213,7 +202,6 @@ Alternatives:
 
 `jq <https://stedolan.github.io/jq/>`_ is like sed or awk for JSON data.
 
-.. _pyp:
 
 ``pyp``
 ~~~~~~~
@@ -232,7 +220,6 @@ Alternatives:
 - pythonpy (no longer maintained)
 - opening up a Python interpreter
 
-.. _radian:
 
 ``radian``
 ~~~~~~~~~~
@@ -297,12 +284,10 @@ Alternatives:
   you have a lot of editing to do.
 
 
-.. _zoxide:
-
 ``zoxide``
 ~~~~~~~~~~
 
-.. code-block:: zoxide
+.. code-block::
 
     ./setup.sh --install-zoxide
 
@@ -313,7 +298,7 @@ them.
 Note that after installation it requires an additional command to be added to
 your :file:`.bashrc`.
 
-I most commonly use its interactive mode ``zi``, which opens up :ref:`fzf` as
+I most commonly use its interactive mode ``zi``, which opens up :ref:`fzf_ref` as
 an interface for changing directories via fuzzy search.
 
 Alternatives:

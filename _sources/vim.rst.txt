@@ -5,7 +5,7 @@ Vim / Neovim
 
 :file:`.vimrc` and :file:`.config/nvim/init.vim` have the same contents.
 
-In the `.config/nvim/init.vim <.config/nvim/init.vim>`__ file in this
+In the :file:`.config/nvim/init.vim` file in this
 repo:
 
 -  ``<Leader>`` is set to ``,``

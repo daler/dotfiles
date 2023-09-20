@@ -81,7 +81,7 @@ for the commands set for each alias.
 
     * - ``v``
       - Live, searchable, syntax-highlighted preview of files in a directory.
-        Needs :ref:`fzf` and :ref:`bat` installed
+        Needs ref:`fzf_ref` and :ref:`bat_ref` installed
 
     * - ``..``
       - faster way of moving up a directory
@@ -119,7 +119,7 @@ are set up. Some notable functions defined here:
     * - ``tre``
       - Nicer ``tree`` output, colored and piped to less
     * - ``sa``
-      - Open :ref:`fzf` to search across all conda environments, and activates the
+      - Open ``fzf`` to search across all conda environments, and activates the
         selected one
     * - ``prsetup``
       - When run in a clone of a repo with a pull request from a fork, get set up

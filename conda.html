@@ -48,7 +48,7 @@
           <div class="body" role="main">
             
   <div class="section" id="conda">
-<span id="id1"></span><h1>conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h1>
+<h1>conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installing-conda">
 <h2>Installing conda<a class="headerlink" href="#installing-conda" title="Permalink to this headline">¶</a></h2>
 <p>To install conda, we use <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>. Mambaforge is a way of installing
@@ -97,7 +97,7 @@ activate a specific environment.</p></li>
 <h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
 <p>These dotfiles provide a function, <code class="docutils literal notranslate"><span class="pre">ca</span></code> (short for “conda activate”). It’s
 defined in the <code class="file docutils literal notranslate"><span class="pre">~/.functions</span></code> file which in turn is sourced in
-<a href="#id2"><span class="problematic" id="id3">:fiel:`~/.bashrc`</span></a>. This function runs <code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">&quot;$(conda</span> <span class="pre">shell.bash</span> <span class="pre">hook)&quot;</span></code>,
+<code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code>. This function runs <code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">&quot;$(conda</span> <span class="pre">shell.bash</span> <span class="pre">hook)&quot;</span></code>,
 which is a way of running the same commands that <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">init</span> <span class="pre">bash</span></code> would add
 to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>. <strong>But it runs it on demand, not every shell.</strong> In other
 words, this is wrapping the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">init</span> <span class="pre">bash</span></code> stuff inside a function that we

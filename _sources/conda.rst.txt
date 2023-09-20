@@ -1,5 +1,3 @@
-.. _conda:
-
 conda
 =====
 
@@ -59,7 +57,7 @@ How it works
 
 These dotfiles provide a function, ``ca`` (short for "conda activate"). It's
 defined in the :file:`~/.functions` file which in turn is sourced in
-:fiel:`~/.bashrc`. This function runs ``eval "$(conda shell.bash hook)"``,
+:file:`~/.bashrc`. This function runs ``eval "$(conda shell.bash hook)"``,
 which is a way of running the same commands that ``conda init bash`` would add
 to your ``~/.bashrc``. **But it runs it on demand, not every shell.** In other
 words, this is wrapping the ``conda init bash`` stuff inside a function that we
