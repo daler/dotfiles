@@ -14,8 +14,10 @@ function start_agent {
         else
             additional_arg="--apple-use-keychain"
         fi
+        ssh-add "$additional_arg"
+    else
+        ssh-add
     fi
-    ssh-add "$additional_arg"
 }
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
