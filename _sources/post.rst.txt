@@ -80,3 +80,43 @@ Git config
 
     git config --global user.name "your name here"
     git config --global user.email "your email here"
+
+Alacritty config
+----------------
+If you're using Alacritty as your terminal, it needs a little configuration to
+get colors to work on tmux.
+
+These instructions are from `this gist <https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6>`_.
+
+In :file:`.config/alacritty/alacritty.yml`::
+
+    env:
+        TERM: xterm-256color
+
+In :file:`.tmux.conf`::
+
+    set -g default-terminal "tmux-256color"
+    set -ag terminal-overrides ",xterm-256color:RGB"
+
+    # Or use a wildcard instead of forcing a default mode.
+    # Some users in the comments of this gist have reported that this work better.
+    #set -sg terminal-overrides ",*:RGB"
+
+    # You can also use the env variable set from the terminal.
+    # Useful if you share your configuration betweeen systems with a varying value.
+    #set -ag terminal-overrides ",$TERM:RGB"
+
+In :file:`.config/nvim/init.vim`::
+
+
+    " You might have to force true color when using regular vim inside tmux as the
+    " colorscheme can appear to be grayscale with "termguicolors" option enabled.
+    " if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+    "   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    "   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    " endif
+
+    set termguicolors
+    colorscheme yourfavcolorscheme
+
+

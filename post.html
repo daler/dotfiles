@@ -115,6 +115,42 @@ git config --global user.email <span class="s2">&quot;your email here&quot;</spa
 </pre></div>
 </div>
 </div>
+<div class="section" id="alacritty-config">
+<h2>Alacritty config<a class="headerlink" href="#alacritty-config" title="Permalink to this headline">¶</a></h2>
+<p>If you’re using Alacritty as your terminal, it needs a little configuration to
+get colors to work on tmux.</p>
+<p>These instructions are from <a class="reference external" href="https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6">this gist</a>.</p>
+<p>In <code class="file docutils literal notranslate"><span class="pre">.config/alacritty/alacritty.yml</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">env</span><span class="p">:</span>
+    <span class="n">TERM</span><span class="p">:</span> <span class="n">xterm</span><span class="o">-</span><span class="mi">256</span><span class="n">color</span>
+</pre></div>
+</div>
+<p>In <code class="file docutils literal notranslate"><span class="pre">.tmux.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">default</span><span class="o">-</span><span class="n">terminal</span> <span class="s2">&quot;tmux-256color&quot;</span>
+<span class="nb">set</span> <span class="o">-</span><span class="n">ag</span> <span class="n">terminal</span><span class="o">-</span><span class="n">overrides</span> <span class="s2">&quot;,xterm-256color:RGB&quot;</span>
+
+<span class="c1"># Or use a wildcard instead of forcing a default mode.</span>
+<span class="c1"># Some users in the comments of this gist have reported that this work better.</span>
+<span class="c1">#set -sg terminal-overrides &quot;,*:RGB&quot;</span>
+
+<span class="c1"># You can also use the env variable set from the terminal.</span>
+<span class="c1"># Useful if you share your configuration betweeen systems with a varying value.</span>
+<span class="c1">#set -ag terminal-overrides &quot;,$TERM:RGB&quot;</span>
+</pre></div>
+</div>
+<p>In <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot; You might have to force true color when using regular vim inside tmux as the</span>
+<span class="s2">&quot; colorscheme can appear to be grayscale with &quot;</span><span class="n">termguicolors</span><span class="s2">&quot; option enabled.</span>
+<span class="s2">&quot; if !has(&#39;gui_running&#39;) &amp;&amp; &amp;term =~ &#39;^\%(screen\|tmux\)&#39;</span>
+<span class="s2">&quot;   let &amp;t_8f = &quot;</span>\<span class="o">&lt;</span><span class="n">Esc</span><span class="o">&gt;</span><span class="p">[</span><span class="mi">38</span><span class="p">;</span><span class="mi">2</span><span class="p">;</span><span class="o">%</span><span class="n">lu</span><span class="p">;</span><span class="o">%</span><span class="n">lu</span><span class="p">;</span><span class="o">%</span><span class="n">lum</span><span class="s2">&quot;</span>
+<span class="s2">&quot;   let &amp;t_8b = &quot;</span>\<span class="o">&lt;</span><span class="n">Esc</span><span class="o">&gt;</span><span class="p">[</span><span class="mi">48</span><span class="p">;</span><span class="mi">2</span><span class="p">;</span><span class="o">%</span><span class="n">lu</span><span class="p">;</span><span class="o">%</span><span class="n">lu</span><span class="p">;</span><span class="o">%</span><span class="n">lum</span><span class="s2">&quot;</span>
+<span class="s2">&quot; endif</span>
+
+<span class="nb">set</span> <span class="n">termguicolors</span>
+<span class="n">colorscheme</span> <span class="n">yourfavcolorscheme</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -160,6 +196,7 @@ git config --global user.email <span class="s2">&quot;your email here&quot;</spa
 <li class="toctree-l2"><a class="reference internal" href="#mac">Mac</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ssh-config">SSH config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#git-config">Git config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alacritty-config">Alacritty config</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
