@@ -27,7 +27,30 @@ Plug 'vim-pandoc/vim-pandoc-syntax' " Separate plugin for pandoc syntax, require
 Plug 'vim-pandoc/vim-rmarkdown' " Supports syntax highlighting in RMarkdown chunks
 Plug 'vim-python/python-syntax' " Improved python syntax highlighting
 Plug 'vim-scripts/vis' " Makes operations in visual block mode respect selection.
+Plug 'lukas-reineke/indent-blankline.nvim' " adds vertical lines as indentation guides
+Plug 'tpope/vim-sleuth' " Detect and set shiftwidth/tabstop appropriately per buffer
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'folke/which-key.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'mfussenegger/nvim-lint'
+
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'hrsh7th/vim-vsnip'
+
+" Plug 'nvim-lualine/lualine.nvim'
+" Plug 'akinsho/bufferline.nvim'
 call plug#end()
 
 " LUA CONFIG  ================================================================
@@ -44,8 +67,6 @@ filetype plugin indent on " Enable detection, plugin , and indent for filetype
 set nofoldenable " Files will open with everything unfolded; fold commands like zc will re-enable it.
 set foldlevel=99 " Support this many levels of nested folds
 set backspace=indent,eol,start " This gets backspace to work in some situations
-set tabstop=4 " Number of spaces <Tab> represents
-set shiftwidth=4 " Number of spaces for indentation. Same as tabstop.
 set smarttab " At the beginning of the line, insert spaces according to shiftwidth
 set expandtab " <Tab> inserts spaces, not '\t'
 set whichwrap+=<,>,h,l " Allows arrows and h/l to move to next line when at the end of one
@@ -146,16 +167,18 @@ endfunc
 nnoremap <leader>r :call NumberToggle()<cr>
 
 " Buffer switching ----------------------------------------------------------
-" <leader>1 switches to buffer 1, <leader>2 to buffer 2, etc
-nnoremap <leader>1 :1b<CR>
-nnoremap <leader>2 :2b<CR>
-nnoremap <leader>3 :3b<CR>
-nnoremap <leader>4 :4b<CR>
-nnoremap <leader>5 :5b<CR>
-nnoremap <leader>6 :6b<CR>
-nnoremap <leader>7 :7b<CR>
-nnoremap <leader>8 :8b<CR>
-nnoremap <leader>9 :9b<CR>
+" move between buffers. This is largely for backwards compatibility (and
+" muscle memory) from previous configs.
+nnoremap <leader>1 :bprevious<CR>
+nnoremap <leader>2 :bnext<CR>
+
+" This is now my favorite method for buffer switching because tab-completion
+" works.
+nnoremap <leader>b :buffers<CR>:buffer<Space>
+
+" [b and ]b, borrowed from vim-unimpaired, is another mapping for this.
+nnoremap [b :bprevious<CR>
+nnoremap ]b :bnext<CR>
 
 " Copy/paste -----------------------------------------------------------------
 " Yank/paste to the OS clipboard with <leader>y and <leader>p
@@ -246,26 +269,29 @@ nmap <leader>yr i---<CR>output:<CR>  html_document:<CR>  code_folding: hide<CR>t
 " <leader>ko inserts a knitr global options chunk. Mnemonic is 'knitr options'
 nmap <leader>ko i<CR>```{r}<CR>knitr::opts_chunk$set(warning=FALSE, message=FALSE)<CR>```<CR><Esc>0
 
-" plugin: vim-airline --------------------------------------------------------
-" Enable the display of open buffers along the top.
-" Click on them or use <leader>1, <leader>2, etc to switch to them.
-" See :help airline-tabline for more.
+
+" " plugin: vim-airline --------------------------------------------------------
+" Only support a single extension to save a little on load time
+let g:airline_extensions = ['tabline']
+" " Enable the display of open buffers along the top.
+" " Click on them or use <leader>1, <leader>2, etc to switch to them.
+" " See :help airline-tabline for more.
 let g:airline#extensions#tabline#enabled = 1
-
-" Show the buffer number next to the filename for easier switching.
-" See :help airline-tabline for more.
-let g:airline#extensions#tabline#buffer_nr_show = 1
-
-" Show only the filename and not the full path in buffer tabs.
-" See :help filename-modifiers for more info.
+" 
+" " Show the buffer number next to the filename for easier switching.
+" " See :help airline-tabline for more.
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+" 
+" " Show only the filename and not the full path in buffer tabs.
+" " See :help filename-modifiers for more info.
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-" See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose other themes.
-" Use :AirlineTheme <themename> to test live.
+" 
+" " See https://github.com/vim-airline/vim-airline/wiki/Screenshots to choose other themes.
+" " Use :AirlineTheme <themename> to test live.
 let g:airline_theme = "ayu_dark"
-
-" If you are using a powerline-enabled font in your terminal application, set this to 1. Otherwise set to 0.
-" See :help airline-configuration for more.
+" 
+" " If you are using a powerline-enabled font in your terminal application, set this to 1. Otherwise set to 0.
+" " See :help airline-configuration for more.
 let g:airline_powerline_fonts = 1
 
 " plugin: vim-pandoc and vim-pandoc-syntax -----------------------------------
@@ -277,5 +303,8 @@ let g:pandoc#syntax#conceal#use = 0
 
 " RMarkdown code blocks can be folded too
 let g:pandoc#folding#fold_fenced_codeblocks = 1
+
+" plugin: indent-blankline.nvim ----------------------------------------------
+nnoremap <leader>i :IndentBlanklineToggle<CR>
 
 " vim: nowrap
