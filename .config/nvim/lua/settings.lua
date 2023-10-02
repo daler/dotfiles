@@ -1,8 +1,7 @@
 -- GENERAL SETTINGS
 
--- Re-map leader from default \ to , (comma). Any time <leader> is used below, it now means comma.
-vim.g.mapleader = ","
-vim.g.maplocalleader = "\\"
+vim.cmd("let mapleader=','") -- Re-map leader from default \ to , (comma). Any time <leader> is used below, it now means comma.
+vim.cmd("let maplocalleader = '\\'") -- Local leader becomes \. Be careful about escapes: escape Lua -> vim, use single quotes for vim.
 vim.cmd("syntax on") -- Syntax highlighting; also does an implicit filetype on
 vim.cmd("filetype plugin indent on") -- Enable detection, plugin, and indent for filetype
 vim.cmd("set nofoldenable") -- Files will open with everything unfolded
