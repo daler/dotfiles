@@ -94,7 +94,6 @@ function showHelp() {
     echo "    1)  ./setup.sh --dotfiles"
     echo "    2)  CLOSE TERMINAL, OPEN A NEW ONE"
     echo "    3)  ./setup.sh --install-neovim"
-    echo "    4)  ./setup.sh --set-up-vim-plugins"
     echo "    5)  ./setup.sh --install-conda"
     echo "    6)  ./setup.sh --set-up-bioconda"
     echo "    7)  ./setup.sh --install-fzf"
@@ -139,12 +138,6 @@ function showHelp() {
         "use this command. You will need the prequisites " \
         " (https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites) " \
         "installed."
-
-    cmd "--set-up-vim-plugins" \
-        "vim-plug needs to be installed separately," \
-        "and then all vim plugins can be simply be installed" \
-        "by adding them to .vimrc or init.vim" \
-        "Homepage: https://github.com/junegunn/vim-plug"
 
     header "conda setup:"
 
@@ -522,34 +515,6 @@ elif [ $task == "--compile-neovim" ]; then
     printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
     printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
     check_opt_bin_in_path
-
-
-elif [ $task == "--set-up-vim-plugins" ]; then
-    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. (for nvim) and ~/.vim/autoload/plug.vim (for vim). Read the instructions after this command when done."
-    nvim_dest=~/.local/share/nvim/site/autoload/plug.vim
-    vim_dest=~/.vim/autoload/plug.vim
-    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
-    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
-
-    VIM=$(which vim)
-    NVIM=$(which nvim)
-
-    if [ ${MANUAL_PLUG_INSTALL:=0} != 1 ]; then
-        echo
-        ok "vim ($VIM) will now open, install plugins by running :PlugInstall. After inspecting for any errors, use :q to quit."
-        echo
-        vim -c ':PlugInstall' -c ':bunload 1'
-
-        echo
-        ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall. After inspecting for any errors, use :q to quit"
-        echo
-        nvim -c ':PlugInstall' -c ':bunload 1'
-
-        printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
-    else
-        printf "${YELLOW}Please open vim and/or nvim, run :PlugInstall${UNSET}\n"
-    fi
-
 
 
 elif [ $task == "--mac-stuff" ]; then
