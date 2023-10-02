@@ -13,5 +13,8 @@ return  {
 
       -- Use the original zenburn's incremental search highlight
       vim.cmd("highlight IncSearch guifg=#f8f893 guibg=#385f38")
+
+      -- Use italics for comments
+      vim.cmd("highlight Comment cterm=italic gui=italic")
     end,
 }
