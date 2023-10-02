@@ -1,7 +1,8 @@
 return  {
     -- Main colorscheme
     'phha/zenburn.nvim',
-    -- Main coloscheme should not lazy-load and be high-priority, as per lazy.nvim docs
+
+    -- Main colorscheme should not lazy-load and be high-priority, as per lazy.nvim docs
     lazy= false, priority=1000,
     config = function()
       vim.cmd("colorscheme zenburn")
