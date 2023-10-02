@@ -59,13 +59,12 @@ requirements.txt \
 # Directories have to be ADDed one at a time
 ADD .config ./.config
 ADD .vim ./.vim
+ADD .config/nvim/lua ./.config/nvim/lua
+ADD .config/nvim/lua/plugins ./.config/nvim/lua/plugins
 
 # Run setup in order
 RUN ./setup.sh --dotfiles
 RUN ./setup.sh --install-neovim
-RUN MANUAL_PLUG_INSTALL=1 ./setup.sh --set-up-vim-plugins
-RUN source ~/.bashrc; nvim +PlugInstall +qall
-RUN source ~/.bashrc; $(which vim) +PlugInstall +qall
 RUN ./setup.sh --install-conda
 RUN ./setup.sh --set-up-bioconda
 
