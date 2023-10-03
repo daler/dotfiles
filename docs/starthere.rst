@@ -114,35 +114,30 @@ more help on deciding.
      For example, on many machines it's at :file:`/usr/bin/vim`.
 
 
-2b: vim/nvim plugin setup
-~~~~~~~~~~~~~~~~~~~~~~~~~
+2b: neovim plugin setup
+~~~~~~~~~~~~~~~~~~~~~~~
 
-The vim config included here takes advantage of many plugins. The vim ecosystem
-has multiple plugin-managing tools; here we use the popular `vim-plug
-<https://github.com/junegunn/vim-plug>`_. This step installs the manager and
-then installs the plugins in the vim config.
+Plugins are now managed via the `lazy.nvim
+<https://github.com/folke/lazy.nvim>`_ manager rather than ``vim-plug`` (as in
+previous versions of these dotfiles).
 
-.. code-block:: bash
+Simply opening neovim should be sufficient to trigger ``lazy.nvim`` to
+download, install, and configure plugins automatically.
 
-    ./setup.sh --set-up-vim-plugins
+.. code-block::
 
-.. details:: Details
+  nvim 
 
-    This sets up `vim-plug <https://github.com/junegunn/vim-plug>`_, placing the
-    required files in the locations expected by vim and neovim. Then it
-    automatically opens ``vim`` and installs plugins. Then it does the same with
-    ``nvim``.
+  # or, vim
 
-    This command keeps the plugin installation screen up so you can verify
-    everything went OK.
+``lazy.nvim`` will show progress downloading plugins. Treesitter will also
+automatically install parsers, so you should watch the log on the bottom and
+wait until everything settles down. Then you can quit as normal with
+``<Esc>:q``.
 
-    Recall that nvim config is in :file:`~/.config/nvim/init.vim`, and vim
-    config is in :file:`~/.vimrc`. Here, we symlink .vimrc to init.vim so they
-    share the same config.
-
-    If you're still learning vim, remember that you can quit by hitting
-    ``Esc``, then typing ``:q`` and hitting Enter.
-
+For long-time users of these dotfiles who may have older vim/nvim configs,
+please see :ref:`nvim-lua` for more context, rationale, and details on
+migrating to this new config method.
 
 2c: powerline fonts
 ~~~~~~~~~~~~~~~~~~~
