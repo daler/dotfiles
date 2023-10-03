@@ -5,34 +5,39 @@ Migrating to Neovim Lua config
 
 Neovim has been supporting a lot of interesting new features. Historically,
 in these dotfiles I've tried to largely maintain backward compatibility with vim
-by keeping ``.config/nvim/init.vim`` symlinked to ``.vimrc``. But I realized
+by keeping :file:`.config/nvim/init.vim` symlinked to :file:`.vimrc`. But I realized
 that this was preventing me from using a lot of the new functionality.
 
 One of the nice features of nvim is being able to configure with Lua. I've never
 been able to get the hang of VimL (the internal vim language), but was able to
-quickly pick up Lua since it has a lot of similarities with Python.
-
-It is very empowering to have the full use of a language like Lua to use in
-configuration!
+quickly pick up Lua since it has a lot of similarities with Python. It is very
+empowering to have the full use of a language like Lua to use in configuration!
 
 I finally decided to take the plunge and convert my vim+neovim config into
-a full-fledged Lua nvim config. Now there's only a barebones ``.vimrc`` for
-the rare occasions when I need to use :file:`/usr/bin/vim` for some reason.
+a full-fledged Lua nvim config. This forces a dichotomy between vim and nvim,
+but realistically I only ever use nvim. Now there's only a barebones ``.vimrc``
+for the rare occasions when I need to use :file:`/usr/bin/vim` for some reason.
 
 This page is for those of you who have used these dotfiles before, and might
 even have modified your own vim+nvim config...but now with with this newfangled
 config you don't know what's going on!
 
-**TL;DR: try out the new version**
+**TL;DR: to try out the new version**
 
-To try this out:
+First, back up your existing config.
 
-.. code-block::
+.. code-block:: bash
 
    # Back up old files
    mv ~/.config/nvim ~/.config/nvim-backup
    mv ~/.vimrc ~/.vimrc-backup
    mv ~/.vim ~/.vim-backup
+
+Then manually copy the relevant files from this repo (that is, don't use the
+``--dotfiles`` argument to :file:`setup.sh` since that will copy over more than
+just these):
+
+.. code-block:: bash
 
    # here we refer to the dotfiles repo dir;
    # modify accordingly for where you put it.
