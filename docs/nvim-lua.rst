@@ -75,6 +75,8 @@ Here are some initial things to try:
 - ``<leader>fg`` to live-grep within the directory (hit enter on the search
   result to open the file at that location). Great for exploring new codebases.
 
+- Open a file in a git repo with some changes. ``<leader>hp`` to preview hunks.
+
 Don't like it? Do this to revert:
 
 .. code-block::
