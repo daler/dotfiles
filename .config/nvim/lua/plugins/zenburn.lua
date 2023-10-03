@@ -17,5 +17,8 @@ return  {
 
       -- Use italics for comments
       vim.cmd("highlight Comment cterm=italic gui=italic")
+
+      -- Brighter diff delete, for better visibility in gitsigns
+      vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
     end,
 }

@@ -18,7 +18,6 @@ return {
   {'tpope/vim-surround'},
   {'tpope/vim-sleuth'},
   {'folke/which-key.nvim'},
-  {'lewis6991/gitsigns.nvim'},
   {'nvim-lua/plenary.nvim'},
   {'rafamadriz/friendly-snippets'},
   {'rktjmp/lush.nvim'},
@@ -42,5 +41,5 @@ return {
   -- {'ggandor/leap.nvim'}                   -- leap.lua
   -- {'vim-airline/vim-airline'}             -- vim-airline.lua
   -- {'lukas-reineke/indent-blankline.nvim'} -- indent-blankline.lua
-  --
+  -- {'lewis6991/gitsigns.nvim'}             -- gitsigns.lua
 }
