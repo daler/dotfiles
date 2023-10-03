@@ -81,19 +81,6 @@ upgrade independently, and still have them on my path.</p>
 <p><strong>Why use bash for</strong> <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> ? There are a lot of system calls, which gets
 awkward in Python. Using bash, everything is straightforwardly (if verbosely)
 captured in a single script without any other dependencies.</p>
-<p id="why-lua"><strong>Why move to Lua for nvim?</strong> For years I’ve symlinked <code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> to
-<code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>, and had just a small number of if-clauses for
-nvim-specific behavior. This was because on some systems I still had vim, or
-otherwise hadn’t completely set up nvim for things like <code class="docutils literal notranslate"><span class="pre">$EDITOR</span></code>, and wanted
-to be fully functional in either. Nowadays though, I have nvim everywhere and
-there’s not much of a need. Plus, there’s a lot of interesting functionality
-being developed for nvim, and keeping backwards compatibility was holding back
-the vim+nvim config. I suppose I could have kept <code class="file docutils literal notranslate"><span class="pre">init.vim</span></code> in VimL, but
-some plugins (nvim-cmp, treesitter, and LSP-related stuff in particular) often
-needs a lot of customization in Lua. Having one main config file for all of that would
-get out of hand, so I’d need to modularize somehow. I liked how lazy.nvim
-naturally supported modularization of plugins, and once I refactored things
-I thought it was a good approach.</p>
 </div>
 
 
