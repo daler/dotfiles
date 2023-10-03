@@ -21,3 +21,4 @@ to you because:
 - the config files themselves are documented
 
 **For more, see full documentation at https://daler.github.io/dotfiles/**
+
