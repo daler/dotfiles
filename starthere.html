@@ -133,26 +133,25 @@ redirect it to <code class="docutils literal notranslate"><span class="pre">nvim
 <p>If you want to use actual <code class="docutils literal notranslate"><span class="pre">vim</span></code>, provide the full path when calling it.
 For example, on many machines it’s at <code class="file docutils literal notranslate"><span class="pre">/usr/bin/vim</span></code>.</p>
 </div></details></div>
-<div class="section" id="b-vim-nvim-plugin-setup">
-<h3>2b: vim/nvim plugin setup<a class="headerlink" href="#b-vim-nvim-plugin-setup" title="Permalink to this headline">¶</a></h3>
-<p>The vim config included here takes advantage of many plugins. The vim ecosystem
-has multiple plugin-managing tools; here we use the popular <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>. This step installs the manager and
-then installs the plugins in the vim config.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --set-up-vim-plugins
+<div class="section" id="b-neovim-plugin-setup">
+<h3>2b: neovim plugin setup<a class="headerlink" href="#b-neovim-plugin-setup" title="Permalink to this headline">¶</a></h3>
+<p>Plugins are now managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a> manager rather than <code class="docutils literal notranslate"><span class="pre">vim-plug</span></code> (as in
+previous versions of these dotfiles).</p>
+<p>Simply opening neovim should be sufficient to trigger <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> to
+download, install, and configure plugins automatically.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nvim</span>
+
+<span class="c1"># or, vim</span>
 </pre></div>
 </div>
-<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>This sets up <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>, placing the
-required files in the locations expected by vim and neovim. Then it
-automatically opens <code class="docutils literal notranslate"><span class="pre">vim</span></code> and installs plugins. Then it does the same with
-<code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
-<p>This command keeps the plugin installation screen up so you can verify
-everything went OK.</p>
-<p>Recall that nvim config is in <code class="file docutils literal notranslate"><span class="pre">~/.config/nvim/init.vim</span></code>, and vim
-config is in <code class="file docutils literal notranslate"><span class="pre">~/.vimrc</span></code>. Here, we symlink .vimrc to init.vim so they
-share the same config.</p>
-<p>If you’re still learning vim, remember that you can quit by hitting
-<code class="docutils literal notranslate"><span class="pre">Esc</span></code>, then typing <code class="docutils literal notranslate"><span class="pre">:q</span></code> and hitting Enter.</p>
-</div></details></div>
+<p><code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> will show progress downloading plugins. Treesitter will also
+automatically install parsers, so you should watch the log on the bottom and
+wait until everything settles down. Then you can quit as normal with
+<code class="docutils literal notranslate"><span class="pre">&lt;Esc&gt;:q</span></code>.</p>
+<p>For long-time users of these dotfiles who may have older vim/nvim configs,
+please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details on
+migrating to this new config method.</p>
+</div>
 <div class="section" id="c-powerline-fonts">
 <h3>2c: powerline fonts<a class="headerlink" href="#c-powerline-fonts" title="Permalink to this headline">¶</a></h3>
 <p>In <a class="reference external" href="https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif">this gif</a>,
@@ -248,7 +247,7 @@ descriptions of tools and the commands to install them.</p>
 <li class="toctree-l2"><a class="reference internal" href="#copy-over-dotfiles">1. Copy over dotfiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setup-vim-conda">2: Setup vim &amp; conda</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#a-neovim">2a: neovim</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#b-vim-nvim-plugin-setup">2b: vim/nvim plugin setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-neovim-plugin-setup">2b: neovim plugin setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#c-powerline-fonts">2c: powerline fonts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#d-conda">2d: conda</a></li>
 </ul>

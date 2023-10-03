@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Migrating to Neovim Lua config &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="migrating-to-neovim-lua-config">
+<span id="nvim-lua"></span><h1>Migrating to Neovim Lua config<a class="headerlink" href="#migrating-to-neovim-lua-config" title="Permalink to this headline">¶</a></h1>
+<p>Neovim has been supporting a lot of interesting new features. Historically,
+in these dotfiles I’ve tried to largely maintain backward compatibility with vim
+by keeping <code class="docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code> symlinked to <code class="docutils literal notranslate"><span class="pre">.vimrc</span></code>. But I realized
+that this was preventing me from using a lot of the new functionality.</p>
+<p>One of the nice features of nvim is being able to configure with Lua. I’ve never
+been able to get the hang of VimL (the internal vim language), but was able to
+quickly pick up Lua since it has a lot of similarities with Python.</p>
+<p>It is very empowering to have the full use of a language like Lua to use in
+configuration!</p>
+<p>I finally decided to take the plunge and convert my vim+neovim config into
+a full-fledged Lua nvim config. Now there’s only a barebones <code class="docutils literal notranslate"><span class="pre">.vimrc</span></code> for
+the rare occasions when I need to use <code class="file docutils literal notranslate"><span class="pre">/usr/bin/vim</span></code> for some reason.</p>
+<p>This page is for those of you who have used these dotfiles before, and might
+even have modified your own vim+nvim config…but now with with this newfangled
+config you don’t know what’s going on!</p>
+<p><strong>TL;DR: try out the new version</strong></p>
+<p>To try this out:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Back up old files</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span><span class="o">-</span><span class="n">backup</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">vimrc</span> <span class="o">~/.</span><span class="n">vimrc</span><span class="o">-</span><span class="n">backup</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">vim</span> <span class="o">~/.</span><span class="n">vim</span><span class="o">-</span><span class="n">backup</span>
+
+<span class="c1"># here we refer to the dotfiles repo dir;</span>
+<span class="c1"># modify accordingly for where you put it.</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="n">dotfiles</span><span class="o">/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="n">dotfiles</span><span class="o">/.</span><span class="n">vimrc</span> <span class="o">~/.</span><span class="n">vimrc</span>
+</pre></div>
+</div>
+<p>Then open up nvim, and wait for the installations to complete. You should be
+good to go.</p>
+<p>Here are some initial things to try:</p>
+<ul>
+<li><p>&lt;leader&gt;, and then wait a second. You’ll get a menu that pops up, showing you
+the currently-configured key mappings that follow &lt;leader&gt;. Hitting a listed
+key will execute the command. Sometimes you’ll see “-&gt; prefix” in the menu,
+which means you can hit that key to see a menu of the things you can type
+after that. If you go too far, use &lt;Backspace&gt; to go back a step.</p>
+<p>In fact, you can hit backspace a few times to get to the base vim commands. It
+can be helpful to look through to see if there’s any you’ve forgotten about!</p>
+</li>
+<li><p>which-key also pops up if you use <cite>‘</cite> (for marks), and helps you navigate
+between them.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z=</span></code> over a word to get a pop-up for spelling suggestions</p></li>
+<li><p>saner tab completion (hit tab until you like what you see). If you run <code class="docutils literal notranslate"><span class="pre">:set</span>
+<span class="pre">spell</span></code> then you’ll get spelling suggestions upon hitting tab; otherwise it
+will pull text from the buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Shift&gt;k&lt;Shift&gt;j</span></code> (so, hold down shift and type <code class="docutils literal notranslate"><span class="pre">kj</span></code>) to flash a beacon
+where the cursor is. This also works when jumping between search hits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;ff</span></code> to open a file selector within this directory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;fg</span></code> to live-grep within the directory (hit enter on the search
+result to open the file at that location). Great for exploring new codebases.</p></li>
+</ul>
+<p>Don’t like it? Do this to revert:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># aaaaah! revert! revert!</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span><span class="o">-</span><span class="n">lua</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span><span class="o">-</span><span class="n">backup</span> <span class="o">~/.</span><span class="n">config</span><span class="o">/</span><span class="n">nvim</span>
+<span class="n">rm</span> <span class="o">~/.</span><span class="n">vimrc</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">vimrc</span><span class="o">-</span><span class="n">backup</span> <span class="o">~/.</span><span class="n">vimrc</span>
+<span class="n">mv</span> <span class="o">~/.</span><span class="n">vim</span><span class="o">-</span><span class="n">backup</span> <span class="o">~/.</span><span class="n">vim</span>
+</pre></div>
+</div>
+<p>The rest of this page gives some more context so you can make your own changes.</p>
+<div class="section" id="config-nvim-init-vim-config-nvim-init-lua">
+<h2>.config/nvim/init.vim -&gt; .config/nvim/init.lua<a class="headerlink" href="#config-nvim-init-vim-config-nvim-init-lua" title="Permalink to this headline">¶</a></h2>
+<p>First, there’s no more <code class="docutils literal notranslate"><span class="pre">init.vim</span></code>. It’s <code class="docutils literal notranslate"><span class="pre">init.lua</span></code> instead. When you open up
+this file, there’s very little to see. That’s because the config has been
+modularized into more pieces.</p>
+</div>
+<div class="section" id="how-lua-finds-files">
+<h2>How Lua finds files<a class="headerlink" href="#how-lua-finds-files" title="Permalink to this headline">¶</a></h2>
+<p>When you say:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">require</span><span class="p">(</span><span class="s1">&#39;settings&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Lua will look in the <code class="file docutils literal notranslate"><span class="pre">lua</span></code> directory for a file called
+<code class="file docutils literal notranslate"><span class="pre">lua/settings.lua</span></code>, and run it. If there’s a <code class="file docutils literal notranslate"><span class="pre">init.lua</span></code> file in
+a directory, you can require that directory without needing to specify a file
+name.</p>
+<p>Here’s <a class="reference external" href="https://neovim.io/doc/user/lua-guide.html#lua-guide-modules">nvim docs on Lua modules</a> for more info.</p>
+</div>
+<div class="section" id="lazy-vim-for-plugins">
+<h2>lazy.vim for plugins<a class="headerlink" href="#lazy-vim-for-plugins" title="Permalink to this headline">¶</a></h2>
+<p>This config uses <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a> for managing
+plugins. I like the design of how it encourages modular plugin configs. This
+also encourages and supports keeping the plugin-specific keymappings with the
+plugin itself. The interface is also quite nice (though you need a <a class="reference external" href="https://www.nerdfonts.com/font-downloads">patched Nerd
+Font</a> for your font of interest, and
+this font should be configured to be used by the terminal program you’re using).</p>
+<p>The lazy-loading aspect of it is a bonus.</p>
+</div>
+<div class="section" id="the-init-lua-file">
+<h2>The <code class="file docutils literal notranslate"><span class="pre">init.lua</span></code> file<a class="headerlink" href="#the-init-lua-file" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">lua/settings.lua</span></code> has general vim settings</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">lua/plugins/</span></code> directory has plugin configs, which are found by
+the <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> plugin manager. See <a class="reference internal" href="#how-plugins-work"><span class="std std-ref">How to add/configure plugins</span></a> for details.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">lua/mappings.lua</span></code> has keymappings. Note that keymappings related to
+plugins are not configured here but instead in their respective plugin config.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">lua/autocommands.lua</span></code> has autocommands, which are things to run on
+particular triggers or particular kinds of buffers.</p></li>
+</ul>
+<p>Read on for more on each file.</p>
+<div class="section" id="lua-settings-lua">
+<h3><code class="file docutils literal notranslate"><span class="pre">lua/settings.lua</span></code><a class="headerlink" href="#lua-settings-lua" title="Permalink to this headline">¶</a></h3>
+<p><code class="file docutils literal notranslate"><span class="pre">lua/settings.lua</span></code>, is largely a direct translation of VimL to Lua. I just
+wrapped the commands in <code class="docutils literal notranslate"><span class="pre">vim.cmd()</span></code> calls. Importantly, <code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;</span></code> is set
+here, which needs to be done before any plugins are loaded, which is why this
+file is “require”d first in <code class="file docutils literal notranslate"><span class="pre">init.lua</span></code>. Here’s <a class="reference external" href="https://neovim.io/doc/user/lua-guide.html#lua-guide-vim-commands">nvim docs on running Vim
+commands with Lua</a> for more
+info.</p>
+</div>
+<div class="section" id="lua-plugins">
+<h3><code class="file docutils literal notranslate"><span class="pre">lua/plugins/</span></code><a class="headerlink" href="#lua-plugins" title="Permalink to this headline">¶</a></h3>
+<p><code class="file docutils literal notranslate"><span class="pre">init.lua</span></code> runs the <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> plugin manager, giving it <code class="docutils literal notranslate"><span class="pre">&quot;plugins&quot;</span></code>
+as its only parameter. This points lazy.nvim to the <code class="file docutils literal notranslate"><span class="pre">lua/plugins</span></code>
+directory. This directory has <code class="file docutils literal notranslate"><span class="pre">lua/plugins/init.lua</span></code> which is run.
+<code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> also scans the <code class="file docutils literal notranslate"><span class="pre">plugins</span></code> directory for other files, which
+contain configuration for various plugins. See <a class="reference internal" href="#how-plugins-work"><span class="std std-ref">How to add/configure plugins</span></a> for more
+on this.</p>
+</div>
+<div class="section" id="lua-mappings">
+<h3><code class="file docutils literal notranslate"><span class="pre">lua/mappings</span></code><a class="headerlink" href="#lua-mappings" title="Permalink to this headline">¶</a></h3>
+<p><code class="file docutils literal notranslate"><span class="pre">lua/mappings.lua</span></code> has keymappings. Here, we use the <code class="docutils literal notranslate"><span class="pre">vim.keymap.set</span></code>
+command to set mappings. Importantly, we provide the <code class="docutils literal notranslate"><span class="pre">desc</span></code> argument to all of
+the mappings. These descriptions are automatically discovered by the
+<code class="docutils literal notranslate"><span class="pre">which-key</span></code> plugin, which shows a pop-up menu after a second or so. It shows
+the possible key combinations you can do.</p>
+</div>
+</div>
+<div class="section" id="how-to-add-configure-plugins">
+<span id="how-plugins-work"></span><h2>How to add/configure plugins<a class="headerlink" href="#how-to-add-configure-plugins" title="Permalink to this headline">¶</a></h2>
+<p>Does the plugin need configuration? Add a new Lua file to <code class="file docutils literal notranslate"><span class="pre">lua/plugins/</span></code>
+named after the plugin.</p>
+<p>Follow the existing plugin files for a guide, but basically you’re aiming for
+something like this:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">return</span> <span class="p">{</span>
+  <span class="s2">&quot;username/reponame&quot;</span><span class="p">,</span>
+  <span class="n">config</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+    <span class="c1">-- stuff here for setup. Might include keybindings or more complicated</span>
+    <span class="c1">-- things.</span>
+  <span class="kr">end</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
+  </body>
+</html>
