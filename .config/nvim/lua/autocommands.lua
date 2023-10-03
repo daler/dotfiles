@@ -37,19 +37,3 @@ vim.api.nvim_create_autocmd('TextYankPost',
     pattern = "*"
   }
 )
-
--- Render RMarkdown to HTML
-vim.api.nvim_create_autocmd('FileType', { pattern = "rmarkdown",
-callback = function()
-  vim.keymap.set('n', '<leader>k', ':TermExec cmd=\'rmarkdown::render("%:p")\'<CR>',
-    { desc = "Render RMarkdown to HTML" })
-  end,
-})
-
--- Run Python file in IPython
-vim.api.nvim_create_autocmd('FileType', { pattern = "python",
-callback = function()
-  vim.keymap.set('n', '<leader>k', ':TermExec cmd=\'run %:p\'<CR>',
-    { desc = "Run Python file in IPython" })
-  end,
-})
