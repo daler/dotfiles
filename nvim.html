@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Nvim &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="nvim">
+<h1>Nvim<a class="headerlink" href="#nvim" title="Permalink to this headline">¶</a></h1>
+<p>This page describes the Neovim-specific configuration. Nvim has added a lot of
+features compared to Vim, including Lua support, language server protocol
+support, and more.</p>
+<p>Some of this is easy to configure and you’ll get it for free just by using the
+dotfiles. But for all of it to work, you’ll need to install a couple more
+things.</p>
+<div class="section" id="whichkey">
+<h2>WhichKey<a class="headerlink" href="#whichkey" title="Permalink to this headline">¶</a></h2>
+<p>This plugin pops up a temporary window with key bindings. It will pop up after
+1 second of not typing, but you can configure this by adjusting
+<code class="docutils literal notranslate"><span class="pre">vim.o.timeout</span></code>.</p>
+</div>
+<div class="section" id="indent-blankline">
+<h2>indent-blankline<a class="headerlink" href="#indent-blankline" title="Permalink to this headline">¶</a></h2>
+<p>Adds guidelines showing where the indentation levels are.</p>
+<p>If you have treesitter installed and set up, this will highlight in slightly
+brighter color the current context (the function, method, for-loop, etc) you’re
+in.</p>
+</div>
+<div class="section" id="setting-up-for-language-servers">
+<h2>Setting up for language servers<a class="headerlink" href="#setting-up-for-language-servers" title="Permalink to this headline">¶</a></h2>
+<p>This is probably the biggest lift in terms of extra setup.</p>
+<p>Language servers parse the code you’re working on and highlight potential
+errors. They also support linting code to make sure it meets style standards.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.py --install-npm
+./setup.py --install-base-r
+</pre></div>
+</div>
+<p>This makes npm (NodeJS package manager) available on the path, by installing it
+into a conda env. This is needed in order to install language parsers.</p>
+<p>Start nvim.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">:Mason</span></code>. This will pull up a menu with a LOT of possible language
+servers. You’ll install some in a moment, but keep in mind that you’ll get
+a log that shows up at the top. <code class="docutils literal notranslate"><span class="pre">gg</span></code> to get to the top. <code class="docutils literal notranslate"><span class="pre">Enter</span></code> shows more
+information. <code class="docutils literal notranslate"><span class="pre">i</span></code> installs.</p>
+<p>If you’ve installed npm, try installing the pyright language server. Search for
+it, <code class="docutils literal notranslate"><span class="pre">i</span></code> to install, and <code class="docutils literal notranslate"><span class="pre">gg</span></code> to watch the installation log.</p>
+<p>You can do the same thing for <code class="docutils literal notranslate"><span class="pre">marksman</span></code> and <code class="docutils literal notranslate"><span class="pre">lua-language-server</span></code>.</p>
+<p>If you want it for R, you’ll need to first activate an environment with R in it.</p>
+</div>
+<div class="section" id="nvim-cmp">
+<h2>nvim-cmp<a class="headerlink" href="#nvim-cmp" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/hrsh7th/nvim-cmp">nvim-cmp</a> provides tab-completion.</p>
+<p>By default, this would show a tab completion window on every keypress, which to
+me is annoying and distracting. So this is configured to only show up when
+I hit TAB.</p>
+<p>Hit tab to initiate. Hit tab until you like what you see, and then keep typing.
+Arrow keys work to scroll as well. Then keep typing, no need to hit Enter.</p>
+<p>If you’re running an LSP in the buffer, it will tab-complete methods,
+attributes, etc. Use the arrows and mouse wheel to read through help.</p>
+</div>
+<div class="section" id="beacon">
+<h2>beacon<a class="headerlink" href="#beacon" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/DanilaMihailov/beacon.nvim">beacon</a> helps you find the
+cursor. Use <a href="#id3"><span class="problematic" id="id4">:keyboard:`Shift-kj`</span></a> to flash a “beacon” – an animated stripe that
+shows you where the cursor is. This is configured to only show when you ask for
+it, or when you search for something and jump to the next or previous hit.</p>
+</div>
+<div class="section" id="accelerated-jk">
+<h2>accelerated-jk<a class="headerlink" href="#accelerated-jk" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/rhysd/accelerated-jk">accelerated-jk</a> speeds up j and
+k movements: longer presses will jump more and more lines. Configure</p>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
+  </body>
+</html>

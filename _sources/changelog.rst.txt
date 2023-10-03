@@ -1,6 +1,24 @@
 Changelog
 =========
 
+2023-10-02
+----------
+
+Continuing the progression of migrating to Lua-based vim config. See
+:ref:`nvim-lua` for details.
+
+**vim/nvim**
+
+- new, barebones .vimrc
+- remove .vim dir
+- refactor init.vim to init.lua
+- add plugins:
+  - indent-blankline
+  - beacon
+  - nvim-cmp (and various dependencies)
+  - telescope
+- change how buffers are switched
+
 2023-09-19
 ----------
 
