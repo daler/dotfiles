@@ -8,6 +8,7 @@ return {
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
       "L3MON4D3/LuaSnip",
+      "f3fora/cmp-spell",
     },
     -- The following is from the nvim-cmp wiki, which shows how to configure
     -- similar to SuperTab. That is, the window only appears when you hit tab,
@@ -61,11 +62,20 @@ return {
         autocomplete = false,
       },
 
-      sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'path' },
-      }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'buffer' },
+          { name = 'path' },
+          {
+              name = 'spell',
+              option = {
+                  keep_all_entries = false,
+                  enable_in_context = function()
+                      return true
+                  end,
+              },
+          },
+        }),
       }
     end,
 }
