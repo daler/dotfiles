@@ -46,5 +46,6 @@ Ready? :ref:`starthere`!
     tmux
     conda
     post
+    nvim-lua
     why
     changelog
