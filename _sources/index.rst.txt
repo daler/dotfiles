@@ -1,7 +1,7 @@
 daler dotfiles
 ==============
 
-.. details:: What are dofiles?
+.. details:: What are dotfiles?
 
     Linux and macOS have user-specific configuration files for things like bash,
     vim, tmux, and more. Since these files traditionally start with a ``.``, they
