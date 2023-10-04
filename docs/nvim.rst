@@ -78,7 +78,3 @@ cursor. Use :keyboard:`Shift-kj` to flash a "beacon" -- an animated stripe that
 shows you where the cursor is. This is configured to only show when you ask for
 it, or when you search for something and jump to the next or previous hit.
 
-accelerated-jk
---------------
-`accelerated-jk <https://github.com/rhysd/accelerated-jk>`_ speeds up j and
-k movements: longer presses will jump more and more lines. Configure

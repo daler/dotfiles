@@ -15,17 +15,46 @@ div.details code {
     color: #aaaaaa;
 }
 
+div.highlight {
+    border: 2px black solid;
+}
+
+div.details pre {
+    background: #fcfcfc;
+}
+
+div.details div.highlight {
+    border: 1px black solid;
+}
 
 summary {
-    font-style: italic;
-    color: #3a51a0;
+    font-weight: bold;
 }
 
 div.admonition {
-    background: none;
+    background-color: #f7f9ff;
 }
 
 div.admonition p.admonition-title {
     font-size: 20px;
 }
 
+thead {
+    background: #5e6682;
+    color: white;
+}
+
+kbd {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    background: #fcfcfc;
+    font-size: 0.9em;
+}
+
+kbd.compound {
+    border: none;
+}

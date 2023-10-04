@@ -1,11 +1,12 @@
 Changelog
 =========
 
-2023-10-02
+2023-10-04
 ----------
 
 Continuing the progression of migrating to Lua-based vim config. See
-:ref:`nvim-lua` for details.
+:ref:`nvim-lua` for details, and the updated :ref:`vim` for plugin and
+keymapping documentation.
 
 **vim/nvim**
 

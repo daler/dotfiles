@@ -1,50 +1,35 @@
 .. _vim:
 
-Vim / Neovim
-============
+Neovim
+======
 
-:file:`.vimrc` and :file:`.config/nvim/init.vim` have the same contents.
+The :file:`.vimrc` file has only basic setup for vim.
 
-In the :file:`.config/nvim/init.vim` file in this
-repo:
+The files :file:`.config/nvim/init.lua` is the entry point of the nvim config.
 
--  ``<Leader>`` is set to ``,``
--  ``<Localleader>`` is set to ``/``
+See :ref:`nvim-lua` and :ref:`why-lua` if you're coming here from using older
+versions of these dotfiles.
 
+.. note::
 
-.. note:: 
+   Unless otherwise specified, paths on this page are relative to
+   :file:`~/.config/nvim`.
 
-    **Setting up powerline fonts:** After running ``./setup.sh --powerline``,
-    which will install the fonts, you need to tell the terminal to use those
-    fonts. Go to Preferences for the terminal app, select the “Custom Font”
-    checkbox, and choose a font that ends with “Powerline”.
+Structure
+---------
 
-General features
-----------------
+Here is a schematic of the nvim config files in :file:`~/.config/nvim`:
 
-Here are the features (and fixes) you get when using this config file.
-Note that the file itself is pretty heavily commented so you can
-pick-and-choose at will.
+- :file:`init.lua`: entry point, and imports files from :file:`lua/` subdirectory
+- :file:`lua/settings.lua`: general vim settings
+- :file:`lua/lazy-bootstrap.lua`: automatically installs and makes available
+  the lazy.nvim plugin manager (no need for ``./setup.sh
+  --set-up-vim-plugins``)
+- :file:`lua/plugins/init.lua`: loaded by lazy.nvim, contains plugins that don't need additional config
+- :file:`lua/plugins/*.lua`: one file per plugin, containing that plugin's config.
+- :file:`lua/mappings.lua`: custom keymappings
+- :file:`lua/autocommands.lua`: custom autocommands
 
--  Lots of nice plugins (see below)
--  Syntax highlighting and proper Python formatting
--  In some situations backspace does not work, this fixes it
--  Use mouse to click around
--  Current line has a subtle coloring when in insert mode
--  Hitting the TAB key enters spaces, not a literal tab character.
-   Important for writing Python!
--  TAB characters are rendered as ``>...`` which helps troubleshoot
-   spaces vs tabs. This is disabled for files like HTML and XML where
-   tabs vs whitespace is not important
--  Set the tabstop to 2 for YAML format files
--  Trailing spaces are rendered as faded dots
--  Comments, numbered lists can be auto-wrapped after selecting and
-   using ``gq``
--  In insert mode while editing a comment, hitting enter will
-   automatically add the comment character to the beginning of the next
-   line
--  Searches will be case-sensitive only if at least letter is a capital
--  Plugins for working more easily within tmux
 
 Using the mouse
 ---------------
@@ -78,6 +63,57 @@ of insert mode, so that every space typed doesn't show up as trailing. When
 wrap is off, the characters for "extends" and "precedes" indicate that there's
 text offscreen.
 
+Switching buffers
+-----------------
+
+Two main ways of opening a file in a new buffer:
+
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - command
+     - description
+
+   * - :kbd:`:e` <filename>
+     - Open filename in new buffer
+
+   * - :kbd:`<leader>ff`
+     - Search for file in directory to open in new buffer (Telescope)
+
+Once you have multiple buffers, you can switch between them in these ways:
+
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - command
+     - description
+
+   * - :kbd:`[b`, :kbd:`]b`
+     - Prev and next buffers
+
+   * - :kbd:`H`, :kbd:`L`
+     - Prev buffer, next buffer
+
+   * - :kbd:`<leader>1`, :kbd:`<leader>2`
+     - First buffer, last buffer
+
+   * - :kbd:`,b`
+     - tab-complete buffer name (or number), then hit enter
+
+The bufferline is configured to show the basename of the file and the buffer
+number.
+
+Using Telescope and some of the other new plugins will open hidden buffers that
+increment the buffer number. This means that sometimes, opening a new buffer
+will give an unexpectedly high buffer number (instead of buffer 1 and buffer 2,
+you might get buffer 1 and buffer 19, for example). I'm currently keeping the
+buffer numbers because they are sometimes easier to use with :kbd:`<leader>b`
+than filenames.
+
+The display of the bufferline is configured in :file:`lua/plugins/vim-airline.lua`.
+
 Format options explanation
 --------------------------
 
@@ -98,68 +134,121 @@ Explanation of these options:
 -    Use Ctrl-u to quickly delete it if you didn't want it.
 - j: where it makes sense, remove a comment leader when joining lines
 
+Spell check
+-----------
+
+In case you're not aware, vim has built-in spellcheck.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - ``:set spell``
+      - Enable spell check
+
+    * - :kbd:`]s`
+      - Next spelling error
+
+    * - :kbd:`[s`
+      - Previous spelling error
+
+    * - :kbd:`z=`
+      - Show spelling suggestions
+
 
 Shortcuts
 ---------
 
-Here are some general shortcuts that are defined in the included config:
+Here are some general shortcuts that are defined in the included config. With
+the ``which-key`` plugin, many of these are also discoverable by hitting the
+first key and then waiting a second for the menu to pop up.
+
+These are defined in :file:`lua/mappings.lua`. Mappings that require a plugin
+are configured in the respective plugin's :file:`lua/plugins/*.lua` file.
+
+Modes ``n``, ``i``, ``v`` refer to normal, insert and visual respectively.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - mode
       - description
+
     * - :kbd:`,`
       -
       - Remapped leader. Below, when you see :kbd:`<leader>` it means :kbd:`,`.
+
     * - :kbd:`<leader>r`
-      - normal
+      - n
       - Toggle relative line numbering (makes it easier to jump around lines
         with motion operators).
+
     * - :kbd:`<leader>H`
-      - normal
+      - n
       - Toggle highlighted search. Sometimes it's distracting to have all the
         highlights stick around.
+
     * - :kbd:`<leader>W`
-      - normal
+      - n
       - Remove all trailing spaces in the file. Useful when cleaning up code to
         commit.
+
     * - :kbd:`<leader>R`
-      - normal or insert
+      - n, i
       - Refresh syntax highlighting. Useful when syntax highlighting gets wonky.
+
     * - :kbd:`@l`
-      - normal
+      - n
       - Macro to surround the line with quotes and add a trailing comma. Useful
         for making Python or R lists out of pasted text
-    * - :kbd:`<leader>d`
-      - normal or insert
-      - Insert the current date as a ReST-formatted title. Useful when writing
-        logs.
+
     * - :kbd:`<leader>-`
-      - normal
+      - n
       - Fills in the rest of the line with "-", out to column 80. Useful for
         making section separators.
-    * - :kbd:`<leader>md`
-      - normal
-      - Sets hard-wrap to 80, useful for writing markdown.
-    * - :kbd:`<leader>nd`
-      - normal
-      - Opposite of :kbd:`,md`
+
     * - :kbd:`<leader><TAB>`
-      - normal
+      - n
       - Useful for working with TSVs. Writes ``:set nowrap tabstop=`` and then
         leaves the cursor at the vim command bar so you can fill in a reasonble
         tabstop for the file you're looking at.
-    * - :kbd:`<leader>ko`
-      - normal
-      - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
-        global options (mnemonic: knitr options)
-    * - :kbd:`<leader>ry`
-      - normal
-      - Used for RMarkdown; writes commonly-used YAML front matter (mnemonic: rmarkdown yaml)
+
     * - :kbd:`<leader>\``
       - insert or normal
-      - (that's a backtick) Adds a new RMarkdown chunk and places the cursor inside it
+      - (that's a backtick) Adds a new RMarkdown chunk and places the cursor
+        inside it
+
+    * - :kbd:`<leader>ry`
+      - normal
+      - Used for RMarkdown; writes commonly-used YAML front matter (mnemonic:
+        rmarkdown yaml)
+
+    * - :kbd:`<leader>ko`
+      - n
+      - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
+        global options (mnemonic: knitr options)
+
+This is configured in :file:`lua/autocommands.lua`:
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - mode
+      - description
+
+    * - :kbd:`<leader>d`
+      - n, i
+      - Insert the current date as a ReST or Markdown-formatted title,
+        depending on the file type. Useful when writing logs.
+
+
 
 Plugins
 -------
@@ -175,6 +264,171 @@ commands come first.
 .. contents::
     :local:
 
+``vim-commentary``
+~~~~~~~~~~~~~~~~~~
+`vim-commentary <https://github.com/tpope/vim-commentary>`_ lets you easily
+toggle comments on lines or blocks of code.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`gc` on a visual selection
+      - toggle comment
+
+    * - :kbd:`gcc` on a single line
+      - toggle comment
+
+``beacon``
+~~~~~~~~~~
+`Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
+marker to show where the cursor is.
+
+Configured in :file:`lua/plugins/beacon.lua`.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`KJ` (hold shift and tap kj)
+      - Flash beacon
+
+In addition, moving between search hits with :kbd:`N` and :kbd:`n` will flash
+the beacon.
+
+``telescope``
+~~~~~~~~~~~~~
+`Telescope <https://github.com/nvim-telescope/telescope.nvim>`_ opens
+a floating window with fuzzy-search selection.
+
+Type in the text box to filter the list. Hit enter to select (and open the
+selected file in a new buffer).
+
+Configured in :file:`lua/plugins/telescope.lua`.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - mode
+      - description
+
+    * - :kbd:`<leader>ff`
+      - n
+      - Find files under this directory. Handy alternative to ``:e``
+
+    * - :kbd:`<leader>fg`
+      - n
+      - Search directory for string. This is like using ripgrep in vim.
+        Selecting entry takes you right to the line.
+
+``which-key``
+~~~~~~~~~~~~~
+
+`which-key <https://github.com/folke/which-key.nvim>`_ displays a popup with
+possible key bindings of the command you started typing. This is wonderful for
+discovering commands you didn't know about, or have forgotten.
+
+The window will appear 1 second after pressing a key (this is configured with
+``vim.o.timeoutlen``, e.g. ``vim.o.timeoutlen=500`` for half a sectond). There
+is no timeout though for registers (``"``) or marks (``'``) or spelling (``z=``
+over a word).
+
+You can hit a displayed key to execute the command, or if it's a multi-key
+command (typically indicated with a ``+prefix`` to show there's more), then that will take you to the next menu.
+
+Use :kbd:`<Backspace>` to back out a menu. In fact, pressing any key, waiting
+for the menu, and then hitting backspace will give a list of all the default
+mapped keys in vim.
+
+There is currently no extra configuration. Instead, when a key is mapped
+(either in :file:`lua/mappings.lua` or :file:`lua/plugins/*.lua`), an
+additional parameter ``{ desc = "description of mapping" }`` is included. This
+allows which-key to show a description. Mappings with no descriptions will
+still be shown.
+
+.. code-block:: lua
+
+   -- example mapping, with description
+   vim.keymap.set('n', '<leader>1', ':bfirst<CR>',
+     { desc = "First buffer" })
+
+
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - command
+     - description
+
+   * - any
+     - after 1 second, shows a popup menu
+
+   * - :kbd:`<Backspace>`
+     - Goes back a menu
+
+   * - :kbd:`z=` (over a word)
+     - Show popup with spelling suggestions, use indicated character to select
+
+   * - :kbd:`'`
+     - Show popup with list of marks
+
+   * - :kbd:`"`
+     - Show popup with list of registers
+
+
+``accelerated-jk``
+~~~~~~~~~~~~~~~~~~
+`accelerated-jk <https://github.com/rhysd/accelerated-jk>`_ speeds up j and
+k movements: longer presses will jump more and more lines.
+
+Configured in :file:`lua/plugins/accelerated-jk`. In particular, you might want
+to tune the acceleration curve depending on your system's keyboard repeat rate
+settings -- see that file for an explanation of how to tweak.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`j`, :kbd:`k`
+      - Keep holding for increasing vertical scroll speed
+
+``nvim-cmp``
+~~~~~~~~~~~~
+
+`nvim-cmp <https://github.com/hrsh7th/nvim-cmp>`_ provides tab-completion.
+
+By default, this would show a tab completion window on every keypress, which to
+me is annoying and distracting. So this is configured to only show up when
+I hit :kbd:`<Tab>`.
+
+Hit :kbd:`<Tab>` to initiate. Hit :kbd:`<Tab>` until you like what you see.
+Then keep typing -- no need to hit Enter. Arrow keys work to select, too.
+
+If you have enabled spell checking (``set spell``) then tab-completion will
+also show spelling suggestions from the dictionary. Otherwise, it will only use
+options from words already in the buffer.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`<Tab>`
+      - Tab completion
+
 ``toggleterm``
 ~~~~~~~~~~~~~~
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
@@ -185,6 +439,8 @@ The greatest benefit of this is that you can send text from a text buffer
 reproduce an IDE-like environment purely from the terminal. The following
 commands are custom mappings set in :file:`.config/nvim/init.vim` that affect
 the terminal use.
+
+Configured in :file:`lua/plugins/toggleterm.lua`.
 
 .. note::
 
@@ -198,37 +454,48 @@ the terminal use.
     mode.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - mode
       - description
+
     * - :kbd:`<leader>t`
-      - normal
+      - n
       - Open terminal to the right.
+
     * - :kbd:`<leader>w`
-      - normal
+      - n
       - Move to the right window (assumes it's terminal), and enter insert mode
+
     * - :kbd:`<leader>q`
-      - normal or insert
+      - n, i
       - Move to the text buffer to the left, and enter normal mode
+
     * - :kbd:`<leader>cd`
-      - normal
-      - Send the current RMarkdown code chunk to the terminal, and jump to the next chunk
+      - n
+      - Send the current RMarkdown code chunk to the terminal, and jump to the
+        next chunk
+
     * - :kbd:`gxx`
-      - normal
+      - n
       - Send the current *line* to the terminal buffer
+
     * - :kbd:`gx`
-      - visual
+      - v
       - Send the current *selection* to the terminal buffer
+
     * - :kbd:`<leader>k`
-      - normal
+      - n
       - Render the current RMarkdown file to HTML using `knitr::render()`.
         Assumes you have knitr installed and you're running R in the terminal
         buffer.
+
     * - :kbd:`<leader>k`
-      - normal
-      - Run the current Python script in IPython. Assumes you're running IPython
-        in the terminal buffer.
+      - n
+      - Run the current Python script in IPython. Assumes you're running
+        IPython in the terminal buffer.
 
 
 .. _vimfugitive:
@@ -241,22 +508,33 @@ This is wonderful for making incremental commits from within vim. This makes it
 a terminal-only version of git-cola or an alternative to tig. Specifically:
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`:Git`
-      - Opens the main screen for fugitive (hint: use `vim -c ":Git"` from
-        the command line to jump right into it)
+      - Opens the main screen for fugitive (hint: use `vim -c ":Git"` from the
+        command line to jump right into it)
+
     * - :kbd:`=`
       - Toggle visibility of changes
+
     * - :kbd:`-` (when over a filename)
       - Stage or unstage the file
+
     * - :kbd:`-` (when in a chunk after using ``=``)
       - Stage or unstage the chunk
+
     * - :kbd:`-` (in visual select mode (``V``))
-      - Stage or unstage **just the selected lines**. Perfect for making incremental commits.
+      - Stage or unstage **just the selected lines**. Perfect for making
+        incremental commits.
+
     * - :kbd:`cc`
-      - Commit, opening up a separate buffer in which to write the commit message
+      - Commit, opening up a separate buffer in which to write the commit
+        message
+
     * - :kbd:`dd` (when over a file)
       - Open the file in diff mode
 
@@ -264,17 +542,85 @@ The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``, so here is a reminder:
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`]c`
       - Go to the next diff
+
     * - :kbd:`[c`
       - Go to the previous diff
+
     * - :kbd:`do`
       - Use the [o]ther file's contents for the current diff
+
     * - :kbd:`dp`
       - [P]ut the contents of this diff into the other file
+
+``gitsigns``
+~~~~~~~~~~~~
+`gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
+the left side indicating where there were changes in a file. Only works in git
+repos.
+
+This plugin is in a way redundant with vim-fugitive. Fugitive is more useful
+when making commits across multiple files; gitsigns is more useful when making
+commits within a file while you're editing it. So they are complementary
+plugins rather than competing.
+
+Configured in :file:`lua/plugins/gitsigns.lua`
+
+Most commands require being in a hunk. Keymappings start with ``h``, mnemonic
+is "hunk" (the term for a block of changes).
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`[c`
+      - Previous change
+
+    * - :kbd:`]c`
+      - Next change
+
+    * - :kbd:`<leader>hp`
+      - Preview hunk (shows floating window of the change, only works in a change)
+
+    * - :kbd:`<leader>hs`
+      - Stage hunk (or stage lines in visual mode)
+
+    * - :kbd:`<leader>hr`
+      - Reset hunk (or reset lines in visual mode)
+
+    * - :kbd:`<leader>hu`
+      - Undo stage hunk
+
+    * - :kbd:`<leader>hS`
+      - Stage buffer
+
+    * - :kbd:`<leader>hR`
+      - Reset buffer
+
+    * - :kbd:`hb`
+      - Blame line in floating window
+
+    * - :kbd:`tb`
+      - Toggle blame for line
+
+    * - :kbd:`hd`
+      - Diff this file (opens diff mode)
+
+    * - :kbd:`td`
+      - Toggle deleted visibility
+
+Additionally, this supports hunks as text objects using ``ih`` (inside hunk).
+E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 
 .. _vim-gv:
 
@@ -284,11 +630,15 @@ are used heavily when working with ``:Gdiff``, so here is a reminder:
 view and browse git history.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`:GV` in visual mode
       - View commits affecting selection
+
     * - :kbd:`GV`
       - Open a commit browser, hit :kbd:`Enter` on a commit to view
 
@@ -309,13 +659,18 @@ enough flexibility in configuration to be able to reproduce default behaviors.
         conflictStyle = diff3
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`:MergetoolStart`
       - Starts the tool
+
     * - :kbd:`:diffget`
       - Pulls "theirs" (that is, assume the remote is correct)
+
     * - :kbd:`do`, :kbd:`dp`
       - Used as in vim diff mode
 
@@ -329,9 +684,12 @@ additional diff algorithms that work better on certain kinds of files. If your
 diffs are not looking right, try changing the algorithm with this plugin:
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`:EnhancedDiff <algorithm>`
       - Configure the diff algorithm to use, see below table
 
@@ -339,17 +697,24 @@ diffs are not looking right, try changing the algorithm with this plugin:
 The following algorithms are available:
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - algorithm
       - description
+
     * - myers
       - Default diff algorithm
+
     * - default
       - alias for `myers`
+
     * - minimal
       - Like myers, but tries harder to minimize the resulting diff
+
     * - patience
       - Patience diff algorithm
+
     * - histogram
       - Histogram is similar to patience but slightly faster
 
@@ -369,16 +734,22 @@ auto-padding table cells and adding the header lines as needed.
 * Complete the table with :kbd:`||` on a new line.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`:TableModeEnable`
       - Enables table mode, which makes on-the-fly adjustements to table cells
         as they're edited
+
     * - :kbd:`:TableModeDisable`
       - Disables table mode
+
     * - :kbd:`:Tableize`
       - Creates a markdown or restructured text table based on TSV or CSV text
+
     * - :kbd:`TableModeRealign`
       - Realigns an existing table, adding padding as necessary
 
@@ -391,11 +762,15 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 with low mental effort.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`s` in normal mode
       - jump below (see details)
+
     * - :kbd:`S` in normal mode
       - jump above (see details)
 
@@ -412,25 +787,14 @@ This works best when keeping your eyes on the place you want to jump to.
 surrounding characters.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
+
     * - :kbd:`cs"'`
       - change surrounding ``"`` to ``'``
-
-``vim-commentary``
-~~~~~~~~~~~~~~~~~~
-`vim-commentary <https://github.com/tpope/vim-commentary>`_ lets you easily
-toggle comments on lines or blocks of code.
-
-.. list-table::
-
-    * - command
-      - description
-    * - :kbd:`gc` on a visual selection
-      - toggle comment
-    * - :kbd:`gcc` on a single line
-      - toggle comment
 
 
 ``vis``
@@ -444,10 +808,12 @@ not just the block, as you might expect. However sometimes you want to edit
 just the visual block selection, for example when editing TSV files.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
-    * - :kbd:`Ctrl-v`, then use :kbd:`:B` instead of :kbd:`:`
+    * - :kbd:`<C-v>`, then use :kbd:`:B` instead of :kbd:`:`
       - Operates on visual block selection only
 
 ``nerdtree``
@@ -457,20 +823,14 @@ for finding/selecting files to edit. Navigate it with vim movement keys, and
 hit ``Enter`` to open the file in a new buffer.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
     * - :kbd:`<leader>n`
       - toggle file browser
 
-``supertab``
-~~~~~~~~~~~~
-`Supertab <https://github.com/ervandew/supertab>`_ lets you autocomplete most
-things with ``TAB`` in insert mode. This is enabled automatically when the
-plugin is installed. 
-
-No additional configuration is performed here, but see ``:help supertab`` for
-available options.
 
 ``python-syntax``
 ~~~~~~~~~~~~~~~~~

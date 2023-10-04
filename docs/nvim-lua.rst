@@ -49,33 +49,35 @@ good to go.
 
 Here are some initial things to try:
 
-- <leader>, and then wait a second. You'll get a menu that pops up, showing you
-  the currently-configured key mappings that follow <leader>. Hitting a listed
-  key will execute the command. Sometimes you'll see "-> prefix" in the menu,
-  which means you can hit that key to see a menu of the things you can type
-  after that. If you go too far, use <Backspace> to go back a step.
+- :kbd:`<leader>` (by default, :kbd:`,`) and then wait a second. You'll get
+  a menu that pops up, showing you the currently-configured key mappings that
+  follow <leader>. Hitting a listed key will execute the command. Sometimes
+  you'll see "-> prefix" in the menu, which means you can hit that key to see
+  a menu of the things you can type after that. If you go too far, use
+  <Backspace> to go back a step.
 
   In fact, you can hit backspace a few times to get to the base vim commands. It
   can be helpful to look through to see if there's any you've forgotten about!
 
-- which-key also pops up if you use `'` (for marks), and helps you navigate
+- which-key also pops up if you use :kbd`'` (for marks), and helps you navigate
   between them.
 
-- ``z=`` over a word to get a pop-up for spelling suggestions
+- :kbd:`z=` over a word to get a pop-up for spelling suggestions
 
 - saner tab completion (hit tab until you like what you see). If you run ``:set
   spell`` then you'll get spelling suggestions upon hitting tab; otherwise it
   will pull text from the buffer.
 
-- ``<Shift>k<Shift>j`` (so, hold down shift and type ``kj``) to flash a beacon
+- :kbd:`KJ` (so, hold down shift and type ``kj``) to flash a beacon
   where the cursor is. This also works when jumping between search hits.
 
-- ``<leader>ff`` to open a file selector within this directory
+- :kbd:`<leader>ff` to open a file selector within this directory
 
-- ``<leader>fg`` to live-grep within the directory (hit enter on the search
+- :kbd:`<leader>fg` to live-grep within the directory (hit enter on the search
   result to open the file at that location). Great for exploring new codebases.
 
-- Open a file in a git repo with some changes. ``<leader>hp`` to preview hunks.
+- Open a file in a git repo with some changes. :kbd:`]c` to go to the next
+  change (hunk) and :kbd:`<leader>hp` to preview hunks.
 
 Don't like it? Do this to revert:
 
