@@ -18,6 +18,11 @@ keymapping documentation.
   - beacon
   - nvim-cmp (and various dependencies)
   - telescope
+  - treesitter
+  - which-key
+- use lazy.nvim for plugin handling
+- modularize config into multiple lua files
+- convert mappings to have descriptions, so which-key picks them up
 - change how buffers are switched
 
 2023-09-19

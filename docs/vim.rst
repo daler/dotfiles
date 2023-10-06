@@ -7,7 +7,7 @@ The :file:`.vimrc` file has only basic setup for vim.
 
 The files :file:`.config/nvim/init.lua` is the entry point of the nvim config.
 
-See :ref:`nvim-lua` and :ref:`why-lua` if you're coming here from using older
+See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
 versions of these dotfiles.
 
 .. note::
@@ -166,70 +166,59 @@ Here are some general shortcuts that are defined in the included config. With
 the ``which-key`` plugin, many of these are also discoverable by hitting the
 first key and then waiting a second for the menu to pop up.
 
-These are defined in :file:`lua/mappings.lua`. Mappings that require a plugin
-are configured in the respective plugin's :file:`lua/plugins/*.lua` file.
+These are defined in :file:`lua/mappings.lua`. 
 
-Modes ``n``, ``i``, ``v`` refer to normal, insert and visual respectively.
+**Mappings that use a plugin** are configured in the respective plugin's
+:file:`lua/plugins/*.lua` file, so check below for more mappings.
+
 
 .. list-table::
     :header-rows: 1
     :align: left
 
     * - command
-      - mode
       - description
 
     * - :kbd:`,`
-      -
       - Remapped leader. Below, when you see :kbd:`<leader>` it means :kbd:`,`.
 
     * - :kbd:`<leader>r`
-      - n
       - Toggle relative line numbering (makes it easier to jump around lines
         with motion operators).
 
     * - :kbd:`<leader>H`
-      - n
       - Toggle highlighted search. Sometimes it's distracting to have all the
         highlights stick around.
 
     * - :kbd:`<leader>W`
-      - n
       - Remove all trailing spaces in the file. Useful when cleaning up code to
         commit.
 
     * - :kbd:`<leader>R`
-      - n, i
       - Refresh syntax highlighting. Useful when syntax highlighting gets wonky.
 
     * - :kbd:`@l`
-      - n
       - Macro to surround the line with quotes and add a trailing comma. Useful
         for making Python or R lists out of pasted text
 
     * - :kbd:`<leader>-`
-      - n
       - Fills in the rest of the line with "-", out to column 80. Useful for
         making section separators.
 
     * - :kbd:`<leader><TAB>`
-      - n
       - Useful for working with TSVs. Writes ``:set nowrap tabstop=`` and then
         leaves the cursor at the vim command bar so you can fill in a reasonble
         tabstop for the file you're looking at.
 
     * - :kbd:`<leader>\``
-      - insert or normal
       - (that's a backtick) Adds a new RMarkdown chunk and places the cursor
         inside it
 
     * - :kbd:`<leader>ry`
-      - normal
       - Used for RMarkdown; writes commonly-used YAML front matter (mnemonic:
         rmarkdown yaml)
 
     * - :kbd:`<leader>ko`
-      - n
       - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
         global options (mnemonic: knitr options)
 
@@ -240,11 +229,9 @@ This is configured in :file:`lua/autocommands.lua`:
     :align: left
 
     * - command
-      - mode
       - description
 
     * - :kbd:`<leader>d`
-      - n, i
       - Insert the current date as a ReST or Markdown-formatted title,
         depending on the file type. Useful when writing logs.
 
@@ -317,17 +304,40 @@ Configured in :file:`lua/plugins/telescope.lua`.
     :align: left
 
     * - command
-      - mode
       - description
 
     * - :kbd:`<leader>ff`
-      - n
       - Find files under this directory. Handy alternative to ``:e``
 
     * - :kbd:`<leader>fg`
-      - n
       - Search directory for string. This is like using ripgrep in vim.
         Selecting entry takes you right to the line.
+
+    * - :kbd:`<leader>/`
+      - Fuzzy find within buffer
+
+    * - :kbd:`<leader>fc`
+      - Find code object
+
+    * - :kbd:`<leader>fo`
+      - Find recently-opened files
+
+
+Other useful things you can do with Telescope:
+
+- ``:Telescope highlights`` to see the currently set highlights for the
+  colorscheme. You can use that information to modify
+  :file:`lua/plugins/zenburn.lua`.
+
+- ``:Telescope builtin`` to see a picker of all the built-in pickers.
+  Selecting one opens that picker. Very meta. But also very interesting for
+  poking around to see what's configured. 
+
+- ``:Telescope planets`` to use a telescope
+
+- ``:Telescope autocommands``, ``:Telescope commands``, ``:Telescope
+  vim_options``, ``:Telescope man_pages`` are some other built-in pickers that
+  are interesting to browse through.
 
 ``which-key``
 ~~~~~~~~~~~~~
@@ -429,6 +439,29 @@ options from words already in the buffer.
     * - :kbd:`<Tab>`
       - Tab completion
 
+``aerial``
+~~~~~~~~~~
+
+`aerial <https://github.com/stevearc/aerial.nvim>`_ provides a navigation
+sidebar for quickly moving around code (for example, jumping to functions or
+classes or methods).
+
+Configured in :file:`lua/plugins/aerial.lua`.
+
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - :kbd:`<leader>a`
+     - Toggle aerial sidebar
+
+   * - :kbd: `{` and :kbd:`}`
+     - Jump to prev or next item
+
+For navigating complex codebases, there are other keys that are automatically
+mapped, which you can read about in the `README for aerial
+<https://github.com/stevearc/aerial.nvim>`_.
+
 ``toggleterm``
 ~~~~~~~~~~~~~~
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
@@ -458,42 +491,33 @@ Configured in :file:`lua/plugins/toggleterm.lua`.
     :align: left
 
     * - command
-      - mode
       - description
 
     * - :kbd:`<leader>t`
-      - n
       - Open terminal to the right.
 
     * - :kbd:`<leader>w`
-      - n
       - Move to the right window (assumes it's terminal), and enter insert mode
 
     * - :kbd:`<leader>q`
-      - n, i
       - Move to the text buffer to the left, and enter normal mode
 
     * - :kbd:`<leader>cd`
-      - n
       - Send the current RMarkdown code chunk to the terminal, and jump to the
         next chunk
 
     * - :kbd:`gxx`
-      - n
       - Send the current *line* to the terminal buffer
 
     * - :kbd:`gx`
-      - v
       - Send the current *selection* to the terminal buffer
 
     * - :kbd:`<leader>k`
-      - n
       - Render the current RMarkdown file to HTML using `knitr::render()`.
         Assumes you have knitr installed and you're running R in the terminal
         buffer.
 
     * - :kbd:`<leader>k`
-      - n
       - Run the current Python script in IPython. Assumes you're running
         IPython in the terminal buffer.
 
