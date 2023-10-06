@@ -483,14 +483,17 @@ classes or methods).
 Configured in :file:`lua/plugins/aerial.lua`.
 
 .. list-table::
-   :header-rows: 1
-   :align: left
+    :header-rows: 1
+    :align: left
 
-   * - :kbd:`<leader>a`
-     - Toggle aerial sidebar
+    * - command
+      - description
+  
+    * - :kbd:`<leader>a`
+      - Toggle aerial sidebar
 
-   * - :kbd: `{` and :kbd:`}`
-     - Jump to prev or next item
+    * - :kbd:`{` and :kbd:`}`
+      - Jump to prev or next item
 
 For navigating complex codebases, there are other keys that are automatically
 mapped, which you can read about in the `README for aerial
@@ -508,8 +511,12 @@ to do something with that. For example, colorschemes can use that information,
 or you can select text based on its semantic meaning within the programming
 language.
 
+Configured in :file:`lua/plugins/treesitter.lua`.
+
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -534,6 +541,35 @@ vertical lines to indicate the current `scope
 <https://en.wikipedia.org/wiki/Scope_(computer_science)>`_.
 
 Configured in :file:`lua/plugins/indent-blankline.lua`.
+
+``color-picker``
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
+`color-picker <https://github.com/ziontee113/color-picker.nvim>`_ opens a mini
+color picker in nvim, optionally replacing the edited color.
+
+Configured in :file:`lua/plugins/color-picker.lua`
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>cp`
+      - Start color picker over color
+
+    * - :kbd:`j`, :kbd:`k`
+      - Choose slider
+
+    * - :kbd:`h`, :kbd:`l`
+      - Move slider by 1
+
+    * - :kbd:`U`, :kbd:`O`
+      - Move slider by 5
 
 
 ``toggleterm``
@@ -670,8 +706,8 @@ are used heavily when working with ``:Gdiff``, so here is a reminder:
 .. versionadded:: 2023-10-15
 
 `gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
-the left side indicating where there were changes in a file. Only works in git
-repos.
+the left side of the line numbers, indicating where there were changes in
+a file. Only works in git repos.
 
 This plugin is in a way redundant with vim-fugitive. Fugitive is more useful
 when making commits across multiple files; gitsigns is more useful when making
