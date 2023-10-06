@@ -249,11 +249,29 @@ ways they can be used.
 Here, plugins are sorted roughly so that the ones that provide additional
 commands come first.
 
+.. note:: note
+
+
+    Don't like a plugin? Find where it's being loaded, either in
+    :file:`lua/plugins/init.lua` (for plugins without config) or
+    :file:`lua/plugins/*.lua` (for plugins with config). Add ``enabled
+    = false`` next to where the plugin is named. For example:
+
+    .. code-block:: lua
+
+      -- ... other stuff
+      { "user/plugin-name", enabled = false },
+      -- ... more stuff
+
+
 .. contents::
     :local:
 
 ``vim-commentary``
 ~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
 `vim-commentary <https://github.com/tpope/vim-commentary>`_ lets you easily
 toggle comments on lines or blocks of code.
 
@@ -272,6 +290,9 @@ toggle comments on lines or blocks of code.
 
 ``beacon``
 ~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
 
@@ -292,6 +313,9 @@ the beacon.
 
 ``telescope``
 ~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
 `Telescope <https://github.com/nvim-telescope/telescope.nvim>`_ opens
 a floating window with fuzzy-search selection.
 
@@ -342,6 +366,8 @@ Other useful things you can do with Telescope:
 
 ``which-key``
 ~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
 
 `which-key <https://github.com/folke/which-key.nvim>`_ displays a popup with
 possible key bindings of the command you started typing. This is wonderful for
@@ -397,6 +423,9 @@ still be shown.
 
 ``accelerated-jk``
 ~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
 `accelerated-jk <https://github.com/rhysd/accelerated-jk>`_ speeds up j and
 k movements: longer presses will jump more and more lines.
 
@@ -416,6 +445,8 @@ settings -- see that file for an explanation of how to tweak.
 
 ``nvim-cmp``
 ~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
 
 `nvim-cmp <https://github.com/hrsh7th/nvim-cmp>`_ provides tab-completion.
 
@@ -443,6 +474,8 @@ options from words already in the buffer.
 ``aerial``
 ~~~~~~~~~~
 
+.. versionadded:: 2023-10-15
+
 `aerial <https://github.com/stevearc/aerial.nvim>`_ provides a navigation
 sidebar for quickly moving around code (for example, jumping to functions or
 classes or methods).
@@ -463,8 +496,51 @@ For navigating complex codebases, there are other keys that are automatically
 mapped, which you can read about in the `README for aerial
 <https://github.com/stevearc/aerial.nvim>`_.
 
+``treesitter``
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
+`treesitter <https://github.com/nvim-treesitter/nvim-treesitter>`_ is a parsing
+library. You install a parser for a language, and it figures out which tokens
+are functions, classes, variables, modules, etc. Then it's up to other plugins
+to do something with that. For example, colorschemes can use that information,
+or you can select text based on its semantic meaning within the programming
+language.
+
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`gnn`
+      - Start incremental selection
+
+    * - :kbd:`<Tab>` (in incremental selection)
+      - Increase selection by node
+
+    * - :kbd:`<Backspace>` (in incremental selection)
+      - Decrease selection by node
+
+``indent-blankline``
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
+`indent-blankline <https://github.com/lukas-reineke/indent-blankline.nvim>`_
+shows vertical lines where there is indentation, and highlights one of these
+vertical lines to indicate the current `scope
+<https://en.wikipedia.org/wiki/Scope_(computer_science)>`_.
+
+Configured in :file:`lua/plugins/indent-blankline.lua`.
+
+
 ``toggleterm``
 ~~~~~~~~~~~~~~
+
+.. versionadded:: 2022-12-27
+
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
 interact with a terminal within vim.
 
@@ -527,6 +603,9 @@ Configured in :file:`lua/plugins/toggleterm.lua`.
 
 ``vim-fugitive``
 ~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2018-09-26
+
 `vim-fugitive <https://github.com/tpope/vim-fugitive>`_ provides a git interface in vim.
 
 This is wonderful for making incremental commits from within vim. This makes it
@@ -587,6 +666,9 @@ are used heavily when working with ``:Gdiff``, so here is a reminder:
 
 ``gitsigns``
 ~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
 `gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
 the left side indicating where there were changes in a file. Only works in git
 repos.
@@ -651,6 +733,9 @@ E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 
 ``vim.gv``
 ~~~~~~~~~~
+
+.. versionadded:: 2021-02-14
+
 `vim.gv <https://github.com/junegunn/gv.vim>`_ provides an interface to easily
 view and browse git history.
 
@@ -669,6 +754,9 @@ view and browse git history.
 
 ``vim-mergetool``
 ~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2021-02-14
+
 `vim-mergetool <https://github.com/samoshkin/vim-mergetool>`_ makes 3-way merge
 conflicts much easier to deal with by only focusing on what needs to be
 manually edited.
@@ -704,6 +792,9 @@ Save and quit, or use :kbd:`:MergetoolStop`.
 
 ``vim-diff-enhanced``
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2019-02-27
+
 `vim-diff-enhanced <https://github.com/chrisbra/vim-diff-enhanced>`_ provides
 additional diff algorithms that work better on certain kinds of files. If your
 diffs are not looking right, try changing the algorithm with this plugin:
@@ -746,6 +837,9 @@ The following algorithms are available:
 
 ``vim-table-mode``
 ~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2019-03-27
+
 `vim-table-mode <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ provides
 easy formatting of tables in Markdown and Restructured Text
 
@@ -783,6 +877,9 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 
 ``leap.nvim``
 ~~~~~~~~~~~~~
+
+.. versionadded:: 2022-12-27
+
 `leap <https://github.com/ggandor/leap.nvim>`_ lets you jump around in a buffer
 with low mental effort.
 
@@ -808,6 +905,9 @@ This works best when keeping your eyes on the place you want to jump to.
 
 ``vim-surround``
 ~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2022-12-27
+
 `vim-surround <https://github.com/tpope/vim-surround>`_ lets you easily change
 surrounding characters.
 
@@ -824,6 +924,9 @@ surrounding characters.
 
 ``vis``
 ~~~~~~~
+
+.. versionadded:: 2019-09-30
+
 `vis <https://github.com/vim-scripts/vis>`_ provides better behavior on visual
 blocks.
 
@@ -843,6 +946,9 @@ just the visual block selection, for example when editing TSV files.
 
 ``nerdtree``
 ~~~~~~~~~~~~
+
+.. versionadded:: 2016
+
 `nerdtree <https://github.com/scrooloose/nerdtree>`_ provides a file browser
 for finding/selecting files to edit. Navigate it with vim movement keys, and
 hit ``Enter`` to open the file in a new buffer.
@@ -856,26 +962,11 @@ hit ``Enter`` to open the file in a new buffer.
     * - :kbd:`<leader>n`
       - toggle file browser
 
-
-``python-syntax``
-~~~~~~~~~~~~~~~~~
-`python-syntax <https://github.com/vim-python/python-syntax>`_ provides
-improved Python syntax highlighting.
-
-This happens automatically when editing Python files. The syntax highlighting
-is improved within format strings, within docstrings, reserved keywords.
-Happens automatically when editing Python files; no additional commands.
-
-``simpylfold``
-~~~~~~~~~~~~~~
-`SimpylFold <https://github.com/tmhedberg/SimpylFold>`_ provides improved code folding for Python.
-
-Built-in vim folding for Python will also fold for-loops and if-blocks; this
-only folds function, method, and class definitions using built-in vim commands
-for folding like ``zc``, ``zn``, ``zM``.
-
 ``vim-python-pep8-indent``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2017
+
 `vim-python-pep8-indent <https://github.com/Vimjas/vim-python-pep8-indent>`_
 auto-indents Python using pep8 recommendations. This happens as you’re typing,
 or when you use :kbd:`gq` on a selection to wrap. No additional commands
@@ -883,6 +974,9 @@ configured.
 
 ``vim-rmarkdown``
 ~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2019-02-27
+
 `vim-rmarkdown <https://github.com/vim-pandoc/vim-rmarkdown>`_ provides syntax
 highlighting for R within RMarkdown code chunks. Requires both ``vim-pandoc``
 and ``vim-pandoc-syntax``, described below.
@@ -891,6 +985,9 @@ No additional commands configured.
 
 ``vim-pandoc``
 ~~~~~~~~~~~~~~
+
+.. versionadded:: 2019-02-27
+
 `vim-pandoc <https://github.com/vim-pandoc/vim-pandoc>`_ Integration with
 `pandoc <http://johnmacfarlane.net/pandoc/>`_. Uses vim-pandoc-syntax (see
 below) for syntax highlighting.
@@ -900,6 +997,9 @@ see ``:help vim-pandoc`` for much more.
 
 ``vim-pandoc-syntax``
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2019-02-27
+
 `vim-pandoc-syntax <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ is used
 by vim-pandoc (above). It is a separate plugin because the authors found it
 easier to track bugs separately.
@@ -909,6 +1009,9 @@ No additional commands configured.
 
 ``vim-airline``
 ~~~~~~~~~~~~~~~
+
+.. versionadded:: 2016
+
 `vim-airline <https://github.com/vim-airline/vim-airline>`_ provides a nice
 statusline, plus "tabs" that allow you to easily switch between open files and
 copy/paste between them.
@@ -918,6 +1021,9 @@ for themes.
 
 ``vim-airline-themes``
 ~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2016
+
 `vim-airline-themes
 <https://github.com/vim-airline/vim-airline/wiki/Screenshots>`_ provides themes
 for use with vim-airline.
@@ -925,6 +1031,9 @@ for use with vim-airline.
 
 ``vim-tmux-clipboard``
 ~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2016
+
 `vim-tmux-clipboard <https://github.com/roxma/vim-tmux-clipboard>`_
 automatically copies yanked text from vim into the tmux clipboard. Similarly,
 anything copied in tmux makes it into the vim clipboard.
