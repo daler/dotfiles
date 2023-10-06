@@ -2,26 +2,26 @@
 -- in their own files in the plugins/ dir.
 
 return {
-  {'vim-pandoc/vim-pandoc-syntax'},
-  {'vim-pandoc/vim-rmarkdown'},
-  {'vim-python/python-syntax'},
-  {'vim-scripts/vis'},
-  {'Vimjas/vim-python-pep8-indent'},
-  {'chrisbra/vim-diff-enhanced'},
-  {'dhruvasagar/vim-table-mode'},
-  {'junegunn/gv.vim'},
-  {'roxma/vim-tmux-clipboard'},
-  {'samoshkin/vim-mergetool'},
-  {'tmhedberg/SimpylFold'},
-  {'tpope/vim-commentary'},
-  {'tpope/vim-fugitive'},
-  {'tpope/vim-surround'},
-  {'tpope/vim-sleuth'},
-  {'nvim-lua/plenary.nvim'},
-  {'rafamadriz/friendly-snippets'},
-  {'rktjmp/lush.nvim'},
-  {'sindrets/diffview.nvim'},
-  {'folke/which-key.nvim'},
+  { "vim-pandoc/vim-pandoc-syntax" },
+  { "vim-pandoc/vim-rmarkdown" },
+  { "vim-python/python-syntax" },
+  { "vim-scripts/vis" },
+  { "Vimjas/vim-python-pep8-indent" },
+  { "chrisbra/vim-diff-enhanced" },
+  { "dhruvasagar/vim-table-mode" },
+  { "junegunn/gv.vim" },
+  { "roxma/vim-tmux-clipboard" },
+  { "samoshkin/vim-mergetool" },
+  { "tmhedberg/SimpylFold" },
+  { "tpope/vim-commentary" },
+  { "tpope/vim-fugitive" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-sleuth" },
+  { "nvim-lua/plenary.nvim" },
+  { "rafamadriz/friendly-snippets" },
+  { "rktjmp/lush.nvim" },
+  { "sindrets/diffview.nvim" },
+  { "folke/which-key.nvim" },
   {
     "L3MON4D3/LuaSnip",
     dependencies = { "rafamadriz/friendly-snippets" },
@@ -46,5 +46,4 @@ return {
   -- {'vim-airline/vim-airline'}             -- vim-airline.lua
   -- {'lukas-reineke/indent-blankline.nvim'} -- indent-blankline.lua
   -- {'lewis6991/gitsigns.nvim'}             -- gitsigns.lua
-
 }

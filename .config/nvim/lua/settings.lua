@@ -25,7 +25,7 @@ vim.cmd("set noswapfile") -- Disable swap file creation. Keep enabled for huge f
 vim.cmd("autocmd BufEnter * silent! lcd %:p:h") -- Set the working directory to that of the opened file
 vim.cmd("set ignorecase") -- Ignore case when searching...
 vim.cmd("set smartcase") -- ...unless at least one character is uppercase
-vim.cmd("set nohlsearch ")-- Don't highlight search items by default
+vim.cmd("set nohlsearch ") -- Don't highlight search items by default
 vim.cmd("set wildmenu") -- Make tab completion for files/buffers act like bash
 vim.cmd("set wildmode=list:full") -- Show a list when pressing tab; complete first full match
 vim.cmd("set wildignore=*.swp,*.bak,*.pyc,*.class") -- Ignore these when autocompleting

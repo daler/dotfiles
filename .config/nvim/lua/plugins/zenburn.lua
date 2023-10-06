@@ -1,9 +1,10 @@
-return  {
+return {
   -- Main colorscheme
-  'phha/zenburn.nvim',
+  "phha/zenburn.nvim",
 
   -- Main colorscheme should not lazy-load and be high-priority, as per lazy.nvim docs
-  lazy= false, priority=1000,
+  lazy = false,
+  priority = 1000,
   config = function()
     vim.cmd("colorscheme zenburn")
     vim.cmd("set termguicolors")
@@ -20,6 +21,5 @@ return  {
 
     -- Brighter diff delete, for better visibility in gitsigns
     vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
-
-    end,
+  end,
 }
