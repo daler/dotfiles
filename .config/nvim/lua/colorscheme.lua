@@ -4,6 +4,10 @@ vim.cmd("colorscheme zenburn")
 
 --
 -- The following are some tweaks to the zenburn colorscheme.
+--
+-- Some hints:
+--    Use :Inspect to see what highlight group the cursor is over.
+--    Use :Telescope higlight to search for it and find the current setting
 
 -- Make the line numbers a little more obvious than the default.
 vim.cmd("highlight LineNr guifg=#959898 guibg=#353535")
