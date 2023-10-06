@@ -1,7 +1,7 @@
 -- GENERAL SETTINGS
 
-vim.cmd("let mapleader=','") -- Re-map leader from default \ to , (comma). Any time <leader> is used below, it now means comma.
-vim.cmd("let maplocalleader = '\\'") -- Local leader becomes \. Be careful about escapes: escape Lua -> vim, use single quotes for vim.
+vim.cmd("set termguicolors") -- Enables 24-bit RGB color, using "gui" highlight rather than "cterm"
+vim.cmd("colorscheme zenburn") -- Set colorscheme
 vim.cmd("syntax on") -- Syntax highlighting; also does an implicit filetype on
 vim.cmd("filetype plugin indent on") -- Enable detection, plugin, and indent for filetype
 vim.cmd("set nofoldenable") -- Files will open with everything unfolded

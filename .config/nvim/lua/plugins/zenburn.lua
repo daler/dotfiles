@@ -6,8 +6,6 @@ return {
   lazy = false,
   priority = 1000,
   config = function()
-    vim.cmd("colorscheme zenburn")
-    vim.cmd("set termguicolors")
 
     -- Make the line numbers a little more obvious than the default.
     vim.cmd("highlight LineNr guifg=#959898 guibg=#353535")
