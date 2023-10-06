@@ -4,7 +4,6 @@
 return {
   { "vim-pandoc/vim-pandoc-syntax" },
   { "vim-pandoc/vim-rmarkdown" },
-  { "vim-python/python-syntax" },
   { "vim-scripts/vis" },
   { "Vimjas/vim-python-pep8-indent" },
   { "chrisbra/vim-diff-enhanced" },
