@@ -22,10 +22,15 @@ if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
   -- Brighter diff delete, for better visibility in gitsigns
   vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
 
-  vim.cmd("highlight @variable.python guifg=#dcdccc")
-  vim.cmd("highlight @constant.python guifg=#dcdccc gui=bold")
-  vim.cmd("highlight @boolean.python guifg=#FFCFAF gui=bold")
-  vim.cmd("highlight Function guifg=#f4f4c2")
+  vim.cmd("highlight Identifier guifg=#dcdccc")
+  vim.cmd("highlight Constant guifg=#dcdccc gui=bold")
+  vim.cmd("highlight Boolean guifg=#FFCFAF gui=bold")
+  vim.cmd("highlight Function guifg=#f6f6ab")
+
+  vim.cmd("highlight @punctuation.bracket.bash guifg=#FFCFAF")
+  vim.cmd("highlight @punctuation.special.bash guifg=#FFCFAF")
+  vim.cmd("highlight @constant.bash guifg=#FFCFAF")
+  vim.cmd("highlight @variable.bash guifg=#FFCFAF")
 
   --
   vim.cmd("highlight IblScope guifg=#efefaf")
