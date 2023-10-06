@@ -22,7 +22,7 @@ return {
   { "rktjmp/lush.nvim" },
   { "sindrets/diffview.nvim" },
   { "folke/which-key.nvim" },
-  {"phha/zenburn.nvim"},
+  { "phha/zenburn.nvim", lazy = false, priority = 1000 },
 
   -- NOTE: Some plugins have additional configuration, which can get verbose if
   -- all listed inline here. So they are moved to their own files. The plugins are
