@@ -29,6 +29,7 @@ Here is a schematic of the nvim config files in :file:`~/.config/nvim`:
 - :file:`lua/plugins/*.lua`: one file per plugin, containing that plugin's config.
 - :file:`lua/mappings.lua`: custom keymappings
 - :file:`lua/autocommands.lua`: custom autocommands
+- :file:`lua/colorscheme.lua`: set and/or modify colorscheme
 
 
 Using the mouse
@@ -969,15 +970,3 @@ buffer. To test, you can send lines over using any of the following methods:
    Rmd
 
 5. ``,k`` to render the current Rmd to HTML.
-
-Troubleshooting
-~~~~~~~~~~~~~~~
-
-Sometimes text gets garbled when using an interactive node on biowulf.
-This is due to a known bug in Slurm, but Biowulf is not intending on
-updating any time soon. The fix is ``Ctrl-L`` either in the Rmd buffer
-or in the terminal buffer. And maybe ``,R`` to refresh the syntax
-highlighting.
-
-Remember that the terminal is a vim window, so to enter commands you
-need to be in insert mode.

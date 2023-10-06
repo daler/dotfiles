@@ -48,4 +48,5 @@ Ready? :ref:`starthere`!
     post
     nvim-lua
     why
+    troubleshooting
     changelog
