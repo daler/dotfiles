@@ -10,5 +10,11 @@ return  {
 
       vim.keymap.set('n', '<leader>/', "<cmd>Telescope current_buffer_fuzzy_find<cr>",
         { desc = "Fuzzy find in buffer"})
+
+      vim.keymap.set('n', '<leader>fc', "<cmd>Telescope treesitter<CR>",
+        { desc = "Find code object" })
+
+      vim.keymap.set('n', '<leader>fo', "<cmd>Telescope oldfiles<CR>",
+        { desc = "Find recently-opened files" })
     end,
 }
