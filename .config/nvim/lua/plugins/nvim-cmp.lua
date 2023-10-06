@@ -7,13 +7,15 @@ return {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
-      "L3MON4D3/LuaSnip",
       "f3fora/cmp-spell",
     },
     -- The following is from the nvim-cmp wiki, which shows how to configure
     -- similar to SuperTab. That is, the window only appears when you hit tab,
     -- and replaces the text you're writing.
     config = function()
+
+      require("luasnip.loaders.from_vscode").lazy_load()
+
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
