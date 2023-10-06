@@ -166,6 +166,10 @@ function showHelp() {
         "the terminal app." \
         "Homepage: https://github.com/vim-airline/vim-airline"
 
+    cmd "--fix-tmux-terminfo" \
+        "Update terminfo so that italics work within tmux; " \
+        "see https://jdhao.github.io/2018/10/19/tmux_nvim_true_color"
+
     cmd "--install-alacritty" \
         "Alacritty is a terminal emulator that is quite fast;" \
         "its speed is clear when catting a large file in tmux." \
@@ -795,6 +799,14 @@ elif [ $task == "--dotfiles" ]; then
         fi
     fi
     unset doIt
+
+elif [ $task == "--fix-tmux-terminfo" ]; then
+    ok "Runs the fix from https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/ for getting italics in tmux"
+    download http://invisible-island.net/datafiles/current/terminfo.src.gz terminfo.src.gz
+    gunzip terminfo.src.gz
+    tic -xe tmux-256color terminfo.src
+    rm terminfo.src
+    printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"screen-256color\" in your .tmux.conf.${UNSET}\n"
 
 
 
