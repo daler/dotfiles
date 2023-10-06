@@ -23,10 +23,6 @@ return {
   { "sindrets/diffview.nvim" },
   { "folke/which-key.nvim" },
   {"phha/zenburn.nvim"},
-  {
-    "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
-  },
 
   -- NOTE: Some plugins have additional configuration, which can get verbose if
   -- all listed inline here. So they are moved to their own files. The plugins are

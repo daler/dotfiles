@@ -8,6 +8,8 @@ return {
     "hrsh7th/cmp-cmdline",
     "saadparwaiz1/cmp_luasnip",
     "f3fora/cmp-spell",
+    "L3MON4D3/LuaSnip",
+    "rafamadriz/friendly-snippets",
   },
   -- The following is from the nvim-cmp wiki, which shows how to configure
   -- similar to SuperTab. That is, the window only appears when you hit tab,
