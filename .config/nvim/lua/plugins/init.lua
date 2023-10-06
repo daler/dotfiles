@@ -22,6 +22,7 @@ return {
   { "rktjmp/lush.nvim" },
   { "sindrets/diffview.nvim" },
   { "folke/which-key.nvim" },
+  {"phha/zenburn.nvim"},
   {
     "L3MON4D3/LuaSnip",
     dependencies = { "rafamadriz/friendly-snippets" },
