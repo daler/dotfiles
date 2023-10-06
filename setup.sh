@@ -812,7 +812,11 @@ elif [ $task == "--diffs" ]; then
 
 elif [ $task == "--vim-diffs" ]; then
     ok "Opens up vim -d to display differences between files in this repo and your home directory"
-    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do nvim -d $i ~/$i; done
+    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do
+        if ! diff $i ~/$i &> /dev/null; then
+            nvim -d $i ~/$i;
+        fi
+    done
 else
     showHelp
 
