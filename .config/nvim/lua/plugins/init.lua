@@ -11,7 +11,6 @@ return {
   { "junegunn/gv.vim" },
   { "roxma/vim-tmux-clipboard" },
   { "samoshkin/vim-mergetool" },
-  { "tmhedberg/SimpylFold" },
   { "tpope/vim-commentary" },
   { "tpope/vim-fugitive" },
   { "tpope/vim-surround" },
