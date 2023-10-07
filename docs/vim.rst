@@ -26,11 +26,26 @@ Here is a schematic of the nvim config files in :file:`~/.config/nvim`:
   the lazy.nvim plugin manager (no need for ``./setup.sh
   --set-up-vim-plugins``)
 - :file:`lua/plugins/init.lua`: loaded by lazy.nvim, contains plugins that don't need additional config
-- :file:`lua/plugins/*.lua`: one file per plugin, containing that plugin's config.
 - :file:`lua/mappings.lua`: custom keymappings
 - :file:`lua/autocommands.lua`: custom autocommands
 - :file:`lua/colorscheme.lua`: set and/or modify colorscheme
+- :file:`lua/plugins.lua`: plugin configs
 
+See :ref:`plugins` for details on how the plugins are configured.
+
+Each plugin spec is a table. The first property is the name of the plugin.
+Other properties:
+   * lazy: only load when requested by something else. Saves on initial load time.
+   * ft: only load the plugin when editing this filetype. Implies lazy=true.
+   * cmd: only load the plugin when first running this command. Implies lazy=true.
+   * keys: only load the plugin when using these keymappings. Implies lazy=true.
+   * config: run this stuff after the plugin loads. If config = true, just run
+     the default setup for the plugin.
+   * init: similar to config, but used for pure-vim plugins
+
+If keys are specified, this is the only place they need to be mapped, and
+they will make their way into the which-key menu even if they trigger
+a lazy-loaded plugin.
 
 Using the mouse
 ---------------
@@ -67,7 +82,7 @@ text offscreen.
 Switching buffers
 -----------------
 
-Two main ways of opening a file in a new buffer:
+Two main ways of *opening* a file in a new buffer:
 
 .. list-table::
    :header-rows: 1
@@ -103,17 +118,8 @@ Once you have multiple buffers, you can switch between them in these ways:
    * - :kbd:`,b`
      - tab-complete buffer name (or number), then hit enter
 
-The bufferline is configured to show the basename of the file and the buffer
-number.
-
-Using Telescope and some of the other new plugins will open hidden buffers that
-increment the buffer number. This means that sometimes, opening a new buffer
-will give an unexpectedly high buffer number (instead of buffer 1 and buffer 2,
-you might get buffer 1 and buffer 19, for example). I'm currently keeping the
-buffer numbers because they are sometimes easier to use with :kbd:`<leader>b`
-than filenames.
-
-The display of the bufferline is configured in :file:`lua/plugins/vim-airline.lua`.
+The display of the bufferline is configured in :file:`lua/plugins.lua`, as part
+of the vim-airline plugin.
 
 Format options explanation
 --------------------------
@@ -169,9 +175,8 @@ first key and then waiting a second for the menu to pop up.
 
 These are defined in :file:`lua/mappings.lua`. 
 
-**Mappings that use a plugin** are configured in the respective plugin's
-:file:`lua/plugins/*.lua` file, so check below for more mappings.
-
+**Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
+file and are described below under the respective plugin's section.
 
 .. list-table::
     :header-rows: 1
@@ -241,20 +246,17 @@ This is configured in :file:`lua/autocommands.lua`:
 Plugins
 -------
 
-The plugins configured at the top of :file:`.config/nvim/init.vim` have lots
-and lots of options. Here I’m only highlighting the options I use the most, but
-definitely check out each homepage to see all the other weird and wonderful
-ways they can be used.
+The plugins configured in :file:`lua/plugins.lua` have lots and lots of
+options. Here I’m only highlighting the options I use the most, but definitely
+check out each homepage to see all the other weird and wonderful ways they can
+be used.
 
 Here, plugins are sorted roughly so that the ones that provide additional
 commands come first.
 
 .. note:: note
 
-
-    Don't like a plugin? Find where it's being loaded, either in
-    :file:`lua/plugins/init.lua` (for plugins without config) or
-    :file:`lua/plugins/*.lua` (for plugins with config). Add ``enabled
+    Don't like a plugin? Find it in :file:`lua/plugins.lua` and add ``enabled
     = false`` next to where the plugin is named. For example:
 
     .. code-block:: lua
@@ -296,8 +298,6 @@ toggle comments on lines or blocks of code.
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
 
-Configured in :file:`lua/plugins/beacon.lua`.
-
 .. list-table::
     :header-rows: 1
     :align: left
@@ -322,8 +322,6 @@ a floating window with fuzzy-search selection.
 Type in the text box to filter the list. Hit enter to select (and open the
 selected file in a new buffer).
 
-Configured in :file:`lua/plugins/telescope.lua`.
-
 .. list-table::
     :header-rows: 1
     :align: left
@@ -335,7 +333,7 @@ Configured in :file:`lua/plugins/telescope.lua`.
       - Find files under this directory. Handy alternative to ``:e``
 
     * - :kbd:`<leader>fg`
-      - Search directory for string. This is like using ripgrep in vim.
+      - Search directory for string. This is like using ripgrep, but in vim.
         Selecting entry takes you right to the line.
 
     * - :kbd:`<leader>/`
@@ -379,24 +377,31 @@ is no timeout though for registers (``"``) or marks (``'``) or spelling (``z=``
 over a word).
 
 You can hit a displayed key to execute the command, or if it's a multi-key
-command (typically indicated with a ``+prefix`` to show there's more), then that will take you to the next menu.
+command (typically indicated with a ``+prefix`` to show there's more), then
+that will take you to the next menu.
 
 Use :kbd:`<Backspace>` to back out a menu. In fact, pressing any key, waiting
 for the menu, and then hitting backspace will give a list of all the default
 mapped keys in vim.
 
 There is currently no extra configuration. Instead, when a key is mapped
-(either in :file:`lua/mappings.lua` or :file:`lua/plugins/*.lua`), an
-additional parameter ``{ desc = "description of mapping" }`` is included. This
+(either in :file:`lua/mappings.lua` or :file:`lua/plugins.lua`), an
+additional parameter ``desc = "description of mapping"`` is included. This
 allows which-key to show a description. Mappings with no descriptions will
 still be shown.
 
 .. code-block:: lua
 
-   -- example mapping, with description
+   -- example mapping using vim.keymap.set, with description
    vim.keymap.set('n', '<leader>1', ':bfirst<CR>',
      { desc = "First buffer" })
 
+   -- example mapping when inside a plugin spec
+   { "plugin/plugin-name",
+     keys = {
+       { "<leader>1", ":bfirst<CR>", desc = "First buffer" },
+     }
+   }
 
 .. list-table::
    :header-rows: 1
@@ -429,9 +434,9 @@ still be shown.
 `accelerated-jk <https://github.com/rhysd/accelerated-jk>`_ speeds up j and
 k movements: longer presses will jump more and more lines.
 
-Configured in :file:`lua/plugins/accelerated-jk`. In particular, you might want
-to tune the acceleration curve depending on your system's keyboard repeat rate
-settings -- see that file for an explanation of how to tweak.
+Configured in :file:`lua/plugins.lua`. In particular, you might want to tune
+the acceleration curve depending on your system's keyboard repeat rate settings
+-- see that file for an explanation of how to tweak.
 
 .. list-table::
     :header-rows: 1
@@ -455,11 +460,11 @@ me is annoying and distracting. So this is configured to only show up when
 I hit :kbd:`<Tab>`.
 
 Hit :kbd:`<Tab>` to initiate. Hit :kbd:`<Tab>` until you like what you see.
-Then keep typing -- no need to hit Enter. Arrow keys work to select, too.
+Then hit Enter. Arrow keys work to select, too.
 
-If you have enabled spell checking (``set spell``) then tab-completion will
-also show spelling suggestions from the dictionary. Otherwise, it will only use
-options from words already in the buffer.
+Snippets are configured as well. If you hit Enter to complete a snippet, you
+can then use :kbd:`<Tab>` and :kbd:`<S-Tab>` to move between the placeholders
+to fill them in.
 
 .. list-table::
     :header-rows: 1
@@ -478,9 +483,8 @@ options from words already in the buffer.
 
 `aerial <https://github.com/stevearc/aerial.nvim>`_ provides a navigation
 sidebar for quickly moving around code (for example, jumping to functions or
-classes or methods).
-
-Configured in :file:`lua/plugins/aerial.lua`.
+classes or methods). For markdown or ReStructured Text, it acts like a table of
+contents.
 
 .. list-table::
     :header-rows: 1
@@ -511,8 +515,6 @@ to do something with that. For example, colorschemes can use that information,
 or you can select text based on its semantic meaning within the programming
 language.
 
-Configured in :file:`lua/plugins/treesitter.lua`.
-
 
 .. list-table::
     :header-rows: 1
@@ -521,7 +523,7 @@ Configured in :file:`lua/plugins/treesitter.lua`.
     * - command
       - description
 
-    * - :kbd:`gnn`
+    * - :kbd:`gis`
       - Start incremental selection
 
     * - :kbd:`<Tab>` (in incremental selection)
@@ -530,27 +532,23 @@ Configured in :file:`lua/plugins/treesitter.lua`.
     * - :kbd:`<Backspace>` (in incremental selection)
       - Decrease selection by node
 
-``indent-blankline``
-~~~~~~~~~~~~~~~~~~~~
+
+``gitsigns``
+~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
 
-`indent-blankline <https://github.com/lukas-reineke/indent-blankline.nvim>`_
-shows vertical lines where there is indentation, and highlights one of these
-vertical lines to indicate the current `scope
-<https://en.wikipedia.org/wiki/Scope_(computer_science)>`_.
+`gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
+the left side of the line numbers, indicating where there were changes in
+a file. Only works in git repos.
 
-Configured in :file:`lua/plugins/indent-blankline.lua`.
+This plugin is in a way redundant with vim-fugitive. Fugitive is more useful
+when making commits across multiple files; gitsigns is more useful when making
+commits within a file while you're editing it. So they are complementary
+plugins rather than competing.
 
-``color-picker``
-~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2023-10-15
-
-`color-picker <https://github.com/ziontee113/color-picker.nvim>`_ opens a mini
-color picker in nvim, optionally replacing the edited color.
-
-Configured in :file:`lua/plugins/color-picker.lua`
+Most commands require being in a hunk. Keymappings start with ``h``, mnemonic
+is "hunk" (the term for a block of changes).
 
 .. list-table::
     :header-rows: 1
@@ -559,18 +557,44 @@ Configured in :file:`lua/plugins/color-picker.lua`
     * - command
       - description
 
-    * - :kbd:`<leader>cp`
-      - Start color picker over color
+    * - :kbd:`[c`
+      - Previous change
 
-    * - :kbd:`j`, :kbd:`k`
-      - Choose slider
+    * - :kbd:`]c`
+      - Next change
 
-    * - :kbd:`h`, :kbd:`l`
-      - Move slider by 1
+    * - :kbd:`<leader>hp`
+      - Preview hunk (shows floating window of the change, only works in a change)
 
-    * - :kbd:`U`, :kbd:`O`
-      - Move slider by 5
+    * - :kbd:`<leader>hs`
+      - Stage hunk (or stage lines in visual mode)
 
+    * - :kbd:`<leader>hr`
+      - Reset hunk (or reset lines in visual mode)
+
+    * - :kbd:`<leader>hu`
+      - Undo stage hunk
+
+    * - :kbd:`<leader>hS`
+      - Stage buffer
+
+    * - :kbd:`<leader>hR`
+      - Reset buffer
+
+    * - :kbd:`hb`
+      - Blame line in floating window
+
+    * - :kbd:`tb`
+      - Toggle blame for line
+
+    * - :kbd:`hd`
+      - Diff this file (opens diff mode)
+
+    * - :kbd:`td`
+      - Toggle deleted visibility
+
+Additionally, this supports hunks as text objects using ``ih`` (inside hunk).
+E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 
 ``toggleterm``
 ~~~~~~~~~~~~~~
@@ -585,8 +609,6 @@ The greatest benefit of this is that you can send text from a text buffer
 reproduce an IDE-like environment purely from the terminal. The following
 commands are custom mappings set in :file:`.config/nvim/init.vim` that affect
 the terminal use.
-
-Configured in :file:`lua/plugins/toggleterm.lua`.
 
 .. note::
 
@@ -700,70 +722,6 @@ are used heavily when working with ``:Gdiff``, so here is a reminder:
     * - :kbd:`dp`
       - [P]ut the contents of this diff into the other file
 
-``gitsigns``
-~~~~~~~~~~~~
-
-.. versionadded:: 2023-10-15
-
-`gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
-the left side of the line numbers, indicating where there were changes in
-a file. Only works in git repos.
-
-This plugin is in a way redundant with vim-fugitive. Fugitive is more useful
-when making commits across multiple files; gitsigns is more useful when making
-commits within a file while you're editing it. So they are complementary
-plugins rather than competing.
-
-Configured in :file:`lua/plugins/gitsigns.lua`
-
-Most commands require being in a hunk. Keymappings start with ``h``, mnemonic
-is "hunk" (the term for a block of changes).
-
-.. list-table::
-    :header-rows: 1
-    :align: left
-
-    * - command
-      - description
-
-    * - :kbd:`[c`
-      - Previous change
-
-    * - :kbd:`]c`
-      - Next change
-
-    * - :kbd:`<leader>hp`
-      - Preview hunk (shows floating window of the change, only works in a change)
-
-    * - :kbd:`<leader>hs`
-      - Stage hunk (or stage lines in visual mode)
-
-    * - :kbd:`<leader>hr`
-      - Reset hunk (or reset lines in visual mode)
-
-    * - :kbd:`<leader>hu`
-      - Undo stage hunk
-
-    * - :kbd:`<leader>hS`
-      - Stage buffer
-
-    * - :kbd:`<leader>hR`
-      - Reset buffer
-
-    * - :kbd:`hb`
-      - Blame line in floating window
-
-    * - :kbd:`tb`
-      - Toggle blame for line
-
-    * - :kbd:`hd`
-      - Diff this file (opens diff mode)
-
-    * - :kbd:`td`
-      - Toggle deleted visibility
-
-Additionally, this supports hunks as text objects using ``ih`` (inside hunk).
-E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 
 .. _vim-gv:
 
@@ -896,7 +854,7 @@ auto-padding table cells and adding the header lines as needed.
       - description
 
     * - :kbd:`:TableModeEnable`
-      - Enables table mode, which makes on-the-fly adjustements to table cells
+      - Enables table mode, which makes on-the-fly adjustments to table cells
         as they're edited
 
     * - :kbd:`:TableModeDisable`
@@ -957,6 +915,12 @@ surrounding characters.
     * - :kbd:`cs"'`
       - change surrounding ``"`` to ``'``
 
+    * - :kbd:`csw}`
+      - add ``{`` and ``}`` surrounding word
+
+    * - :kbd:`csw{`
+      - same, but include a space
+
 
 ``vis``
 ~~~~~~~
@@ -966,7 +930,7 @@ surrounding characters.
 `vis <https://github.com/vim-scripts/vis>`_ provides better behavior on visual
 blocks.
 
-Did you know that by default in vim and neovim, when selecting things in visual
+By default in vim and neovim, when selecting things in visual
 block mode, operations (substitutions, sorting) operate on the entire line --
 not just the block, as you might expect. However sometimes you want to edit
 just the visual block selection, for example when editing TSV files.
@@ -980,23 +944,18 @@ just the visual block selection, for example when editing TSV files.
     * - :kbd:`<C-v>`, then use :kbd:`:B` instead of :kbd:`:`
       - Operates on visual block selection only
 
-``nerdtree``
-~~~~~~~~~~~~
 
-.. versionadded:: 2016
+``indent-blankline``
+~~~~~~~~~~~~~~~~~~~~
 
-`nerdtree <https://github.com/scrooloose/nerdtree>`_ provides a file browser
-for finding/selecting files to edit. Navigate it with vim movement keys, and
-hit ``Enter`` to open the file in a new buffer.
+.. versionadded:: 2023-10-15
 
-.. list-table::
-    :header-rows: 1
-    :align: left
+`indent-blankline <https://github.com/lukas-reineke/indent-blankline.nvim>`_
+shows vertical lines where there is indentation, and highlights one of these
+vertical lines to indicate the current `scope
+<https://en.wikipedia.org/wiki/Scope_(computer_science)>`_.
 
-    * - command
-      - description
-    * - :kbd:`<leader>n`
-      - toggle file browser
+No additional commands configured.
 
 ``vim-python-pep8-indent``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1005,8 +964,9 @@ hit ``Enter`` to open the file in a new buffer.
 
 `vim-python-pep8-indent <https://github.com/Vimjas/vim-python-pep8-indent>`_
 auto-indents Python using pep8 recommendations. This happens as you’re typing,
-or when you use :kbd:`gq` on a selection to wrap. No additional commands
-configured.
+or when you use :kbd:`gq` on a selection to wrap.
+
+No additional commands configured.
 
 ``vim-rmarkdown``
 ~~~~~~~~~~~~~~~~~
@@ -1030,6 +990,8 @@ below) for syntax highlighting.
 
 Includes folding and formatting. Lots of shortcuts are defined by this plugin,
 see ``:help vim-pandoc`` for much more.
+
+No additional commands configured.
 
 ``vim-pandoc-syntax``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1055,6 +1017,9 @@ copy/paste between them.
 Install powerline fonts for full effect (``./setup.sh --powerline``). See below
 for themes.
 
+No additional commands configured.
+
+
 ``vim-airline-themes``
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1063,6 +1028,8 @@ for themes.
 `vim-airline-themes
 <https://github.com/vim-airline/vim-airline/wiki/Screenshots>`_ provides themes
 for use with vim-airline.
+
+No additional commands configured.
 
 
 ``vim-tmux-clipboard``
@@ -1079,39 +1046,4 @@ usage details. Note that this also requires the `vim-tmux-focus-events
 <https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin. You'll need
 to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
 
-Working with R in nvim
-----------------------
-
-This assumes that you’re using neovim and have installed the neoterm
-plugin.
-
-Initial setup
-~~~~~~~~~~~~~
-
-When first starting work on a file:
-
-1. Open or create a new RMarkdown file with nvim
-2. Open a neoterm terminal to the right (``,t``)
-3. Move to that terminal (``Alt-w``).
-4. In the terminal, source activate your environment
-5. Start R in the terminal
-6. Go back to the RMarkdown or R script, and use the commands below to
-   send lines over.
-
-Working with R
-~~~~~~~~~~~~~~
-
-Once you have the terminal up and running, write some R code in the text file
-buffer. To test, you can send lines over using any of the following methods:
-
-1. ``gxx`` to send the current line to R
-
-2. Highlight some lines (``Shift-V`` in vim gets you to visual select
-   mode), ``gx`` sends them and then jumps to the terminal.
-
-3. Inside a code chunk, ``,cd`` sends the entire code chunk and then
-
-4  jumps to the next one. This way you can ``,cd`` your way through an
-   Rmd
-
-5. ``,k`` to render the current Rmd to HTML.
+No additional commands configured.
