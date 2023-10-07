@@ -11,15 +11,19 @@ return {
   { "tpope/vim-surround" },
   { "tpope/vim-sleuth" },
   { "Vimjas/vim-python-pep8-indent", ft = { "python", "snakemake" } },
-  { "junegunn/gv.vim", dependencies = { "tpope/vim-fugitive" }, cmd="GV" },
+  { "junegunn/gv.vim", dependencies = { "tpope/vim-fugitive" }, cmd = "GV" },
   { "samoshkin/vim-mergetool", cmd = "MergetoolStart" },
   { "tpope/vim-fugitive", cmd = "Git", lazy = true },
   { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
-  {'stsewd/sphinx.nvim', ft = "rst" },
-  { "vim-pandoc/vim-pandoc-syntax", ft = { "markdown", "rmarkdown" }, dependencies = { "vim-pandoc/vim-pandoc" }},
-  { "vim-pandoc/vim-rmarkdown", ft = "rmarkdown", dependencies = { "vim-pandoc/vim-pandoc-syntax", "vim-pandoc/vim-pandoc" }},
+  { "stsewd/sphinx.nvim", ft = "rst" },
+  { "vim-pandoc/vim-pandoc-syntax", ft = { "markdown", "rmarkdown" }, dependencies = { "vim-pandoc/vim-pandoc" } },
+  {
+    "vim-pandoc/vim-rmarkdown",
+    ft = "rmarkdown",
+    dependencies = { "vim-pandoc/vim-pandoc-syntax", "vim-pandoc/vim-pandoc" },
+  },
   { "morhetz/gruvbox", enabled = false },
-  { "folke/which-key.nvim", lazy=false, config = true },
+  { "folke/which-key.nvim", lazy = false, config = true },
   {
     "phha/zenburn.nvim",
     lazy = false,
@@ -192,7 +196,7 @@ return {
     main = "ibl",
     opts = {
       indent = { char = "┊" }, -- make the character a little less dense
-      scope = { exclude = { language = { "markdown", "rst" } }},
+      scope = { exclude = { language = { "markdown", "rst" } } },
     },
   },
   {

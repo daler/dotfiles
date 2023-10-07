@@ -4,7 +4,12 @@ vim.keymap.set("n", "<Leader>H", ":set hlsearch!<CR>", { desc = "Toggle search h
 vim.keymap.set("n", "<leader>W", ":%s/\\s\\+$//<cr>:let @/=''<CR>", { desc = "Clean trailing whitespace" })
 vim.keymap.set({ "n", "i" }, "<leader>R", "<Esc>:syntax sync fromstart<CR>", { desc = "Refresh syntax highlighting" })
 vim.keymap.set({ "n", "i" }, "<leader>`", "i```{r}<CR>```<Esc>O", { desc = "New fenced RMarkdown code block" })
-vim.keymap.set( { "n", "i" }, "<leader>ts", '<Esc>o<Esc>:r! date "+[\\%Y-\\%m-\\%d \\%H:\\%M] "<CR>A', { desc = "Insert timestamp" })
+vim.keymap.set(
+  { "n", "i" },
+  "<leader>ts",
+  '<Esc>o<Esc>:r! date "+[\\%Y-\\%m-\\%d \\%H:\\%M] "<CR>A',
+  { desc = "Insert timestamp" }
+)
 vim.keymap.set("n", "<leader>-", "80A-<Esc>d80<bar>", { desc = "Fill rest of line with -" })
 vim.keymap.set("n", "<leader><tab>", ":set nowrap tabstop=", { desc = "Prepare for viewing TSV" })
 vim.keymap.set("n", "<leader>1", ":bfirst<CR>", { desc = "First buffer" })
