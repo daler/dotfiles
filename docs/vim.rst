@@ -25,7 +25,6 @@ Here is a schematic of the nvim config files in :file:`~/.config/nvim`:
 - :file:`lua/lazy-bootstrap.lua`: automatically installs and makes available
   the lazy.nvim plugin manager (no need for ``./setup.sh
   --set-up-vim-plugins``)
-- :file:`lua/plugins/init.lua`: loaded by lazy.nvim, contains plugins that don't need additional config
 - :file:`lua/mappings.lua`: custom keymappings
 - :file:`lua/autocommands.lua`: custom autocommands
 - :file:`lua/colorscheme.lua`: set and/or modify colorscheme
@@ -33,19 +32,6 @@ Here is a schematic of the nvim config files in :file:`~/.config/nvim`:
 
 See :ref:`plugins` for details on how the plugins are configured.
 
-Each plugin spec is a table. The first property is the name of the plugin.
-Other properties:
-   * lazy: only load when requested by something else. Saves on initial load time.
-   * ft: only load the plugin when editing this filetype. Implies lazy=true.
-   * cmd: only load the plugin when first running this command. Implies lazy=true.
-   * keys: only load the plugin when using these keymappings. Implies lazy=true.
-   * config: run this stuff after the plugin loads. If config = true, just run
-     the default setup for the plugin.
-   * init: similar to config, but used for pure-vim plugins
-
-If keys are specified, this is the only place they need to be mapped, and
-they will make their way into the which-key menu even if they trigger
-a lazy-loaded plugin.
 
 Using the mouse
 ---------------
@@ -175,8 +161,10 @@ first key and then waiting a second for the menu to pop up.
 
 These are defined in :file:`lua/mappings.lua`. 
 
-**Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
-file and are described below under the respective plugin's section.
+.. note::
+
+  **Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
+  file and are described below under the respective plugin's section.
 
 .. list-table::
     :header-rows: 1
@@ -241,7 +229,7 @@ This is configured in :file:`lua/autocommands.lua`:
       - Insert the current date as a ReST or Markdown-formatted title,
         depending on the file type. Useful when writing logs.
 
-
+.. _plugins:
 
 Plugins
 -------
@@ -250,6 +238,31 @@ The plugins configured in :file:`lua/plugins.lua` have lots and lots of
 options. Here I’m only highlighting the options I use the most, but definitely
 check out each homepage to see all the other weird and wonderful ways they can
 be used.
+
+**Plugins are now configured using** `lazy.nvim
+<https://github.com/folke/lazy.nvim>`_. This supports lazy-loading of plugins
+to keep a snappy startup time, and only load plugins when they're needed. See
+:ref:`nvim-lua` for my rationale on that.
+
+Each plugin spec in :file:`lua/plugins.lua` is a table. The first property is
+the name of the plugin. Other properties:
+
+  * lazy: only load when requested by something else. Saves on initial load time.
+
+  * ft: only load the plugin when editing this filetype. Implies lazy=true.
+
+  * cmd: only load the plugin when first running this command. Implies lazy=true.
+
+  * keys: only load the plugin when using these keymappings. Implies lazy=true.
+
+  * config: run this stuff after the plugin loads. If config = true, just run
+    the default setup for the plugin.
+
+  * init: similar to config, but used for pure-vim plugins
+
+If keys are specified, this is the only place they need to be mapped, and
+they will make their way into the which-key menu even if they trigger
+a lazy-loaded plugin.
 
 Here, plugins are sorted roughly so that the ones that provide additional
 commands come first.
@@ -265,6 +278,7 @@ commands come first.
       { "user/plugin-name", enabled = false },
       -- ... more stuff
 
+Here is a list of the plugins documented below:
 
 .. contents::
     :local:
@@ -308,8 +322,9 @@ marker to show where the cursor is.
     * - :kbd:`KJ` (hold shift and tap kj)
       - Flash beacon
 
-In addition, moving between search hits with :kbd:`N` and :kbd:`n` will flash
-the beacon.
+    * - :kbd:`n` or :kbd:`N` after search
+      - Flash beacon at search hit
+
 
 ``telescope``
 ~~~~~~~~~~~~~
@@ -1047,6 +1062,14 @@ usage details. Note that this also requires the `vim-tmux-focus-events
 to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
 
 No additional commands configured.
+
+``sphinx.nvim``
+~~~~~~~~~~~~~~~
+`sphinx.nvim <https://github.com/stsewd/sphinx.nvim>`_ provides some
+integrations for Sphinx and ReStructured Text.
+
+No additional commands configured.
+
 ``diffview.nvim``
 ~~~~~~~~~~~~~~~~~
 `diffview.nvim <https://github.com/sindrets/diffview.nvim>`_ supports viewing
@@ -1066,5 +1089,5 @@ See the homepage for details.
       - Opens the viewer
 
     * - ``:DiffviewFileHistory``
-    * - View diffs for this file throughout git history
+      - View diffs for this file throughout git history
 

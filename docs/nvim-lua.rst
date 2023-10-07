@@ -42,7 +42,7 @@ just these):
    # here we refer to the dotfiles repo dir;
    # modify accordingly for where you put it.
    cp -r dotfiles/.config/nvim ~/.config/nvim
-   cp -r dotfiles/.vimrc ~/.vimrc
+   cp dotfiles/.vimrc ~/.vimrc
 
 Then open up nvim, and wait for the installations to complete. You should be
 good to go.
@@ -52,21 +52,25 @@ Here are some initial things to try:
 - :kbd:`<leader>` (by default, :kbd:`,`) and then wait a second. You'll get
   a menu that pops up, showing you the currently-configured key mappings that
   follow <leader>. Hitting a listed key will execute the command. Sometimes
-  you'll see "-> prefix" in the menu, which means you can hit that key to see
+  you'll see ``-> +prefix`` in the menu, which means you can hit that key to see
   a menu of the things you can type after that. If you go too far, use
-  <Backspace> to go back a step.
+  :kbd:`<Backspace>` to go back a step.
 
   In fact, you can hit backspace a few times to get to the base vim commands. It
   can be helpful to look through to see if there's any you've forgotten about!
 
-- which-key also pops up if you use :kbd`'` (for marks), and helps you navigate
+- which-key also pops up if you use :kbd:`'` (for marks), and helps you navigate
   between them.
 
 - :kbd:`z=` over a word to get a pop-up for spelling suggestions
 
-- saner tab completion (hit tab until you like what you see). If you run ``:set
-  spell`` then you'll get spelling suggestions upon hitting tab; otherwise it
-  will pull text from the buffer.
+- Saner tab completion (hit tab until you like what you see). Snippets are
+  enabled, so if you're in a Python file for example, type ``def`` and then hit
+  :kbd:`<Tab>`. One of the options will be a snippet to create a Python
+  function. There are also other "flavors" of snippets, for example whether you
+  want to return from the function, o if you're writing method. Use
+  :kbd:`<Tab>` to jump between the placeholders, and immediately start typing
+  to replace them.
 
 - :kbd:`KJ` (so, hold down shift and type ``kj``) to flash a beacon
   where the cursor is. This also works when jumping between search hits.
@@ -76,8 +80,8 @@ Here are some initial things to try:
 - :kbd:`<leader>fg` to live-grep within the directory (hit enter on the search
   result to open the file at that location). Great for exploring new codebases.
 
-- Open a file in a git repo with some changes. :kbd:`]c` to go to the next
-  change (hunk) and :kbd:`<leader>hp` to preview hunks.
+- Open a file in a git repo with some changes. Then use :kbd:`]c` to go to the
+  next change (hunk) and :kbd:`<leader>hp` to preview hunks.
 
 Don't like it? Do this to revert:
 
@@ -170,13 +174,25 @@ the mappings. These descriptions are automatically discovered by the
 ``which-key`` plugin, which shows a pop-up menu after a second or so. It shows
 the possible key combinations you can do.
 
+:file:`lua/colorscheme`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+I realized that the zenburn colorscheme I've been using for many years was
+behaving a little differently due to the interaction of treesitter and the
+zenburn.nvim colorscheme. So I made some tweaks. However, these tweaks only
+work after the colorscheme has been set -- and since it's a plugin, it is
+handled by :file:`lua/plugins.lua`. So this has to be done at the end -- hence,
+a separate colorscheme file loaded at the end.
+
+I'm sure there's a better way to do this, but it's the best I could come up
+with that also allows others to swap out what they want to use.
+
 .. _how-plugins-work:
 
 How to add/configure plugins
 ----------------------------
 
-Does the plugin need configuration? Add a new Lua file to :file:`lua/plugins/`
-named after the plugin.
+Edit :file:`lua/plugins.lua`.
 
 Follow the existing plugin files for a guide, but basically you're aiming for
 something like this:

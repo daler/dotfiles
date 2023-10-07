@@ -1,6 +1,6 @@
 -- Returns a table of plugin specs for lazy.nvim to handle.
 --
--- See https://daler.github.io/dotfiles/vim.html for details.
+-- See https://daler.github.io/dotfiles/vim.html#plugins  for details.
 --
 return {
   { "vim-scripts/vis" },
