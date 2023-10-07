@@ -1,5 +1,3 @@
--- GENERAL SETTINGS
-
 vim.cmd("syntax on") -- Syntax highlighting; also does an implicit filetype on
 vim.cmd("filetype plugin indent on") -- Enable detection, plugin, and indent for filetype
 vim.cmd("set nofoldenable") -- Files will open with everything unfolded

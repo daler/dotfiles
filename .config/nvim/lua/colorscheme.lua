@@ -2,6 +2,8 @@ require("zenburn")
 vim.cmd("set termguicolors")
 vim.cmd("colorscheme zenburn")
 
+-- Changes to a colorscheme need to happen after they're loaded.
+--
 -- Some hints for tweaking colorschemes:
 --    Use :Inspect to see what highlight group the cursor is over.
 --    Use :Telescope higlight to search for it and find the current setting
@@ -22,17 +24,19 @@ if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
   -- Brighter diff delete, for better visibility in gitsigns
   vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
 
+  -- tweaks for bash and python
   vim.cmd("highlight Identifier guifg=#dcdccc")
   vim.cmd("highlight Constant guifg=#dcdccc gui=bold")
   vim.cmd("highlight Boolean guifg=#FFCFAF gui=bold")
   vim.cmd("highlight Function guifg=#f6f6ab")
 
+  -- bash tweaks
   vim.cmd("highlight @punctuation.bracket.bash guifg=#FFCFAF")
   vim.cmd("highlight @punctuation.special.bash guifg=#FFCFAF")
   vim.cmd("highlight @constant.bash guifg=#FFCFAF")
   vim.cmd("highlight @variable.bash guifg=#FFCFAF")
 
-  --
+  -- indent-blankline
   vim.cmd("highlight IblScope guifg=#efefaf")
   vim.cmd("highlight @ibl.scope.char.1 guifg=#efefaf")
 end
