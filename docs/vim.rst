@@ -1047,3 +1047,24 @@ usage details. Note that this also requires the `vim-tmux-focus-events
 to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
 
 No additional commands configured.
+``diffview.nvim``
+~~~~~~~~~~~~~~~~~
+`diffview.nvim <https://github.com/sindrets/diffview.nvim>`_ supports viewing
+diffs across multiple files. It also has a nice interface for browsing previous
+commits.
+
+I'm still figuring out when it's better to use this, fugitive, or gitsigns.
+
+See the homepage for details.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - ``:DiffviewOpen``
+      - Opens the viewer
+
+    * - ``:DiffviewFileHistory``
+    * - View diffs for this file throughout git history
+
