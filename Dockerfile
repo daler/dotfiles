@@ -59,7 +59,6 @@ requirements.txt \
 # Directories have to be ADDed one at a time
 ADD .config ./.config
 ADD .config/nvim/lua ./.config/nvim/lua
-ADD .config/nvim/lua/plugins ./.config/nvim/lua/plugins
 
 # Run setup in order
 RUN ./setup.sh --dotfiles
