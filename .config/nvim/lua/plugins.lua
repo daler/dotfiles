@@ -11,7 +11,6 @@ return {
   { "tpope/vim-surround" },
   { "tpope/vim-sleuth" },
   { "Vimjas/vim-python-pep8-indent", ft = { "python", "snakemake" } },
-  { "junegunn/gv.vim", dependencies = { "tpope/vim-fugitive" }, cmd = "GV" },
   { "samoshkin/vim-mergetool", cmd = "MergetoolStart" },
   { "tpope/vim-fugitive", cmd = "Git", lazy = true },
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } },
