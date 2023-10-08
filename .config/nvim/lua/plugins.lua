@@ -1,6 +1,12 @@
--- Returns a table of plugin specs for lazy.nvim to handle.
+-- Returns a table of plugin specs for lazy.nvim to handle. They will be
+-- automatically installed when starting nvim.
 --
--- See https://daler.github.io/dotfiles/vim.html#plugins  for details.
+-- See https://daler.github.io/dotfiles/vim.html#plugins for descriptions and
+-- keymappings...or read on.
+--
+-- In general, plugins are lazy-loaded if possible. Loading can be triggered by
+-- commands, filetypes, or keymappings. Many plugins have keymappings, and
+-- along with the description these are picked up by which-key.
 --
 return {
   { "vim-scripts/vis" },
@@ -15,50 +21,32 @@ return {
   { "tpope/vim-fugitive", cmd = "Git", lazy = true },
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } },
   { "stsewd/sphinx.nvim", ft = "rst" },
-  { "vim-pandoc/vim-pandoc-syntax", ft = { "markdown", "rmarkdown" }, dependencies = { "vim-pandoc/vim-pandoc" } },
+  { 
+    "vim-pandoc/vim-pandoc-syntax",
+    ft = { "markdown", "rmarkdown" },
+    dependencies = { "vim-pandoc/vim-pandoc" }
+  },
   {
     "vim-pandoc/vim-rmarkdown",
     ft = "rmarkdown",
     dependencies = { "vim-pandoc/vim-pandoc-syntax", "vim-pandoc/vim-pandoc" },
   },
-  { "morhetz/gruvbox", enabled = false },
   { "folke/which-key.nvim", lazy = false, config = true },
-  {
-    "phha/zenburn.nvim",
-    lazy = false,
-    priority = 1000,
-    init = function()
-      -- The following are some tweaks to the zenburn colorscheme. Collectively
-      -- this makes line numbers more obvious, fixes some diff coloring, and
-      -- makes bash and python highlighting look more like the older zenburn.
-      --
-      -- HINT: Use :Telescope highlights and :Inspect to tweak more.
-      vim.cmd("highlight LineNr guifg=#959898 guibg=#353535")
-      vim.cmd("highlight CursorLineNr guifg=#f2f48d guibg=#2f2f2f")
-      vim.cmd("highlight IncSearch guifg=#f8f893 guibg=#385f38")
-      vim.cmd("highlight Comment cterm=italic gui=italic")
-      vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
-      vim.cmd("highlight Identifier guifg=#dcdccc")
-      vim.cmd("highlight Constant guifg=#dcdccc gui=bold")
-      vim.cmd("highlight Boolean guifg=#FFCFAF gui=bold")
-      vim.cmd("highlight Function guifg=#f6f6ab")
-      vim.cmd("highlight @punctuation.bracket.bash guifg=#FFCFAF")
-      vim.cmd("highlight @punctuation.special.bash guifg=#FFCFAF")
-      vim.cmd("highlight @constant.bash guifg=#FFCFAF")
-      vim.cmd("highlight @variable.bash guifg=#FFCFAF")
-      vim.cmd("highlight IblScope guifg=#efefaf")
-      vim.cmd("highlight @ibl.scope.char.1 guifg=#efefaf")
-    end,
-  },
+  { "phha/zenburn.nvim", lazy = false, priority = 1000 },
+  { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    cmd = "Telescope",
     keys = {
       {
         "<leader>ff",
-        "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer=false})<CR>",
+        function ()
+          local previewer = require('telescope.themes').get_dropdown{previewer=false}
+          require("telescope.builtin").find_files(previewer)
+        end,
         desc = "Find files",
       },
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep in directory" },
@@ -69,7 +57,7 @@ return {
   },
   {
     "danilamihailov/beacon.nvim",
-    lazy = false,
+    lazy = false, -- otherwise, on first KJ you get a double-flash
     keys = {
       { "<S-k><S-j>", ":Beacon<CR>", desc = "Flash beacon" },
       { "N", "N:Beacon<CR>" }, -- prev search flashes beacon
@@ -78,8 +66,7 @@ return {
       { "*", "*:Beacon<CR>" }, -- next word under cursor flashes beacon
     },
     config = function()
-      vim.cmd("highlight Beacon guibg=white ctermbg=15")
-      vim.cmd("let g:beacon_show_jumps=0")
+      vim.cmd("let g:beacon_show_jumps=0") -- default only flashes if jumping >10 lines
     end,
   },
   {
@@ -89,7 +76,8 @@ return {
       { "k", "<Plug>(accelerated_jk_gk)" },
     },
     config = function()
-      vim.cmd("let g:accelerated_jk_acceleration_table = [7, 13, 20, 33, 53, 86]") -- see :help accelerated_jk_acceleration_table
+      -- see :help accelerated_jk_acceleration_table
+      vim.cmd("let g:accelerated_jk_acceleration_table = [7, 13, 20, 33, 53, 86]")
     end,
   },
   {
@@ -357,3 +345,5 @@ return {
     end,
   },
 }
+
+-- vim: nowrap

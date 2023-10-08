@@ -166,6 +166,8 @@ if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
   vim.cmd("highlight IncSearch guifg=#f8f893 guibg=#385f38")
   vim.cmd("highlight Comment cterm=italic gui=italic")
   vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
+  vim.cmd("highlight diffRemoved guifg=#9f8888 guibg=#464646")
+  vim.cmd("highlight diffAdded guifg=#709080")
   vim.cmd("highlight Identifier guifg=#dcdccc")
   vim.cmd("highlight Constant guifg=#dcdccc gui=bold")
   vim.cmd("highlight Boolean guifg=#FFCFAF gui=bold")
@@ -177,6 +179,7 @@ if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
   vim.cmd("highlight IblScope guifg=#efefaf")
   vim.cmd("highlight @ibl.scope.char.1 guifg=#efefaf")
   vim.cmd("highlight Beacon guibg=white ctermbg=15")
+
 end
 
 -- vim: nowrap
