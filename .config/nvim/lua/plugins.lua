@@ -195,7 +195,7 @@ return {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
     },
-    config = true,
+    opts = { layout = { default_direction = "prefer_left" } },
     keys = {
       { "{", "<cmd>AerialPrev<CR>", buffer = bufnr, desc = "Prev code symbol" },
       { "}", "<cmd>AerialNext<CR>", buffer = bufnr, desc = "Next code symbol" },
