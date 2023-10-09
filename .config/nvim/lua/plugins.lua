@@ -21,7 +21,7 @@ return {
   { "tpope/vim-fugitive", cmd = "Git", lazy = true },
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } },
   { "stsewd/sphinx.nvim", ft = "rst" },
-  { 
+  {
     "vim-pandoc/vim-pandoc-syntax",
     ft = { "markdown", "rmarkdown" },
     dependencies = { "vim-pandoc/vim-pandoc" }
