@@ -138,7 +138,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
+        highlight = { enable = true, disable = { "rmarkdown" }},
         indent = { enable = true },
         ensure_installed = {
           "bash",
@@ -169,6 +169,9 @@ return {
       vim.cmd("set foldmethod=expr")
       vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
       vim.cmd("set nofoldenable")
+
+      vim.treesitter.language.register("markdown", "rmd")
+      vim.treesitter.language.register("markdown", "rmarkdown")
     end,
   },
   {
