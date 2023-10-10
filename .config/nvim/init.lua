@@ -36,7 +36,6 @@ vim.cmd("colorscheme zenburn") -- bottom of this file has some tweaks to zenburn
 -- You can use vim.cmd() to execute any standard vim command. Many of these can
 -- be converted to Lua syntax, like vim.o.mouse = "a", but for consistency with
 -- earlier versions of this config, we're keeping the vim syntax for now.
---
 vim.cmd("set termguicolors") -- use full color in colorschemes
 vim.cmd("syntax on") -- Syntax highlighting; also does an implicit filetype on
 vim.cmd("filetype plugin indent on") -- Enable detection, plugin, and indent for filetype

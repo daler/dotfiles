@@ -151,7 +151,10 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
+        highlight = {
+          enable = true,
+          disable = { "markdown", "rmarkdown" }, -- let pandoc handle highlighting for these
+        },
         indent = { enable = true },
         ensure_installed = {
           "bash",
