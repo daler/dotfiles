@@ -6,12 +6,7 @@
 .config/nvim/init.lua
 .config/nvim/lazy-lock.json
 .config/nvim/lua/
-.config/nvim/lua/autocommands.lua
-.config/nvim/lua/lazy-bootstrap.lua
-.config/nvim/lua/mappings.lua
 .config/nvim/lua/plugins.lua
-.config/nvim/lua/settings.lua
-.config/nvim/lua/colorscheme.lua
 .dircolors
 .exports
 .extra
