@@ -175,7 +175,7 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "gis",
+            init_selection = "<leader>cs",
             node_incremental = "<Tab>",
             scope_incremental = false,
             node_decremental = "<BS>",
