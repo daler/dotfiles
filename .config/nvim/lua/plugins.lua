@@ -25,6 +25,20 @@ return {
   { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 }, 
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
+  { "nvim-tree/nvim-tree.lua", -- file browser
+    lazy = false,
+    config = function()
+      require("nvim-tree").setup({
+        disable_netrw = false,
+        hijack_netrw = true,
+      })
+    end;
+    keys = {
+      { "<leader>fbc", "<cmd>NvimTreeClose<CR>", desc = "[f]ile [b]rowser [c]lose (nvim-tree)" },
+      { "<leader>fbo", "<cmd>NvimTreeFocus<CR>", desc = "[f]ile [b]rowser [o]pen (or focus if open)" },
+
+    },
+  },
   {
     "vim-pandoc/vim-pandoc-syntax", -- improves editing markdown and ReST
     ft = { "markdown", "rmarkdown" },
