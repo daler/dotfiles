@@ -377,6 +377,27 @@ Other useful things you can do with Telescope:
   vim_options``, ``:Telescope man_pages`` are some other built-in pickers that
   are interesting to browse through.
 
+``nvim-tree``
+~~~~~~~~~~~~~
+`nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`_ is a file browser.
+
+.. list-table::
+
+    * - command
+      - description
+    * - :kbd:`<leader>fbo`
+      - File browser open (or focus, if already open)
+    * - :kbd:`<leader>fbc` or :kbd:`q` in browser
+      - File browser close
+    * - :kbd:`-` (within browser)
+      - Go up a directory
+    * - :kbd:`Enter` (within browser)
+      - Open file or directory, or close directory
+
+The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
+windows left and right respectively) also work.
+
+
 ``which-key``
 ~~~~~~~~~~~~~
 
