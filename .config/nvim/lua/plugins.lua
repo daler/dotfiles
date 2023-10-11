@@ -28,7 +28,6 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    lazy = false,
     config = function()
       require("nvim-tree").setup({
         disable_netrw = false,
