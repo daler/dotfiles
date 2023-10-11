@@ -23,32 +23,36 @@ return {
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
   { "folke/which-key.nvim", lazy = false, config = true }, -- pop up a window showing possible keybindings
   { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
-  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 }, 
+  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 },
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
-  { "nvim-tree/nvim-tree.lua", -- file browser
+
+  {
+    "nvim-tree/nvim-tree.lua", -- file browser
     lazy = false,
     config = function()
       require("nvim-tree").setup({
         disable_netrw = false,
         hijack_netrw = true,
       })
-    end;
+    end,
     keys = {
       { "<leader>fbc", "<cmd>NvimTreeClose<CR>", desc = "[f]ile [b]rowser [c]lose (nvim-tree)" },
       { "<leader>fbo", "<cmd>NvimTreeFocus<CR>", desc = "[f]ile [b]rowser [o]pen (or focus if open)" },
-
     },
   },
+
   {
     "vim-pandoc/vim-pandoc-syntax", -- improves editing markdown and ReST
     ft = { "markdown", "rmarkdown" },
-    dependencies = { "vim-pandoc/vim-pandoc" }
+    dependencies = { "vim-pandoc/vim-pandoc" },
   },
+
   {
     "vim-pandoc/vim-rmarkdown", -- improves editing RMarkdown
     ft = "rmarkdown",
     dependencies = { "vim-pandoc/vim-pandoc-syntax", "vim-pandoc/vim-pandoc" },
   },
+
   {
     "nvim-telescope/telescope.nvim", -- pop-up window used for fuzzy-searching and selecting
     dependencies = {
@@ -58,8 +62,8 @@ return {
     keys = {
       {
         "<leader>ff",
-        function ()
-          local previewer = require('telescope.themes').get_dropdown{previewer=false}
+        function()
+          local previewer = require("telescope.themes").get_dropdown({ previewer = false })
           require("telescope.builtin").find_files(previewer)
         end,
         desc = "Find files",
@@ -70,17 +74,19 @@ return {
       { "<leader>fo", "<cmd>Telescope oldfiles<CR>", desc = "Find recently-opened files" },
     },
   },
+
   {
     "danilamihailov/beacon.nvim", -- flash a beacon to show where you are
     lazy = false, -- otherwise, on first KJ you get a double-flash
     keys = {
       { "<S-k><S-j>", ":Beacon<CR>", desc = "Flash beacon" },
-      { "N", "N:Beacon<CR>", desc = "Prev search hit and flash beacon"},
+      { "N", "N:Beacon<CR>", desc = "Prev search hit and flash beacon" },
       { "n", "n:Beacon<CR>", desc = "Next search hit and flash beacon" },
       { "%", "%:Beacon<CR>", desc = "Go to matching bracket and flash beacon" },
-      { "*", "*:Beacon<CR>" , desc = "Go to next word occurrence and flash beacon" },
+      { "*", "*:Beacon<CR>", desc = "Go to next word occurrence and flash beacon" },
     },
   },
+
   {
     "rhysd/accelerated-jk", -- speeds up vertical navigation
     keys = {
@@ -92,6 +98,7 @@ return {
       vim.cmd("let g:accelerated_jk_acceleration_table = [7, 13, 20, 33, 53, 86]")
     end,
   },
+
   {
     "vim-pandoc/vim-pandoc", -- improves editing markdown and RMarkdown
     lazy = true,
@@ -102,6 +109,7 @@ return {
       vim.cmd("let g:pandoc#keyboard#display_motions = 0") -- Disable remapping j to gj and k to gk
     end,
   },
+
   {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
     lazy = false,
@@ -202,12 +210,14 @@ return {
       vim.treesitter.language.register("markdown", "rmarkdown")
     end,
   },
+
   {
     "ggandor/leap.nvim", -- quickly jump around the buffer without counting lines
     config = function()
       require("leap").set_default_keymaps()
     end,
   },
+
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
     lazy = false,
@@ -217,12 +227,14 @@ return {
       scope = { exclude = { language = { "markdown", "rst" } } },
     },
   },
+
   {
     "stevearc/aerial.nvim", -- code navigator
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
     },
+
     opts = { layout = { default_direction = "prefer_left" } },
     keys = {
       { "{", "<cmd>AerialPrev<CR>", buffer = bufnr, desc = "Prev code symbol" },
@@ -230,6 +242,7 @@ return {
       { "<leader>a", "<cmd>AerialToggle<CR>", buffer = bufnr, desc = "Toggle aerial nav" },
     },
   },
+
   {
     "lewis6991/gitsigns.nvim", -- show changes in git repo
     dependencies = {
@@ -262,6 +275,7 @@ return {
       end,
     },
   },
+
   {
     "vim-airline/vim-airline", -- status line along the bottom
     dependencies = { "vim-airline/vim-airline-themes" },
@@ -274,6 +288,7 @@ return {
       -- vim.cmd("let g:airline#extensions#tabline#buffer_nr_show = 1") -- Show a buffer number for easier switching
     end,
   },
+
   {
     "L3MON4D3/LuaSnip", -- allow tab completion of snippets
     lazy = true,
@@ -309,6 +324,7 @@ return {
       },
     },
   },
+
   {
     "hrsh7th/nvim-cmp", -- tab completion
     dependencies = {
