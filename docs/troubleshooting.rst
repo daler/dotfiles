@@ -15,3 +15,8 @@ For Alacritty, see `this gist
 which also includes a setting you need in
 :file:`.config/alacritty/alacritty.yml`.
 
+Can't install conda packages from Bioconda
+------------------------------------------
+Bioconda does not yet build packages for Mac ARM chips (Mac M1 or M2). You can
+install docker and use a container, or wait until Bioconda starts building
+those packages.

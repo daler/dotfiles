@@ -1,7 +1,7 @@
 .. _vim:
 
-Neovim
-======
+Neovim configuration
+====================
 
 The :file:`.vimrc` file has only basic setup for vim.
 

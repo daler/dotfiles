@@ -15,6 +15,7 @@ keymapping documentation for details.
 - refactor init.vim to init.lua
 - use lazy.nvim for plugin handling
 - add plugins:
+
   - indent-blankline
   - beacon
   - nvim-cmp (and various dependencies)
@@ -28,6 +29,12 @@ keymapping documentation for details.
 - modularize config into multiple lua files
 - convert mappings to have descriptions, so which-key picks them up
 - change how buffers are switched
+- removed plugins:
+
+  - NERDTree (replaced by nvim-tree)
+  - supertab (replaced by nvim-cmp)
+  - simpylfold (replaced by treesitter folding)
+  - gv.vim (replaced by diffview and gitsigns)
 
 2023-09-19
 ----------
