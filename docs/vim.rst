@@ -559,7 +559,7 @@ language.
     * - command
       - description
 
-    * - :kbd:`gis`
+    * - :kbd:`<leader>cs`
       - Start incremental selection
 
     * - :kbd:`<Tab>` (in incremental selection)
