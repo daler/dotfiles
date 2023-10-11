@@ -104,6 +104,7 @@ return {
   },
   {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
+    lazy = false,
     config = function()
       require("toggleterm").setup({
         size = function(term)
@@ -114,6 +115,16 @@ return {
           end
         end,
       })
+      -- Always use insert mode when entering a terminal buffer, even with mouse
+      -- click. NOTE: Clicking with a mouse a second time enters visual select mode,
+      -- just like in a text buffer.
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+          vim.cmd("if &buftype == 'terminal' | startinsert | endif")
+        end,
+      })
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "rmarkdown",
         callback = function()

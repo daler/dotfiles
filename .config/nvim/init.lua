@@ -133,15 +133,6 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
--- Always use insert mode when entering a terminal buffer, even with mouse
--- click. NOTE: Clicking with a mouse a second time enters visual select mode,
--- just like in a text buffer.
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*",
-  callback = function()
-    vim.cmd("if &buftype == 'terminal' | startinsert | endif")
-  end,
-})
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
