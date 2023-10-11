@@ -83,6 +83,13 @@ Here are some initial things to try:
 - Open a file in a git repo with some changes. Then use :kbd:`]c` to go to the
   next change (hunk) and :kbd:`<leader>hp` to preview hunks.
 
+- Open a file browser with :kbd:`<leader>fbo`, hit Enter to select, or :kbd:`-`
+  to go up a level
+
+- Open a Python file with lots of classes/functions, or a markdown or RMarkdown
+  file. Use :kbd:`<leader>a` to open a panel for navigation within the file.
+
+
 Don't like it? Do this to revert:
 
 .. code-block::
@@ -96,29 +103,70 @@ Don't like it? Do this to revert:
 
 The rest of this page gives some more context so you can make your own changes.
 
-.config/nvim/init.vim -> .config/nvim/init.lua
-----------------------------------------------
+Structure
+---------
 
-First, there's no more ``init.vim``. It's ``init.lua`` instead. When you open up
-this file, there's very little to see. That's because the config has been
-modularized into more pieces.
+First, there's no more ``init.vim``. It's ``init.lua`` instead.
 
-How Lua finds files
--------------------
+There is an additional :file:`lua/plugins/init.lua` which holds plugin configuration.
 
-When you say:
+I had initially completely modularized things into separate settings,
+autocommands, mappings, colorscheme, and plugins files. But after living with
+that a bit, I decided to go back to a single main config with settings,
+mappings, autocommands, and colorscheme, and only having a separate plugins
+file.
 
-.. code-block:: lua
-
-   require('settings')
-
-Lua will look in the :file:`lua` directory for a file called
-:file:`lua/settings.lua`, and run it. If there's a :file:`init.lua` file in
-a directory, you can require that directory without needing to specify a file
-name.
+Lua
+---
 
 Here's `nvim docs on Lua modules
-<https://neovim.io/doc/user/lua-guide.html#lua-guide-modules>`_ for more info.
+<https://neovim.io/doc/user/lua-guide.html#lua-guide-modules>`_ for more info
+on working with Lua.
+
+But for a quick intro, here are some of my notes:
+
+- Any vim commands can be trivially converted to Lua by wrapping them in
+  ``vim.cmd()``. See the `nvim docs on running Vim commands with Lua
+  <https://neovim.io/doc/user/lua-guide.html#lua-guide-vim-commands>`_ for more
+  info.
+
+- ``--`` indicates comments
+
+- Lua makes extensive use of *tables*. A table is delimited by ``{}``. It's an
+  associative array, sort of like like a Python dict, or an R named list, or
+  a Perl hash.
+
+  .. code-block:: lua
+
+    -- a table
+    { a = 1, b = "asdf" }
+
+- Functions are defined with a ``function ... end`` block. Functions can be
+  called multiple different ways. Function can be anonymous
+
+  .. code-block:: lua
+
+    function (arg1, arg2)
+      return arg1 + arg2
+    end
+
+- Functions can be called in different ways. Parentheses are optional if the
+  function has a single argument. Here are some examples from the `Lua docs on
+  functions <https://www.lua.org/pil/5.html>`_:
+
+  .. code-block::
+
+    print "Hello World"     <-->     print("Hello World")
+    dofile 'a.lua'          <-->     dofile ('a.lua')
+    print [[a multi-line    <-->     print([[a multi-line
+     message]]                        message]])
+    f{x=10, y=20}           <-->     f({x=10, y=20})
+    type{}                  <-->     type({})
+
+- Import other Lua code with the ``require`` function. If ``init.lua`` is in
+  a directory, requiring that directory will automatically use the ``init.lua``
+  (it's like Python's ``__init__.py``). See the `nvim docs on lua modules
+  <https://neovim.io/doc/user/lua-guide.html#lua-guide-modules>`_ for more.
 
 lazy.vim for plugins
 --------------------
@@ -132,60 +180,36 @@ this font should be configured to be used by the terminal program you're using).
 
 The lazy-loading aspect of it is a bonus.
 
-The :file:`init.lua` file
--------------------------
+Mappings
+--------
 
-- :file:`lua/settings.lua` has general vim settings
-- :file:`lua/plugins/` directory has plugin configs, which are found by
-  the ``lazy.nvim`` plugin manager. See :ref:`how-plugins-work` for details.
-- :file:`lua/mappings.lua` has keymappings. Note that keymappings related to
-  plugins are not configured here but instead in their respective plugin config.
-- :file:`lua/autocommands.lua` has autocommands, which are things to run on
-  particular triggers or particular kinds of buffers.
+For Lua, see the `nvim docs on creating mappings with Lua
+<https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings>`_ for more
+details. This is for mappings created within :file:`init.lua`, for example.
 
-Read on for more on each file.
+.. code-block:: lua
 
-:file:`lua/settings.lua`
-~~~~~~~~~~~~~~~~~~~~~~~~
-:file:`lua/settings.lua`, is largely a direct translation of VimL to Lua. I just
-wrapped the commands in ``vim.cmd()`` calls. Importantly, ``<leader>`` is set
-here, which needs to be done before any plugins are loaded, which is why this
-file is "require"d first in :file:`init.lua`. Here's `nvim docs on running Vim
-commands with Lua
-<https://neovim.io/doc/user/lua-guide.html#lua-guide-vim-commands>`_ for more
-info.
+    -- directly in Lua
+    vim.keymap.set("n", "<leader>1", ":bfirst<CR>", { desc = "First buffer" })
 
-:file:`lua/plugins/`
-~~~~~~~~~~~~~~~~~~~~
+For plugins managed by lazy.nvim, they are specified in the ``keys`` property
+of the plugin's table:
 
-:file:`init.lua` runs the ``lazy.nvim`` plugin manager, giving it ``"plugins"``
-as its only parameter. This points lazy.nvim to the :file:`lua/plugins`
-directory. This directory has :file:`lua/plugins/init.lua` which is run.
-``lazy.nvim`` also scans the :file:`plugins` directory for other files, which
-contain configuration for various plugins. See :ref:`how-plugins-work` for more
-on this.
+.. code-block:: lua
 
-:file:`lua/mappings`
-~~~~~~~~~~~~~~~~~~~~
+    -- in a plugin
+    {
+      "plugin/name",
+      keys = {
+        { "<leader>1", ":bfirst<CR>", desc = "First buffer" },
+      },
+      -- possibly other stuff for plugin...
+    }
 
-:file:`lua/mappings.lua` has keymappings. Here, we use the ``vim.keymap.set``
-command to set mappings. Importantly, we provide the ``desc`` argument to all of
-the mappings. These descriptions are automatically discovered by the
-``which-key`` plugin, which shows a pop-up menu after a second or so. It shows
-the possible key combinations you can do.
 
-:file:`lua/colorscheme`
-~~~~~~~~~~~~~~~~~~~~~~~
-
-I realized that the zenburn colorscheme I've been using for many years was
-behaving a little differently due to the interaction of treesitter and the
-zenburn.nvim colorscheme. So I made some tweaks. However, these tweaks only
-work after the colorscheme has been set -- and since it's a plugin, it is
-handled by :file:`lua/plugins.lua`. So this has to be done at the end -- hence,
-a separate colorscheme file loaded at the end.
-
-I'm sure there's a better way to do this, but it's the best I could come up
-with that also allows others to swap out what they want to use.
+In both cases, note the use of ``desc``. This description is picked up by the
+which-key plugin to populate the menu. When setting in Lua directly, ``desc``
+needs to be in a table. When setting in a plugin config, it's not in a table.
 
 .. _how-plugins-work:
 
@@ -205,4 +229,9 @@ something like this:
       -- stuff here for setup. Might include keybindings or more complicated
       -- things.
     end,
+    keys = {
+      -- ... see above for discussion of keys
+    },
+    cmd = {
+      -- 
   }
