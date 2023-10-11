@@ -4,15 +4,16 @@ Changelog
 2023-10-04
 ----------
 
-Continuing the progression of migrating to Lua-based vim config. See
-:ref:`nvim-lua` for details, and the updated :ref:`vim` for plugin and
-keymapping documentation.
+This finishes the progression of migrating to Lua-based vim config. See
+:ref:`nvim-lua` for context, and the updated :ref:`vim` for plugin and
+keymapping documentation for details.
 
 **vim/nvim**
 
 - new, barebones .vimrc
 - remove .vim dir
 - refactor init.vim to init.lua
+- use lazy.nvim for plugin handling
 - add plugins:
   - indent-blankline
   - beacon
@@ -20,7 +21,10 @@ keymapping documentation.
   - telescope
   - treesitter
   - which-key
-- use lazy.nvim for plugin handling
+  - nvim-tree
+  - accelerated_jk
+  - aerial
+  - gitsigns
 - modularize config into multiple lua files
 - convert mappings to have descriptions, so which-key picks them up
 - change how buffers are switched
