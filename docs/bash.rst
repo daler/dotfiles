@@ -83,7 +83,7 @@ for the commands set for each alias.
 
     * - ``v``
       - Live, searchable, syntax-highlighted preview of files in a directory.
-        Needs ref:`fzf_ref` and :ref:`bat_ref` installed
+        Needs :ref:`fzf_ref` and :ref:`bat_ref` installed
 
     * - ``..``
       - faster way of moving up a directory
