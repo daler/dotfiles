@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2023-10-04
+2023-10-11
 ----------
 
 This finishes the progression of migrating to Lua-based vim config. See
