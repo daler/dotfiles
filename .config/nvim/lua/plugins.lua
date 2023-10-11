@@ -196,7 +196,7 @@ return {
             init_selection = "<leader>cs",
             node_incremental = "<Tab>",
             scope_incremental = false,
-            node_decremental = "<BS>",
+            node_decremental = "<S-Tab>",
           },
         },
       })

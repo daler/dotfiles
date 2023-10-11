@@ -544,7 +544,7 @@ language.
     * - :kbd:`<Tab>` (in incremental selection)
       - Increase selection by node
 
-    * - :kbd:`<Backspace>` (in incremental selection)
+    * - :kbd:`<S-Tab>` (in incremental selection)
       - Decrease selection by node
 
 
