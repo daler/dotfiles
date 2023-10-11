@@ -68,7 +68,7 @@ text offscreen.
 Switching buffers
 -----------------
 
-Two main ways of *opening* a file in a new buffer:
+Three main ways of *opening* a file in a new buffer:
 
 .. list-table::
    :header-rows: 1
@@ -82,6 +82,9 @@ Two main ways of *opening* a file in a new buffer:
 
    * - :kbd:`<leader>ff`
      - Search for file in directory to open in new buffer (Telescope)
+
+   * - :kbd:`<leader>fbo`
+     - Open a file browser, hit Enter on file (nvim-tree)
 
 Once you have multiple buffers, you can switch between them in these ways:
 
@@ -106,6 +109,7 @@ Once you have multiple buffers, you can switch between them in these ways:
 
 The display of the bufferline is configured in :file:`lua/plugins.lua`, as part
 of the vim-airline plugin.
+
 
 Format options explanation
 --------------------------
