@@ -3,10 +3,10 @@
 # and the only change is that the docs are built in the top level rather than
 # in a `doc` dir.
 
-name: main
+name: docs
 on: [push]
 jobs:
-  build-and-test:
+  build-docs:
     runs-on: "ubuntu-latest"
     steps:
     - uses: actions/checkout@v3

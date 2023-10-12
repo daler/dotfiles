@@ -118,10 +118,11 @@ file.
 
 Lua
 ---
+More info on Lua:
 
-Here's `nvim docs on Lua modules
-<https://neovim.io/doc/user/lua-guide.html#lua-guide-modules>`_ for more info
-on working with Lua.
+* `nvim Lua guide <https://neovim.io/doc/user/lua-guide.html>`_
+* `nvim Lua reference <https://neovim.io/doc/user/luaref.html>`_
+* `nvim Lua concept and idioms <https://neovim.io/doc/user/lua.html#lua-concepts>`_
 
 But for a quick intro, here are some of my notes:
 
@@ -142,11 +143,12 @@ But for a quick intro, here are some of my notes:
     { a = 1, b = "asdf" }
 
 - Functions are defined with a ``function ... end`` block. Functions can be
-  called multiple different ways. Function can be anonymous
+  called multiple different ways. Functions can be anonymous (omit the "myfunc"
+  identifier below).
 
   .. code-block:: lua
 
-    function (arg1, arg2)
+    function myfunc (arg1, arg2)
       return arg1 + arg2
     end
 
@@ -178,10 +180,18 @@ plugin itself. The interface is also quite nice (though you need a `patched Nerd
 Font <https://www.nerdfonts.com/font-downloads>`_ for your font of interest, and
 this font should be configured to be used by the terminal program you're using).
 
-The lazy-loading aspect of it is a bonus.
+The lazy-loading aspect of it is a bonus. When configured, a plugin will not
+load until it's triggered -- via a dependency requirement from another plugin,
+by using a command, or by using a keymapping. This offers very quick startup
+speed while still supporting lots of plugins.
 
-Mappings
---------
+See ``:Lazy`` for the interface, where you can see timings for how long it took
+things to load as well as the ability to update or clean up plugins. This is
+similar to ``:PlugInstall`` and ``:PlugClean`` from the previous versions of
+these dotfiles.
+
+Creating keymappings
+--------------------
 
 For Lua, see the `nvim docs on creating mappings with Lua
 <https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings>`_ for more
@@ -192,8 +202,8 @@ details. This is for mappings created within :file:`init.lua`, for example.
     -- directly in Lua
     vim.keymap.set("n", "<leader>1", ":bfirst<CR>", { desc = "First buffer" })
 
-For plugins managed by lazy.nvim, they are specified in the ``keys`` property
-of the plugin's table:
+For plugins managed by lazy.nvim, they are instead specified in the ``keys``
+property of the plugin's table:
 
 .. code-block:: lua
 
@@ -233,5 +243,5 @@ something like this:
       -- ... see above for discussion of keys
     },
     cmd = {
-      -- 
+      --
   }
