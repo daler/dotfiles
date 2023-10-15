@@ -94,7 +94,6 @@ function showHelp() {
     echo "    1)  ./setup.sh --dotfiles"
     echo "    2)  CLOSE TERMINAL, OPEN A NEW ONE"
     echo "    3)  ./setup.sh --install-neovim"
-    echo "    4)  ./setup.sh --set-up-vim-plugins"
     echo "    5)  ./setup.sh --install-conda"
     echo "    6)  ./setup.sh --set-up-bioconda"
     echo "    7)  ./setup.sh --install-fzf"
@@ -140,12 +139,6 @@ function showHelp() {
         " (https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites) " \
         "installed."
 
-    cmd "--set-up-vim-plugins" \
-        "vim-plug needs to be installed separately," \
-        "and then all vim plugins can be simply be installed" \
-        "by adding them to .vimrc or init.vim" \
-        "Homepage: https://github.com/junegunn/vim-plug"
-
     header "conda setup:"
 
     cmd "--install-conda" \
@@ -172,6 +165,10 @@ function showHelp() {
         "Only needs to be installed on local machine that is running" \
         "the terminal app." \
         "Homepage: https://github.com/vim-airline/vim-airline"
+
+    cmd "--fix-tmux-terminfo" \
+        "Update terminfo so that italics work within tmux; " \
+        "see https://jdhao.github.io/2018/10/19/tmux_nvim_true_color"
 
     cmd "--install-alacritty" \
         "Alacritty is a terminal emulator that is quite fast;" \
@@ -524,34 +521,6 @@ elif [ $task == "--compile-neovim" ]; then
     check_opt_bin_in_path
 
 
-elif [ $task == "--set-up-vim-plugins" ]; then
-    ok "Downloads plug.vim into ~/.local/share/nvim/site/autoload/plug.vim. (for nvim) and ~/.vim/autoload/plug.vim (for vim). Read the instructions after this command when done."
-    nvim_dest=~/.local/share/nvim/site/autoload/plug.vim
-    vim_dest=~/.vim/autoload/plug.vim
-    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $nvim_dest
-    download https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim $vim_dest
-
-    VIM=$(which vim)
-    NVIM=$(which nvim)
-
-    if [ ${MANUAL_PLUG_INSTALL:=0} != 1 ]; then
-        echo
-        ok "vim ($VIM) will now open, install plugins by running :PlugInstall. After inspecting for any errors, use :q to quit."
-        echo
-        vim -c ':PlugInstall' -c ':bunload 1'
-
-        echo
-        ok "nvim ($NVIM) will now open, install plugins by running :PlugInstall. After inspecting for any errors, use :q to quit"
-        echo
-        nvim -c ':PlugInstall' -c ':bunload 1'
-
-        printf "${YELLOW}In the future if you add plugins to your vim/nvim config, run :PlugInstall${UNSET}\n"
-    else
-        printf "${YELLOW}Please open vim and/or nvim, run :PlugInstall${UNSET}\n"
-    fi
-
-
-
 elif [ $task == "--mac-stuff" ]; then
     ok "Sets the shell to be bash, and silences the warning about zsh being the default by adding an env var to ~/.extra"
     chsh -s /bin/bash
@@ -831,6 +800,14 @@ elif [ $task == "--dotfiles" ]; then
     fi
     unset doIt
 
+elif [ $task == "--fix-tmux-terminfo" ]; then
+    ok "Runs the fix from https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/ for getting italics in tmux"
+    download http://invisible-island.net/datafiles/current/terminfo.src.gz terminfo.src.gz
+    gunzip terminfo.src.gz
+    tic -xe tmux-256color terminfo.src
+    rm terminfo.src
+    printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"screen-256color\" in your .tmux.conf.${UNSET}\n"
+
 
 
 # ----------------------------------------------------------------------------
@@ -847,7 +824,11 @@ elif [ $task == "--diffs" ]; then
 
 elif [ $task == "--vim-diffs" ]; then
     ok "Opens up vim -d to display differences between files in this repo and your home directory"
-    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do nvim -d $i ~/$i; done
+    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do
+        if ! diff $i ~/$i &> /dev/null; then
+            nvim -d $i ~/$i;
+        fi
+    done
 else
     showHelp
 

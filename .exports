@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if command -v nvim > /dev/null; then
-    export EDITOR="vim"
+    export EDITOR="nvim"
 else
     export EDITOR="vim"
 fi

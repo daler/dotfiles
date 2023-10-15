@@ -50,6 +50,15 @@ The solution
    Use ``ca`` by itself to activate the base environment. Use ``ca <envname>`` to
    activate a specific environment.
 
+   .. code-block:: bash
+
+      # activate named environment
+      ca myenv
+
+      # activate environment at path
+      ca ./env
+
+
 2. Every new tmux pane starts with everything deactivated.
 
 How it works

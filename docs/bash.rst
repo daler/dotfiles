@@ -16,12 +16,12 @@ a little more organized and modular. They work like this:
 
    .bash_profile  # sources .bashrc
    .bashrc        # sources the following files:
-            --> .path         # all "export PATH=..." goes in here
-            --> .aliases      # add your aliases here
-            --> .functions    # add your functions here
-            --> .exports      # add your various exports here
-            --> .bash_prompt  # edit your bash prompt here
-            --> .extra        # any machine-specific config goes here
+      --> .path         # all "export PATH=..." goes in here
+      --> .aliases      # add your aliases here
+      --> .functions    # add your functions here
+      --> .exports      # add your various exports here
+      --> .bash_prompt  # edit your bash prompt here
+      --> .extra        # any machine-specific config goes here
 
 Below is a little more detail on the contents of each of these files and
 some notable features.
@@ -60,6 +60,8 @@ This file keeps aliase separate for easier maintenance. See :file:`.aliases`
 for the commands set for each alias.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - alias
       - description
@@ -81,7 +83,7 @@ for the commands set for each alias.
 
     * - ``v``
       - Live, searchable, syntax-highlighted preview of files in a directory.
-        Needs ref:`fzf_ref` and :ref:`bat_ref` installed
+        Needs :ref:`fzf_ref` and :ref:`bat_ref` installed
 
     * - ``..``
       - faster way of moving up a directory
@@ -110,6 +112,8 @@ Separate file for bash functions. This is also where fzf and autojump
 are set up. Some notable functions defined here:
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - function
       - description
@@ -158,6 +162,8 @@ details.
 Exported environment variables.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - env var
       - value and description

@@ -1,0 +1,69 @@
+# This uses
+# https://github.com/NICHD-BSPC/documentation-template/blob/main/.github/workflows/main.yml,
+# and the only change is that the docs are built in the top level rather than
+# in a `doc` dir.
+
+name: docs
+on: [push]
+jobs:
+  build-docs:
+    runs-on: "ubuntu-latest"
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: build env
+      run: |
+        eval "$(conda shell.bash hook)"
+        conda create -p ./env sphinx --channel conda-forge
+
+    - name: check links
+      run: |
+        # Activate env and build docs
+        eval "$(conda shell.bash hook)"
+        conda activate ./env
+
+        cd docs
+
+        # check for broken links
+        make linkcheck | tee linkcheck.log
+
+        # Prevent completely exiting the test if pattern not found
+        grep -w "broken" linkcheck.log > broken ||  true
+
+        if [ -s broken ]; then
+          echo "BROKEN LINKS IDENTIFIED"
+          cat broken
+          exit 1
+        fi
+
+    - name: build docs
+      run: |
+        # Activate env and build docs
+        eval "$(conda shell.bash hook)"
+        conda activate ./env
+        cd docs
+        make html
+
+        git clone \
+          --single-branch \
+          --branch gh-pages "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY" \
+          /tmp/doc
+        rm -rf /tmp/doc/*
+        cp -r _build/html/* /tmp/doc
+        touch /tmp/doc/.nojekyll
+
+    - name: push artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: doc
+        path: /tmp/doc
+
+    - name: push docs to gh-pages branch
+      if: ${{ (github.ref == 'refs/heads/main') }}
+      run: |
+        cd /tmp/doc
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add .
+        git commit -m 'update docs' -a || true
+        git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY" gh-pages

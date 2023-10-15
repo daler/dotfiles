@@ -59,9 +59,11 @@ files and want to try these out, or if you want the "batteries included"
 experience.
 
 To start fresh, do this to create or overwrite existing files, and then close
-your terminal and reopen it to use the new configuration::
+your terminal and reopen it to use the new configuration:
 
-    ./setup.sh --dotfiles
+.. code-block:: bash
+
+    ./setup.sh --dotfiles   # then close your terminal and re-open
 
 
 .. details:: Details
@@ -92,8 +94,41 @@ The remainder of this documentation will assume you're starting fresh.
 
 2: Setup vim & conda
 --------------------
+2a: Set terminal font
+~~~~~~~~~~~~~~~~~~~~~
 
-2a: neovim
+In `this gif
+<https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif>`_,
+you can see arrow shapes for buffers, line number glyphs, and so on. To get
+these, you need a patched font, and your terminal needs to be set to use the
+font.
+
+Skip this step if you don't want those.
+
+This only needs to be done on the machine you’re running the terminal app on.
+So this does not need to be run on a remote machine.
+
+There are several options for this:
+
+1. **If you are using ITerm2**, you can skip this step and instead click
+   a checkbox: Preferences -> Profiles -> Text -> Use built-in powerline
+   glyphs. You should see the symbols then. You will not get additional icons
+   for things like lazy.nvim
+
+2. Manually download and install your favorite font from
+   https://www.nerdfonts.com/. Be sure to set your terminal to use the font.
+
+You’ll need to configure your terminal preferences to use one of the new fonts
+that ends in “for Powerline”. Note that on Terminal on Mac, you'll also need to
+set the font for non-ASCII characters.
+
+.. note::
+
+   You may get a warning about "cannot load default config file". As long as
+   the new fonts show up, you should be fine.
+
+
+2b: neovim
 ~~~~~~~~~~
 
 Do this if you want to use `neovim <https://neovim.io/>`_. See :ref:`why` for
@@ -114,73 +149,41 @@ more help on deciding.
      For example, on many machines it's at :file:`/usr/bin/vim`.
 
 
-2b: vim/nvim plugin setup
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The vim config included here takes advantage of many plugins. The vim ecosystem
-has multiple plugin-managing tools; here we use the popular `vim-plug
-<https://github.com/junegunn/vim-plug>`_. This step installs the manager and
-then installs the plugins in the vim config.
-
-.. code-block:: bash
-
-    ./setup.sh --set-up-vim-plugins
-
-.. details:: Details
-
-    This sets up `vim-plug <https://github.com/junegunn/vim-plug>`_, placing the
-    required files in the locations expected by vim and neovim. Then it
-    automatically opens ``vim`` and installs plugins. Then it does the same with
-    ``nvim``.
-
-    This command keeps the plugin installation screen up so you can verify
-    everything went OK.
-
-    Recall that nvim config is in :file:`~/.config/nvim/init.vim`, and vim
-    config is in :file:`~/.vimrc`. Here, we symlink .vimrc to init.vim so they
-    share the same config.
-
-    If you're still learning vim, remember that you can quit by hitting
-    ``Esc``, then typing ``:q`` and hitting Enter.
-
-
-2c: powerline fonts
-~~~~~~~~~~~~~~~~~~~
-
-In `this gif
-<https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif>`_,
-you can see arrow shapes for buffers, line number glyphs, and so on. To get
-these, you need a patched font, and your terminal needs to be set to use the
-font.
-
-Skip this step if you don't want those.
-
-This only needs to be done on the machine you’re running the terminal app on.
-So this does not need to be run on a remote machine.
-
-**If you are using ITerm2**, you can skip this step and instead click
-a checkbox: Preferences -> Profiles -> Text -> Use built-in powerline glyphs.
-You should see the symbols then.
-
-Otherwise, run:
-
-.. code-block:: bash
-
-    ./setup.sh --powerline
-
-.. details:: Details
-
-    This downloads patched fonts from github and makes them available as fonts
-    on your system.
-
-Once it installs, you’ll need to configure your terminal preferences to use
-one of the new fonts that ends in “for Powerline”. Note that on Terminal on
-Mac, you'll also need to set the font for non-ASCII characters.
+2c: neovim plugin setup
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
 
-   You may get a warning about "cannot load default config file". As long as
-   the new fonts show up, you should be fine.
+  For long-time users of these dotfiles who may have older vim/nvim configs,
+  please see :ref:`nvim-lua` for more context, rationale, and details on
+  migrating to this new config method.
+
+Plugins are now managed via the `lazy.nvim
+<https://github.com/folke/lazy.nvim>`_ manager rather than ``vim-plug`` (as in
+previous versions of these dotfiles).
+
+Simply opening neovim should be sufficient to trigger ``lazy.nvim`` to
+download, install, and configure plugins automatically.
+
+.. code-block:: bash
+
+  nvim
+
+.. details:: Details
+
+  ``lazy.nvim`` will show progress downloading plugins. Treesitter will also
+  automatically install parsers, so you should watch the log on the bottom and
+  wait until everything settles down. Then you can quit as normal with
+  ``<Esc>:q``.
+
+  If running ``nvim`` didn't work, check that it's on your path. Close and then
+  reopen your terminal just to make sure. If you installed with ``./.setup.sh
+  --install-neovim``, it put it in ``~/opt/bin/nvim``. Make sure that directory
+  is on your PATH by checking:
+
+  .. code-block:: bash
+
+    echo $PATH
 
 
 .. _setupconda:

@@ -1,6 +1,41 @@
 Changelog
 =========
 
+2023-10-11
+----------
+
+This finishes the progression of migrating to Lua-based vim config. See
+:ref:`nvim-lua` for context, and the updated :ref:`vim` for plugin and
+keymapping documentation for details.
+
+**vim/nvim**
+
+- new, barebones .vimrc
+- remove .vim dir
+- refactor init.vim to init.lua
+- use lazy.nvim for plugin handling
+- add plugins:
+
+  - indent-blankline
+  - beacon
+  - nvim-cmp (and various dependencies)
+  - telescope
+  - treesitter
+  - which-key
+  - nvim-tree
+  - accelerated_jk
+  - aerial
+  - gitsigns
+- modularize config into multiple lua files
+- convert mappings to have descriptions, so which-key picks them up
+- change how buffers are switched
+- removed plugins:
+
+  - NERDTree (replaced by nvim-tree)
+  - supertab (replaced by nvim-cmp)
+  - simpylfold (replaced by treesitter folding)
+  - gv.vim (replaced by diffview and gitsigns)
+
 2023-09-19
 ----------
 
