@@ -155,7 +155,7 @@ return {
       { "gx", ":ToggleTermSendVisualSelection<CR><CR>", desc = "Send selection to terminal", mode = "x" },
       {
         "<leader>cd",
-        "/```{<CR>NjV/```\n<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>",
+        "/```{r<CR>NjV/```<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>",
         desc = "Send RMarkdown chunk to R",
       },
       { "<leader>t", ":ToggleTerm direction=vertical<CR>", desc = "New terminal on right" },
