@@ -59,7 +59,7 @@ jobs:
         path: /tmp/doc
 
     - name: push docs to gh-pages branch
-      if: ${{ (github.ref == 'refs/heads/main') }}
+      if: ${{ (github.ref == 'refs/heads/master') }}
       run: |
         cd /tmp/doc
         git config --global user.email "action@github.com"
