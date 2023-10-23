@@ -20,7 +20,7 @@ If you are unable to use a terminal emulator like iTerm2, alacritty, kitty,
 etc, that supports 24-bit colors, then you can use a different color scheme.
 
 You can find an excellent writeup of this at `docs for the onedark colorscheme
-<https://github.com/joshdick/onedark.vim#troubleshooting>`_.
+<https://github.com/joshdick/onedark.vim>`_ -- see the Troubleshooting section.
 
 As a fallback, you can make the following changes in your
 :file:`./config/nvim/init.lua` file. This will turn off termguicolors (the
