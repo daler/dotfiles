@@ -105,8 +105,11 @@ font.
 
 Skip this step if you don't want those.
 
-This only needs to be done on the machine you’re running the terminal app on.
-So this does not need to be run on a remote machine.
+This only needs to be done **on the machine you’re running the terminal app
+on.**  If you are setting up your dotfiles on a remote machine (say, on NIH's
+Biowulf) and your fonts look strange, you need to set install fonts on your
+*laptop* and set your terminal app (iTerm2, MobaXterm, Terminal.app, etc) to
+use that font.
 
 There are several options for this:
 
@@ -116,11 +119,11 @@ There are several options for this:
    for things like lazy.nvim
 
 2. Manually download and install your favorite font from
-   https://www.nerdfonts.com/. Be sure to set your terminal to use the font.
+   https://www.nerdfonts.com/. Be sure to change your terminal program's
+   preferences to use the new font.
 
-You’ll need to configure your terminal preferences to use one of the new fonts
-that ends in “for Powerline”. Note that on Terminal on Mac, you'll also need to
-set the font for non-ASCII characters.
+Note that on Terminal on Mac, you'll also need to set the font for non-ASCII
+characters.
 
 .. note::
 

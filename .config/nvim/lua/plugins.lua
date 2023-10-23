@@ -25,6 +25,7 @@ return {
   { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 },
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
+  { "joshdick/onedark.vim" }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
