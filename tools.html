@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Additional tool installations &#8212; dotfiles  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Bash dotfiles" href="bash.html" />
@@ -47,19 +46,19 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="additional-tool-installations">
-<span id="tools"></span><h1>Additional tool installations<a class="headerlink" href="#additional-tool-installations" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="base-conda-packages">
-<h2>Base conda packages<a class="headerlink" href="#base-conda-packages" title="Permalink to this headline">¶</a></h2>
+  <section id="additional-tool-installations">
+<span id="tools"></span><h1>Additional tool installations<a class="headerlink" href="#additional-tool-installations" title="Link to this heading">¶</a></h1>
+<section id="base-conda-packages">
+<h2>Base conda packages<a class="headerlink" href="#base-conda-packages" title="Link to this heading">¶</a></h2>
 <p>Do this if you want to install the conda packages in <code class="file docutils literal notranslate"><span class="pre">requirements.txt</span></code>
 into the base conda environment. (you may want to edit that file first)</p>
 <p>If you’re on a Mac, <code class="file docutils literal notranslate"><span class="pre">requirements-mac.txt</span></code> will be used as well:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --conda-env
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--conda-env
 </pre></div>
 </div>
-</div>
-<div class="section" id="apt-packages">
-<h2><code class="docutils literal notranslate"><span class="pre">apt</span></code> packages<a class="headerlink" href="#apt-packages" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="apt-packages">
+<h2><code class="docutils literal notranslate"><span class="pre">apt</span></code> packages<a class="headerlink" href="#apt-packages" title="Link to this heading">¶</a></h2>
 <p>Do this if you want to install a large or small set of packages on an Ubuntu
 machine. (you may want to edit the files mentioned below first).</p>
 <p>If you’re on Ubuntu and have root privileges, this is a quick way to install
@@ -67,24 +66,24 @@ machine. (you may want to edit the files mentioned below first).</p>
 <code class="file docutils literal notranslate"><span class="pre">apt-installs.txt</span></code> or <code class="file docutils literal notranslate"><span class="pre">apt-installs-minimal.txt</span></code> for what will be
 installed. These are packages I find to be most useful (git, build-essential,
 meld, and so on).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">apt</span><span class="o">-</span><span class="n">install</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--apt-install
 <span class="c1"># or</span>
-<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">apt</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">minimal</span>
+./setup.sh<span class="w"> </span>--apt-install-minimal
 </pre></div>
 </div>
-</div>
-<div class="section" id="tool-installation">
-<h2>Tool installation<a class="headerlink" href="#tool-installation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="tool-installation">
+<h2>Tool installation<a class="headerlink" href="#tool-installation" title="Link to this heading">¶</a></h2>
 <p>Run the <code class="docutils literal notranslate"><span class="pre">--install-&lt;toolname&gt;</span></code> for each of the tools below. Each is copied
 into <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, so you’ll want to make sure that’s on your path.</p>
 <p>Tools are listed alphabetically.</p>
 <p>The help for <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> suggests some to start with (fzf, ripgrep, visidata,
 pyp, and fd):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">fzf</span>
-<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">ripgrep</span>
-<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">vd</span>
-<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">pyp</span>
-<span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">fd</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-fzf
+./setup.sh<span class="w"> </span>--install-ripgrep
+./setup.sh<span class="w"> </span>--install-vd
+./setup.sh<span class="w"> </span>--install-pyp
+./setup.sh<span class="w"> </span>--install-fd
 </pre></div>
 </div>
 <details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>If a tool below is available in conda, it is “installed” as follows:</p>
@@ -98,9 +97,9 @@ which will place the env in your miniconda installation directory).</p></li>
 use an installed tool. As long as <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code> is on your path, you can
 use it immediately. This allows for more modular updating of the tools and
 avoiding conflicting dependencies.</p>
-</div></details><div class="section" id="alacritty">
-<h3><code class="docutils literal notranslate"><span class="pre">alacritty</span></code><a class="headerlink" href="#alacritty" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-alacritty
+</div></details><section id="alacritty">
+<h3><code class="docutils literal notranslate"><span class="pre">alacritty</span></code><a class="headerlink" href="#alacritty" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-alacritty
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/alacritty/alacritty">alacritty</a> is a
@@ -113,10 +112,10 @@ noticable when catting large files over tmux.</p>
 <li><p>On Mac, iTerm2 or the default Terminal app</p></li>
 <li><p>On Linux, any number of default terminal apps</p></li>
 </ul>
-</div>
-<div class="section" id="bat">
-<span id="bat-ref"></span><h3><code class="docutils literal notranslate"><span class="pre">bat</span></code><a class="headerlink" href="#bat" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-bat
+</section>
+<section id="bat">
+<span id="bat-ref"></span><h3><code class="docutils literal notranslate"><span class="pre">bat</span></code><a class="headerlink" href="#bat" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-bat
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/sharkdp/bat">bat</a> is a replacement for <code class="docutils literal notranslate"><span class="pre">cat</span></code>,
@@ -126,10 +125,10 @@ git diffs.</p>
 <ul class="simple">
 <li><p>cat</p></li>
 </ul>
-</div>
-<div class="section" id="bfg">
-<h3><code class="docutils literal notranslate"><span class="pre">bfg</span></code><a class="headerlink" href="#bfg" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-bfg
+</section>
+<section id="bfg">
+<h3><code class="docutils literal notranslate"><span class="pre">bfg</span></code><a class="headerlink" href="#bfg" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-bfg
 </pre></div>
 </div>
 <p>The <a class="reference external" href="https://rtyley.github.io/bfg-repo-cleaner/">BFG</a> is a tool for cleaning
@@ -139,19 +138,19 @@ sensitive information.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">git-filter-branch</span></code>, which is built in to git but is slower and not as feature-rich.</p></li>
 </ul>
-</div>
-<div class="section" id="black">
-<h3><code class="docutils literal notranslate"><span class="pre">black</span></code><a class="headerlink" href="#black" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-black
+</section>
+<section id="black">
+<h3><code class="docutils literal notranslate"><span class="pre">black</span></code><a class="headerlink" href="#black" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-black
 </pre></div>
 </div>
 <p><a class="reference external" href="https://black.readthedocs.io">black</a> reformats Python files to conform to
 PEP8 style conventions. I’ll typically run it on a file in vim with <code class="docutils literal notranslate"><span class="pre">!black</span>
 <span class="pre">%</span></code> (the <code class="docutils literal notranslate"><span class="pre">!</span></code> calls out to the shell, and the <code class="docutils literal notranslate"><span class="pre">%</span></code> means “this file”.</p>
-</div>
-<div class="section" id="docker">
-<h3><code class="docutils literal notranslate"><span class="pre">docker</span></code><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-docker
+</section>
+<section id="docker">
+<h3><code class="docutils literal notranslate"><span class="pre">docker</span></code><a class="headerlink" href="#docker" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-docker
 </pre></div>
 </div>
 <p><a class="reference external" href="https://www.docker.com">docker</a> runs containers. Needs root access, and the
@@ -161,10 +160,10 @@ installation here is currently only supported on Linux.</p>
 <li><p>Singularity, though this requires a Linux machine to build and is a bit more
 involved to install.</p></li>
 </ul>
-</div>
-<div class="section" id="fd">
-<h3><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fd
+</section>
+<section id="fd">
+<h3><code class="docutils literal notranslate"><span class="pre">fd</span></code><a class="headerlink" href="#fd" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-fd
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/sharkdp/fd">fd</a> is a much faster and more ergonomic
@@ -175,10 +174,10 @@ lengthy, unneeded searches through conda envs.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">find</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="fzf">
-<span id="fzf-ref"></span><h3><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-fzf
+</section>
+<section id="fzf">
+<span id="fzf-ref"></span><h3><code class="docutils literal notranslate"><span class="pre">fzf</span></code><a class="headerlink" href="#fzf" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-fzf
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/junegunn/fzf">fzf</a> is a fuzzy-finder interface that works
@@ -187,10 +186,10 @@ standard bash way of reverse-search through history), you’ll instead get the
 fzf interface. Other tools may also look for <code class="docutils literal notranslate"><span class="pre">fzf</span></code> to use as an interface.
 <code class="docutils literal notranslate"><span class="pre">zoxide</span></code> for example does this. You can also pipe in any arbitrary text to
 <code class="docutils literal notranslate"><span class="pre">fzf</span></code> for a fuzzy search tool.</p>
-</div>
-<div class="section" id="icdiff">
-<h3><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-icdiff
+</section>
+<section id="icdiff">
+<h3><code class="docutils literal notranslate"><span class="pre">icdiff</span></code><a class="headerlink" href="#icdiff" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-icdiff
 </pre></div>
 </div>
 <p><a class="reference external" href="https://www.jefftk.com/icdiff">icdiff</a> makes an easy-to-read, side-by-side
@@ -200,16 +199,16 @@ colored diff between files. It’s used for <code class="docutils literal notran
 <li><p><code class="docutils literal notranslate"><span class="pre">diff</span></code>, which doesn’t do side-by-side or colored diffs</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">-d</span></code>, which I still use quite often</p></li>
 </ul>
-</div>
-<div class="section" id="jq">
-<h3><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-jq
+</section>
+<section id="jq">
+<h3><code class="docutils literal notranslate"><span class="pre">jq</span></code><a class="headerlink" href="#jq" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-jq
 </pre></div>
 </div>
 <p><a class="reference external" href="https://stedolan.github.io/jq/">jq</a> is like sed or awk for JSON data.</p>
-</div>
-<div class="section" id="pyp">
-<h3><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pyp">
+<h3><code class="docutils literal notranslate"><span class="pre">pyp</span></code><a class="headerlink" href="#pyp" title="Link to this heading">¶</a></h3>
 <p><a class="reference external" href="https://github.com/hauntsaninja/pyp">pyp</a> lets you run Python right from the
 terminal similar to Perl one-liners.</p>
 <p>I use it most often for a quick calculator (<code class="docutils literal notranslate"><span class="pre">pyp</span> <span class="pre">&quot;(4e6</span> <span class="pre">/</span> <span class="pre">300)</span> <span class="pre">*</span> <span class="pre">3600&quot;</span></code>), and
@@ -222,10 +221,10 @@ flag is a brilliant touch).</p>
 <li><p>pythonpy (no longer maintained)</p></li>
 <li><p>opening up a Python interpreter</p></li>
 </ul>
-</div>
-<div class="section" id="radian">
-<h3><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-radian
+</section>
+<section id="radian">
+<h3><code class="docutils literal notranslate"><span class="pre">radian</span></code><a class="headerlink" href="#radian" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-radian
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/randy3k/radian">radian</a> is a replacement shell for
@@ -239,10 +238,10 @@ using.</p>
 <ul class="simple">
 <li><p>plain vanilla R, which doesn’t have the syntax highlighting or tab completion</p></li>
 </ul>
-</div>
-<div class="section" id="ripgrep-rg">
-<span id="rg"></span><h3><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)<a class="headerlink" href="#ripgrep-rg" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-ripgrep
+</section>
+<section id="ripgrep-rg">
+<span id="rg"></span><h3><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)<a class="headerlink" href="#ripgrep-rg" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-ripgrep
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/BurntSushi/ripgrep/">ripgrep</a> is a fast code-searching
@@ -253,10 +252,10 @@ and hidden files.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">grep</span></code>, or <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">...</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">grep</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ag</span></code>, the Silver Searcher</p></li>
 </ul>
-</div>
-<div class="section" id="visidata-vd">
-<span id="vd"></span><h3><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)<a class="headerlink" href="#visidata-vd" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-vd
+</section>
+<section id="visidata-vd">
+<span id="vd"></span><h3><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)<a class="headerlink" href="#visidata-vd" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-vd
 </pre></div>
 </div>
 <p><a class="reference external" href="https://visidata.org/">visidata</a> is a powerful spreadsheet-like tool for
@@ -271,9 +270,9 @@ the same lines as tabview.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vim</span></code> followed by messing with tabstops. You’ll probably need to use vim if
 you have a lot of editing to do.</p></li>
 </ul>
-</div>
-<div class="section" id="zoxide">
-<h3><code class="docutils literal notranslate"><span class="pre">zoxide</span></code><a class="headerlink" href="#zoxide" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="zoxide">
+<h3><code class="docutils literal notranslate"><span class="pre">zoxide</span></code><a class="headerlink" href="#zoxide" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">zoxide</span>
 </pre></div>
 </div>
@@ -290,9 +289,9 @@ an interface for changing directories via fuzzy search.</p>
 <li><p>autojump</p></li>
 <li><p>z.sh</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -351,11 +350,13 @@ an interface for changing directories via fuzzy search.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Neovim configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvim-lua.html">Migrating to Neovim Lua config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
@@ -372,12 +373,12 @@ an interface for changing directories via fuzzy search.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 

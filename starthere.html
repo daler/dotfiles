@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Start here &#8212; dotfiles  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Additional tool installations" href="tools.html" />
@@ -47,8 +46,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="start-here">
-<span id="starthere"></span><h1>Start here<a class="headerlink" href="#start-here" title="Permalink to this headline">¶</a></h1>
+  <section id="start-here">
+<span id="starthere"></span><h1>Start here<a class="headerlink" href="#start-here" title="Link to this heading">¶</a></h1>
 <p>A couple of preliminary things to get out of the way:</p>
 <ul>
 <li><dl class="simple">
@@ -83,15 +82,15 @@ only one place to look for updates.</p></li>
 <li><p><strong>All steps are optional</strong> though there are some dependencies and assumptions
 which are noted as they come up.</p></li>
 </ul>
-<div class="section" id="step-0-download-and-check">
-<span id="step0"></span><h2>Step 0: Download and check<a class="headerlink" href="#step-0-download-and-check" title="Permalink to this headline">¶</a></h2>
+<section id="step-0-download-and-check">
+<span id="step0"></span><h2>Step 0: Download and check<a class="headerlink" href="#step-0-download-and-check" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Download the latest <a class="reference external" href="https://github.com/daler/dotfiles/archive/master.zip">zip file</a></p></li>
 <li><p>Unzip, and go to the unzipped directory, and run <code class="docutils literal notranslate"><span class="pre">./setup.sh</span></code> to see the help.</p></li>
 </ul>
-</div>
-<div class="section" id="copy-over-dotfiles">
-<span id="dotfilessection"></span><h2>1. Copy over dotfiles<a class="headerlink" href="#copy-over-dotfiles" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="copy-over-dotfiles">
+<span id="dotfilessection"></span><h2>1. Copy over dotfiles<a class="headerlink" href="#copy-over-dotfiles" title="Link to this heading">¶</a></h2>
 <p>There are two paths to take here:</p>
 <p class="rubric" id="option1"><strong>Option 1: start fresh</strong></p>
 <p>Do this if you’re setting up a new machine, or if you’ve made a backup of your
@@ -99,7 +98,7 @@ files and want to try these out, or if you want the “batteries included”
 experience.</p>
 <p>To start fresh, do this to create or overwrite existing files, and then close
 your terminal and reopen it to use the new configuration:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">dotfiles</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--dotfiles<span class="w">   </span><span class="c1"># then close your terminal and re-open</span>
 </pre></div>
 </div>
 <details><summary>Details</summary><div id=dotfiles-details class="details"><p><i>Details</i><a class="headerlink" title="Permalink" href="#dotfiles-details">¶</a></p><p>The <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--dotfiles</span></code> command copies all dotfiles over to your home
@@ -110,17 +109,47 @@ will load all the new configuration.</p>
 </div></details><p class="rubric" id="option2"><strong>Option 2: update existing</strong></p>
 <p>Do this if you already have your own files.</p>
 <ul class="simple">
-<li><p>Read through <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>, <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Vim / Neovim</span></a>, and <a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux configuration</span></a> to see how things are set up here</p></li>
+<li><p>Read through <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>, <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Neovim configuration</span></a>, and <a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux configuration</span></a> to see how things are set up here</p></li>
 <li><p>Browse the dotfiles to look for parts that would be useful for you, and copy them into your own files</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--vim-diffs</span></code> may be helpful to you if you’re updating</p></li>
 <li><p>Use the tool installation commands as-is, but make sure <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code> is on your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p></li>
 </ul>
 <p>The remainder of this documentation will assume you’re starting fresh.</p>
+</section>
+<section id="setup-vim-conda">
+<span id="setupsection"></span><h2>2: Setup vim &amp; conda<a class="headerlink" href="#setup-vim-conda" title="Link to this heading">¶</a></h2>
+<section id="a-set-terminal-font">
+<h3>2a: Set terminal font<a class="headerlink" href="#a-set-terminal-font" title="Link to this heading">¶</a></h3>
+<p>In <a class="reference external" href="https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif">this gif</a>,
+you can see arrow shapes for buffers, line number glyphs, and so on. To get
+these, you need a patched font, and your terminal needs to be set to use the
+font.</p>
+<p>Skip this step if you don’t want those.</p>
+<p>This only needs to be done <strong>on the machine you’re running the terminal app
+on.</strong>  If you are setting up your dotfiles on a remote machine (say, on NIH’s
+Biowulf) and your fonts look strange, you need to set install fonts on your
+<em>laptop</em> and set your terminal app (iTerm2, MobaXterm, Terminal.app, etc) to
+use that font.</p>
+<p>There are several options for this:</p>
+<ol class="arabic simple">
+<li><p><strong>If you are using ITerm2</strong>, you can skip this step and instead click
+a checkbox: Preferences -&gt; Profiles -&gt; Text -&gt; Use built-in powerline
+glyphs. You should see the symbols then. You will not get additional icons
+for things like lazy.nvim</p></li>
+<li><p>Manually download and install your favorite font from
+<a class="reference external" href="https://www.nerdfonts.com/">https://www.nerdfonts.com/</a>. Be sure to change your terminal program’s
+preferences to use the new font.</p></li>
+</ol>
+<p>Note that on Terminal on Mac, you’ll also need to set the font for non-ASCII
+characters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may get a warning about “cannot load default config file”. As long as
+the new fonts show up, you should be fine.</p>
 </div>
-<div class="section" id="setup-vim-conda">
-<span id="setupsection"></span><h2>2: Setup vim &amp; conda<a class="headerlink" href="#setup-vim-conda" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="a-neovim">
-<h3>2a: neovim<a class="headerlink" href="#a-neovim" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="b-neovim">
+<h3>2b: neovim<a class="headerlink" href="#b-neovim" title="Link to this heading">¶</a></h3>
 <p>Do this if you want to use <a class="reference external" href="https://neovim.io/">neovim</a>. See <a class="reference internal" href="why.html#why"><span class="std std-ref">Why?</span></a> for
 more help on deciding.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">neovim</span>
@@ -132,62 +161,42 @@ more help on deciding.</p>
 redirect it to <code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
 <p>If you want to use actual <code class="docutils literal notranslate"><span class="pre">vim</span></code>, provide the full path when calling it.
 For example, on many machines it’s at <code class="file docutils literal notranslate"><span class="pre">/usr/bin/vim</span></code>.</p>
-</div></details></div>
-<div class="section" id="b-vim-nvim-plugin-setup">
-<h3>2b: vim/nvim plugin setup<a class="headerlink" href="#b-vim-nvim-plugin-setup" title="Permalink to this headline">¶</a></h3>
-<p>The vim config included here takes advantage of many plugins. The vim ecosystem
-has multiple plugin-managing tools; here we use the popular <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>. This step installs the manager and
-then installs the plugins in the vim config.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --set-up-vim-plugins
-</pre></div>
-</div>
-<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>This sets up <a class="reference external" href="https://github.com/junegunn/vim-plug">vim-plug</a>, placing the
-required files in the locations expected by vim and neovim. Then it
-automatically opens <code class="docutils literal notranslate"><span class="pre">vim</span></code> and installs plugins. Then it does the same with
-<code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
-<p>This command keeps the plugin installation screen up so you can verify
-everything went OK.</p>
-<p>Recall that nvim config is in <code class="file docutils literal notranslate"><span class="pre">~/.config/nvim/init.vim</span></code>, and vim
-config is in <code class="file docutils literal notranslate"><span class="pre">~/.vimrc</span></code>. Here, we symlink .vimrc to init.vim so they
-share the same config.</p>
-<p>If you’re still learning vim, remember that you can quit by hitting
-<code class="docutils literal notranslate"><span class="pre">Esc</span></code>, then typing <code class="docutils literal notranslate"><span class="pre">:q</span></code> and hitting Enter.</p>
-</div></details></div>
-<div class="section" id="c-powerline-fonts">
-<h3>2c: powerline fonts<a class="headerlink" href="#c-powerline-fonts" title="Permalink to this headline">¶</a></h3>
-<p>In <a class="reference external" href="https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif">this gif</a>,
-you can see arrow shapes for buffers, line number glyphs, and so on. To get
-these, you need a patched font, and your terminal needs to be set to use the
-font.</p>
-<p>Skip this step if you don’t want those.</p>
-<p>This only needs to be done on the machine you’re running the terminal app on.
-So this does not need to be run on a remote machine.</p>
-<p><strong>If you are using ITerm2</strong>, you can skip this step and instead click
-a checkbox: Preferences -&gt; Profiles -&gt; Text -&gt; Use built-in powerline glyphs.
-You should see the symbols then.</p>
-<p>Otherwise, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --powerline
-</pre></div>
-</div>
-<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>This downloads patched fonts from github and makes them available as fonts
-on your system.</p>
-</div></details><p>Once it installs, you’ll need to configure your terminal preferences to use
-one of the new fonts that ends in “for Powerline”. Note that on Terminal on
-Mac, you’ll also need to set the font for non-ASCII characters.</p>
+</div></details></section>
+<section id="c-neovim-plugin-setup">
+<h3>2c: neovim plugin setup<a class="headerlink" href="#c-neovim-plugin-setup" title="Link to this heading">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You may get a warning about “cannot load default config file”. As long as
-the new fonts show up, you should be fine.</p>
+<p>For long-time users of these dotfiles who may have older vim/nvim configs,
+please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details on
+migrating to this new config method.</p>
 </div>
+<p>Plugins are now managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a> manager rather than <code class="docutils literal notranslate"><span class="pre">vim-plug</span></code> (as in
+previous versions of these dotfiles).</p>
+<p>Simply opening neovim should be sufficient to trigger <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> to
+download, install, and configure plugins automatically.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvim
+</pre></div>
 </div>
-<div class="section" id="d-conda">
-<span id="setupconda"></span><h3>2d: conda<a class="headerlink" href="#d-conda" title="Permalink to this headline">¶</a></h3>
+<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p><code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> will show progress downloading plugins. Treesitter will also
+automatically install parsers, so you should watch the log on the bottom and
+wait until everything settles down. Then you can quit as normal with
+<code class="docutils literal notranslate"><span class="pre">&lt;Esc&gt;:q</span></code>.</p>
+<p>If running <code class="docutils literal notranslate"><span class="pre">nvim</span></code> didn’t work, check that it’s on your path. Close and then
+reopen your terminal just to make sure. If you installed with <code class="docutils literal notranslate"><span class="pre">./.setup.sh</span>
+<span class="pre">--install-neovim</span></code>, it put it in <code class="docutils literal notranslate"><span class="pre">~/opt/bin/nvim</span></code>. Make sure that directory
+is on your PATH by checking:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span>
+</pre></div>
+</div>
+</div></details></section>
+<section id="d-conda">
+<span id="setupconda"></span><h3>2d: conda<a class="headerlink" href="#d-conda" title="Link to this heading">¶</a></h3>
 <p><a class="reference external" href="https://docs.conda.io/en/latest/">conda</a> is a cross-platform,
 language-agnostic package manager. It’s by far the best way to get set up with
 Python, but it also works for many other languages. See <a class="reference internal" href="conda.html#conda"><span class="std std-ref">conda</span></a> for some
 details on how to activate environments.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh --install-conda
-./setup.sh --set-up-bioconda
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-conda
+./setup.sh<span class="w"> </span>--set-up-bioconda
 </pre></div>
 </div>
 <details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>First, this downloads the latest version of <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>, and installs conda and mamba
@@ -200,15 +209,15 @@ support the installation, this will auto-detect that and install instead to
 <span class="pre">PATH=&quot;$PATH:~/data/$USER/mambaforge/condabin</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code></p>
 <p>Finally, <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--set-up-bioconda</span></code> sets up the bioconda and
 conda-forge channels in the right way as documented by <a class="reference external" href="https://bioconda.github.io">Bioconda</a>.</p>
-</div></details></div>
-</div>
-<div class="section" id="installing-programs">
-<span id="toolsection"></span><h2>3: Installing programs<a class="headerlink" href="#installing-programs" title="Permalink to this headline">¶</a></h2>
+</div></details></section>
+</section>
+<section id="installing-programs">
+<span id="toolsection"></span><h2>3: Installing programs<a class="headerlink" href="#installing-programs" title="Link to this heading">¶</a></h2>
 <p>The <code class="file docutils literal notranslate"><span class="pre">setup.sh</span></code> script has many commands for installing various tools
 I find useful. These warrant their own section, so <strong>continue to</strong> <a class="reference internal" href="tools.html#tools"><span class="std std-ref">Additional tool installations</span></a> for
 descriptions of tools and the commands to install them.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -247,9 +256,9 @@ descriptions of tools and the commands to install them.</p>
 <li class="toctree-l2"><a class="reference internal" href="#step-0-download-and-check">Step 0: Download and check</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#copy-over-dotfiles">1. Copy over dotfiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setup-vim-conda">2: Setup vim &amp; conda</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#a-neovim">2a: neovim</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#b-vim-nvim-plugin-setup">2b: vim/nvim plugin setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#c-powerline-fonts">2c: powerline fonts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-set-terminal-font">2a: Set terminal font</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-neovim">2b: neovim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-neovim-plugin-setup">2c: neovim plugin setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#d-conda">2d: conda</a></li>
 </ul>
 </li>
@@ -258,11 +267,13 @@ descriptions of tools and the commands to install them.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Neovim configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvim-lua.html">Migrating to Neovim Lua config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
@@ -279,12 +290,12 @@ descriptions of tools and the commands to install them.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 

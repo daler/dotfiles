@@ -1,21 +1,20 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Why? &#8212; dotfiles  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Changelog" href="changelog.html" />
-    <link rel="prev" title="Post-setup tasks" href="post.html" />
+    <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
+    <link rel="prev" title="Migrating to Neovim Lua config" href="nvim-lua.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,10 +33,10 @@
     <ul>
         <li>
           &larr;
-          <a href="post.html" title="Previous document">Post-setup tasks</a>
+          <a href="nvim-lua.html" title="Previous document">Migrating to Neovim Lua config</a>
         </li>
         <li>
-          <a href="changelog.html" title="Next document">Changelog</a>
+          <a href="troubleshooting.html" title="Next document">Troubleshooting</a>
           &rarr;
         </li>
     </ul>
@@ -47,8 +46,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="why">
-<span id="id1"></span><h1>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h1>
+  <section id="why">
+<span id="id1"></span><h1>Why?<a class="headerlink" href="#why" title="Link to this heading">¶</a></h1>
 <p><strong>Why this repo?</strong> This started as a way of quickly getting myself set
 up on a new Linux box (like a fresh AWS instance). Once I started my own
 bioinformatics group, I realized there was a benefit to having others
@@ -81,7 +80,20 @@ upgrade independently, and still have them on my path.</p>
 <p><strong>Why use bash for</strong> <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> ? There are a lot of system calls, which gets
 awkward in Python. Using bash, everything is straightforwardly (if verbosely)
 captured in a single script without any other dependencies.</p>
-</div>
+<p id="why-lua"><strong>Why move to Lua for nvim?</strong> For years I’ve symlinked <code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> to
+<code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>, and had just a small number of if-clauses for
+nvim-specific behavior. This was because on some systems I still had vim, or
+otherwise hadn’t completely set up nvim for things like <code class="docutils literal notranslate"><span class="pre">$EDITOR</span></code>, and wanted
+to be fully functional in either. Nowadays though, I have nvim everywhere and
+there’s not much of a need. Plus, there’s a lot of interesting functionality
+being developed for nvim, and keeping backwards compatibility was holding back
+the vim+nvim config. I suppose I could have kept <code class="file docutils literal notranslate"><span class="pre">init.vim</span></code> in VimL, but
+some plugins (nvim-cmp, treesitter, and LSP-related stuff in particular) often
+needs a lot of customization in Lua. Having one main config file for all of that would
+get out of hand, so I’d need to modularize somehow. I liked how lazy.nvim
+naturally supported modularization of plugins, and once I refactored things
+I thought it was a good approach.</p>
+</section>
 
 
           </div>
@@ -91,10 +103,10 @@ captured in a single script without any other dependencies.</p>
     <ul>
         <li>
           &larr;
-          <a href="post.html" title="Previous document">Post-setup tasks</a>
+          <a href="nvim-lua.html" title="Previous document">Migrating to Neovim Lua config</a>
         </li>
         <li>
-          <a href="changelog.html" title="Next document">Changelog</a>
+          <a href="troubleshooting.html" title="Next document">Troubleshooting</a>
           &rarr;
         </li>
     </ul>
@@ -119,11 +131,13 @@ captured in a single script without any other dependencies.</p>
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vim.html">Vim / Neovim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Neovim configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvim-lua.html">Migrating to Neovim Lua config</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Why?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
@@ -131,8 +145,8 @@ captured in a single script without any other dependencies.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="post.html" title="previous chapter">Post-setup tasks</a></li>
-      <li>Next: <a href="changelog.html" title="next chapter">Changelog</a></li>
+      <li>Previous: <a href="nvim-lua.html" title="previous chapter">Migrating to Neovim Lua config</a></li>
+      <li>Next: <a href="troubleshooting.html" title="next chapter">Troubleshooting</a></li>
   </ul></li>
 </ul>
 </div>
@@ -140,12 +154,12 @@ captured in a single script without any other dependencies.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 

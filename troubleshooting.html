@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Troubleshooting &#8212; dotfiles  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="Why?" href="why.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="why.html" title="Previous document">Why?</a>
+        </li>
+        <li>
+          <a href="changelog.html" title="Next document">Changelog</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h1>
+<section id="vim-has-light-gray-text-colorscheme-looks-broken">
+<h2>Vim has light gray text, colorscheme looks broken<a class="headerlink" href="#vim-has-light-gray-text-colorscheme-looks-broken" title="Link to this heading">¶</a></h2>
+<p>Are you using Mac’s built-in Terminal app? Terminal.app does not support true
+colors, so the true-color default zenburn colorscheme (or any true color
+colorscheme) will not work.</p>
+<p>Run this command to see if your terminal supports true color. If it shows up in
+red, then it supports true color. If it just looks like regular black text,
+your terminal does NOT support true color.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n&quot;</span>
+</pre></div>
+</div>
+<p>If you are unable to use a terminal emulator like iTerm2, alacritty, kitty,
+etc, that supports 24-bit colors, then you can use a different color scheme.</p>
+<p>You can find an excellent writeup of this at <a class="reference external" href="https://github.com/joshdick/onedark.vim">docs for the onedark colorscheme</a> – see the Troubleshooting section.</p>
+<p>As a fallback, you can make the following changes in your
+<code class="file docutils literal notranslate"><span class="pre">./config/nvim/init.lua</span></code> file. This will turn off termguicolors (the
+setting in vim that supports true color) and set the colorscheme to onedark,
+which supports 256- and 16-color-only terminals:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- vim.cmd(&quot;colorscheme zenburn&quot;)</span>
+<span class="n">vim</span><span class="p">.</span><span class="n">cmd</span><span class="p">(</span><span class="s2">&quot;colorscheme onedark&quot;</span><span class="p">)</span>
+
+<span class="c1">-- vim.cmd(&quot;set termguicolors&quot;)</span>
+<span class="n">vim</span><span class="p">.</span><span class="n">cmd</span><span class="p">(</span><span class="s2">&quot;set notermguicolors&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="comments-don-t-show-up-as-italic">
+<h2>Comments don’t show up as italic<a class="headerlink" href="#comments-don-t-show-up-as-italic" title="Link to this heading">¶</a></h2>
+<p>This is a bit of a rabbit hole, but it’s due to an interaction between
+terminals and tmux and nvim.</p>
+<p><a class="reference external" href="https://gist.github.com/bbqtd/a4ac060d6f6b9ea6fe3aabe735aa9d95">This gist</a>
+has a nice writeup and description of the fix.</p>
+<p>For Alacritty, see <a class="reference external" href="https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6">this gist</a>,
+which also includes a setting you need in
+<code class="file docutils literal notranslate"><span class="pre">.config/alacritty/alacritty.yml</span></code>.</p>
+</section>
+<section id="can-t-install-conda-packages-from-bioconda">
+<h2>Can’t install conda packages from Bioconda<a class="headerlink" href="#can-t-install-conda-packages-from-bioconda" title="Link to this heading">¶</a></h2>
+<p>Bioconda does not yet build packages for Mac ARM chips (Mac M1 or M2). You can
+install docker and use a container, or wait until Bioconda starts building
+those packages.</p>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="why.html" title="Previous document">Why?</a>
+        </li>
+        <li>
+          <a href="changelog.html" title="Next document">Changelog</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dotfiles</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">Neovim configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvim-lua.html">Migrating to Neovim Lua config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vim-has-light-gray-text-colorscheme-looks-broken">Vim has light gray text, colorscheme looks broken</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comments-don-t-show-up-as-italic">Comments don’t show up as italic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-t-install-conda-packages-from-bioconda">Can’t install conda packages from Bioconda</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="why.html" title="previous chapter">Why?</a></li>
+      <li>Next: <a href="changelog.html" title="next chapter">Changelog</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div><script>
+    let closest;
+    // Get the last part of the URL after the # symbol - should match the div id to display
+    let id = window.location.hash.substring(1);
+    let elem = document.getElementById(id);
+    if (elem != null) {
+        // Get the closest "details" element and open it
+        closest = elem.closest("details");
+        closest.open = true;
+    }
+</script>
+  </body>
+</html>

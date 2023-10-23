@@ -39,3 +39,19 @@ upgrade independently, and still have them on my path.
 **Why use bash for** ``setup.sh`` ? There are a lot of system calls, which gets
 awkward in Python. Using bash, everything is straightforwardly (if verbosely)
 captured in a single script without any other dependencies.
+
+.. _why-lua:
+
+**Why move to Lua for nvim?** For years I've symlinked :file:`.vimrc` to
+:file:`.config/nvim/init.vim`, and had just a small number of if-clauses for
+nvim-specific behavior. This was because on some systems I still had vim, or
+otherwise hadn't completely set up nvim for things like ``$EDITOR``, and wanted
+to be fully functional in either. Nowadays though, I have nvim everywhere and
+there's not much of a need. Plus, there's a lot of interesting functionality
+being developed for nvim, and keeping backwards compatibility was holding back
+the vim+nvim config. I suppose I could have kept :file:`init.vim` in VimL, but
+some plugins (nvim-cmp, treesitter, and LSP-related stuff in particular) often
+needs a lot of customization in Lua. Having one main config file for all of that would
+get out of hand, so I'd need to modularize somehow. I liked how lazy.nvim
+naturally supported modularization of plugins, and once I refactored things
+I thought it was a good approach.

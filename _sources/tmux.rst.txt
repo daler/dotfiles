@@ -20,12 +20,17 @@ Here are the general features of the ``.tmux.conf`` file:
 
 Here are some shortcuts for window and pane navigation:
 
-================ ===========================
-command          description
-================ ===========================
-``Alt-arrows``   move around panes
-``Shift-arrows`` switch windows (left/right)
-================ ===========================
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - command
+     - description
+
+   * - :kbd:`Alt-arrows`
+     - move around panes
+   * - :kbd:`Shift-arrows`
+     - switch windows (left/right only)
 
 Copy/paste in vim and tmux
 --------------------------
@@ -36,6 +41,8 @@ commands.
 This is by far the most annoying part about using tmux and vim together.
 
 .. list-table::
+  :header-rows: 1
+  :align: left
 
   * - copy method (Linux)
     - copy method (Mac)
@@ -65,7 +72,7 @@ Another annoying situation is when copying text from the terminal into
 an email. In this case, we cannot use tmux copy mode, because X windows
 doesn’t know about it. Instead:
 
--  if you’re in a pane, make it full screen (``Ctrl-j``, ``z``)
+-  if you’re in a pane, make it full screen (:kbd:`Ctrl-j`, :kbd:`z`)
 -  if you’re in vim, turn off line numbers (``:set nonu``), or maybe
    quit out of vim and just cat the file
 -  shift-select text in terminal

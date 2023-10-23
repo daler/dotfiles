@@ -25,7 +25,7 @@ If you're on Ubuntu and have root privileges, this is a quick way to install
 installed. These are packages I find to be most useful (git, build-essential,
 meld, and so on).
 
-.. code-block::
+.. code-block:: bash
 
     ./setup.sh --apt-install
     # or
@@ -40,7 +40,9 @@ into ``~/opt/bin``, so you’ll want to make sure that’s on your path.
 Tools are listed alphabetically.
 
 The help for ``setup.sh`` suggests some to start with (fzf, ripgrep, visidata,
-pyp, and fd)::
+pyp, and fd):
+
+.. code-block:: bash
 
     ./setup.sh --install-fzf
     ./setup.sh --install-ripgrep
