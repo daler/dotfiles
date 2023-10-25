@@ -23,7 +23,15 @@ return {
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
   { "folke/which-key.nvim", lazy = false, config = true }, -- pop up a window showing possible keybindings
   { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
-  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 },
+  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000,
+    config = function ()
+      require('nightfox').setup({
+        options = {
+          styles = { comments = "italic", },
+        },
+      })
+    end,
+  },
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim" }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
 
@@ -190,6 +198,7 @@ return {
           "yaml",
           "r",
           "rst",
+          "snakemake",
         },
         incremental_selection = {
           enable = true,

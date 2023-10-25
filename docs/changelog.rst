@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2023-10-25
+----------
+
+**vim/nvim**
+
+- Add better support for Snakemake filetype detection and syntax highlighting.
+
 2023-10-23
 ----------
 **vim/nvim; docs**

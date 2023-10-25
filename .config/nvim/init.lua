@@ -137,6 +137,17 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
+vim.filetype.add({
+  filename = {
+    ["Snakefile"] = "snakemake",
+  },
+  pattern = {
+    ["*.smk"] = "snakemake",
+    ["*.snakefile"] = "snakemake",
+    ["*.snakemake"] = "snakemake",
+    ["Snakefile*"] = "snakemake",
+  }
+})
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
