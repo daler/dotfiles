@@ -140,6 +140,8 @@ vim.filetype.add({
   pattern = {
     ["*.smk"] = "snakemake",
     ["*.snakefile"] = "snakemake",
+    ["*.snakemake"] = "snakemake",
+    ["Snakefile*"] = "snakemake",
   }
 })
 
