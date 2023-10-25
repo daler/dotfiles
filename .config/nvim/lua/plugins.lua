@@ -189,6 +189,7 @@ return {
           "yaml",
           "r",
           "rst",
+          "snakemake",
         },
         incremental_selection = {
           enable = true,
