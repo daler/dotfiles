@@ -44,14 +44,21 @@
   <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
 <section id="id1">
-<h2>2023-10-23<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<h2>2023-10-25<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p><strong>vim/nvim</strong></p>
+<ul class="simple">
+<li><p>Add better support for Snakemake filetype detection and syntax highlighting.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>2023-10-23<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p><strong>vim/nvim; docs</strong></p>
 <p>Update docs and nvim config fallback for Terminal.app users (which doesn’t
 support true color in the terminal, which in turn breaks many colorschemes in
 nvim).</p>
 </section>
-<section id="id2">
-<h2>2023-10-11<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="id3">
+<h2>2023-10-11<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>This finishes the progression of migrating to Lua-based vim config. See
 <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for context, and the updated <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Neovim configuration</span></a> for plugin and
 keymapping documentation for details.</p>
@@ -88,8 +95,8 @@ keymapping documentation for details.</p>
 </li>
 </ul>
 </section>
-<section id="id3">
-<h2>2023-09-19<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="id4">
+<h2>2023-09-19<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
 <p><strong>vim/nvim</strong></p>
 <ul class="simple">
 <li><p>make <code class="docutils literal notranslate"><span class="pre">init.vim</span></code> more condensed, and move plugin information over to HTML
@@ -123,8 +130,8 @@ insert mode.</p></li>
 <li><p>fix mambaforge complaining if tmpdir exists (thanks &#64;aliciaaevans)</p></li>
 </ul>
 </section>
-<section id="id4">
-<h2>2023-07-06<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="id5">
+<h2>2023-07-06<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <p>Updates to support new MacOS and arm64 architecture, and general improvements:</p>
 <p><strong>bash</strong></p>
 <ul class="simple">
@@ -151,8 +158,8 @@ This also now supports all architectures supported by Mambaforge</p></li>
 <li><p>add docs for mac ssh</p></li>
 </ul>
 </section>
-<section id="id5">
-<h2>2022-12-27<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h2>2022-12-27<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
 <p>Lots of updates to the neovim config, <code class="docutils literal notranslate"><span class="pre">.config/nvim/init.vim</span></code>:</p>
 <ul class="simple">
 <li><p>The neoterm plugin is no longer actively developed; switched to using
@@ -175,27 +182,27 @@ latest neovim version</p></li>
 function (found in the <code class="docutils literal notranslate"><span class="pre">.functions</span></code> file)</p></li>
 </ul>
 </section>
-<section id="id6">
-<h2>2022-09-14<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<section id="id7">
+<h2>2022-09-14<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>conda setup now sets the recommended <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-channels.html#strict-channel-priority">strict channel priority</a></p></li>
 <li><p>made some fixes to correctly run on recent Mac OS versions</p></li>
 </ul>
 </section>
-<section id="id7">
-<h2>2022-07-22<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<section id="id8">
+<h2>2022-07-22<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>updated git repo for nerdtree and nerdcommenter plugins in <code class="docutils literal notranslate"><span class="pre">init.vim</span></code> (thanks &#64;njohnso6)</p></li>
 </ul>
 </section>
-<section id="id8">
-<h2>2022-07-09<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<section id="id9">
+<h2>2022-07-09<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>added new <code class="docutils literal notranslate"><span class="pre">prsetup</span></code> function for working on contributed pull requests</p></li>
 </ul>
 </section>
-<section id="id9">
-<h2>2022-05-27<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<section id="id10">
+<h2>2022-05-27<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
 <p>Changes to <code class="file docutils literal notranslate"><span class="pre">init.vim</span></code> (thanks &#64;mitraak)</p>
 <ul class="simple">
 <li><p>add shortcut to add commonly-used YAML front matter to RMarkdown (<code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;ry</span></code>, mnemonic is “RMarkdown YAML”)</p></li>
@@ -206,8 +213,8 @@ buffer the command is called from (<code class="docutils literal notranslate"><s
 change directory”)</p></li>
 </ul>
 </section>
-<section id="id10">
-<h2>2022-02-05<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<section id="id11">
+<h2>2022-02-05<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
 <p>Changes to <code class="file docutils literal notranslate"><span class="pre">init.vim</span></code>:</p>
 <ul class="simple">
 <li><p>Change <code class="docutils literal notranslate"><span class="pre">&lt;leader&gt;d</span></code> to insert a ReST-formatted date title</p></li>
@@ -226,16 +233,16 @@ cursor at the vim command bar so you can fill in a reasonble tabstop for the
 file you’re looking at.</p></li>
 </ul>
 </section>
-<section id="id11">
-<h2>2021-11-09<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
+<section id="id12">
+<h2>2021-11-09<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h2>
 <p>Changed <code class="docutils literal notranslate"><span class="pre">zoxide</span></code> installation to use conda env.</p>
 </section>
-<section id="id12">
-<h2>2021-09-18<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h2>
+<section id="id13">
+<h2>2021-09-18<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h2>
 <p>Added installation of BFG for cleaning git repos</p>
 </section>
-<section id="id13">
-<h2>2021-07-14<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h2>
+<section id="id14">
+<h2>2021-07-14<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
 <p>Lessons from setting up a new Mac…</p>
 <ul class="simple">
 <li><p>Instead of <cite>.bashrc</cite> sourcing <cite>.bash_profile</cite>, it is now flipped around to
@@ -251,8 +258,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>Removed dircolors from requirements-mac.txt which is apparently no longer available.</p></li>
 </ul>
 </section>
-<section id="id14">
-<h2>2021-06-01<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
+<section id="id15">
+<h2>2021-06-01<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h2>
 <p><strong>installation</strong></p>
 <ul class="simple">
 <li><p>modify requirements.txt: remove R, add conda-pack and mamba</p></li>
@@ -283,8 +290,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>add <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">inccommand=nosplit</span></code></p></li>
 </ul>
 </section>
-<section id="id15">
-<h2>2021-02-14<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h2>
+<section id="id16">
+<h2>2021-02-14<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h2>
 <p><strong>nvim</strong></p>
 <ul class="simple">
 <li><p>rm clipboard settings for nvim</p></li>
@@ -304,8 +311,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>solve issue with libz.so.1 conda.exe error:</p></li>
 </ul>
 </section>
-<section id="id16">
-<h2>2021-10-16<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h2>
+<section id="id17">
+<h2>2021-10-16<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h2>
 <p><strong>installation</strong></p>
 <ul class="simple">
 <li><p>minor additions to dockerfile</p></li>
@@ -329,8 +336,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>do not change prompt color on mac</p></li>
 </ul>
 </section>
-<section id="id17">
-<h2>2021-05-10<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h2>
+<section id="id18">
+<h2>2021-05-10<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>various docs and command-line help improvements</p></li>
@@ -342,8 +349,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>strip down README so it points to the generated docs</p></li>
 </ul>
 </section>
-<section id="id18">
-<h2>2021-04-26<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h2>
+<section id="id19">
+<h2>2021-04-26<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
 <p><strong>Installation</strong></p>
 <ul class="simple">
 <li><p>install tig (instead of lazygit)</p></li>
@@ -353,8 +360,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>support installation of ripgrep for mac</p></li>
 </ul>
 </section>
-<section id="id19">
-<h2>2021-04-06<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
+<section id="id20">
+<h2>2021-04-06<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>update docs based on user feedback</p></li>
@@ -390,8 +397,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>assume vim-plug in vim and nvim</p></li>
 </ul>
 </section>
-<section id="id20">
-<h2>2021-03-31<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
+<section id="id21">
+<h2>2021-03-31<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>rm note column</p></li>
@@ -404,8 +411,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>set SHELL to /bin/bash on Mac</p></li>
 </ul>
 </section>
-<section id="id21">
-<h2>2021-02-07<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
+<section id="id22">
+<h2>2021-02-07<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
 <p><strong>Testing</strong></p>
 <ul class="simple">
 <li><p>Using docker for testing</p></li>
@@ -426,8 +433,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>rm redundant ripgrep install</p></li>
 </ul>
 </section>
-<section id="id22">
-<h2>2019-12-16<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<section id="id23">
+<h2>2019-12-16<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>update nvim appimage version</p></li>
@@ -446,8 +453,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>export PS1 prevent conda from complaining</p></li>
 </ul>
 </section>
-<section id="id23">
-<h2>2019-09-30<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h2>
+<section id="id24">
+<h2>2019-09-30<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>install fd, vd, tabview, hub, bat, radian, black</p></li>
@@ -483,8 +490,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>disable pep8; add more buffers; set clipboard</p></li>
 </ul>
 </section>
-<section id="id24">
-<h2>2019-03-27<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h2>
+<section id="id25">
+<h2>2019-03-27<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h2>
 <p><strong>Installation</strong></p>
 <ul class="simple">
 <li><p>add –force for alacritty build</p></li>
@@ -509,8 +516,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>add vim-table-mode plugin</p></li>
 </ul>
 </section>
-<section id="id25">
-<h2>2019-02-27<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h2>
+<section id="id26">
+<h2>2019-02-27<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>move to next line after sending to terminal</p></li>
@@ -532,8 +539,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>goodbye nvim-r</p></li>
 </ul>
 </section>
-<section id="id26">
-<h2>2018-11-28<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h2>
+<section id="id27">
+<h2>2018-11-28<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>add installation of fzf, ag, fasd, autojump</p></li>
@@ -544,8 +551,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>fix channel order</p></li>
 </ul>
 </section>
-<section id="id27">
-<h2>2018-09-26<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h2>
+<section id="id28">
+<h2>2018-09-26<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>add apt-get and docker installation commands</p></li>
@@ -563,8 +570,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>clean up colors; adjust tab character colors</p></li>
 </ul>
 </section>
-<section id="id28">
-<h2>2017<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h2>
+<section id="id29">
+<h2>2017<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h2>
 <p><strong>Installation and docs</strong></p>
 <ul class="simple">
 <li><p>update dircolors</p></li>
@@ -599,8 +606,8 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li><p>add current dir to window create and split</p></li>
 </ul>
 </section>
-<section id="id29">
-<h2>2016<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h2>
+<section id="id30">
+<h2>2016<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>add plugin for python indentation</p></li>
 <li><p>add requirements.txt</p></li>
@@ -652,35 +659,36 @@ channel (not conda-forge). It’s possible that using mamba would fix this.</p><
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2023-10-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2023-10-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2023-09-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2023-07-06</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">2022-12-27</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">2022-09-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">2022-07-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">2022-07-09</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">2022-05-27</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">2022-02-05</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id11">2021-11-09</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id12">2021-09-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id13">2021-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id14">2021-06-01</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id15">2021-02-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id16">2021-10-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id17">2021-05-10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id18">2021-04-26</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id19">2021-04-06</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id20">2021-03-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id21">2021-02-07</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">2019-12-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id23">2019-09-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id24">2019-03-27</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id25">2019-02-27</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id26">2018-11-28</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id27">2018-09-26</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id28">2017</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id29">2016</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2023-10-25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2023-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2023-10-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2023-09-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2023-07-06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2022-12-27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">2022-09-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">2022-07-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">2022-07-09</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">2022-05-27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">2022-02-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">2021-11-09</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">2021-09-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">2021-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">2021-06-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">2021-02-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">2021-10-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id18">2021-05-10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">2021-04-26</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">2021-04-06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id21">2021-03-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">2021-02-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">2019-12-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id24">2019-09-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id25">2019-03-27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id26">2019-02-27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id27">2018-11-28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id28">2018-09-26</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id29">2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id30">2016</a></li>
 </ul>
 </li>
 </ul>
