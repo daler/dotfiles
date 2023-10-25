@@ -30,13 +30,17 @@ require("lazy").setup("plugins")
 -- Add your favorite colorscheme to lua/plugins.lua, and use it here.
 --
 vim.cmd("colorscheme zenburn") -- bottom of this file has some tweaks to zenburn
+vim.cmd("set termguicolors") -- use full color in colorschemes
+
+-- Uncomment these lines if you use a terminal that does not support true color:
+-- vim.cmd("colorscheme onedark")
+-- vim.cmd("set notermguicolors")
 
 --
 -- Settings.
 -- You can use vim.cmd() to execute any standard vim command. Many of these can
 -- be converted to Lua syntax, like vim.o.mouse = "a", but for consistency with
 -- earlier versions of this config, we're keeping the vim syntax for now.
-vim.cmd("set termguicolors") -- use full color in colorschemes
 vim.cmd("syntax on") -- Syntax highlighting; also does an implicit filetype on
 vim.cmd("filetype plugin indent on") -- Enable detection, plugin, and indent for filetype
 vim.cmd("set nofoldenable") -- Files will open with everything unfolded

@@ -8,6 +8,14 @@ Changelog
 
 - Add better support for Snakemake filetype detection and syntax highlighting.
 
+2023-10-23
+----------
+**vim/nvim; docs**
+
+Update docs and nvim config fallback for Terminal.app users (which doesn't
+support true color in the terminal, which in turn breaks many colorschemes in
+nvim).
+
 2023-10-11
 ----------
 
