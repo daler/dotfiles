@@ -5,6 +5,10 @@
 vim.cmd("let mapleader=','") -- Re-map leader from default \ to , (comma)
 vim.cmd("let maplocalleader = '\\'") -- Local leader becomes \.
 
+-- This allows nvim-tree to be used when opening a directory in nvim.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Bootstrap lazy.nvim in case it's not already installed.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

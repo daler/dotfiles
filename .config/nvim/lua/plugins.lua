@@ -40,12 +40,8 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    config = function()
-      require("nvim-tree").setup({
-        disable_netrw = false,
-        hijack_netrw = true,
-      })
-    end,
+    lazy = false,
+    config = true,
     keys = {
       { "<leader>fbc", "<cmd>NvimTreeClose<CR>", desc = "[f]ile [b]rowser [c]lose (nvim-tree)" },
       { "<leader>fbo", "<cmd>NvimTreeFocus<CR>", desc = "[f]ile [b]rowser [o]pen (or focus if open)" },
