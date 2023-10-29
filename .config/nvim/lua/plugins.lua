@@ -43,8 +43,7 @@ return {
     lazy = false,
     config = true,
     keys = {
-      { "<leader>fbc", "<cmd>NvimTreeClose<CR>", desc = "[f]ile [b]rowser [c]lose (nvim-tree)" },
-      { "<leader>fbo", "<cmd>NvimTreeFocus<CR>", desc = "[f]ile [b]rowser [o]pen (or focus if open)" },
+      { "<leader>fb", "<cmd>NvimTreeToggle<CR>", desc = "[f]ile [b]rowser toggle" },
     },
   },
 
