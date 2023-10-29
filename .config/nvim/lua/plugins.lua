@@ -21,13 +21,16 @@ return {
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
-  { "folke/which-key.nvim", lazy = false, config = true }, -- pop up a window showing possible keybindings
+  { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
   { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
-  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000,
-    config = function ()
-      require('nightfox').setup({
+  {
+    "EdenEast/nightfox.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("nightfox").setup({
         options = {
-          styles = { comments = "italic", },
+          styles = { comments = "italic" },
         },
       })
     end,
