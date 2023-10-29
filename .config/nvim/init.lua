@@ -81,6 +81,11 @@ vim.cmd("set guicursor=i:block") -- Always use block cursor. In some terminals a
 -- lua/plugins.lua. Many keymappings have descriptions which will show up in
 -- which-key.
 --
+-- 
+local wk = require('which-key')
+wk.register( { ["<leader>c"] = { name = "+code" } } )
+wk.register( { ["<leader>f"] = { name = "+file or +find" } } )
+
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Fix <Esc> in terminal buffer
 vim.keymap.set("n", "<Leader>H", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })
 vim.keymap.set("n", "<leader>W", ":%s/\\s\\+$//<cr>:let @/=''<CR>", { desc = "Clean trailing whitespace" })
