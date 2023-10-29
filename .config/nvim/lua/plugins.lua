@@ -180,7 +180,10 @@ return {
           enable = true,
           disable = { "markdown", "rmarkdown" }, -- let pandoc handle highlighting for these
         },
-        indent = { enable = true },
+        indent = {
+          enable = true,
+          disable = { "python", "snakemake" }, -- let vim-python-pep8-indent handle this
+        },
         ensure_installed = {
           "bash",
           "css",
