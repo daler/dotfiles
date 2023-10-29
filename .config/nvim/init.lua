@@ -1,7 +1,7 @@
 -- Lua config for neovim. Coming from Vim lanuage? See
 -- https://neovim.io/doc/user/lua.html for the basics.
 
--- leader must be set before plugins are installed
+-- leader must be set before plugins are set up.
 vim.cmd("let mapleader=','") -- Re-map leader from default \ to , (comma)
 vim.cmd("let maplocalleader = '\\'") -- Local leader becomes \.
 
@@ -26,6 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- Plugins.
 -- Plugins are handled separately, see the lua/plugins.lua file.
+-- This command tells lazy.nvim, the plugin manager, where to find that file.
 --
 require("lazy").setup("plugins")
 
@@ -146,6 +147,7 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
+-- Tell nvim about the snakemake filetype
 vim.filetype.add({
   filename = {
     ["Snakefile"] = "snakemake",
@@ -155,7 +157,7 @@ vim.filetype.add({
     ["*.snakefile"] = "snakemake",
     ["*.snakemake"] = "snakemake",
     ["Snakefile*"] = "snakemake",
-  }
+  },
 })
 
 -- Highlight yanked text
@@ -202,8 +204,8 @@ vim.api.nvim_create_autocmd("QuitPre", {
 if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
   -- If there's a good highlight existing, link to that
   vim.api.nvim_set_hl(0, "@variable", { link = "Normal" })
-  vim.api.nvim_set_hl(0, "diffAdded", { fg="#9ECE9E", bg="#313C36" })
-  vim.api.nvim_set_hl(0, "diffRemoved", { fg="#ECBCBC", bg="#41363C"})
+  vim.api.nvim_set_hl(0, "diffAdded", { fg = "#9ECE9E", bg = "#313C36" })
+  vim.api.nvim_set_hl(0, "diffRemoved", { fg = "#ECBCBC", bg = "#41363C" })
   vim.api.nvim_set_hl(0, "diffLine", { link = "MoreMsg" })
 
   vim.cmd("highlight LineNr guifg=#959898 guibg=#353535")

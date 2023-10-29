@@ -23,6 +23,8 @@ return {
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
   { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
   { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
+  { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
+  { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
   {
     "EdenEast/nightfox.nvim",
     lazy = false,
@@ -35,8 +37,6 @@ return {
       })
     end,
   },
-  { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
-  { "joshdick/onedark.vim" }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
@@ -73,12 +73,12 @@ return {
           local previewer = require("telescope.themes").get_dropdown({ previewer = false })
           require("telescope.builtin").find_files(previewer)
         end,
-        desc = "Find files",
+        desc = "[f]ind [f]iles",
       },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep in directory" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "[f]ind with [g]rep in directory" },
       { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Fuzzy find in buffer" },
-      { "<leader>fc", "<cmd>Telescope treesitter<CR>", desc = "Find code object" },
-      { "<leader>fo", "<cmd>Telescope oldfiles<CR>", desc = "Find recently-opened files" },
+      { "<leader>fc", "<cmd>Telescope treesitter<CR>", desc = "[f]ind [c]ode object" },
+      { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "[f]ind [r]ecently-opened files" },
     },
   },
 
@@ -147,7 +147,7 @@ return {
             "n",
             "<leader>k",
             ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
-            { desc = "Render RMarkdown to HTML" }
+            { desc = "Render RMar[k]down to HTML" }
           )
         end,
       })
@@ -245,9 +245,9 @@ return {
 
     opts = { layout = { default_direction = "prefer_left" } },
     keys = {
-      { "{", "<cmd>AerialPrev<CR>", buffer = bufnr, desc = "Prev code symbol" },
-      { "}", "<cmd>AerialNext<CR>", buffer = bufnr, desc = "Next code symbol" },
-      { "<leader>a", "<cmd>AerialToggle<CR>", buffer = bufnr, desc = "Toggle aerial nav" },
+      { "{", "<cmd>AerialPrev<CR>", desc = "Prev code symbol" },
+      { "}", "<cmd>AerialNext<CR>", desc = "Next code symbol" },
+      { "<leader>a", "<cmd>AerialToggle<CR>", desc = "Toggle [a]erial nav" },
     },
   },
 
@@ -264,22 +264,22 @@ return {
           vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
         end
 
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
-        map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<leader>hS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>hu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>hR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>hp", gs.preview_hunk, "Preview Hunk")
+        map("n", "]h", gs.next_hunk, "Next hunk")
+        map("n", "[h", gs.prev_hunk, "Prev hunk")
+        map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
+        map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>", "Reset hunk")
+        map("n", "<leader>hS", gs.stage_buffer, "Stage buffer")
+        map("n", "<leader>hu", gs.undo_stage_hunk, "Undo Stage hunk")
+        map("n", "<leader>hR", gs.reset_buffer, "Reset buffer")
+        map("n", "<leader>hp", gs.preview_hunk, "Preview hunk")
         map("n", "<leader>hb", function()
           gs.blame_line({ full = true })
-        end, "Blame Line")
-        map("n", "<leader>hd", gs.diffthis, "Diff This")
+        end, "Blame line")
+        map("n", "<leader>hd", gs.diffthis, "Diff this")
         map("n", "<leader>hD", function()
           gs.diffthis("~")
         end, "Diff This ~")
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select hunk")
       end,
     },
   },
