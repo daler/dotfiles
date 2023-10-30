@@ -253,6 +253,12 @@ function showHelp() {
         "to and provides a convenient interface for jumping directly" \
         "there." \
         "Homepage: https://github.com/ajeetdsouza/zoxide"
+    cmd "--install-pyright" \
+        "Python language server for nvim LSP."\
+        "Homepage: https://github.com/microsoft/pyright"
+    cmf "--install-lua-ls" \
+        "Lua language server for LSP."\
+        "Homepage: https://luals.github.io/#install"
     echo
 }
 
@@ -762,6 +768,36 @@ elif [ $task == "--install-bfg" ]; then
     chmod +x $BFG_WRAPPER
     check_opt_bin_in_path
     printf "${YELLOW}Installed jar file to ~/opt/bin, and created wrapper script ~/opt/bin/bfg.${UNSET}\n\n"
+
+elif [ $task == "--install-pyright" ]; then
+    ok "Install pyright to ~/opt/bin?"
+    eval "$(conda shell.bash hook)"
+    can_make_conda_env pyright
+    mamba create -y -n pyright pyright
+    for executable in pyright pyright-langserver pyright-python pyright-python-langserver; do
+        ln -sf "$CONDA_LOCATION/envs/pyright/bin/$executable" $HOME/opt/bin/$executable
+    done
+    printf "${YELLOW}Installed $HOME/opt/bin/pyright${UNSET}\n"
+
+elif [ $task == "--install-lua-ls" ]; then
+    ok "Install lua-ls?"
+    LUA_LS_VERSION=3.7.0
+    TAG="linux-x64"
+    if [[ $OSTYPE == darwin* ]]; then
+        TAG="darwin-x64"
+        if [[ $(uname -p) == arm ]]; then
+            TAG="darwin-arm64"
+        fi
+    fi
+    download https://github.com/LuaLS/lua-language-server/releases/download/${LUA_LS_VERSION}/lua-language-server-${LUA_LS_VERSION}-$TAG.tar.gz ~/opt/lua-ls.tar.gz
+    mkdir ~/opt/lua-ls
+    (
+        cd ~/opt/lua-ls
+        tar -xf ../lua-ls.tar.gz
+    )
+    echo "export PATH=$PATH:~/opt/lua-ls/bin" >> ~/.path
+    printf "${YELLOW}Created $HOME/opt/lua-ls and added its bin dir to the PATH in ~/.,path${UNSET}\n"
+
 
 elif [ $task == "--dotfiles" ]; then
     set -x
