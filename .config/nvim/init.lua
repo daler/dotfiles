@@ -8,6 +8,7 @@ vim.cmd("let maplocalleader = '\\'") -- Local leader becomes \.
 -- This allows nvim-tree to be used when opening a directory in nvim.
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.cmd("set termguicolors") -- use full color in colorschemes
 
 -- Bootstrap lazy.nvim in case it's not already installed.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -35,7 +36,6 @@ require("lazy").setup("plugins")
 -- Add your favorite colorscheme to lua/plugins.lua, and use it here.
 --
 vim.cmd("colorscheme zenburn") -- bottom of this file has some tweaks to zenburn
-vim.cmd("set termguicolors") -- use full color in colorschemes
 
 -- Uncomment these lines if you use a terminal that does not support true color:
 -- vim.cmd("colorscheme onedark")
