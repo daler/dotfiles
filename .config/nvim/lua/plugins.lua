@@ -287,16 +287,48 @@ return {
   },
 
   {
-    "vim-airline/vim-airline", -- status line along the bottom
-    dependencies = { "vim-airline/vim-airline-themes" },
-    init = function()
-      vim.cmd("let g:airline_theme='ayu_dark'") -- theme that looks good with zenburn
-      vim.cmd("let g:airline_powerline_fonts = 1") -- use powerline fonts; set to 0 if you don't have them installed
-      vim.cmd("let g:airline_extensions = ['tabline']") -- use the tabline extension
-      vim.cmd("let g:airline#extensions#tabline#enabled = 1")
-      vim.cmd("let g:airline#extensions#tabline#fnamemod = ':t'") -- just show the basename of the open file
-      -- vim.cmd("let g:airline#extensions#tabline#buffer_nr_show = 1") -- Show a buffer number for easier switching
-    end,
+    "nvim-lualine/lualine.nvim",
+    config = true,
+    opts = { options = { theme = "zenburn" } },
+
+  },
+  {
+    "akinsho/bufferline.nvim", config = true, lazy = false,
+    keys = {
+      {"<leader>b", "<cmd>BufferLinePick<CR>", desc = "Pick buffer"},
+    },
+    opts = {
+      options = {
+        right_mouse_command = "vertical sbufer %d",
+        separator_style = "slant",
+        hover = {
+          enabled = true, delay = 200, reveal = { "close" },
+        },
+        diagnostics = "nvim_lsp",
+        custom_filter = function(buf_number, buf_numbers)
+          if vim.bo[buf_number].filetype ~= "fugitive" then
+            return true
+        end
+        end,
+        show_buffer_icons = false,
+        offsets = {
+        {
+          filetype = "NvimTree",
+          highlight = "Directory",
+          separator = true,
+        },
+        {
+          filetype = "aerial",
+          highlight = "Directory",
+          separator = true,
+          },
+        },
+
+
+
+      },
+    },
+
   },
 
   {
