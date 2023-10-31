@@ -434,7 +434,12 @@ return {
     end,
   },
   {
+    "williamboman/mason.nvim",
+    lazy = false, config = true,
+  },
+  {
     "neovim/nvim-lspconfig",
+
     cmd = "LspStart",
 
     init = function()
