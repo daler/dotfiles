@@ -106,7 +106,6 @@ vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>b", ":buffers<CR>:buffer<Space>", { desc = "Select buffer" })
 
 -- Keymappings for navigating terminals.
 -- <leader>q and <leader>w move to left and right windows respectively. Useful
