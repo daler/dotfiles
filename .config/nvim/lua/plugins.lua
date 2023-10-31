@@ -22,7 +22,7 @@ return {
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
   { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
-  { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
+  { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
   {
