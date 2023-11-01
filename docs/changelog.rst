@@ -13,7 +13,6 @@ Changelog
 - Disable tree-sitter indentation for Python and Snakemake; use the pep8 python indentation plugin instead.
 - Improve closing of buffers if they are not text buffers (aerial, nvim-tree, scratch from trouble.nvim)
 - Reintroduce gv.vim
-  need to run ``:LspStart`` or use the ``<leader>cl`` mapping.
 - Add trouble.nvim plugin
 - Add more hints to descriptions of keybindings
 - Instead of ``<leader>fbo`` and ``<leader>fbc`` to open and close the file
