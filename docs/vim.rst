@@ -3,34 +3,20 @@
 Neovim configuration
 ====================
 
-The :file:`.vimrc` file has only basic setup for vim.
-
-The files :file:`.config/nvim/init.lua` is the entry point of the nvim config.
-
-See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
-versions of these dotfiles.
-
 .. note::
 
-   Unless otherwise specified, paths on this page are relative to
-   :file:`~/.config/nvim`.
+    See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
+    versions of these dotfiles.
 
-Structure
----------
+The :file:`.vimrc` file has only basic setup for vim.
 
-Here is a schematic of the nvim config files in :file:`~/.config/nvim`:
+The file :file:`.config/nvim/init.lua` is the entry point of the nvim config.
+Unless otherwise specified, paths on this page are relative to
+:file:`~/.config/nvim`.
 
-- :file:`init.lua`: entry point, and imports files from :file:`lua/` subdirectory
-- :file:`lua/settings.lua`: general vim settings
-- :file:`lua/lazy-bootstrap.lua`: automatically installs and makes available
-  the lazy.nvim plugin manager (no need for ``./setup.sh
-  --set-up-vim-plugins``)
-- :file:`lua/mappings.lua`: custom keymappings
-- :file:`lua/autocommands.lua`: custom autocommands
-- :file:`lua/colorscheme.lua`: set and/or modify colorscheme
-- :file:`lua/plugins.lua`: plugin configs
 
-See :ref:`plugins` for details on how the plugins are configured.
+- :file:`~/.config/nvim/init.lua` has general settings.
+- :file:`~/.config/nvim/lua/plugins.lua` has plugin settings.
 
 
 Using the mouse
@@ -52,10 +38,10 @@ debugging situations.
 
 The vim config has these lines:
 
-.. code-block:: vim
+.. code-block:: lua
 
-    :autocmd InsertEnter * set listchars=tab:>•
-    :autocmd InsertLeave * set listchars=tab:>•,trail:∙,nbsp:•,extends:⟩,precedes:⟨
+    vim.cmd(":autocmd InsertEnter * set listchars=tab:>•")
+    vim.cmd(":autocmd InsertLeave * set listchars=tab:>•,trail:∙,nbsp:•,extends:⟩,precedes:⟨")
 
 With these settings <TAB> characters look like ``>••••``. Trailing spaces show up
 as dots like ``∙∙∙∙∙``.
@@ -68,7 +54,7 @@ text offscreen.
 Switching buffers
 -----------------
 
-Three main ways of *opening* a file in a new buffer:
+Three main ways of **opening** file in a new buffer:
 
 .. list-table::
    :header-rows: 1
@@ -83,10 +69,10 @@ Three main ways of *opening* a file in a new buffer:
    * - :kbd:`<leader>ff`
      - Search for file in directory to open in new buffer (Telescope)
 
-   * - :kbd:`<leader>fbo`
-     - Open a file browser, hit Enter on file (nvim-tree)
+   * - :kbd:`<leader>fb`
+     - Toggle file browser, hit Enter on file (nvim-tree)
 
-Once you have multiple buffers, you can switch between them in these ways:
+Once you have multiple buffers, you can **switch** between them in these ways:
 
 .. list-table::
    :header-rows: 1
@@ -104,21 +90,26 @@ Once you have multiple buffers, you can switch between them in these ways:
    * - :kbd:`<leader>1`, :kbd:`<leader>2`
      - First buffer, last buffer
 
-   * - :kbd:`,b`
-     - tab-complete buffer name (or number), then hit enter
+   * - :kbd:`<leader>b` then type highlighted letter in tab
+     - Switch buffer
 
 The display of the bufferline is configured in :file:`lua/plugins.lua`, as part
-of the vim-airline plugin.
+of the bufferline plugin. It is additionally styled using the
+daler/zenburn.nvim plugin/colorscheme.
 
+.. versionadded:: 2023-11-01
+   :kbd:`<leader>b` using bufferline plugin
+
+  
 
 Format options explanation
 --------------------------
 
 The following options change the behavior of various formatting; see ``:h formatoptions``:
 
-.. code-block:: vim
+.. code-block:: lua
 
-    set formatoptions=qrn1coj
+    vim.cmd("set formatoptions=qrn1coj")
 
 Explanation of these options:
 
@@ -163,12 +154,13 @@ Here are some general shortcuts that are defined in the included config. With
 the ``which-key`` plugin, many of these are also discoverable by hitting the
 first key and then waiting a second for the menu to pop up.
 
-These are defined in :file:`lua/mappings.lua`. 
-
 .. note::
 
   **Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
   file and are described below under the respective plugin's section.
+
+If you're definign your own keymappings, add a ``desc`` argument so that
+which-key will provide a description for it.
 
 .. list-table::
     :header-rows: 1
@@ -204,9 +196,9 @@ These are defined in :file:`lua/mappings.lua`.
         making section separators.
 
     * - :kbd:`<leader><TAB>`
-      - Useful for working with TSVs. Writes ``:set nowrap tabstop=`` and then
-        leaves the cursor at the vim command bar so you can fill in a reasonble
-        tabstop for the file you're looking at.
+      - Useful for working with TSVs. Starts the command ``:set nowrap
+        tabstop=`` but then leaves the cursor at the vim command bar so you can
+        fill in a reasonble tabstop for the file you're looking at.
 
     * - :kbd:`<leader>\``
       - (that's a backtick) Adds a new RMarkdown chunk and places the cursor
@@ -219,15 +211,6 @@ These are defined in :file:`lua/mappings.lua`.
     * - :kbd:`<leader>ko`
       - Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
         global options (mnemonic: knitr options)
-
-This is configured in :file:`lua/autocommands.lua`:
-
-.. list-table::
-    :header-rows: 1
-    :align: left
-
-    * - command
-      - description
 
     * - :kbd:`<leader>d`
       - Insert the current date as a ReST or Markdown-formatted title,
@@ -251,27 +234,28 @@ to keep a snappy startup time, and only load plugins when they're needed. See
 Each plugin spec in :file:`lua/plugins.lua` is a table. The first property is
 the name of the plugin. Other properties:
 
-  * lazy: only load when requested by something else. Saves on initial load time.
+* ``lazy``: only load when requested by something else. Saves on initial load
+  time, but use this with care since it can get confusing.
 
-  * ft: only load the plugin when editing this filetype. Implies lazy=true.
+* ``ft``: only load the plugin when editing this filetype. Implies lazy=true.
 
-  * cmd: only load the plugin when first running this command. Implies lazy=true.
+* ``cmd``: only load the plugin when first running this command. Implies lazy=true.
 
-  * keys: only load the plugin when using these keymappings. Implies lazy=true.
+* ``keys``: only load the plugin when using these keymappings. Implies lazy=true.
 
-  * config: run this stuff after the plugin loads. If config = true, just run
-    the default setup for the plugin.
+* ``config``: run this stuff after the plugin loads. If config = true, just run
+  the default setup for the plugin.
 
-  * init: similar to config, but used for pure-vim plugins
+* ``init``: similar to config, but used for pure-vim plugins
 
-If keys are specified, this is the only place they need to be mapped, and
-they will make their way into the which-key menu even if they trigger
-a lazy-loaded plugin.
+If keys are specified, this is the only place they need to be mapped, and they
+will make their way into the which-key menu even if they trigger a lazy-loaded
+plugin. Use the ``desc`` argument to give which-key a description to use.
 
 Here, plugins are sorted roughly so that the ones that provide additional
 commands come first.
 
-.. note:: note
+.. note::
 
     Don't like a plugin? Find it in :file:`lua/plugins.lua` and add ``enabled
     = false`` next to where the plugin is named. For example:
@@ -281,6 +265,8 @@ commands come first.
       -- ... other stuff
       { "user/plugin-name", enabled = false },
       -- ... more stuff
+
+    Or delete it, or comment it out.
 
 Here is a list of the plugins documented below:
 
@@ -339,7 +325,7 @@ marker to show where the cursor is.
 a floating window with fuzzy-search selection.
 
 Type in the text box to filter the list. Hit enter to select (and open the
-selected file in a new buffer).
+selected file in a new buffer). Hit Esc twice to exit.
 
 .. list-table::
     :header-rows: 1
@@ -368,8 +354,7 @@ selected file in a new buffer).
 Other useful things you can do with Telescope:
 
 - ``:Telescope highlights`` to see the currently set highlights for the
-  colorscheme. You can use that information to modify
-  :file:`lua/plugins/zenburn.lua`.
+  colorscheme.
 
 - ``:Telescope builtin`` to see a picker of all the built-in pickers.
   Selecting one opens that picker. Very meta. But also very interesting for
@@ -389,17 +374,18 @@ Other useful things you can do with Telescope:
 
     * - command
       - description
-    * - :kbd:`<leader>fbo`
-      - File browser open (or focus, if already open)
-    * - :kbd:`<leader>fbc` or :kbd:`q` in browser
-      - File browser close
+
+    * - :kbd:`<leader>fb`
+      - Toggle file browser
+
     * - :kbd:`-` (within browser)
       - Go up a directory
+
     * - :kbd:`Enter` (within browser)
       - Open file or directory, or close directory
 
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
-windows left and right respectively) also work.
+windows left and right respectively) also work
 
 
 ``which-key``
@@ -537,7 +523,7 @@ contents.
       - Toggle aerial sidebar
 
     * - :kbd:`{` and :kbd:`}`
-      - Jump to prev or next item
+      - Jump to prev or next item (function, snakemake rule, markdown section)
 
 For navigating complex codebases, there are other keys that are automatically
 mapped, which you can read about in the `README for aerial
@@ -572,6 +558,110 @@ language.
     * - :kbd:`<S-Tab>` (in incremental selection)
       - Decrease selection by node
 
+``nvim-lspconfig``
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-11-01
+
+`nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ provides access to
+nvim's Language Server Protocol (LSP). You install an LSP server for each
+language you want to use it with (see :ref:`mason` for installing these).
+Then you enable the LSP server for a buffer, and you get code-aware hints,
+warnings, etc.
+
+Not all features are implemented in every LSP server. For example, the Python
+LSP is quite feature-rich. In contrast, the R LSP is a bit weak. Install them
+with :ref:`mason`.
+
+The Python LSP may be quite verbose if you enable it on existing code, though
+in my experience addressing everything it's complaining about will improve your
+code. You may find you need to add type annotations in some cases.
+
+Because the experience can be hit-or-miss depending on the language you're
+using, LSP is disabled by default. The current exception is for Lua, but you
+can configure this behavior in :file:`lua/plugins.lua`. Use :kbd:`<leader>cl`
+to start the LSP for a buffer. See :ref:`trouble` for easily viewing all the
+diagnostics.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+    * - :kbd:`<leader>cl`
+      - Start the LSP server for this buffer
+    * - :kbd:`<leader>ce`
+      - Open diagnostic details
+    * - :kbd:`[e`
+      - Prev diagnostic
+    * - :kbd:`]e`
+      - Next diagnostic
+    * - :kbd:`<leader>cgd`
+      - Goto definition (e.g., when cursor is over a function)
+    * - :kbd:`<leader>cK`
+      - Hover help
+    * - :kbd:`<leader>crn`
+      - Rename all instances of this symbol
+    * - :kbd:`<leader>cr`
+      - Goto references
+    * - :kbd:`<leader>ca`
+      - Code action (opens a menu if implemented)
+
+.. _mason:
+
+``mason.nvim``
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-11-01
+
+`mason.nvim <https://github.com/williamboman/mason.nvim>`_ easily installs
+Language Server Protocols, debuggers, linters, and formatters. Use ``:Mason``
+to open the interface, and hit :kbd:`i` on what you want to install, or
+:kbd:`g?` for more help.
+
+For Python, install ``pyright``.
+
+For Lua (working on your nvim configs), use ``lua-language-server``
+(nvim-lspconfig calls this ``lua-ls``).
+
+For R, you can try ``r-languageserver``, but this needs to be installed within
+the environment you're using R (and R itself must be available). It's not
+that useful if you want to use it in multiple conda environments. It doesn't
+have that many features yet, either.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+    * - ``:Mason``
+      - Open the mason interface
+
+.. _trouble:
+
+``trouble.nvim``
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-11-01
+
+
+`trouble.nvim <https://github.com/folke/trouble.nvim>`_ organizes all the LSP
+diagnostics into a single window. You can use that to navigate the issues found
+in your code.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+    * - :kbd:`<leader>ct`
+      - Toggle trouble.nvim window
+
+
+.. _gitsigns_ref:
 
 ``gitsigns``
 ~~~~~~~~~~~~
@@ -635,6 +725,10 @@ is "hunk" (the term for a block of changes).
 
 Additionally, this supports hunks as text objects using ``ih`` (inside hunk).
 E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
+
+.. seealso::
+
+   :ref:`vimfugitive`, :ref:`gitsigns_ref`, :ref:`vimgv`,  and :ref:`diffview` are other complementary plugins for working with Git.
 
 ``toggleterm``
 ~~~~~~~~~~~~~~
@@ -762,8 +856,11 @@ are used heavily when working with ``:Gdiff``, so here is a reminder:
     * - :kbd:`dp`
       - [P]ut the contents of this diff into the other file
 
+.. seealso::
 
-.. _vim-gv:
+   :ref:`vimfugitive`, :ref:`gitsigns_ref`, :ref:`vimgv`,  and :ref:`diffview` are other complementary plugins for working with Git.
+
+.. _vimgv:
 
 ``vim.gv``
 ~~~~~~~~~~
@@ -772,6 +869,7 @@ are used heavily when working with ``:Gdiff``, so here is a reminder:
 
 `vim.gv <https://github.com/junegunn/gv.vim>`_ provides an interface to easily
 view and browse git history.
+
 
 .. list-table::
     :header-rows: 1
@@ -785,6 +883,10 @@ view and browse git history.
 
     * - :kbd:`GV`
       - Open a commit browser, hit :kbd:`Enter` on a commit to view
+
+.. seealso::
+
+   :ref:`vimfugitive`, :ref:`gitsigns_ref`, :ref:`vimgv`,  and :ref:`diffview` are other complementary plugins for working with Git.
 
 ``vim-mergetool``
 ~~~~~~~~~~~~~~~~~
@@ -984,6 +1086,63 @@ just the visual block selection, for example when editing TSV files.
     * - :kbd:`<C-v>`, then use :kbd:`:B` instead of :kbd:`:`
       - Operates on visual block selection only
 
+``bufferline.nvim``
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-11-01
+
+`bufferline.nvim <https://github.com/akinsho/bufferline.nvim>`_ provides the
+tabs along the top.
+
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+    * - :kbd:`<leader>b`, then type highlighted letter in tab
+      - Switch to buffer
+
+.. _diffview:
+
+``diffview.nvim``
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-11
+
+`diffview.nvim <https://github.com/sindrets/diffview.nvim>`_ supports viewing
+diffs across multiple files. It also has a nice interface for browsing previous
+commits.
+
+I'm still figuring out when it's better to use this, fugitive, or gitsigns.
+
+.. seealso::
+
+   :ref:`vimfugitive`, :ref:`gitsigns_ref`, :ref:`vimgv`,  and :ref:`diffview` are other complementary plugins for working with Git.
+
+See the homepage for details.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - ``:DiffviewOpen``
+      - Opens the viewer
+
+    * - ``:DiffviewFileHistory``
+      - View diffs for this file throughout git history
+
+
+``lualine``
+~~~~~~~~~~~
+
+.. versionadded:: 2023-11-01
+
+`lualine <https://github.com/nvim-lualine/lualine.nvim>`_ provides the status line along the bottom.
+
+No additional commands configured.
 
 ``indent-blankline``
 ~~~~~~~~~~~~~~~~~~~~
@@ -1045,33 +1204,6 @@ easier to track bugs separately.
 No additional commands configured.
 
 
-``vim-airline``
-~~~~~~~~~~~~~~~
-
-.. versionadded:: 2016
-
-`vim-airline <https://github.com/vim-airline/vim-airline>`_ provides a nice
-statusline, plus "tabs" that allow you to easily switch between open files and
-copy/paste between them.
-
-Install powerline fonts for full effect (``./setup.sh --powerline``). See below
-for themes.
-
-No additional commands configured.
-
-
-``vim-airline-themes``
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2016
-
-`vim-airline-themes
-<https://github.com/vim-airline/vim-airline/wiki/Screenshots>`_ provides themes
-for use with vim-airline.
-
-No additional commands configured.
-
-
 ``vim-tmux-clipboard``
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1090,29 +1222,21 @@ No additional commands configured.
 
 ``sphinx.nvim``
 ~~~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-11
+
 `sphinx.nvim <https://github.com/stsewd/sphinx.nvim>`_ provides some
 integrations for Sphinx and ReStructured Text.
 
 No additional commands configured.
 
-``diffview.nvim``
-~~~~~~~~~~~~~~~~~
-`diffview.nvim <https://github.com/sindrets/diffview.nvim>`_ supports viewing
-diffs across multiple files. It also has a nice interface for browsing previous
-commits.
 
-I'm still figuring out when it's better to use this, fugitive, or gitsigns.
+``zenburn.nvim``
+~~~~~~~~~~~~~~~~
 
-See the homepage for details.
+.. versionadded:: 2023-11-01
 
-.. list-table::
+This uses my fork of https://github.com/phha/zenburn.nvim, which adds addtional
+support for plugins and tweaks some of the existing colors to work better.
 
-    * - command
-      - description
-
-    * - ``:DiffviewOpen``
-      - Opens the viewer
-
-    * - ``:DiffviewFileHistory``
-      - View diffs for this file throughout git history
-
+No additional commands configured.
