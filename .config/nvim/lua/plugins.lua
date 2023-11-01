@@ -26,7 +26,7 @@ return {
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
   {
-    "EdenEast/nightfox.nvim",
+    "EdenEast/nightfox.nvim", -- family of colorschemes (nightfox, dawnfox, terrafox, etc)
     lazy = false,
     priority = 1000,
     config = function()
@@ -69,6 +69,7 @@ return {
       {
         "<leader>ff",
         function()
+          -- use a previewer that doesn't show each file's contents
           local previewer = require("telescope.themes").get_dropdown({ previewer = false })
           require("telescope.builtin").find_files(previewer)
         end,
@@ -120,6 +121,7 @@ return {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
     lazy = false,
     config = function()
+      -- tweak the sizes of the new terminal
       require("toggleterm").setup({
         size = function(term)
           if term.direction == "horizontal" then
@@ -129,9 +131,8 @@ return {
           end
         end,
       })
-      -- Always use insert mode when entering a terminal buffer, even with mouse
-      -- click. NOTE: Clicking with a mouse a second time enters visual select mode,
-      -- just like in a text buffer.
+      -- Always use insert mode when entering a terminal buffer, even with mouse click.
+      -- NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*",
         callback = function()
@@ -139,6 +140,7 @@ return {
         end,
       })
 
+      -- Only set this for RMarkdown
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "rmarkdown",
         callback = function()
@@ -150,6 +152,8 @@ return {
           )
         end,
       })
+
+      -- Only set this for Python
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "python",
         callback = function()
@@ -234,7 +238,7 @@ return {
     main = "ibl",
     opts = {
       indent = { char = "┊" }, -- make the character a little less dense
-      scope = { exclude = { language = { "markdown", "rst" } } },
+      scope = { exclude = { language = { "markdown", "rst" } } }, -- don't need scope for text docs
     },
   },
 
@@ -254,7 +258,7 @@ return {
   },
 
   {
-    "lewis6991/gitsigns.nvim", -- show changes in git repo
+    "lewis6991/gitsigns.nvim", -- show changes in file, when working in a git repo
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -287,13 +291,13 @@ return {
   },
 
   {
-    "nvim-lualine/lualine.nvim",
+    "nvim-lualine/lualine.nvim", -- status line along the bottom
     config = true,
-    opts = { options = { theme = "zenburn" } },
+    opts = { options = { theme = "zenburn" } }, -- this theme is supplied by the zenburn.nvim plugin
 
   },
   {
-    "akinsho/bufferline.nvim", config = true, lazy = false,
+    "akinsho/bufferline.nvim", config = true, lazy = false, -- tabs for buffers along the top
     keys = {
       {"<leader>b", "<cmd>BufferLinePick<CR>", desc = "Pick buffer"},
     },
@@ -323,9 +327,6 @@ return {
           separator = true,
           },
         },
-
-
-
       },
     },
 
@@ -434,11 +435,11 @@ return {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "williamboman/mason.nvim", -- convenient installation of LSP clients
     lazy = false, config = true,
   },
   {
-    "neovim/nvim-lspconfig",
+    "neovim/nvim-lspconfig", -- convenient configuration of LSP clients
 
     cmd = "LspStart",
 
@@ -499,7 +500,7 @@ return {
     },
   },
   {
-    "folke/trouble.nvim",
+    "folke/trouble.nvim", -- split window to show issues found by LSP
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       { "<leader>ct", "<cmd>TroubleToggle<CR>", desc = "Toggle trouble.nvim" },
