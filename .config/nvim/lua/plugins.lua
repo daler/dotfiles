@@ -19,12 +19,14 @@ return {
   { "Vimjas/vim-python-pep8-indent", ft = { "python", "snakemake" } }, -- better indentation for python
   { "samoshkin/vim-mergetool", cmd = "MergetoolStart" }, -- easily work with 3-way merge conflicts
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
+  { "junegunn/gv.vim", cmd = "GV", dependencies = {"tpope/vim-fugitive"}, lazy = true}, -- graphical git log
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
   { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
   { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
+  { "norcalli/nvim-colorizer.lua", config = true, lazy = true, cmd = "ColorizerToggle" }, -- color hex codes by their actual color
   {
     "EdenEast/nightfox.nvim", -- family of colorschemes (nightfox, dawnfox, terrafox, etc)
     lazy = false,
