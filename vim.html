@@ -48,31 +48,19 @@
             
   <section id="neovim-configuration">
 <span id="vim"></span><h1>Neovim configuration<a class="headerlink" href="#neovim-configuration" title="Link to this heading">¶</a></h1>
-<p>The <code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> file has only basic setup for vim.</p>
-<p>The files <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.lua</span></code> is the entry point of the nvim config.</p>
-<p>See <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> and <a class="reference internal" href="why.html#why-lua"><span class="std std-ref">Why Lua</span></a> if you’re coming here from using older
-versions of these dotfiles.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Unless otherwise specified, paths on this page are relative to
-<code class="file docutils literal notranslate"><span class="pre">~/.config/nvim</span></code>.</p>
+<p>See <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> and <a class="reference internal" href="why.html#why-lua"><span class="std std-ref">Why Lua</span></a> if you’re coming here from using older
+versions of these dotfiles.</p>
 </div>
-<section id="structure">
-<h2>Structure<a class="headerlink" href="#structure" title="Link to this heading">¶</a></h2>
-<p>Here is a schematic of the nvim config files in <code class="file docutils literal notranslate"><span class="pre">~/.config/nvim</span></code>:</p>
+<p>The <code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> file has only basic setup for vim.</p>
+<p>The file <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.lua</span></code> is the entry point of the nvim config.
+Unless otherwise specified, paths on this page are relative to
+<code class="file docutils literal notranslate"><span class="pre">~/.config/nvim</span></code>.</p>
 <ul class="simple">
-<li><p><code class="file docutils literal notranslate"><span class="pre">init.lua</span></code>: entry point, and imports files from <code class="file docutils literal notranslate"><span class="pre">lua/</span></code> subdirectory</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">lua/settings.lua</span></code>: general vim settings</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">lua/lazy-bootstrap.lua</span></code>: automatically installs and makes available
-the lazy.nvim plugin manager (no need for <code class="docutils literal notranslate"><span class="pre">./setup.sh</span>
-<span class="pre">--set-up-vim-plugins</span></code>)</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">lua/mappings.lua</span></code>: custom keymappings</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">lua/autocommands.lua</span></code>: custom autocommands</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">lua/colorscheme.lua</span></code>: set and/or modify colorscheme</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code>: plugin configs</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">~/.config/nvim/init.lua</span></code> has general settings.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">~/.config/nvim/lua/plugins.lua</span></code> has plugin settings.</p></li>
 </ul>
-<p>See <a class="reference internal" href="#plugins"><span class="std std-ref">Plugins</span></a> for details on how the plugins are configured.</p>
-</section>
 <section id="using-the-mouse">
 <h2>Using the mouse<a class="headerlink" href="#using-the-mouse" title="Link to this heading">¶</a></h2>
 <p>In addition to allowing clicking and scrolling, <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">mouse=a</span></code> also:</p>
@@ -90,8 +78,8 @@ clicked.</p></li>
 Differentiating between tabs and spaces is extremely helpful in tricky
 debugging situations.</p>
 <p>The vim config has these lines:</p>
-<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span><span class="p">:</span>autocmd <span class="nb">InsertEnter</span> * <span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;</span>•
-<span class="p">:</span>autocmd <span class="nb">InsertLeave</span> * <span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;</span>•<span class="p">,</span>trail:∙<span class="p">,</span>nbsp:•<span class="p">,</span>extends:⟩<span class="p">,</span>precedes:⟨
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span><span class="p">.</span><span class="n">cmd</span><span class="p">(</span><span class="s2">&quot;:autocmd InsertEnter * set listchars=tab:&gt;•&quot;</span><span class="p">)</span>
+<span class="n">vim</span><span class="p">.</span><span class="n">cmd</span><span class="p">(</span><span class="s2">&quot;:autocmd InsertLeave * set listchars=tab:&gt;•,trail:∙,nbsp:•,extends:⟩,precedes:⟨&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>With these settings &lt;TAB&gt; characters look like <code class="docutils literal notranslate"><span class="pre">&gt;••••</span></code>. Trailing spaces show up
@@ -103,7 +91,7 @@ text offscreen.</p>
 </section>
 <section id="switching-buffers">
 <h2>Switching buffers<a class="headerlink" href="#switching-buffers" title="Link to this heading">¶</a></h2>
-<p>Three main ways of <em>opening</em> a file in a new buffer:</p>
+<p>Three main ways of <strong>opening</strong> file in a new buffer:</p>
 <table class="docutils align-left">
 <thead>
 <tr class="row-odd"><th class="head"><p>command</p></th>
@@ -117,12 +105,12 @@ text offscreen.</p>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ff</kbd></p></td>
 <td><p>Search for file in directory to open in new buffer (Telescope)</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fbo</kbd></p></td>
-<td><p>Open a file browser, hit Enter on file (nvim-tree)</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fb</kbd></p></td>
+<td><p>Toggle file browser, hit Enter on file (nvim-tree)</p></td>
 </tr>
 </tbody>
 </table>
-<p>Once you have multiple buffers, you can switch between them in these ways:</p>
+<p>Once you have multiple buffers, you can <strong>switch</strong> between them in these ways:</p>
 <table class="docutils align-left">
 <thead>
 <tr class="row-odd"><th class="head"><p>command</p></th>
@@ -139,18 +127,22 @@ text offscreen.</p>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;1</kbd>, <kbd class="kbd docutils literal notranslate">&lt;leader&gt;2</kbd></p></td>
 <td><p>First buffer, last buffer</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">,b</kbd></p></td>
-<td><p>tab-complete buffer name (or number), then hit enter</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;b</kbd> then type highlighted letter in tab</p></td>
+<td><p>Switch buffer</p></td>
 </tr>
 </tbody>
 </table>
 <p>The display of the bufferline is configured in <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code>, as part
-of the vim-airline plugin.</p>
+of the bufferline plugin. It is additionally styled using the
+daler/zenburn.nvim plugin/colorscheme.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-11-01: </span><kbd class="kbd docutils literal notranslate">&lt;leader&gt;b</kbd> using bufferline plugin</p>
+</div>
 </section>
 <section id="format-options-explanation">
 <h2>Format options explanation<a class="headerlink" href="#format-options-explanation" title="Link to this heading">¶</a></h2>
 <p>The following options change the behavior of various formatting; see <code class="docutils literal notranslate"><span class="pre">:h</span> <span class="pre">formatoptions</span></code>:</p>
-<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> <span class="nb">formatoptions</span><span class="p">=</span>qrn1coj
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span><span class="p">.</span><span class="n">cmd</span><span class="p">(</span><span class="s2">&quot;set formatoptions=qrn1coj&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Explanation of these options:</p>
@@ -195,12 +187,13 @@ of the vim-airline plugin.</p>
 <p>Here are some general shortcuts that are defined in the included config. With
 the <code class="docutils literal notranslate"><span class="pre">which-key</span></code> plugin, many of these are also discoverable by hitting the
 first key and then waiting a second for the menu to pop up.</p>
-<p>These are defined in <code class="file docutils literal notranslate"><span class="pre">lua/mappings.lua</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Mappings that use a plugin</strong> are configured in the <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code>
 file and are described below under the respective plugin’s section.</p>
 </div>
+<p>If you’re definign your own keymappings, add a <code class="docutils literal notranslate"><span class="pre">desc</span></code> argument so that
+which-key will provide a description for it.</p>
 <table class="docutils align-left">
 <thead>
 <tr class="row-odd"><th class="head"><p>command</p></th>
@@ -235,9 +228,9 @@ for making Python or R lists out of pasted text</p></td>
 making section separators.</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;&lt;TAB&gt;</kbd></p></td>
-<td><p>Useful for working with TSVs. Writes <code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">nowrap</span> <span class="pre">tabstop=</span></code> and then
-leaves the cursor at the vim command bar so you can fill in a reasonble
-tabstop for the file you’re looking at.</p></td>
+<td><p>Useful for working with TSVs. Starts the command <code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">nowrap</span>
+<span class="pre">tabstop=</span></code> but then leaves the cursor at the vim command bar so you can
+fill in a reasonble tabstop for the file you’re looking at.</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;`</kbd></p></td>
 <td><p>(that’s a backtick) Adds a new RMarkdown chunk and places the cursor
@@ -251,17 +244,7 @@ rmarkdown yaml)</p></td>
 <td><p>Used for RMarkdown; writes an RMarkdown chunk with commonly-used knitr
 global options (mnemonic: knitr options)</p></td>
 </tr>
-</tbody>
-</table>
-<p>This is configured in <code class="file docutils literal notranslate"><span class="pre">lua/autocommands.lua</span></code>:</p>
-<table class="docutils align-left">
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;d</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;d</kbd></p></td>
 <td><p>Insert the current date as a ReST or Markdown-formatted title,
 depending on the file type. Useful when writing logs.</p></td>
 </tr>
@@ -279,25 +262,23 @@ to keep a snappy startup time, and only load plugins when they’re needed. See
 <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for my rationale on that.</p>
 <p>Each plugin spec in <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code> is a table. The first property is
 the name of the plugin. Other properties:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>lazy: only load when requested by something else. Saves on initial load time.</p></li>
-<li><p>ft: only load the plugin when editing this filetype. Implies lazy=true.</p></li>
-<li><p>cmd: only load the plugin when first running this command. Implies lazy=true.</p></li>
-<li><p>keys: only load the plugin when using these keymappings. Implies lazy=true.</p></li>
-<li><p>config: run this stuff after the plugin loads. If config = true, just run
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lazy</span></code>: only load when requested by something else. Saves on initial load
+time, but use this with care since it can get confusing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ft</span></code>: only load the plugin when editing this filetype. Implies lazy=true.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd</span></code>: only load the plugin when first running this command. Implies lazy=true.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keys</span></code>: only load the plugin when using these keymappings. Implies lazy=true.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: run this stuff after the plugin loads. If config = true, just run
 the default setup for the plugin.</p></li>
-<li><p>init: similar to config, but used for pure-vim plugins</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">init</span></code>: similar to config, but used for pure-vim plugins</p></li>
 </ul>
-</div></blockquote>
-<p>If keys are specified, this is the only place they need to be mapped, and
-they will make their way into the which-key menu even if they trigger
-a lazy-loaded plugin.</p>
+<p>If keys are specified, this is the only place they need to be mapped, and they
+will make their way into the which-key menu even if they trigger a lazy-loaded
+plugin. Use the <code class="docutils literal notranslate"><span class="pre">desc</span></code> argument to give which-key a description to use.</p>
 <p>Here, plugins are sorted roughly so that the ones that provide additional
 commands come first.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>note</p>
 <p>Don’t like a plugin? Find it in <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code> and add <code class="docutils literal notranslate"><span class="pre">enabled</span>
 <span class="pre">=</span> <span class="pre">false</span></code> next to where the plugin is named. For example:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- ... other stuff</span>
@@ -305,43 +286,48 @@ commands come first.</p>
 <span class="c1">-- ... more stuff</span>
 </pre></div>
 </div>
+<p>Or delete it, or comment it out.</p>
 </div>
 <p>Here is a list of the plugins documented below:</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#vim-commentary" id="id31"><code class="docutils literal notranslate"><span class="pre">vim-commentary</span></code></a></p></li>
-<li><p><a class="reference internal" href="#beacon" id="id32"><code class="docutils literal notranslate"><span class="pre">beacon</span></code></a></p></li>
-<li><p><a class="reference internal" href="#telescope" id="id33"><code class="docutils literal notranslate"><span class="pre">telescope</span></code></a></p></li>
-<li><p><a class="reference internal" href="#nvim-tree" id="id34"><code class="docutils literal notranslate"><span class="pre">nvim-tree</span></code></a></p></li>
-<li><p><a class="reference internal" href="#which-key" id="id35"><code class="docutils literal notranslate"><span class="pre">which-key</span></code></a></p></li>
-<li><p><a class="reference internal" href="#accelerated-jk" id="id36"><code class="docutils literal notranslate"><span class="pre">accelerated-jk</span></code></a></p></li>
-<li><p><a class="reference internal" href="#nvim-cmp" id="id37"><code class="docutils literal notranslate"><span class="pre">nvim-cmp</span></code></a></p></li>
-<li><p><a class="reference internal" href="#aerial" id="id38"><code class="docutils literal notranslate"><span class="pre">aerial</span></code></a></p></li>
-<li><p><a class="reference internal" href="#treesitter" id="id39"><code class="docutils literal notranslate"><span class="pre">treesitter</span></code></a></p></li>
-<li><p><a class="reference internal" href="#gitsigns" id="id40"><code class="docutils literal notranslate"><span class="pre">gitsigns</span></code></a></p></li>
-<li><p><a class="reference internal" href="#toggleterm" id="id41"><code class="docutils literal notranslate"><span class="pre">toggleterm</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-fugitive" id="id42"><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-gv" id="id43"><code class="docutils literal notranslate"><span class="pre">vim.gv</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-mergetool" id="id44"><code class="docutils literal notranslate"><span class="pre">vim-mergetool</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-diff-enhanced" id="id45"><code class="docutils literal notranslate"><span class="pre">vim-diff-enhanced</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-table-mode" id="id46"><code class="docutils literal notranslate"><span class="pre">vim-table-mode</span></code></a></p></li>
-<li><p><a class="reference internal" href="#leap-nvim" id="id47"><code class="docutils literal notranslate"><span class="pre">leap.nvim</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-surround" id="id48"><code class="docutils literal notranslate"><span class="pre">vim-surround</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vis" id="id49"><code class="docutils literal notranslate"><span class="pre">vis</span></code></a></p></li>
-<li><p><a class="reference internal" href="#indent-blankline" id="id50"><code class="docutils literal notranslate"><span class="pre">indent-blankline</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-python-pep8-indent" id="id51"><code class="docutils literal notranslate"><span class="pre">vim-python-pep8-indent</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-rmarkdown" id="id52"><code class="docutils literal notranslate"><span class="pre">vim-rmarkdown</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-pandoc" id="id53"><code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-pandoc-syntax" id="id54"><code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-airline" id="id55"><code class="docutils literal notranslate"><span class="pre">vim-airline</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-airline-themes" id="id56"><code class="docutils literal notranslate"><span class="pre">vim-airline-themes</span></code></a></p></li>
-<li><p><a class="reference internal" href="#vim-tmux-clipboard" id="id57"><code class="docutils literal notranslate"><span class="pre">vim-tmux-clipboard</span></code></a></p></li>
-<li><p><a class="reference internal" href="#sphinx-nvim" id="id58"><code class="docutils literal notranslate"><span class="pre">sphinx.nvim</span></code></a></p></li>
-<li><p><a class="reference internal" href="#diffview-nvim" id="id59"><code class="docutils literal notranslate"><span class="pre">diffview.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-commentary" id="id33"><code class="docutils literal notranslate"><span class="pre">vim-commentary</span></code></a></p></li>
+<li><p><a class="reference internal" href="#beacon" id="id34"><code class="docutils literal notranslate"><span class="pre">beacon</span></code></a></p></li>
+<li><p><a class="reference internal" href="#telescope" id="id35"><code class="docutils literal notranslate"><span class="pre">telescope</span></code></a></p></li>
+<li><p><a class="reference internal" href="#nvim-tree" id="id36"><code class="docutils literal notranslate"><span class="pre">nvim-tree</span></code></a></p></li>
+<li><p><a class="reference internal" href="#which-key" id="id37"><code class="docutils literal notranslate"><span class="pre">which-key</span></code></a></p></li>
+<li><p><a class="reference internal" href="#accelerated-jk" id="id38"><code class="docutils literal notranslate"><span class="pre">accelerated-jk</span></code></a></p></li>
+<li><p><a class="reference internal" href="#nvim-cmp" id="id39"><code class="docutils literal notranslate"><span class="pre">nvim-cmp</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aerial" id="id40"><code class="docutils literal notranslate"><span class="pre">aerial</span></code></a></p></li>
+<li><p><a class="reference internal" href="#treesitter" id="id41"><code class="docutils literal notranslate"><span class="pre">treesitter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#nvim-lspconfig" id="id42"><code class="docutils literal notranslate"><span class="pre">nvim-lspconfig</span></code></a></p></li>
+<li><p><a class="reference internal" href="#mason-nvim" id="id43"><code class="docutils literal notranslate"><span class="pre">mason.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#trouble-nvim" id="id44"><code class="docutils literal notranslate"><span class="pre">trouble.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#gitsigns" id="id45"><code class="docutils literal notranslate"><span class="pre">gitsigns</span></code></a></p></li>
+<li><p><a class="reference internal" href="#toggleterm" id="id46"><code class="docutils literal notranslate"><span class="pre">toggleterm</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-fugitive" id="id47"><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-gv" id="id48"><code class="docutils literal notranslate"><span class="pre">vim.gv</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-mergetool" id="id49"><code class="docutils literal notranslate"><span class="pre">vim-mergetool</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-diff-enhanced" id="id50"><code class="docutils literal notranslate"><span class="pre">vim-diff-enhanced</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-table-mode" id="id51"><code class="docutils literal notranslate"><span class="pre">vim-table-mode</span></code></a></p></li>
+<li><p><a class="reference internal" href="#leap-nvim" id="id52"><code class="docutils literal notranslate"><span class="pre">leap.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-surround" id="id53"><code class="docutils literal notranslate"><span class="pre">vim-surround</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vis" id="id54"><code class="docutils literal notranslate"><span class="pre">vis</span></code></a></p></li>
+<li><p><a class="reference internal" href="#bufferline-nvim" id="id55"><code class="docutils literal notranslate"><span class="pre">bufferline.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#diffview-nvim" id="id56"><code class="docutils literal notranslate"><span class="pre">diffview.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lualine" id="id57"><code class="docutils literal notranslate"><span class="pre">lualine</span></code></a></p></li>
+<li><p><a class="reference internal" href="#indent-blankline" id="id58"><code class="docutils literal notranslate"><span class="pre">indent-blankline</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-python-pep8-indent" id="id59"><code class="docutils literal notranslate"><span class="pre">vim-python-pep8-indent</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-rmarkdown" id="id60"><code class="docutils literal notranslate"><span class="pre">vim-rmarkdown</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-pandoc" id="id61"><code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-pandoc-syntax" id="id62"><code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code></a></p></li>
+<li><p><a class="reference internal" href="#vim-tmux-clipboard" id="id63"><code class="docutils literal notranslate"><span class="pre">vim-tmux-clipboard</span></code></a></p></li>
+<li><p><a class="reference internal" href="#sphinx-nvim" id="id64"><code class="docutils literal notranslate"><span class="pre">sphinx.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#zenburn-nvim" id="id65"><code class="docutils literal notranslate"><span class="pre">zenburn.nvim</span></code></a></p></li>
 </ul>
 </nav>
 <section id="vim-commentary">
-<h3><a class="toc-backref" href="#id31" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-commentary</span></code></a><a class="headerlink" href="#vim-commentary" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id33" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-commentary</span></code></a><a class="headerlink" href="#vim-commentary" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -364,7 +350,7 @@ toggle comments on lines or blocks of code.</p>
 </table>
 </section>
 <section id="beacon">
-<h3><a class="toc-backref" href="#id32" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">beacon</span></code></a><a class="headerlink" href="#beacon" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id34" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">beacon</span></code></a><a class="headerlink" href="#beacon" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -387,14 +373,14 @@ marker to show where the cursor is.</p>
 </table>
 </section>
 <section id="telescope">
-<h3><a class="toc-backref" href="#id33" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">telescope</span></code></a><a class="headerlink" href="#telescope" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id35" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">telescope</span></code></a><a class="headerlink" href="#telescope" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
 <p><a class="reference external" href="https://github.com/nvim-telescope/telescope.nvim">Telescope</a> opens
 a floating window with fuzzy-search selection.</p>
 <p>Type in the text box to filter the list. Hit enter to select (and open the
-selected file in a new buffer).</p>
+selected file in a new buffer). Hit Esc twice to exit.</p>
 <table class="docutils align-left">
 <thead>
 <tr class="row-odd"><th class="head"><p>command</p></th>
@@ -423,8 +409,7 @@ Selecting entry takes you right to the line.</p></td>
 <p>Other useful things you can do with Telescope:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">:Telescope</span> <span class="pre">highlights</span></code> to see the currently set highlights for the
-colorscheme. You can use that information to modify
-<code class="file docutils literal notranslate"><span class="pre">lua/plugins/zenburn.lua</span></code>.</p></li>
+colorscheme.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">:Telescope</span> <span class="pre">builtin</span></code> to see a picker of all the built-in pickers.
 Selecting one opens that picker. Very meta. But also very interesting for
 poking around to see what’s configured.</p></li>
@@ -435,32 +420,29 @@ are interesting to browse through.</p></li>
 </ul>
 </section>
 <section id="nvim-tree">
-<h3><a class="toc-backref" href="#id34" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">nvim-tree</span></code></a><a class="headerlink" href="#nvim-tree" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id36" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">nvim-tree</span></code></a><a class="headerlink" href="#nvim-tree" title="Link to this heading">¶</a></h3>
 <p><a class="reference external" href="https://github.com/nvim-tree/nvim-tree.lua">nvim-tree</a> is a file browser.</p>
 <table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p>command</p></td>
 <td><p>description</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fbo</kbd></p></td>
-<td><p>File browser open (or focus, if already open)</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fb</kbd></p></td>
+<td><p>Toggle file browser</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fbc</kbd> or <kbd class="kbd docutils literal notranslate">q</kbd> in browser</p></td>
-<td><p>File browser close</p></td>
-</tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (within browser)</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (within browser)</p></td>
 <td><p>Go up a directory</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">Enter</kbd> (within browser)</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">Enter</kbd> (within browser)</p></td>
 <td><p>Open file or directory, or close directory</p></td>
 </tr>
 </tbody>
 </table>
 <p>The window-switching shortcuts <kbd class="kbd docutils literal notranslate">&lt;leader&gt;w</kbd> and <kbd class="kbd docutils literal notranslate">&lt;leader&gt;q</kbd> (move to
-windows left and right respectively) also work.</p>
+windows left and right respectively) also work</p>
 </section>
 <section id="which-key">
-<h3><a class="toc-backref" href="#id35" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">which-key</span></code></a><a class="headerlink" href="#which-key" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id37" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">which-key</span></code></a><a class="headerlink" href="#which-key" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -520,7 +502,7 @@ still be shown.</p>
 </table>
 </section>
 <section id="accelerated-jk">
-<h3><a class="toc-backref" href="#id36" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">accelerated-jk</span></code></a><a class="headerlink" href="#accelerated-jk" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id38" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">accelerated-jk</span></code></a><a class="headerlink" href="#accelerated-jk" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -543,7 +525,7 @@ the acceleration curve depending on your system’s keyboard repeat rate setting
 </table>
 </section>
 <section id="nvim-cmp">
-<h3><a class="toc-backref" href="#id37" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">nvim-cmp</span></code></a><a class="headerlink" href="#nvim-cmp" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id39" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">nvim-cmp</span></code></a><a class="headerlink" href="#nvim-cmp" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -570,7 +552,7 @@ to fill them in.</p>
 </table>
 </section>
 <section id="aerial">
-<h3><a class="toc-backref" href="#id38" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">aerial</span></code></a><a class="headerlink" href="#aerial" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id40" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">aerial</span></code></a><a class="headerlink" href="#aerial" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -589,7 +571,7 @@ contents.</p>
 <td><p>Toggle aerial sidebar</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">{</kbd> and <kbd class="kbd docutils literal notranslate">}</kbd></p></td>
-<td><p>Jump to prev or next item</p></td>
+<td><p>Jump to prev or next item (function, snakemake rule, markdown section)</p></td>
 </tr>
 </tbody>
 </table>
@@ -597,7 +579,7 @@ contents.</p>
 mapped, which you can read about in the <a class="reference external" href="https://github.com/stevearc/aerial.nvim">README for aerial</a>.</p>
 </section>
 <section id="treesitter">
-<h3><a class="toc-backref" href="#id39" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">treesitter</span></code></a><a class="headerlink" href="#treesitter" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id41" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">treesitter</span></code></a><a class="headerlink" href="#treesitter" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -626,8 +608,116 @@ language.</p>
 </tbody>
 </table>
 </section>
+<section id="nvim-lspconfig">
+<h3><a class="toc-backref" href="#id42" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">nvim-lspconfig</span></code></a><a class="headerlink" href="#nvim-lspconfig" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-11-01.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a> provides access to
+nvim’s Language Server Protocol (LSP). You install an LSP server for each
+language you want to use it with (see <a class="reference internal" href="#mason"><span class="std std-ref">mason.nvim</span></a> for installing these).
+Then you enable the LSP server for a buffer, and you get code-aware hints,
+warnings, etc.</p>
+<p>Not all features are implemented in every LSP server. For example, the Python
+LSP is quite feature-rich. In contrast, the R LSP is a bit weak. Install them
+with <a class="reference internal" href="#mason"><span class="std std-ref">mason.nvim</span></a>.</p>
+<p>The Python LSP may be quite verbose if you enable it on existing code, though
+in my experience addressing everything it’s complaining about will improve your
+code. You may find you need to add type annotations in some cases.</p>
+<p>Because the experience can be hit-or-miss depending on the language you’re
+using, LSP is disabled by default. The current exception is for Lua, but you
+can configure this behavior in <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code>. Use <kbd class="kbd docutils literal notranslate">&lt;leader&gt;cl</kbd>
+to start the LSP for a buffer. See <a class="reference internal" href="#trouble"><span class="std std-ref">trouble.nvim</span></a> for easily viewing all the
+diagnostics.</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>command</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cl</kbd></p></td>
+<td><p>Start the LSP server for this buffer</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ce</kbd></p></td>
+<td><p>Open diagnostic details</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">[e</kbd></p></td>
+<td><p>Prev diagnostic</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">]e</kbd></p></td>
+<td><p>Next diagnostic</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cgd</kbd></p></td>
+<td><p>Goto definition (e.g., when cursor is over a function)</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cK</kbd></p></td>
+<td><p>Hover help</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;crn</kbd></p></td>
+<td><p>Rename all instances of this symbol</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cr</kbd></p></td>
+<td><p>Goto references</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ca</kbd></p></td>
+<td><p>Code action (opens a menu if implemented)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mason-nvim">
+<span id="mason"></span><h3><a class="toc-backref" href="#id43" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">mason.nvim</span></code></a><a class="headerlink" href="#mason-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-11-01.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/williamboman/mason.nvim">mason.nvim</a> easily installs
+Language Server Protocols, debuggers, linters, and formatters. Use <code class="docutils literal notranslate"><span class="pre">:Mason</span></code>
+to open the interface, and hit <kbd class="kbd docutils literal notranslate">i</kbd> on what you want to install, or
+<kbd class="kbd docutils literal notranslate">g?</kbd> for more help.</p>
+<p>For Python, install <code class="docutils literal notranslate"><span class="pre">pyright</span></code>.</p>
+<p>For Lua (working on your nvim configs), use <code class="docutils literal notranslate"><span class="pre">lua-language-server</span></code>
+(nvim-lspconfig calls this <code class="docutils literal notranslate"><span class="pre">lua-ls</span></code>).</p>
+<p>For R, you can try <code class="docutils literal notranslate"><span class="pre">r-languageserver</span></code>, but this needs to be installed within
+the environment you’re using R (and R itself must be available). It’s not
+that useful if you want to use it in multiple conda environments. It doesn’t
+have that many features yet, either.</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>command</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:Mason</span></code></p></td>
+<td><p>Open the mason interface</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="trouble-nvim">
+<span id="trouble"></span><h3><a class="toc-backref" href="#id44" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">trouble.nvim</span></code></a><a class="headerlink" href="#trouble-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-11-01.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/folke/trouble.nvim">trouble.nvim</a> organizes all the LSP
+diagnostics into a single window. You can use that to navigate the issues found
+in your code.</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>command</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ct</kbd></p></td>
+<td><p>Toggle trouble.nvim window</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="gitsigns">
-<h3><a class="toc-backref" href="#id40" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">gitsigns</span></code></a><a class="headerlink" href="#gitsigns" title="Link to this heading">¶</a></h3>
+<span id="gitsigns-ref"></span><h3><a class="toc-backref" href="#id45" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">gitsigns</span></code></a><a class="headerlink" href="#gitsigns" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2023-10-15.</span></p>
 </div>
@@ -687,9 +777,13 @@ is “hunk” (the term for a block of changes).</p>
 </table>
 <p>Additionally, this supports hunks as text objects using <code class="docutils literal notranslate"><span class="pre">ih</span></code> (inside hunk).
 E.g., select a hunk with <kbd class="kbd docutils literal notranslate">vih</kbd>, or delete a hunk with <kbd class="kbd docutils literal notranslate">dih</kbd>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#vimfugitive"><span class="std std-ref">vim-fugitive</span></a>, <a class="reference internal" href="#gitsigns-ref"><span class="std std-ref">gitsigns</span></a>, <a class="reference internal" href="#vimgv"><span class="std std-ref">vim.gv</span></a>,  and <a class="reference internal" href="#diffview"><span class="std std-ref">diffview.nvim</span></a> are other complementary plugins for working with Git.</p>
+</div>
 </section>
 <section id="toggleterm">
-<h3><a class="toc-backref" href="#id41" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">toggleterm</span></code></a><a class="headerlink" href="#toggleterm" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id46" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">toggleterm</span></code></a><a class="headerlink" href="#toggleterm" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2022-12-27.</span></p>
 </div>
@@ -749,7 +843,7 @@ IPython in the terminal buffer.</p></td>
 </table>
 </section>
 <section id="vim-fugitive">
-<span id="vimfugitive"></span><h3><a class="toc-backref" href="#id42" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code></a><a class="headerlink" href="#vim-fugitive" title="Link to this heading">¶</a></h3>
+<span id="vimfugitive"></span><h3><a class="toc-backref" href="#id47" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code></a><a class="headerlink" href="#vim-fugitive" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2018-09-26.</span></p>
 </div>
@@ -812,9 +906,13 @@ are used heavily when working with <code class="docutils literal notranslate"><s
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#vimfugitive"><span class="std std-ref">vim-fugitive</span></a>, <a class="reference internal" href="#gitsigns-ref"><span class="std std-ref">gitsigns</span></a>, <a class="reference internal" href="#vimgv"><span class="std std-ref">vim.gv</span></a>,  and <a class="reference internal" href="#diffview"><span class="std std-ref">diffview.nvim</span></a> are other complementary plugins for working with Git.</p>
+</div>
 </section>
 <section id="vim-gv">
-<span id="id14"></span><h3><a class="toc-backref" href="#id43" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim.gv</span></code></a><a class="headerlink" href="#vim-gv" title="Link to this heading">¶</a></h3>
+<span id="vimgv"></span><h3><a class="toc-backref" href="#id48" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim.gv</span></code></a><a class="headerlink" href="#vim-gv" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2021-02-14.</span></p>
 </div>
@@ -835,9 +933,13 @@ view and browse git history.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#vimfugitive"><span class="std std-ref">vim-fugitive</span></a>, <a class="reference internal" href="#gitsigns-ref"><span class="std std-ref">gitsigns</span></a>, <a class="reference internal" href="#vimgv"><span class="std std-ref">vim.gv</span></a>,  and <a class="reference internal" href="#diffview"><span class="std std-ref">diffview.nvim</span></a> are other complementary plugins for working with Git.</p>
+</div>
 </section>
 <section id="vim-mergetool">
-<h3><a class="toc-backref" href="#id44" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-mergetool</span></code></a><a class="headerlink" href="#vim-mergetool" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id49" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-mergetool</span></code></a><a class="headerlink" href="#vim-mergetool" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2021-02-14.</span></p>
 </div>
@@ -875,7 +977,7 @@ enough flexibility in configuration to be able to reproduce default behaviors.</
 <p>Save and quit, or use <kbd class="kbd docutils literal notranslate">:MergetoolStop</kbd>.</p>
 </section>
 <section id="vim-diff-enhanced">
-<h3><a class="toc-backref" href="#id45" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-diff-enhanced</span></code></a><a class="headerlink" href="#vim-diff-enhanced" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id50" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-diff-enhanced</span></code></a><a class="headerlink" href="#vim-diff-enhanced" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2019-02-27.</span></p>
 </div>
@@ -921,7 +1023,7 @@ diffs are not looking right, try changing the algorithm with this plugin:</p>
 </table>
 </section>
 <section id="vim-table-mode">
-<h3><a class="toc-backref" href="#id46" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-table-mode</span></code></a><a class="headerlink" href="#vim-table-mode" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id51" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-table-mode</span></code></a><a class="headerlink" href="#vim-table-mode" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2019-03-27.</span></p>
 </div>
@@ -961,7 +1063,7 @@ as they’re edited</p></td>
 <p>See the homepage for, e.g., using <code class="docutils literal notranslate"><span class="pre">||</span></code> to auto-create header lines.</p>
 </section>
 <section id="leap-nvim">
-<h3><a class="toc-backref" href="#id47" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">leap.nvim</span></code></a><a class="headerlink" href="#leap-nvim" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id52" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">leap.nvim</span></code></a><a class="headerlink" href="#leap-nvim" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2022-12-27.</span></p>
 </div>
@@ -989,7 +1091,7 @@ point to go right there.</p>
 <p>This works best when keeping your eyes on the place you want to jump to.</p>
 </section>
 <section id="vim-surround">
-<h3><a class="toc-backref" href="#id48" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-surround</span></code></a><a class="headerlink" href="#vim-surround" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id53" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-surround</span></code></a><a class="headerlink" href="#vim-surround" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2022-12-27.</span></p>
 </div>
@@ -1015,7 +1117,7 @@ surrounding characters.</p>
 </table>
 </section>
 <section id="vis">
-<h3><a class="toc-backref" href="#id49" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vis</span></code></a><a class="headerlink" href="#vis" title="Link to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id54" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vis</span></code></a><a class="headerlink" href="#vis" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2019-09-30.</span></p>
 </div>
@@ -1038,104 +1140,39 @@ just the visual block selection, for example when editing TSV files.</p>
 </tbody>
 </table>
 </section>
-<section id="indent-blankline">
-<h3><a class="toc-backref" href="#id50" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">indent-blankline</span></code></a><a class="headerlink" href="#indent-blankline" title="Link to this heading">¶</a></h3>
+<section id="bufferline-nvim">
+<h3><a class="toc-backref" href="#id55" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">bufferline.nvim</span></code></a><a class="headerlink" href="#bufferline-nvim" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 2023-10-15.</span></p>
+<p><span class="versionmodified added">New in version 2023-11-01.</span></p>
 </div>
-<p><a class="reference external" href="https://github.com/lukas-reineke/indent-blankline.nvim">indent-blankline</a>
-shows vertical lines where there is indentation, and highlights one of these
-vertical lines to indicate the current <a class="reference external" href="https://en.wikipedia.org/wiki/Scope_(computer_science)">scope</a>.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-python-pep8-indent">
-<h3><a class="toc-backref" href="#id51" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-python-pep8-indent</span></code></a><a class="headerlink" href="#vim-python-pep8-indent" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2017.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/Vimjas/vim-python-pep8-indent">vim-python-pep8-indent</a>
-auto-indents Python using pep8 recommendations. This happens as you’re typing,
-or when you use <kbd class="kbd docutils literal notranslate">gq</kbd> on a selection to wrap.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-rmarkdown">
-<h3><a class="toc-backref" href="#id52" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-rmarkdown</span></code></a><a class="headerlink" href="#vim-rmarkdown" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2019-02-27.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/vim-pandoc/vim-rmarkdown">vim-rmarkdown</a> provides syntax
-highlighting for R within RMarkdown code chunks. Requires both <code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code>
-and <code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code>, described below.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-pandoc">
-<h3><a class="toc-backref" href="#id53" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code></a><a class="headerlink" href="#vim-pandoc" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2019-02-27.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc">vim-pandoc</a> Integration with
-<a class="reference external" href="http://johnmacfarlane.net/pandoc/">pandoc</a>. Uses vim-pandoc-syntax (see
-below) for syntax highlighting.</p>
-<p>Includes folding and formatting. Lots of shortcuts are defined by this plugin,
-see <code class="docutils literal notranslate"><span class="pre">:help</span> <span class="pre">vim-pandoc</span></code> for much more.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-pandoc-syntax">
-<h3><a class="toc-backref" href="#id54" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code></a><a class="headerlink" href="#vim-pandoc-syntax" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2019-02-27.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc-syntax">vim-pandoc-syntax</a> is used
-by vim-pandoc (above). It is a separate plugin because the authors found it
-easier to track bugs separately.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-airline">
-<h3><a class="toc-backref" href="#id55" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-airline</span></code></a><a class="headerlink" href="#vim-airline" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2016.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/vim-airline/vim-airline">vim-airline</a> provides a nice
-statusline, plus “tabs” that allow you to easily switch between open files and
-copy/paste between them.</p>
-<p>Install powerline fonts for full effect (<code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--powerline</span></code>). See below
-for themes.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-airline-themes">
-<h3><a class="toc-backref" href="#id56" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-airline-themes</span></code></a><a class="headerlink" href="#vim-airline-themes" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2016.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/vim-airline/vim-airline/wiki/Screenshots">vim-airline-themes</a> provides themes
-for use with vim-airline.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="vim-tmux-clipboard">
-<h3><a class="toc-backref" href="#id57" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-tmux-clipboard</span></code></a><a class="headerlink" href="#vim-tmux-clipboard" title="Link to this heading">¶</a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2016.</span></p>
-</div>
-<p><a class="reference external" href="https://github.com/roxma/vim-tmux-clipboard">vim-tmux-clipboard</a>
-automatically copies yanked text from vim into the tmux clipboard. Similarly,
-anything copied in tmux makes it into the vim clipboard.</p>
-<p>See this <a class="reference external" href="https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy">screencast</a> for
-usage details. Note that this also requires the <a class="reference external" href="https://github.com/tmux-plugins/vim-tmux-focus-events">vim-tmux-focus-events</a> plugin. You’ll need
-to make sure <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-g</span> <span class="pre">focus-events</span> <span class="pre">on</span></code> is in your <code class="file docutils literal notranslate"><span class="pre">.tmux.conf</span></code>.</p>
-<p>No additional commands configured.</p>
-</section>
-<section id="sphinx-nvim">
-<h3><a class="toc-backref" href="#id58" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">sphinx.nvim</span></code></a><a class="headerlink" href="#sphinx-nvim" title="Link to this heading">¶</a></h3>
-<p><a class="reference external" href="https://github.com/stsewd/sphinx.nvim">sphinx.nvim</a> provides some
-integrations for Sphinx and ReStructured Text.</p>
-<p>No additional commands configured.</p>
+<p><a class="reference external" href="https://github.com/akinsho/bufferline.nvim">bufferline.nvim</a> provides the
+tabs along the top.</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>command</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;b</kbd>, then type highlighted letter in tab</p></td>
+<td><p>Switch to buffer</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="diffview-nvim">
-<h3><a class="toc-backref" href="#id59" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">diffview.nvim</span></code></a><a class="headerlink" href="#diffview-nvim" title="Link to this heading">¶</a></h3>
+<span id="diffview"></span><h3><a class="toc-backref" href="#id56" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">diffview.nvim</span></code></a><a class="headerlink" href="#diffview-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-10-11.</span></p>
+</div>
 <p><a class="reference external" href="https://github.com/sindrets/diffview.nvim">diffview.nvim</a> supports viewing
 diffs across multiple files. It also has a nice interface for browsing previous
 commits.</p>
 <p>I’m still figuring out when it’s better to use this, fugitive, or gitsigns.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#vimfugitive"><span class="std std-ref">vim-fugitive</span></a>, <a class="reference internal" href="#gitsigns-ref"><span class="std std-ref">gitsigns</span></a>, <a class="reference internal" href="#vimgv"><span class="std std-ref">vim.gv</span></a>,  and <a class="reference internal" href="#diffview"><span class="std std-ref">diffview.nvim</span></a> are other complementary plugins for working with Git.</p>
+</div>
 <p>See the homepage for details.</p>
 <table class="docutils align-default">
 <tbody>
@@ -1150,6 +1187,97 @@ commits.</p>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="lualine">
+<h3><a class="toc-backref" href="#id57" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">lualine</span></code></a><a class="headerlink" href="#lualine" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-11-01.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> provides the status line along the bottom.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="indent-blankline">
+<h3><a class="toc-backref" href="#id58" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">indent-blankline</span></code></a><a class="headerlink" href="#indent-blankline" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-10-15.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/lukas-reineke/indent-blankline.nvim">indent-blankline</a>
+shows vertical lines where there is indentation, and highlights one of these
+vertical lines to indicate the current <a class="reference external" href="https://en.wikipedia.org/wiki/Scope_(computer_science)">scope</a>.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="vim-python-pep8-indent">
+<h3><a class="toc-backref" href="#id59" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-python-pep8-indent</span></code></a><a class="headerlink" href="#vim-python-pep8-indent" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2017.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/Vimjas/vim-python-pep8-indent">vim-python-pep8-indent</a>
+auto-indents Python using pep8 recommendations. This happens as you’re typing,
+or when you use <kbd class="kbd docutils literal notranslate">gq</kbd> on a selection to wrap.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="vim-rmarkdown">
+<h3><a class="toc-backref" href="#id60" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-rmarkdown</span></code></a><a class="headerlink" href="#vim-rmarkdown" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2019-02-27.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-rmarkdown">vim-rmarkdown</a> provides syntax
+highlighting for R within RMarkdown code chunks. Requires both <code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code>
+and <code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code>, described below.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="vim-pandoc">
+<h3><a class="toc-backref" href="#id61" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code></a><a class="headerlink" href="#vim-pandoc" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2019-02-27.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc">vim-pandoc</a> Integration with
+<a class="reference external" href="http://johnmacfarlane.net/pandoc/">pandoc</a>. Uses vim-pandoc-syntax (see
+below) for syntax highlighting.</p>
+<p>Includes folding and formatting. Lots of shortcuts are defined by this plugin,
+see <code class="docutils literal notranslate"><span class="pre">:help</span> <span class="pre">vim-pandoc</span></code> for much more.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="vim-pandoc-syntax">
+<h3><a class="toc-backref" href="#id62" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code></a><a class="headerlink" href="#vim-pandoc-syntax" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2019-02-27.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/vim-pandoc/vim-pandoc-syntax">vim-pandoc-syntax</a> is used
+by vim-pandoc (above). It is a separate plugin because the authors found it
+easier to track bugs separately.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="vim-tmux-clipboard">
+<h3><a class="toc-backref" href="#id63" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">vim-tmux-clipboard</span></code></a><a class="headerlink" href="#vim-tmux-clipboard" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2016.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/roxma/vim-tmux-clipboard">vim-tmux-clipboard</a>
+automatically copies yanked text from vim into the tmux clipboard. Similarly,
+anything copied in tmux makes it into the vim clipboard.</p>
+<p>See this <a class="reference external" href="https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy">screencast</a> for
+usage details. Note that this also requires the <a class="reference external" href="https://github.com/tmux-plugins/vim-tmux-focus-events">vim-tmux-focus-events</a> plugin. You’ll need
+to make sure <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-g</span> <span class="pre">focus-events</span> <span class="pre">on</span></code> is in your <code class="file docutils literal notranslate"><span class="pre">.tmux.conf</span></code>.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="sphinx-nvim">
+<h3><a class="toc-backref" href="#id64" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">sphinx.nvim</span></code></a><a class="headerlink" href="#sphinx-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-10-11.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/stsewd/sphinx.nvim">sphinx.nvim</a> provides some
+integrations for Sphinx and ReStructured Text.</p>
+<p>No additional commands configured.</p>
+</section>
+<section id="zenburn-nvim">
+<h3><a class="toc-backref" href="#id65" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">zenburn.nvim</span></code></a><a class="headerlink" href="#zenburn-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2023-11-01.</span></p>
+</div>
+<p>This uses my fork of <a class="reference external" href="https://github.com/phha/zenburn.nvim">https://github.com/phha/zenburn.nvim</a>, which adds addtional
+support for plugins and tweaks some of the existing colors to work better.</p>
+<p>No additional commands configured.</p>
 </section>
 </section>
 </section>
@@ -1191,7 +1319,6 @@ commits.</p>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Neovim configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#structure">Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-mouse">Using the mouse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#non-printing-characters">Non-printing characters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#switching-buffers">Switching buffers</a></li>
@@ -1208,6 +1335,9 @@ commits.</p>
 <li class="toctree-l3"><a class="reference internal" href="#nvim-cmp"><code class="docutils literal notranslate"><span class="pre">nvim-cmp</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aerial"><code class="docutils literal notranslate"><span class="pre">aerial</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#treesitter"><code class="docutils literal notranslate"><span class="pre">treesitter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nvim-lspconfig"><code class="docutils literal notranslate"><span class="pre">nvim-lspconfig</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mason-nvim"><code class="docutils literal notranslate"><span class="pre">mason.nvim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trouble-nvim"><code class="docutils literal notranslate"><span class="pre">trouble.nvim</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gitsigns"><code class="docutils literal notranslate"><span class="pre">gitsigns</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#toggleterm"><code class="docutils literal notranslate"><span class="pre">toggleterm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-fugitive"><code class="docutils literal notranslate"><span class="pre">vim-fugitive</span></code></a></li>
@@ -1218,16 +1348,17 @@ commits.</p>
 <li class="toctree-l3"><a class="reference internal" href="#leap-nvim"><code class="docutils literal notranslate"><span class="pre">leap.nvim</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-surround"><code class="docutils literal notranslate"><span class="pre">vim-surround</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vis"><code class="docutils literal notranslate"><span class="pre">vis</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bufferline-nvim"><code class="docutils literal notranslate"><span class="pre">bufferline.nvim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diffview-nvim"><code class="docutils literal notranslate"><span class="pre">diffview.nvim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lualine"><code class="docutils literal notranslate"><span class="pre">lualine</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#indent-blankline"><code class="docutils literal notranslate"><span class="pre">indent-blankline</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-python-pep8-indent"><code class="docutils literal notranslate"><span class="pre">vim-python-pep8-indent</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-rmarkdown"><code class="docutils literal notranslate"><span class="pre">vim-rmarkdown</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-pandoc"><code class="docutils literal notranslate"><span class="pre">vim-pandoc</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-pandoc-syntax"><code class="docutils literal notranslate"><span class="pre">vim-pandoc-syntax</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vim-airline"><code class="docutils literal notranslate"><span class="pre">vim-airline</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vim-airline-themes"><code class="docutils literal notranslate"><span class="pre">vim-airline-themes</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vim-tmux-clipboard"><code class="docutils literal notranslate"><span class="pre">vim-tmux-clipboard</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sphinx-nvim"><code class="docutils literal notranslate"><span class="pre">sphinx.nvim</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#diffview-nvim"><code class="docutils literal notranslate"><span class="pre">diffview.nvim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zenburn-nvim"><code class="docutils literal notranslate"><span class="pre">zenburn.nvim</span></code></a></li>
 </ul>
 </li>
 </ul>
