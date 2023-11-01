@@ -201,38 +201,4 @@ vim.api.nvim_create_autocmd("QuitPre", {
   end,
 })
 
--- Modifications to the zenburn colorscheme.
--- Collectively, this makes line numbers more obvious, fixes some diff
--- coloring, makes matched parentheses much more obvious, and makes
--- bash and python highlighting look more like the older
--- zenburn. Some hints for tweaking colorschemes:
---
---  *  Use :Inspect to see what highlight group the cursor is over.
---  *  Use :Telescope higlight to search for it and find the current setting
-
-if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
-  -- If there's a good highlight existing, link to that
-  vim.api.nvim_set_hl(0, "@variable", { link = "Normal" })
-  vim.api.nvim_set_hl(0, "diffAdded", { fg = "#9ECE9E", bg = "#313C36" })
-  vim.api.nvim_set_hl(0, "diffRemoved", { fg = "#ECBCBC", bg = "#41363C" })
-  vim.api.nvim_set_hl(0, "diffLine", { link = "MoreMsg" })
-
-  vim.cmd("highlight MatchParen guifg=#b2ff45")
-  vim.cmd("highlight LineNr guifg=#959898 guibg=#353535")
-  vim.cmd("highlight CursorLineNr guifg=#f2f48d guibg=#2f2f2f")
-  vim.cmd("highlight IncSearch guifg=#f8f893 guibg=#385f38")
-  vim.cmd("highlight Comment cterm=italic gui=italic")
-  vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
-  vim.cmd("highlight Constant guifg=#dcdccc gui=bold")
-  vim.cmd("highlight Boolean guifg=#FFCFAF gui=bold")
-  vim.cmd("highlight Function guifg=#f6f6ab")
-  vim.cmd("highlight @punctuation.bracket.bash guifg=#FFCFAF")
-  vim.cmd("highlight @punctuation.special.bash guifg=#FFCFAF")
-  vim.cmd("highlight @constant.bash guifg=#FFCFAF")
-  vim.cmd("highlight @variable.bash guifg=#FFCFAF")
-  vim.cmd("highlight IblScope guifg=#efefaf")
-  vim.cmd("highlight @ibl.scope.char.1 guifg=#efefaf")
-  vim.cmd("highlight Beacon guibg=white ctermbg=15")
-end
-
 -- vim: nowrap
