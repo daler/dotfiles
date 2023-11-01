@@ -35,6 +35,10 @@ div.admonition {
     background-color: #f7f9ff;
 }
 
+div.seealso {
+    background-color: #fffaf1;
+}
+
 div.admonition p.admonition-title {
     font-size: 20px;
 }
@@ -57,4 +61,10 @@ kbd {
 
 kbd.compound {
     border: none;
+}
+
+.versionmodified {
+    border-left: 2px #5e6682 solid;
+    font-size: .8em;
+    padding: 5px;
 }

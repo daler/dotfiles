@@ -19,33 +19,33 @@ return {
   { "Vimjas/vim-python-pep8-indent", ft = { "python", "snakemake" } }, -- better indentation for python
   { "samoshkin/vim-mergetool", cmd = "MergetoolStart" }, -- easily work with 3-way merge conflicts
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
+  { "junegunn/gv.vim", cmd = "GV", dependencies = {"tpope/vim-fugitive"}, lazy = true}, -- graphical git log
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
   { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
-  { "folke/which-key.nvim", lazy = false, config = true }, -- pop up a window showing possible keybindings
-  { "phha/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
-  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000,
-    config = function ()
-      require('nightfox').setup({
+  { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
+  { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
+  { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
+  { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
+  { "norcalli/nvim-colorizer.lua", config = true, lazy = true, cmd = "ColorizerToggle" }, -- color hex codes by their actual color
+  {
+    "EdenEast/nightfox.nvim", -- family of colorschemes (nightfox, dawnfox, terrafox, etc)
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("nightfox").setup({
         options = {
-          styles = { comments = "italic", },
+          styles = { comments = "italic" },
         },
       })
     end,
   },
-  { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
-  { "joshdick/onedark.vim" }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    config = function()
-      require("nvim-tree").setup({
-        disable_netrw = false,
-        hijack_netrw = true,
-      })
-    end,
+    lazy = false,
+    config = true,
     keys = {
-      { "<leader>fbc", "<cmd>NvimTreeClose<CR>", desc = "[f]ile [b]rowser [c]lose (nvim-tree)" },
-      { "<leader>fbo", "<cmd>NvimTreeFocus<CR>", desc = "[f]ile [b]rowser [o]pen (or focus if open)" },
+      { "<leader>fb", "<cmd>NvimTreeToggle<CR>", desc = "[f]ile [b]rowser toggle" },
     },
   },
 
@@ -71,15 +71,16 @@ return {
       {
         "<leader>ff",
         function()
+          -- use a previewer that doesn't show each file's contents
           local previewer = require("telescope.themes").get_dropdown({ previewer = false })
           require("telescope.builtin").find_files(previewer)
         end,
-        desc = "Find files",
+        desc = "[f]ind [f]iles",
       },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep in directory" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "[f]ind with [g]rep in directory" },
       { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Fuzzy find in buffer" },
-      { "<leader>fc", "<cmd>Telescope treesitter<CR>", desc = "Find code object" },
-      { "<leader>fo", "<cmd>Telescope oldfiles<CR>", desc = "Find recently-opened files" },
+      { "<leader>fc", "<cmd>Telescope treesitter<CR>", desc = "[f]ind [c]ode object" },
+      { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "[f]ind [r]ecently-opened files" },
     },
   },
 
@@ -122,6 +123,7 @@ return {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
     lazy = false,
     config = function()
+      -- tweak the sizes of the new terminal
       require("toggleterm").setup({
         size = function(term)
           if term.direction == "horizontal" then
@@ -131,9 +133,8 @@ return {
           end
         end,
       })
-      -- Always use insert mode when entering a terminal buffer, even with mouse
-      -- click. NOTE: Clicking with a mouse a second time enters visual select mode,
-      -- just like in a text buffer.
+      -- Always use insert mode when entering a terminal buffer, even with mouse click.
+      -- NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*",
         callback = function()
@@ -141,6 +142,7 @@ return {
         end,
       })
 
+      -- Only set this for RMarkdown
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "rmarkdown",
         callback = function()
@@ -148,10 +150,12 @@ return {
             "n",
             "<leader>k",
             ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
-            { desc = "Render RMarkdown to HTML" }
+            { desc = "Render RMar[k]down to HTML" }
           )
         end,
       })
+
+      -- Only set this for Python
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "python",
         callback = function()
@@ -182,7 +186,10 @@ return {
           enable = true,
           disable = { "markdown", "rmarkdown" }, -- let pandoc handle highlighting for these
         },
-        indent = { enable = true },
+        indent = {
+          enable = true,
+          disable = { "python", "snakemake" }, -- let vim-python-pep8-indent handle this
+        },
         ensure_installed = {
           "bash",
           "css",
@@ -233,7 +240,7 @@ return {
     main = "ibl",
     opts = {
       indent = { char = "┊" }, -- make the character a little less dense
-      scope = { exclude = { language = { "markdown", "rst" } } },
+      scope = { exclude = { language = { "markdown", "rst" } } }, -- don't need scope for text docs
     },
   },
 
@@ -246,14 +253,14 @@ return {
 
     opts = { layout = { default_direction = "prefer_left" } },
     keys = {
-      { "{", "<cmd>AerialPrev<CR>", buffer = bufnr, desc = "Prev code symbol" },
-      { "}", "<cmd>AerialNext<CR>", buffer = bufnr, desc = "Next code symbol" },
-      { "<leader>a", "<cmd>AerialToggle<CR>", buffer = bufnr, desc = "Toggle aerial nav" },
+      { "{", "<cmd>AerialPrev<CR>", desc = "Prev code symbol" },
+      { "}", "<cmd>AerialNext<CR>", desc = "Next code symbol" },
+      { "<leader>a", "<cmd>AerialToggle<CR>", desc = "Toggle [a]erial nav" },
     },
   },
 
   {
-    "lewis6991/gitsigns.nvim", -- show changes in git repo
+    "lewis6991/gitsigns.nvim", -- show changes in file, when working in a git repo
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -265,37 +272,66 @@ return {
           vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
         end
 
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
-        map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<leader>hS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>hu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>hR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>hp", gs.preview_hunk, "Preview Hunk")
+        map("n", "]h", gs.next_hunk, "Next hunk")
+        map("n", "[h", gs.prev_hunk, "Prev hunk")
+        map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
+        map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>", "Reset hunk")
+        map("n", "<leader>hS", gs.stage_buffer, "Stage buffer")
+        map("n", "<leader>hu", gs.undo_stage_hunk, "Undo Stage hunk")
+        map("n", "<leader>hR", gs.reset_buffer, "Reset buffer")
+        map("n", "<leader>hp", gs.preview_hunk, "Preview hunk")
         map("n", "<leader>hb", function()
           gs.blame_line({ full = true })
-        end, "Blame Line")
-        map("n", "<leader>hd", gs.diffthis, "Diff This")
+        end, "Blame line")
+        map("n", "<leader>hd", gs.diffthis, "Diff this")
         map("n", "<leader>hD", function()
           gs.diffthis("~")
         end, "Diff This ~")
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select hunk")
       end,
     },
   },
 
   {
-    "vim-airline/vim-airline", -- status line along the bottom
-    dependencies = { "vim-airline/vim-airline-themes" },
-    init = function()
-      vim.cmd("let g:airline_theme='ayu_dark'") -- theme that looks good with zenburn
-      vim.cmd("let g:airline_powerline_fonts = 1") -- use powerline fonts; set to 0 if you don't have them installed
-      vim.cmd("let g:airline_extensions = ['tabline']") -- use the tabline extension
-      vim.cmd("let g:airline#extensions#tabline#enabled = 1")
-      vim.cmd("let g:airline#extensions#tabline#fnamemod = ':t'") -- just show the basename of the open file
-      -- vim.cmd("let g:airline#extensions#tabline#buffer_nr_show = 1") -- Show a buffer number for easier switching
-    end,
+    "nvim-lualine/lualine.nvim", -- status line along the bottom
+    config = true,
+    opts = { options = { theme = "zenburn" } }, -- this theme is supplied by the zenburn.nvim plugin
+
+  },
+  {
+    "akinsho/bufferline.nvim", config = true, lazy = false, -- tabs for buffers along the top
+    keys = {
+      {"<leader>b", "<cmd>BufferLinePick<CR>", desc = "Pick buffer"},
+    },
+    opts = {
+      options = {
+        right_mouse_command = "vertical sbufer %d",
+        separator_style = "slant",
+        hover = {
+          enabled = true, delay = 200, reveal = { "close" },
+        },
+        diagnostics = "nvim_lsp",
+        custom_filter = function(buf_number, buf_numbers)
+          if vim.bo[buf_number].filetype ~= "fugitive" then
+            return true
+        end
+        end,
+        show_buffer_icons = false,
+        offsets = {
+        {
+          filetype = "NvimTree",
+          highlight = "Directory",
+          separator = true,
+        },
+        {
+          filetype = "aerial",
+          highlight = "Directory",
+          separator = true,
+          },
+        },
+      },
+    },
+
   },
 
   {
@@ -399,6 +435,78 @@ return {
         sorting = defaults.sorting,
       }
     end,
+  },
+  {
+    "williamboman/mason.nvim", -- convenient installation of LSP clients
+    lazy = false, config = true,
+  },
+  {
+    "neovim/nvim-lspconfig", -- convenient configuration of LSP clients
+
+    cmd = "LspStart",
+
+    init = function()
+      local lspconfig = require("lspconfig")
+
+      -- Below, autostart = false means that you need to explicity call :LspStart (<leader>cl)
+      --
+      -- pyright is the language server for Python
+      lspconfig.pyright.setup({ autostart = false })
+
+      -- language server for R
+      lspconfig.r_language_server.setup({ autostart = false })
+
+      -- Language server for Lua. These are the recommended options
+      -- when mainly using Lua for Neovim
+      lspconfig.lua_ls.setup({
+        autostart = true,
+        on_init = function(client)
+          local path = client.workspace_folders[1].name
+          if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+            client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
+              Lua = {
+                runtime = { version = "LuaJIT" },
+                workspace = {
+                  checkThirdParty = false,
+                  library = {
+                    vim.env.VIMRUNTIME,
+                  },
+                },
+              },
+            })
+
+            client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+          end
+        end,
+      })
+
+      -- Use LspAttach autocommand to only map the following keys after
+      -- the language server attaches to the current buffer
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          vim.keymap.set("n", "<leader>cgd", vim.lsp.buf.definition, { buffer = ev.buf, desc = "Goto definition" })
+          vim.keymap.set("n", "<leader>cK", vim.lsp.buf.hover, { buffer = ev.buf, desc = "Hover help" })
+          vim.keymap.set("n", "<leader>crn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Rename" })
+          vim.keymap.set("n", "<leader>cgr", vim.lsp.buf.references, { buffer = ev.buf, desc = "Goto references" })
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "Code action" })
+        end,
+      })
+    end,
+    keys = {
+      -- Because autostart=false above, need to manually start the language server.
+      { "<leader>cl", "<cmd>LspStart<CR>", desc = "Start LSP" },
+      { "<leader>ce", vim.diagnostic.open_float, desc = "Open diagnostics/errors" },
+      { "]e", vim.diagnostic.goto_next, desc = "Next diagnostic/error" },
+      { "[e", vim.diagnostic.goto_prev, desc = "Prev diagnostic/error" },
+    },
+  },
+  {
+    "folke/trouble.nvim", -- split window to show issues found by LSP
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "<leader>ct", "<cmd>TroubleToggle<CR>", desc = "Toggle trouble.nvim" },
+    },
   },
 }
 

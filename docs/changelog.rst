@@ -1,6 +1,34 @@
 Changelog
 =========
 
+2023-10-29
+----------
+
+**vim/nvim**
+
+- Initial config for LSP (Python, R, Lua). Lua autostarts; for Python use
+  :kbd:`<leader>cl`. Use mason to install LSP servers. See :ref:`vim` for
+  details.
+- Use daler/zenburn.nvim fork for colorscheme; remove other zenburn colorscheme customizations
+- Disable tree-sitter indentation for Python and Snakemake; use the pep8 python indentation plugin instead.
+- Improve closing of buffers if they are not text buffers (aerial, nvim-tree, scratch from trouble.nvim)
+- Reintroduce gv.vim
+- Add trouble.nvim plugin
+- Add more hints to descriptions of keybindings
+- Instead of ``<leader>fbo`` and ``<leader>fbc`` to open and close the file
+  browser, just use ``<leader>fb`` to toggle it.
+- Replace vim-airline with lualine and bufferline
+- New plugins:
+  - nvim-lspconfig
+  - mason.nvim
+  - trouble.nvim
+  - bufferline
+  - lualine
+
+- Removed plugins:
+  - vim-airline
+
+
 2023-10-25
 ----------
 
@@ -41,6 +69,7 @@ keymapping documentation for details.
   - accelerated_jk
   - aerial
   - gitsigns
+  - diffview
 - modularize config into multiple lua files
 - convert mappings to have descriptions, so which-key picks them up
 - change how buffers are switched
@@ -49,7 +78,6 @@ keymapping documentation for details.
   - NERDTree (replaced by nvim-tree)
   - supertab (replaced by nvim-cmp)
   - simpylfold (replaced by treesitter folding)
-  - gv.vim (replaced by diffview and gitsigns)
 
 2023-09-19
 ----------

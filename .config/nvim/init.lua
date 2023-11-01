@@ -1,9 +1,14 @@
 -- Lua config for neovim. Coming from Vim lanuage? See
 -- https://neovim.io/doc/user/lua.html for the basics.
 
--- leader must be set before plugins are installed
+-- leader must be set before plugins are set up.
 vim.cmd("let mapleader=','") -- Re-map leader from default \ to , (comma)
 vim.cmd("let maplocalleader = '\\'") -- Local leader becomes \.
+
+-- This allows nvim-tree to be used when opening a directory in nvim.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.cmd("set termguicolors") -- use full color in colorschemes
 
 -- Bootstrap lazy.nvim in case it's not already installed.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -22,6 +27,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- Plugins.
 -- Plugins are handled separately, see the lua/plugins.lua file.
+-- This command tells lazy.nvim, the plugin manager, where to find that file.
 --
 require("lazy").setup("plugins")
 
@@ -30,7 +36,6 @@ require("lazy").setup("plugins")
 -- Add your favorite colorscheme to lua/plugins.lua, and use it here.
 --
 vim.cmd("colorscheme zenburn") -- bottom of this file has some tweaks to zenburn
-vim.cmd("set termguicolors") -- use full color in colorschemes
 
 -- Uncomment these lines if you use a terminal that does not support true color:
 -- vim.cmd("colorscheme onedark")
@@ -77,6 +82,11 @@ vim.cmd("set guicursor=i:block") -- Always use block cursor. In some terminals a
 -- lua/plugins.lua. Many keymappings have descriptions which will show up in
 -- which-key.
 --
+-- 
+local wk = require('which-key')
+wk.register( { ["<leader>c"] = { name = "+code" } } )
+wk.register( { ["<leader>f"] = { name = "+file or +find" } } )
+
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Fix <Esc> in terminal buffer
 vim.keymap.set("n", "<Leader>H", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })
 vim.keymap.set("n", "<leader>W", ":%s/\\s\\+$//<cr>:let @/=''<CR>", { desc = "Clean trailing whitespace" })
@@ -96,7 +106,6 @@ vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>b", ":buffers<CR>:buffer<Space>", { desc = "Select buffer" })
 
 -- Keymappings for navigating terminals.
 -- <leader>q and <leader>w move to left and right windows respectively. Useful
@@ -137,6 +146,7 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
+-- Tell nvim about the snakemake filetype
 vim.filetype.add({
   filename = {
     ["Snakefile"] = "snakemake",
@@ -146,7 +156,7 @@ vim.filetype.add({
     ["*.snakefile"] = "snakemake",
     ["*.snakemake"] = "snakemake",
     ["Snakefile*"] = "snakemake",
-  }
+  },
 })
 
 -- Highlight yanked text
@@ -157,62 +167,38 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
--- From https://github.com/nvim-tree/nvim-tree.lua/wiki/Auto-Close. If the last
--- buffer open is an nvim-tree buffer, then close it and quit.
+-- Modified from https://github.com/nvim-tree/nvim-tree.lua/wiki/Auto-Close.
+-- If the last buffer(s) open are nvim-tree or trouble.nvim or aerial, then close them all and quit.
 vim.api.nvim_create_autocmd("QuitPre", {
   callback = function()
-    local tree_wins = {}
+    local close_wins = {}
     local floating_wins = {}
     local wins = vim.api.nvim_list_wins()
     for _, w in ipairs(wins) do
       local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
-      if bufname:match("NvimTree_") ~= nil then
-        table.insert(tree_wins, w)
+      if bufname:match("NvimTree_") ~= nil then  -- nvim-tree buffer
+        table.insert(close_wins, w)
       end
-      if vim.api.nvim_win_get_config(w).relative ~= '' then
+      if bufname:match("Trouble") ~= nil then    -- trouble.nvim buffer
+        table.insert(close_wins, w)
+      end
+      if bufname:match("Scratch") ~= nil then    -- aerial buffer
+        table.insert(close_wins, w)
+      end
+      if vim.api.nvim_win_get_config(w).relative ~= "" then -- floating windows
         table.insert(floating_wins, w)
       end
     end
-    if 1 == #wins - #floating_wins - #tree_wins then
-      -- Should quit, so we close all invalid windows.
-      for _, w in ipairs(tree_wins) do
+
+    -- If the buffer we are closing during this QuitPre action is the only one
+    -- that does not match the above patterns, then consider it the last text buffer,
+    -- and close all other buffers.
+    if 1 == #wins - #floating_wins - #close_wins then
+      for _, w in ipairs(close_wins) do
         vim.api.nvim_win_close(w, true)
       end
     end
-  end
+  end,
 })
-
--- Modifications to the zenburn colorscheme.
--- Collectively, this makes line numbers more obvious, fixes some diff
--- coloring, and makes bash and python highlighting look more like the older
--- zenburn. Some hints for tweaking colorschemes:
---
---  *  Use :Inspect to see what highlight group the cursor is over.
---  *  Use :Telescope higlight to search for it and find the current setting
-
-if vim.api.nvim_exec("colorscheme", true) == "zenburn.nvim" then
-  -- If there's a good highlight existing, link to that
-  vim.api.nvim_set_hl(0, "@variable", { link = "Normal" })
-  vim.api.nvim_set_hl(0, "diffAdded", { fg="#9ECE9E", bg="#313C36" })
-  vim.api.nvim_set_hl(0, "diffRemoved", { fg="#ECBCBC", bg="#41363C"})
-  vim.api.nvim_set_hl(0, "diffLine", { link = "MoreMsg" })
-
-  vim.cmd("highlight LineNr guifg=#959898 guibg=#353535")
-  vim.cmd("highlight CursorLineNr guifg=#f2f48d guibg=#2f2f2f")
-  vim.cmd("highlight IncSearch guifg=#f8f893 guibg=#385f38")
-  vim.cmd("highlight Comment cterm=italic gui=italic")
-  vim.cmd("highlight DiffDelete guifg=#9f8888 guibg=#464646")
-  vim.cmd("highlight Constant guifg=#dcdccc gui=bold")
-  vim.cmd("highlight Boolean guifg=#FFCFAF gui=bold")
-  vim.cmd("highlight Function guifg=#f6f6ab")
-  vim.cmd("highlight @punctuation.bracket.bash guifg=#FFCFAF")
-  vim.cmd("highlight @punctuation.special.bash guifg=#FFCFAF")
-  vim.cmd("highlight @constant.bash guifg=#FFCFAF")
-  vim.cmd("highlight @variable.bash guifg=#FFCFAF")
-  vim.cmd("highlight IblScope guifg=#efefaf")
-  vim.cmd("highlight @ibl.scope.char.1 guifg=#efefaf")
-  vim.cmd("highlight Beacon guibg=white ctermbg=15")
-
-end
 
 -- vim: nowrap
