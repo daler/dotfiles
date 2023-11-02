@@ -835,8 +835,8 @@ elif [ $task == "--diffs" ]; then
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--vim-diffs" ]; then
-    ok "Opens up vim -d to display differences between files in this repo and your home directory"
-    for i in $(git ls-tree -r HEAD --name-only | grep "^\."); do
+    ok "Opens up vim -d to display differences between files in this repo and your home directory. Your existing files will be on the RIGHT"
+    for i in $(cat include.file); do
         if ! diff $i ~/$i &> /dev/null; then
             nvim -d $i ~/$i;
         fi
