@@ -253,6 +253,9 @@ function showHelp() {
         "to and provides a convenient interface for jumping directly" \
         "there." \
         "Homepage: https://github.com/ajeetdsouza/zoxide"
+
+    cmd = "--install-npm" \
+        "Installs nodejs and npm into a conda directory"
     echo
 }
 
@@ -764,6 +767,13 @@ elif [ $task == "--install-bfg" ]; then
     chmod +x $BFG_WRAPPER
     check_opt_bin_in_path
     printf "${YELLOW}Installed jar file to ~/opt/bin, and created wrapper script ~/opt/bin/bfg.${UNSET}\n\n"
+
+elif [ $task == "--install-npm" ]; then
+    ok "Install npm in a named conda env and add to ~/.path?"
+    mamba create -n npm -y nodejs
+    MAMBA_LOCATION=$(mamba info --base)
+    echo "export PATH=\$PATH:$MAMBA_LOCATION/envs/npm/bin" >> ~/.path
+    printf "${YELLOW}Installed npm to $MAMBA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
 
 elif [ $task == "--dotfiles" ]; then
     set -x
