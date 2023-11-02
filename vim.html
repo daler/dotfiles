@@ -675,6 +675,13 @@ diagnostics.</p>
 Language Server Protocols, debuggers, linters, and formatters. Use <code class="docutils literal notranslate"><span class="pre">:Mason</span></code>
 to open the interface, and hit <kbd class="kbd docutils literal notranslate">i</kbd> on what you want to install, or
 <kbd class="kbd docutils literal notranslate">g?</kbd> for more help.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Many language servers use the npm (javascript package manager) to install.
+This is the case for <code class="docutils literal notranslate"><span class="pre">pyright</span></code>, for example. You can use <code class="docutils literal notranslate"><span class="pre">./setup.sh</span>
+<span class="pre">--install-npm</span></code> to easily create a conda env with npm and add its bin dir to
+your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p>
+</div>
 <p>For Python, install <code class="docutils literal notranslate"><span class="pre">pyright</span></code>.</p>
 <p>For Lua (working on your nvim configs), use <code class="docutils literal notranslate"><span class="pre">lua-language-server</span></code>
 (nvim-lspconfig calls this <code class="docutils literal notranslate"><span class="pre">lua-ls</span></code>).</p>

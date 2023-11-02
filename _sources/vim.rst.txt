@@ -620,6 +620,13 @@ Language Server Protocols, debuggers, linters, and formatters. Use ``:Mason``
 to open the interface, and hit :kbd:`i` on what you want to install, or
 :kbd:`g?` for more help.
 
+.. note::
+
+  Many language servers use the npm (javascript package manager) to install.
+  This is the case for ``pyright``, for example. You can use ``./setup.sh
+  --install-npm`` to easily create a conda env with npm and add its bin dir to
+  your ``$PATH``.
+
 For Python, install ``pyright``.
 
 For Lua (working on your nvim configs), use ``lua-language-server``

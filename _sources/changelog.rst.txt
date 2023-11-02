@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2023-10-29
+2023-11-01
 ----------
 
 **vim/nvim**
@@ -28,6 +28,11 @@ Changelog
 - Removed plugins:
   - vim-airline
 
+**setup.sh**
+
+- Add ``--install-npm`` argument
+- Specify MAMBA_LOCATION explicitly, because it seems like it can change
+  depending on how mamba was originally installed.
 
 2023-10-25
 ----------
