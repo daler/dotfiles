@@ -254,7 +254,7 @@ function showHelp() {
         "there." \
         "Homepage: https://github.com/ajeetdsouza/zoxide"
 
-    cmd = "--install-npm" \
+    cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
     echo
 }
