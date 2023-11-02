@@ -326,10 +326,12 @@ can_make_conda_env () {
 
 # Find the conda installation location
 CONDA_LOCATION=
+MAMBA_LOCATION=
 check_for_conda () {
     if command -v conda > /dev/null; then
 
         CONDA_LOCATION=$(conda info --base)
+        MAMBA_LOCATION=$(mamba info --base)
 
         # Even if the user has not run conda init, this will enable the use of
         # "conda activate" within the various conda creation steps below.
@@ -391,7 +393,7 @@ install_env_and_symlink () {
 
     can_make_conda_env $ENVNAME
     mamba create -y -n $ENVNAME $CONDAPKG
-    ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
+    ln -sf "$MAMBA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
     printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
     set -u
@@ -627,7 +629,7 @@ elif [ $task == "--install-radian" ]; then
     mamba create -y -n radian python r
     conda activate radian
     pip install radian
-    ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
+    ln -sf $MAMBA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
     conda deactivate
     set -u
     printf "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}\n"
