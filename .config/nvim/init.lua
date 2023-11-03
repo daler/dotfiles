@@ -159,6 +159,13 @@ vim.filetype.add({
   },
 })
 
+-- Set commentstring for snakemake, which is needed for vim-commentary
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "snakemake",
+  callback = function() vim.cmd("set commentstring=#\\ %s") end,
+})
+
+
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
