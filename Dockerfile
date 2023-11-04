@@ -78,6 +78,7 @@ RUN ./setup.sh --install-fd
 RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
+RUN ./setup.sh --install-npm
 
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian
