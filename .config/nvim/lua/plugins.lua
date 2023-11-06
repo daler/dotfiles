@@ -199,7 +199,6 @@ return {
           "lua",
           "markdown",
           "markdown_inline",
-          "perl",
           "python",
           "vim",
           "yaml",
