@@ -799,9 +799,9 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     ok "Runs the fix from https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/ for getting italics in tmux"
     download http://invisible-island.net/datafiles/current/terminfo.src.gz terminfo.src.gz
     gunzip terminfo.src.gz
-    tic -xe tmux-256color terminfo.src
+    tic -xe tmux-256color,screen-256color terminfo.src
     rm terminfo.src
-    printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"screen-256color\" in your .tmux.conf.${UNSET}\n"
+    printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
 
 
