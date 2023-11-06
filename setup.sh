@@ -159,13 +159,6 @@ function showHelp() {
     cmd "--mac-stuff" \
         "Make some Mac-specific settings"
 
-    cmd "--powerline" \
-        "Install powerline fonts. Powerline fonts include the" \
-        "fancy glyphs used for the vim-airline status bar." \
-        "Only needs to be installed on local machine that is running" \
-        "the terminal app." \
-        "Homepage: https://github.com/vim-airline/vim-airline"
-
     cmd "--fix-tmux-terminfo" \
         "Update terminfo so that italics work within tmux; " \
         "see https://jdhao.github.io/2018/10/19/tmux_nvim_true_color"
@@ -530,16 +523,6 @@ elif [ $task == "--mac-stuff" ]; then
     ok "Sets the shell to be bash, and silences the warning about zsh being the default by adding an env var to ~/.extra"
     chsh -s /bin/bash
     echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
-
-elif [ $task == "--powerline" ]; then
-    ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
-    git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
-    (cd /tmp/fonts && ./install.sh)
-    rm -rf /tmp/fonts
-    echo
-    printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
-    echo
-
 
 
 # ----------------------------------------------------------------------------
