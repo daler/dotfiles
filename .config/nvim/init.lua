@@ -35,7 +35,7 @@ require("lazy").setup("plugins")
 -- Colorscheme.
 -- Add your favorite colorscheme to lua/plugins.lua, and use it here.
 --
-vim.cmd("colorscheme zenburn") -- bottom of this file has some tweaks to zenburn
+vim.cmd("colorscheme zenburn")
 
 -- Uncomment these lines if you use a terminal that does not support true color:
 -- vim.cmd("colorscheme onedark")
