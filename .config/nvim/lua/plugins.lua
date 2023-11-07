@@ -125,7 +125,6 @@ return {
 
   {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
-    lazy = false,
     config = function()
       -- tweak the sizes of the new terminal
       require("toggleterm").setup({
