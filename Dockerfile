@@ -132,4 +132,4 @@ RUN echo "alias AGG=\"agg --font-family='FantasqueSansM Nerd Font'\"" >> ~/.alia
 # - EDIT: e.g. with Preview or ezgif
 # - 
 # - IMAGES:  mkdir imgs && convert -coalesce demo.gif imgs/%03d.gif
-ENTRYPOINT [ "/bin/bash" "-c" ]
+ENTRYPOINT [ "/bin/bash", "-c" ]
