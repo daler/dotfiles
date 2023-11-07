@@ -15,6 +15,7 @@ Changelog
 - Allow treesitter to highlight markdown
 - Disable the beacon globally (on every click); now only activates on searches
   or :kbd:`JK`.
+- Use daler/vim-python-pep8-indent, a fork which includes snakemake as a filetype
 
 **docs**
 
