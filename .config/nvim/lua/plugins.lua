@@ -184,7 +184,7 @@ return {
       require("nvim-treesitter.configs").setup({
         highlight = {
           enable = true,
-          disable = { "markdown", "rmarkdown" }, -- let pandoc handle highlighting for these
+          disable = { "rmarkdown" }, -- let pandoc handle highlighting for these
         },
         indent = {
           enable = true,
