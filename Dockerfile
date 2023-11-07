@@ -43,7 +43,6 @@ ADD \
 .dircolors \
 .dircolors \
 .exports \
-.extra \
 .functions \
 .git-completion.bash \
 .gitconfig \

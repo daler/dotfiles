@@ -8,7 +8,6 @@
 .config/nvim/lua/plugins.lua
 .dircolors
 .exports
-.extra
 .functions
 .git-completion.bash
 .gitconfig
