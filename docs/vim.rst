@@ -301,6 +301,9 @@ toggle comments on lines or blocks of code.
 
 .. versionadded:: 2023-10-15
 
+.. versionchanged:: 2023-11-07
+   Only commands below will trigger the beacon
+
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
 

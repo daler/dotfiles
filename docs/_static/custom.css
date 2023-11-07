@@ -67,8 +67,14 @@ kbd.compound {
     border: none;
 }
 
-.versionmodified {
+.versionadded {
+    border-left: 2px #da384c solid;
+    font-size: .8em;
+    padding-left: 5px;
+}
+
+.versionchanged {
     border-left: 2px #5e6682 solid;
     font-size: .8em;
-    padding: 5px;
+    padding-left: 5px;
 }
