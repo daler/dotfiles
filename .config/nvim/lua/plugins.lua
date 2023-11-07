@@ -42,7 +42,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    lazy = false,
+    lazy = true,
     config = true,
     keys = {
       { "<leader>fb", "<cmd>NvimTreeToggle<CR>", desc = "[f]ile [b]rowser toggle" },
