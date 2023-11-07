@@ -35,6 +35,10 @@ div.note {
     background-color: #f7f9ff;
 }
 
+div.tip {
+    background-color: #f1f8f1;
+}
+
 div.seealso {
     background-color: #fffaf1;
 }

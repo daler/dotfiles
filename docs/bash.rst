@@ -3,6 +3,8 @@
 Bash dotfiles
 =============
 
+.. _bashrc:
+
 ``.bashrc``
 -----------
 

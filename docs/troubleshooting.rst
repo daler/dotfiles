@@ -36,7 +36,6 @@ which supports 256- and 16-color-only terminals:
    vim.cmd("set notermguicolors")
 
 
-
 Comments don't show up as italic
 --------------------------------
 

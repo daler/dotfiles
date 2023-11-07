@@ -51,6 +51,8 @@ of insert mode, so that every space typed doesn't show up as trailing. When
 wrap is off, the characters for "extends" and "precedes" indicate that there's
 text offscreen.
 
+.. _buffers:
+
 Switching buffers
 -----------------
 
@@ -843,6 +845,11 @@ a terminal-only version of git-cola or an alternative to tig. Specifically:
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``, so here is a reminder:
+
+.. _working-with-diffs:
+
+Working with diffs
+++++++++++++++++++
 
 .. list-table::
     :header-rows: 1

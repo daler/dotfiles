@@ -18,7 +18,7 @@ A couple of preliminary things to get out of the way:
 
 .. details:: Details
 
-    For example: 
+    For example:
 
     * There are some common fixes for things like backspace in vim not working
       in tmux, spaces instead of tabs for Python code, getting the mouse to
@@ -40,9 +40,13 @@ A couple of preliminary things to get out of the way:
 ---------------------
 
 * Download the latest `zip file <https://github.com/daler/dotfiles/archive/master.zip>`_
-* Unzip it
-* Go to the unzipped directory
+* Unzip it and go to the unzipped directory in your terminal
 * Run ``./setup.sh`` to see the help.
+
+.. tip::
+
+   Are you setting up a recent Mac? The default shell is ``zsh`` which may cause
+   issues. See :ref:`zshmac` for how to change it back to bash.
 
 .. _dotfilessection:
 
@@ -65,6 +69,8 @@ files, and then close your terminal and reopen it to use the new configuration:
 
 .. code-block:: bash
 
+    # START FRESH....
+
     ./setup.sh --dotfiles
 
     # then close your terminal and re-open
@@ -86,10 +92,19 @@ files, and then close your terminal and reopen it to use the new configuration:
 
 Do this if you already have your own files.
 
-* Read through :ref:`bash`, :ref:`vim`, and :ref:`tmux` to see how things are set up here
-* Browse the dotfiles to look for parts that would be useful for you, and copy them into your own files
-* ``./setup.sh --vim-diffs`` may be helpful to you if you're updating
+* Read through :ref:`bash`, :ref:`vim`, and :ref:`tmux` to see how things are set up.
+* ``./setup.sh --vim-diffs`` may be helpful to you if you're updating. See
+  :ref:`working-with-diffs` if you need a refresher for working with diffs.
 * Use the tool installation commands as-is, but make sure :file:`~/opt/bin` is on your ``$PATH``
+
+.. code-block:: bash
+
+    # UPDATE EXISTING...
+
+    ./setup.sh --vim-diffs
+
+    # use standard vim diff operations, e.g.
+    # ]c, do, dp, :qa
 
 The remainder of this documentation will assume you're starting fresh.
 
@@ -100,20 +115,28 @@ The remainder of this documentation will assume you're starting fresh.
 2a: Set a patched terminal font
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Without a patched font, you'll get question mark symbols showing up in many places
-in nvim. That's because many of the plugins expect fonts with additional glyphs.
+* Manually download and install your favorite font from `nerdfonts.com
+  <https://www.nerdfonts.com/>`_. This needs to be done **on your local
+  machine**.
 
-Do this **on the machine running the terminal app.** This is almost always your
-local machine. For example, even if you're setting up dotfiles on a remote
-cluster, the font is installed on the laptop you're using to connect to that
-cluster.
+* Install by double-clicking the .ttf files. On Mac, for example, this will
+  open the font manager, where you can click the "Install" button.
 
-* Manually download and install your favorite font from `nerdfonts.com <https://www.nerdfonts.com/>`_.
-* Change your terminal program's preferences to use the new font. *Using
-  Terminal on Mac? You'll also need to set the font for non-ASCII characters.*
+* Change your terminal program's preferences to use the new font. You're
+  looking for a font that includes "Nerd Font". *Using Terminal on Mac? You'll
+  also need to set the same font for non-ASCII characters.*
 
 
 .. details:: Details
+
+  Without a patched font, you'll get question mark symbols showing up in many places
+  in nvim. That's because many of the plugins expect fonts with additional glyphs.
+
+  Do this **on the machine running the terminal app** because that's the program
+  displaying all the text. This is almost always your local machine. For example,
+  even if you're setting up dotfiles on a remote cluster, the font should not be
+  installed there. It should be installed on the laptop you're using to connect
+  to that cluster.
 
   In `this gif
   <https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif>`_,
@@ -134,12 +157,18 @@ more help on deciding.
 
     ./setup.sh --install-neovim
 
+    # then close and reopen your terminal
+
 .. details:: Details
 
      This installs Neovim to :file:`~/opt/bin`, and then creates an ``alias
      vim=nvim`` in the :file:`~/.aliases` file (which is sourced by
      :file:`~/.bashrc`). This way, whenever you call ``vim``, the alias will
      redirect it to ``nvim``.
+
+     However it's important to close and reopen your terminal, because this
+     alias is conditional on finding nvim, and the alias is only created upon
+     first starting bash.
 
      If you want to use actual ``vim``, provide the full path when calling it.
      For example, on many machines it's at :file:`/usr/bin/vim`.
@@ -154,15 +183,17 @@ more help on deciding.
   changed. Please see :ref:`nvim-lua` for more context, rationale, and details
   on migrating to this new config method.
 
-Plugins are now managed via the `lazy.nvim
-<https://github.com/folke/lazy.nvim>`_ manager rather than ``vim-plug`` (as in
-previous versions of these dotfiles). Simply opening neovim should be
-sufficient to trigger ``lazy.nvim`` to download, install, and configure plugins
+Plugins are managed via the `lazy.nvim <https://github.com/folke/lazy.nvim>`_
+manager. Simply opening neovim should be sufficient to trigger ``lazy.nvim`` to
+bootstrap itself and then download, install, and configure plugins
 automatically.
+
+Or you can run this command to have it quit automatically when it's done:
 
 .. code-block:: bash
 
-  nvim
+  # this will open nvim, install plugins, and quit when done
+  nvim +"lua require('lazy').restore({wait=true})" +q
 
 .. details:: Details
 
