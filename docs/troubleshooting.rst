@@ -1,6 +1,11 @@
 Troubleshooting
 ===============
 
+Updating nvim plugins
+---------------------
+
+In nvim, run ``:Lazy``. In the interface, use ``U`` to update plugins.
+
 Vim has light gray text, colorscheme looks broken
 -------------------------------------------------
 
