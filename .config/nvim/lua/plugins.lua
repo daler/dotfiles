@@ -16,7 +16,7 @@ return {
   { "tpope/vim-commentary" }, -- toggle comments
   { "tpope/vim-surround" }, -- text objects for surrounding characters
   { "tpope/vim-sleuth" }, -- autodetect indentation settings
-  { "Vimjas/vim-python-pep8-indent", ft = { "python", "snakemake" } }, -- better indentation for python
+  { "daler/vim-python-pep8-indent", ft = { "python", "snakemake" } }, -- better indentation for python
   { "samoshkin/vim-mergetool", cmd = "MergetoolStart" }, -- easily work with 3-way merge conflicts
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
   { "junegunn/gv.vim", cmd = "GV", dependencies = {"tpope/vim-fugitive"}, lazy = true}, -- graphical git log
