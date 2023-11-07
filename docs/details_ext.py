@@ -91,7 +91,6 @@ def visit_details(self, node):
         self.body.append(
             f"<details><summary>{heading}</summary>"
             f'<div class="details">'
-            f"<p><i>{heading}</i></p>"
         )
 
 

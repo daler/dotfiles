@@ -42,7 +42,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    lazy = false,
+    lazy = true,
     config = true,
     keys = {
       { "<leader>fb", "<cmd>NvimTreeToggle<CR>", desc = "[f]ile [b]rowser toggle" },
@@ -87,6 +87,10 @@ return {
   {
     "danilamihailov/beacon.nvim", -- flash a beacon to show where you are
     lazy = false, -- otherwise, on first KJ you get a double-flash
+    config = function ()
+      -- Disable the beacon globally; only the commands below will activate it.
+      vim.cmd("let g:beacon_enable=0")
+    end,
     keys = {
       { "<S-k><S-j>", ":Beacon<CR>", desc = "Flash beacon" },
       { "N", "N:Beacon<CR>", desc = "Prev search hit and flash beacon" },
@@ -121,7 +125,6 @@ return {
 
   {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
-    lazy = false,
     config = function()
       -- tweak the sizes of the new terminal
       require("toggleterm").setup({
@@ -184,7 +187,7 @@ return {
       require("nvim-treesitter.configs").setup({
         highlight = {
           enable = true,
-          disable = { "markdown", "rmarkdown" }, -- let pandoc handle highlighting for these
+          disable = { "rmarkdown" }, -- let pandoc handle highlighting for these
         },
         indent = {
           enable = true,

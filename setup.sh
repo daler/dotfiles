@@ -159,13 +159,6 @@ function showHelp() {
     cmd "--mac-stuff" \
         "Make some Mac-specific settings"
 
-    cmd "--powerline" \
-        "Install powerline fonts. Powerline fonts include the" \
-        "fancy glyphs used for the vim-airline status bar." \
-        "Only needs to be installed on local machine that is running" \
-        "the terminal app." \
-        "Homepage: https://github.com/vim-airline/vim-airline"
-
     cmd "--fix-tmux-terminfo" \
         "Update terminfo so that italics work within tmux; " \
         "see https://jdhao.github.io/2018/10/19/tmux_nvim_true_color"
@@ -531,16 +524,6 @@ elif [ $task == "--mac-stuff" ]; then
     chsh -s /bin/bash
     echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
 
-elif [ $task == "--powerline" ]; then
-    ok "Installs patched powerline fonts from https://github.com/powerline/fonts for use with vim-airline"
-    git clone https://github.com/powerline/fonts.git --depth 1 /tmp/fonts
-    (cd /tmp/fonts && ./install.sh)
-    rm -rf /tmp/fonts
-    echo
-    printf "${YELLOW}Change your terminal's config to use the new powerline patched fonts${UNSET}\n"
-    echo
-
-
 
 # ----------------------------------------------------------------------------
 # Individual --install commands
@@ -816,9 +799,9 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     ok "Runs the fix from https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/ for getting italics in tmux"
     download http://invisible-island.net/datafiles/current/terminfo.src.gz terminfo.src.gz
     gunzip terminfo.src.gz
-    tic -xe tmux-256color terminfo.src
+    tic -xe tmux-256color,screen-256color terminfo.src
     rm terminfo.src
-    printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"screen-256color\" in your .tmux.conf.${UNSET}\n"
+    printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
 
 

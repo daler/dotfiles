@@ -1,16 +1,23 @@
 FROM ubuntu:latest
 
-SHELL ["/bin/bash", "-c"]
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
+    curl \
+    git \
+    locales \
+    rsync \
+    sudo \
+    unzip \
+    vim \
+    wget
 
-RUN apt-get update && apt-get install -y git wget curl sudo rsync locales vim
-
-# Locale is set in .bash_profile; needs to be created
+# Locale is set in .bash_profile; needs to be created in this image though
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
 RUN locale-gen en_US.UTF-8
 
 # From now on, use login shell so that bashrc gets sourced
+SHELL [ "/bin/bash", "-c" ]
 ENV SHELL /bin/bash
 
 # Get this installed up front out of the way without prompting for a region
@@ -43,7 +50,6 @@ ADD \
 .dircolors \
 .dircolors \
 .exports \
-.extra \
 .functions \
 .git-completion.bash \
 .gitconfig \
@@ -80,12 +86,50 @@ RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
 RUN ./setup.sh --install-npm
 
+
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian
 
+
 # Additional for this container: asciinema for screen casts
 RUN source ~/.bashrc \
-    pip install asciinema \
-    conda install -n base r-base ipython
+    && ca \
+    && mamba create -y -n asciinema asciinema \
+    && ln -s $(mamba info --base)/envs/asciinema/bin/asciinema ~/opt/bin
 
-ENTRYPOINT ["/bin/bash", "-c"]
+# imagemagick for converting gifs
+RUN source ~/.bashrc \
+    && ca \
+    && mamba create -y -n imagemagick imagemagick \
+    && ln -s $(mamba info --base)/envs/imagemagick/bin/convert ~/opt/bin
+
+# Install fonts for use by agg
+RUN wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FantasqueSansMono.zip \
+    && mkdir -p ~/.local/share/fonts \
+    && ( cd ~/.local/share/fonts \
+        && unzip /dotfiles/FantasqueSansMono.zip ) \
+    && fc-cache \
+    && rm /dotfiles/FantasqueSansMono.zip
+
+# asciinema/agg for cast -> gif
+RUN wget -O - https://github.com/asciinema/agg/releases/download/v1.4.3/agg-x86_64-unknown-linux-gnu > ~/opt/bin/agg \
+    && chmod +x ~/opt/bin/agg
+
+# make it easier to run by using a patched font
+RUN echo "alias AGG=\"agg --font-family='FantasqueSansM Nerd Font'\"" >> ~/.aliases
+
+# Allow lazy.nvim to update. Comment this out if you want to capture.
+# RUN nvim +"lua require('lazy').restore({wait=true})" +q
+
+# SCREENCAST WORKFLOW:
+#
+# tmux split-pane -h -l 100;  tmux split-pane -v -l 30
+# cd dotfiles/docs/gifs/working
+# docker run -v $PWD:/gifs --platform linux/amd64 --rm -it dotfiles
+#
+# - RECORD: asciinema rec demo.cast
+# - MAKE GIF: AGG /gifs/demo.cast /gifs/demo.gif
+# - EDIT: e.g. with Preview or ezgif
+# - 
+# - IMAGES:  mkdir imgs && convert -coalesce demo.gif imgs/%03d.gif
+ENTRYPOINT [ "/bin/bash", "-c" ]

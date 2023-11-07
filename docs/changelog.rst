@@ -1,6 +1,26 @@
 Changelog
 =========
 
+2023-11-07
+----------
+
+- Set up Dockerfile to create a screenshot-ready environment
+
+**vim/nvim**
+
+- Don't force the cursor to always be a block shape; add docs on how to get iTerm cursor looking nice
+- Always highlight the current line (rather than only in insert mode). Keeping
+  the previous lines in the config for future reference.
+- Lazily-load nvim-tree and toggleterm plugins
+- Allow treesitter to highlight markdown
+- Disable the beacon globally (on every click); now only activates on searches
+  or :kbd:`JK`.
+
+**docs**
+
+- Improvements to the docs based on recent feedback: iTerm cursor; zsh -> bash
+  up front; patched terminal font; warning about bioconda ARM.
+
 2023-11-01
 ----------
 

@@ -1,6 +1,11 @@
 Troubleshooting
 ===============
 
+Updating nvim plugins
+---------------------
+
+In nvim, run ``:Lazy``. In the interface, use ``U`` to update plugins.
+
 Vim has light gray text, colorscheme looks broken
 -------------------------------------------------
 
@@ -36,7 +41,6 @@ which supports 256- and 16-color-only terminals:
    vim.cmd("set notermguicolors")
 
 
-
 Comments don't show up as italic
 --------------------------------
 
@@ -50,6 +54,9 @@ For Alacritty, see `this gist
 <https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6>`_,
 which also includes a setting you need in
 :file:`.config/alacritty/alacritty.yml`.
+
+On Mac, you can use ``./setup.sh --fix-tmux-terminfo`` and follow the
+instructions after running to update your tmux config.
 
 Can't install conda packages from Bioconda
 ------------------------------------------
