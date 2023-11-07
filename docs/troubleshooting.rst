@@ -50,6 +50,9 @@ For Alacritty, see `this gist
 which also includes a setting you need in
 :file:`.config/alacritty/alacritty.yml`.
 
+On Mac, you can use ``./setup.sh --fix-tmux-terminfo`` and follow the
+instructions after running to update your tmux config.
+
 Can't install conda packages from Bioconda
 ------------------------------------------
 Bioconda does not yet build packages for Mac ARM chips (Mac M1 or M2). You can
