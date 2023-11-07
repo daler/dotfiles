@@ -3,28 +3,33 @@
 Bash dotfiles
 =============
 
+.. _bashrc:
+
 ``.bashrc``
 -----------
 
+At the top of ``.bashrc``, the following files are sourced if they’re present.
+This keeps things a little more organized and modular:
+
+.. code-block:: bash
+
+  for file in ~/.{path,exports,bash_prompt,functions,aliases,extra}; do
+      [ -r "$file" ] && [ -f "$file" ] && source "$file";
+  done;
+  unset file;
+
+These files are described in the sections below, but a quick summary:
+
+- :ref:`.path`: all ``export PATH=...`` can go here.
+- :ref:`.aliases`: store your aliases here.
+- :ref:`.functions`: store your bash functions here.
+- :ref:`.bash_prompt`: edit your bash prompt here.
+- :ref:`.exports`: add your various env var exports here.
+- :ref:`.extra`: any machine-specific config goes here.
+
+
 The modular organization for bash configuration is inspired by `this
 repo <https://github.com/mathiasbynens/dotfiles>`__.
-
-``.bashrc`` sources the following files if they’re present. This keeps things
-a little more organized and modular. They work like this:
-
-::
-
-   .bash_profile  # sources .bashrc
-   .bashrc        # sources the following files:
-      --> .path         # all "export PATH=..." goes in here
-      --> .aliases      # add your aliases here
-      --> .functions    # add your functions here
-      --> .exports      # add your various exports here
-      --> .bash_prompt  # edit your bash prompt here
-      --> .extra        # any machine-specific config goes here
-
-Below is a little more detail on the contents of each of these files and
-some notable features.
 
 Other notable parts of the :file:`.bashrc`:
 
@@ -45,6 +50,8 @@ Other notable parts of the :file:`.bashrc`:
 
 ``.bash_profile`` does only one thing: it sources ``.bashrc``.
 
+.. _.path:
+
 ``.path``
 ---------
 
@@ -52,6 +59,8 @@ This file ends up being lots of ``export PATH="$PATH:/some/other/path"``
 lines. It is initially populated to put ``~/opt/bin`` and
 ``~/mambaforge/condabin`` on the path. As you install more software in other
 locations, this is a tidy place to put the various exports.
+
+.. _.aliases:
 
 ``.aliases``
 ------------
@@ -105,6 +114,8 @@ for the commands set for each alias.
       - Similar to above, but used for repos where ``main`` is the default
         branch instead of ``master``.
 
+.. _.functions:
+
 ``.functions``
 --------------
 
@@ -142,6 +153,9 @@ are set up. Some notable functions defined here:
         :file:`.ssh/config` file. Useful for when you're trying to remember how
         to log in to an infrequently-accessed host.
 
+
+.. _.bash_prompt:
+
 ``.bash_prompt``
 ----------------
 
@@ -150,11 +164,15 @@ here you can add any other hosts or colors. See
 https://misc.flogisoft.com/bash/tip_colors_and_formatting for color
 options.
 
+.. _.extra:
+
 ``.extra``
 ----------
 
 Nothing is in here by default. This is a good place to store host-specific
 details.
+
+.. _.exports:
 
 ``.exports``
 ------------

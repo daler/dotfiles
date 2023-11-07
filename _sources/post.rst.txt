@@ -10,35 +10,58 @@ tasks.
 Mac
 ---
 
-- To turn off the iTerm2 audio bell (that "donk!" noise you get after hitting
-  TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
-  "Silence bell" is checked.
+Cursor
+~~~~~~
 
-- To avoid the message abou zsh popping up all the time (and you still want to use bash):
+- In iTerm, I like tweaking the cursor a little, to have the block cursor show
+  inverted colors and to have the vertical line cursor a little wider so it's
+  easier to see. First, in Preference -> Profile -> Colors, select "Smart box
+  cursor color". Then in Preferences -> Advanced:
+
+    - width of vertical bar cursor: 2
+    - threshold for smart cursor for foreground: 0
+    - threshold for smart cursor for background: 0
+
+Disable bell
+~~~~~~~~~~~~
+
+To turn off the iTerm2 audio bell (that "donk!" noise you get after hitting
+TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
+"Silence bell" is checked.
+
+.. _zshmac:
+
+zsh to bash
+~~~~~~~~~~~
+
+Recent macOS versions use ``zsh`` as the default shell instead of bash. These
+dotfiles assume bash as the default shell (for compatibility with HPC (Linux)
+systems which typically default to bash as well). See `this post
+<https://apple.stackexchange.com/a/361957>`_ for a great explanation of the
+differences. 
+
+The ``chsh`` command just has to be run once to change the shell to bash. To
+avoid the message about zsh popping up all the time (as `documented at
+support.apple.com <https://support.apple.com/en-us/HT208050>`_), set
+``BASH_SILENCE_DEPRECATION_WARNING=1``. Here, we export it in :file:`~/.extra`,
+which as :ref:`bashrc` describes, will be sourced by :file:`.bashrc` once these
+dotfiles are set up.
 
 .. code-block::
 
     chsh -s /bin/bash
+    echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
 
-and then as `documented at support.apple.com
-<https://support.apple.com/en-us/HT208050>`_ export this env var to disable
-(e.g., in your `~/.extras` file):
+Touchbar
+~~~~~~~~
+To turn off the application-specific changing of the touch bar: System
+Preferences > Keyboard, then change "Touch Bar shows" to "Expanded Control
+Strip".
 
-.. code-block::
-
-    export BASH_SILENCE_DEPRECATION_WARNING=1
-
-- To turn off the application-specific changing of the touch bar: System
-  Preferences > Keyboard, then change "Touch Bar shows" to "Expanded Control
-  Strip".
-
-- In iTerm preferences:
-
-  - click the "General" icon, and check "Applications in terminal may access
-    clipboard"
-
-  - click the "Profiles" icon, and in the "Text" "Use built-in
-    Powerline glyphs"
+Copy/paste
+~~~~~~~~~~
+In iTerm preferences, click the "General" icon, and check "Applications in
+terminal may access clipboard"
 
 SSH config
 ----------

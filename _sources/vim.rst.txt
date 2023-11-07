@@ -51,6 +51,8 @@ of insert mode, so that every space typed doesn't show up as trailing. When
 wrap is off, the characters for "extends" and "precedes" indicate that there's
 text offscreen.
 
+.. _buffers:
+
 Switching buffers
 -----------------
 
@@ -298,6 +300,9 @@ toggle comments on lines or blocks of code.
 ~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. versionchanged:: 2023-11-07
+   Only commands below will trigger the beacon
 
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
@@ -843,6 +848,11 @@ a terminal-only version of git-cola or an alternative to tig. Specifically:
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``, so here is a reminder:
+
+.. _working-with-diffs:
+
+Working with diffs
+++++++++++++++++++
 
 .. list-table::
     :header-rows: 1

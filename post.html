@@ -53,33 +53,57 @@ some things that have to be manually done. This page documents those additional
 tasks.</p>
 <section id="mac">
 <span id="macpostinstall"></span><h2>Mac<a class="headerlink" href="#mac" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>To turn off the iTerm2 audio bell (that “donk!” noise you get after hitting
-TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
-“Silence bell” is checked.</p></li>
-<li><p>To avoid the message abou zsh popping up all the time (and you still want to use bash):</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chsh</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
-</pre></div>
-</div>
-<p>and then as <a class="reference external" href="https://support.apple.com/en-us/HT208050">documented at support.apple.com</a> export this env var to disable
-(e.g., in your <cite>~/.extras</cite> file):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">BASH_SILENCE_DEPRECATION_WARNING</span><span class="o">=</span><span class="mi">1</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>To turn off the application-specific changing of the touch bar: System
-Preferences &gt; Keyboard, then change “Touch Bar shows” to “Expanded Control
-Strip”.</p></li>
-<li><p>In iTerm preferences:</p>
+<section id="cursor">
+<h3>Cursor<a class="headerlink" href="#cursor" title="Link to this heading">¶</a></h3>
 <ul>
-<li><p>click the “General” icon, and check “Applications in terminal may access
-clipboard”</p></li>
-<li><p>click the “Profiles” icon, and in the “Text” “Use built-in
-Powerline glyphs”</p></li>
+<li><p>In iTerm, I like tweaking the cursor a little, to have the block cursor show
+inverted colors and to have the vertical line cursor a little wider so it’s
+easier to see. First, in Preference -&gt; Profile -&gt; Colors, select “Smart box
+cursor color”. Then in Preferences -&gt; Advanced:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>width of vertical bar cursor: 2</p></li>
+<li><p>threshold for smart cursor for foreground: 0</p></li>
+<li><p>threshold for smart cursor for background: 0</p></li>
 </ul>
+</div></blockquote>
 </li>
 </ul>
+</section>
+<section id="disable-bell">
+<h3>Disable bell<a class="headerlink" href="#disable-bell" title="Link to this heading">¶</a></h3>
+<p>To turn off the iTerm2 audio bell (that “donk!” noise you get after hitting
+TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
+“Silence bell” is checked.</p>
+</section>
+<section id="zsh-to-bash">
+<span id="zshmac"></span><h3>zsh to bash<a class="headerlink" href="#zsh-to-bash" title="Link to this heading">¶</a></h3>
+<p>Recent macOS versions use <code class="docutils literal notranslate"><span class="pre">zsh</span></code> as the default shell instead of bash. These
+dotfiles assume bash as the default shell (for compatibility with HPC (Linux)
+systems which typically default to bash as well). See <a class="reference external" href="https://apple.stackexchange.com/a/361957">this post</a> for a great explanation of the
+differences.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">chsh</span></code> command just has to be run once to change the shell to bash. To
+avoid the message about zsh popping up all the time (as <a class="reference external" href="https://support.apple.com/en-us/HT208050">documented at
+support.apple.com</a>), set
+<code class="docutils literal notranslate"><span class="pre">BASH_SILENCE_DEPRECATION_WARNING=1</span></code>. Here, we export it in <code class="file docutils literal notranslate"><span class="pre">~/.extra</span></code>,
+which as <a class="reference internal" href="bash.html#bashrc"><span class="std std-ref">.bashrc</span></a> describes, will be sourced by <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code> once these
+dotfiles are set up.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chsh</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">echo</span> <span class="s2">&quot;export BASH_SILENCE_DEPRECATION_WARNING=1&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">extra</span>
+</pre></div>
+</div>
+</section>
+<section id="touchbar">
+<h3>Touchbar<a class="headerlink" href="#touchbar" title="Link to this heading">¶</a></h3>
+<p>To turn off the application-specific changing of the touch bar: System
+Preferences &gt; Keyboard, then change “Touch Bar shows” to “Expanded Control
+Strip”.</p>
+</section>
+<section id="copy-paste">
+<h3>Copy/paste<a class="headerlink" href="#copy-paste" title="Link to this heading">¶</a></h3>
+<p>In iTerm preferences, click the “General” icon, and check “Applications in
+terminal may access clipboard”</p>
+</section>
 </section>
 <section id="ssh-config">
 <h2>SSH config<a class="headerlink" href="#ssh-config" title="Link to this heading">¶</a></h2>
@@ -192,7 +216,14 @@ get colors to work on tmux.</p>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Post-setup tasks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mac">Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mac">Mac</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cursor">Cursor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disable-bell">Disable bell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zsh-to-bash">zsh to bash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#touchbar">Touchbar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#copy-paste">Copy/paste</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#ssh-config">SSH config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#git-config">Git config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#alacritty-config">Alacritty config</a></li>

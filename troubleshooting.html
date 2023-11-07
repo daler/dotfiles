@@ -48,6 +48,10 @@
             
   <section id="troubleshooting">
 <h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h1>
+<section id="updating-nvim-plugins">
+<h2>Updating nvim plugins<a class="headerlink" href="#updating-nvim-plugins" title="Link to this heading">¶</a></h2>
+<p>In nvim, run <code class="docutils literal notranslate"><span class="pre">:Lazy</span></code>. In the interface, use <code class="docutils literal notranslate"><span class="pre">U</span></code> to update plugins.</p>
+</section>
 <section id="vim-has-light-gray-text-colorscheme-looks-broken">
 <h2>Vim has light gray text, colorscheme looks broken<a class="headerlink" href="#vim-has-light-gray-text-colorscheme-looks-broken" title="Link to this heading">¶</a></h2>
 <p>Are you using Mac’s built-in Terminal app? Terminal.app does not support true
@@ -83,6 +87,8 @@ has a nice writeup and description of the fix.</p>
 <p>For Alacritty, see <a class="reference external" href="https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6">this gist</a>,
 which also includes a setting you need in
 <code class="file docutils literal notranslate"><span class="pre">.config/alacritty/alacritty.yml</span></code>.</p>
+<p>On Mac, you can use <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--fix-tmux-terminfo</span></code> and follow the
+instructions after running to update your tmux config.</p>
 </section>
 <section id="can-t-install-conda-packages-from-bioconda">
 <h2>Can’t install conda packages from Bioconda<a class="headerlink" href="#can-t-install-conda-packages-from-bioconda" title="Link to this heading">¶</a></h2>
@@ -135,6 +141,7 @@ those packages.</p>
 <li class="toctree-l1"><a class="reference internal" href="nvim-lua.html">Migrating to Neovim Lua config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#updating-nvim-plugins">Updating nvim plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vim-has-light-gray-text-colorscheme-looks-broken">Vim has light gray text, colorscheme looks broken</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comments-don-t-show-up-as-italic">Comments don’t show up as italic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#can-t-install-conda-packages-from-bioconda">Can’t install conda packages from Bioconda</a></li>

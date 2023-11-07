@@ -6,17 +6,19 @@ Start here
 
 A couple of preliminary things to get out of the way:
 
-* There are **three general sections**:
-   - :ref:`dotfilessection`
-   - :ref:`setupsection`
-   - :ref:`toolsection`
-
 * **Everything is driven by** :file:`setup.sh`. When in doubt, consult that
   file.
 
 * **Everything here is simply a convenience** to make life easier setting up
   a new machine. Since I spent the work figuring this out, I might as well make it
-  available to others. For example:
+  available to others.
+
+* **All steps are optional** though there are some dependencies and assumptions
+  which are noted as they come up.
+
+.. details:: Details
+
+    For example:
 
     * There are some common fixes for things like backspace in vim not working
       in tmux, spaces instead of tabs for Python code, getting the mouse to
@@ -32,16 +34,19 @@ A couple of preliminary things to get out of the way:
     * A centrally available resource for setup and configuration means there's
       only one place to look for updates.
 
-* **All steps are optional** though there are some dependencies and assumptions
-  which are noted as they come up.
-
 .. _step0:
 
-Step 0: Download and check
---------------------------
+0: Download and check
+---------------------
 
 * Download the latest `zip file <https://github.com/daler/dotfiles/archive/master.zip>`_
-* Unzip, and go to the unzipped directory, and run ``./setup.sh`` to see the help.
+* Unzip it and go to the unzipped directory in your terminal
+* Run ``./setup.sh`` to see the help.
+
+.. tip::
+
+   Are you setting up a recent Mac? The default shell is ``zsh`` which may cause
+   issues. See :ref:`zshmac` for how to change it back to bash.
 
 .. _dotfilessection:
 
@@ -54,17 +59,21 @@ There are two paths to take here:
 
 .. rubric:: **Option 1: start fresh**
 
-Do this if you're setting up a new machine, or if you've made a backup of your
-files and want to try these out, or if you want the "batteries included"
-experience.
 
-To start fresh, do this to create or overwrite existing files, and then close
-your terminal and reopen it to use the new configuration:
+- Are you setting up a new machine?
+- Have you made a backup of your files and want to try these out?
+- Do you want the "batteries included" experience?
+
+Then you should probably start fresh. Do this to create or overwrite existing
+files, and then close your terminal and reopen it to use the new configuration:
 
 .. code-block:: bash
 
-    ./setup.sh --dotfiles   # then close your terminal and re-open
+    # START FRESH....
 
+    ./setup.sh --dotfiles
+
+    # then close your terminal and re-open
 
 .. details:: Details
     :anchor: dotfiles-details
@@ -83,10 +92,19 @@ your terminal and reopen it to use the new configuration:
 
 Do this if you already have your own files.
 
-* Read through :ref:`bash`, :ref:`vim`, and :ref:`tmux` to see how things are set up here
-* Browse the dotfiles to look for parts that would be useful for you, and copy them into your own files
-* ``./setup.sh --vim-diffs`` may be helpful to you if you're updating
+* Read through :ref:`bash`, :ref:`vim`, and :ref:`tmux` to see how things are set up.
+* ``./setup.sh --vim-diffs`` may be helpful to you if you're updating. See
+  :ref:`working-with-diffs` if you need a refresher for working with diffs.
 * Use the tool installation commands as-is, but make sure :file:`~/opt/bin` is on your ``$PATH``
+
+.. code-block:: bash
+
+    # UPDATE EXISTING...
+
+    ./setup.sh --vim-diffs
+
+    # use standard vim diff operations, e.g.
+    # ]c, do, dp, :qa
 
 The remainder of this documentation will assume you're starting fresh.
 
@@ -94,41 +112,39 @@ The remainder of this documentation will assume you're starting fresh.
 
 2: Setup vim & conda
 --------------------
-2a: Set terminal font
-~~~~~~~~~~~~~~~~~~~~~
+2a: Set a patched terminal font
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In `this gif
-<https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif>`_,
-you can see arrow shapes for buffers, line number glyphs, and so on. To get
-these, you need a patched font, and your terminal needs to be set to use the
-font.
+* Manually download and install your favorite font from `nerdfonts.com
+  <https://www.nerdfonts.com/>`_. This needs to be done **on your local
+  machine**.
 
-Skip this step if you don't want those.
+* Install by double-clicking the .ttf files. On Mac, for example, this will
+  open the font manager, where you can click the "Install" button.
 
-This only needs to be done **on the machine you’re running the terminal app
-on.**  If you are setting up your dotfiles on a remote machine (say, on NIH's
-Biowulf) and your fonts look strange, you need to set install fonts on your
-*laptop* and set your terminal app (iTerm2, MobaXterm, Terminal.app, etc) to
-use that font.
+* Change your terminal program's preferences to use the new font. You're
+  looking for a font that includes "Nerd Font". *Using Terminal on Mac? You'll
+  also need to set the same font for non-ASCII characters.*
 
-There are several options for this:
 
-1. **If you are using ITerm2**, you can skip this step and instead click
-   a checkbox: Preferences -> Profiles -> Text -> Use built-in powerline
-   glyphs. You should see the symbols then. You will not get additional icons
-   for things like lazy.nvim
+.. details:: Details
 
-2. Manually download and install your favorite font from
-   https://www.nerdfonts.com/. Be sure to change your terminal program's
-   preferences to use the new font.
+  Without a patched font, you'll get question mark symbols showing up in many places
+  in nvim. That's because many of the plugins expect fonts with additional glyphs.
 
-Note that on Terminal on Mac, you'll also need to set the font for non-ASCII
-characters.
+  Do this **on the machine running the terminal app** because that's the program
+  displaying all the text. This is almost always your local machine. For example,
+  even if you're setting up dotfiles on a remote cluster, the font should not be
+  installed there. It should be installed on the laptop you're using to connect
+  to that cluster.
 
-.. note::
+  In `this gif
+  <https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif>`_,
+  you can see arrow shapes for buffers, line number glyphs, and so on. To get
+  these, you need a patched font, and your terminal needs to be set to use the
+  font.
 
-   You may get a warning about "cannot load default config file". As long as
-   the new fonts show up, you should be fine.
+  Skip this step if you don't want those.
 
 
 2b: neovim
@@ -141,12 +157,18 @@ more help on deciding.
 
     ./setup.sh --install-neovim
 
+    # then close and reopen your terminal
+
 .. details:: Details
 
      This installs Neovim to :file:`~/opt/bin`, and then creates an ``alias
      vim=nvim`` in the :file:`~/.aliases` file (which is sourced by
      :file:`~/.bashrc`). This way, whenever you call ``vim``, the alias will
      redirect it to ``nvim``.
+
+     However it's important to close and reopen your terminal, because this
+     alias is conditional on finding nvim, and the alias is only created upon
+     first starting bash.
 
      If you want to use actual ``vim``, provide the full path when calling it.
      For example, on many machines it's at :file:`/usr/bin/vim`.
@@ -157,20 +179,21 @@ more help on deciding.
 
 .. note::
 
-  For long-time users of these dotfiles who may have older vim/nvim configs,
-  please see :ref:`nvim-lua` for more context, rationale, and details on
-  migrating to this new config method.
+  Have you used these dotfiles before? In Oct 2023, the nvim configuration
+  changed. Please see :ref:`nvim-lua` for more context, rationale, and details
+  on migrating to this new config method.
 
-Plugins are now managed via the `lazy.nvim
-<https://github.com/folke/lazy.nvim>`_ manager rather than ``vim-plug`` (as in
-previous versions of these dotfiles).
+Plugins are managed via the `lazy.nvim <https://github.com/folke/lazy.nvim>`_
+manager. Simply opening neovim should be sufficient to trigger ``lazy.nvim`` to
+bootstrap itself and then download, install, and configure plugins
+automatically.
 
-Simply opening neovim should be sufficient to trigger ``lazy.nvim`` to
-download, install, and configure plugins automatically.
+Or you can run this command to have it quit automatically when it's done:
 
 .. code-block:: bash
 
-  nvim
+  # this will open nvim, install plugins, and quit when done
+  nvim +"lua require('lazy').restore({wait=true})" +q
 
 .. details:: Details
 
@@ -203,6 +226,12 @@ details on how to activate environments.
 
   ./setup.sh --install-conda
   ./setup.sh --set-up-bioconda
+
+.. warning::
+
+    Are you on a Mac with an M1 or M2 chip? You will not be able to install
+    packages from Bioconda because packages are not built yet for the Apple
+    Silicon architecture.
 
 .. details:: Details
 

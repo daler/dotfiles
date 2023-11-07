@@ -49,23 +49,17 @@
   <section id="start-here">
 <span id="starthere"></span><h1>Start here<a class="headerlink" href="#start-here" title="Link to this heading">¶</a></h1>
 <p>A couple of preliminary things to get out of the way:</p>
-<ul>
-<li><dl class="simple">
-<dt>There are <strong>three general sections</strong>:</dt><dd><ul class="simple">
-<li><p><a class="reference internal" href="#dotfilessection"><span class="std std-ref">1. Copy over dotfiles</span></a></p></li>
-<li><p><a class="reference internal" href="#setupsection"><span class="std std-ref">2: Setup vim &amp; conda</span></a></p></li>
-<li><p><a class="reference internal" href="#toolsection"><span class="std std-ref">3: Installing programs</span></a></p></li>
-</ul>
-</dd>
-</dl>
-</li>
+<ul class="simple">
 <li><p><strong>Everything is driven by</strong> <code class="file docutils literal notranslate"><span class="pre">setup.sh</span></code>. When in doubt, consult that
 file.</p></li>
 <li><p><strong>Everything here is simply a convenience</strong> to make life easier setting up
 a new machine. Since I spent the work figuring this out, I might as well make it
-available to others. For example:</p>
-<blockquote>
-<div><ul class="simple">
+available to others.</p></li>
+<li><p><strong>All steps are optional</strong> though there are some dependencies and assumptions
+which are noted as they come up.</p></li>
+</ul>
+<details><summary>Details</summary><div class="details"><p>For example:</p>
+<ul class="simple">
 <li><p>There are some common fixes for things like backspace in vim not working
 in tmux, spaces instead of tabs for Python code, getting the mouse to
 work in vim and tmux, and so on.</p></li>
@@ -77,28 +71,35 @@ a particular machine are up-to-date with this repo.</p></li>
 <li><p>A centrally available resource for setup and configuration means there’s
 only one place to look for updates.</p></li>
 </ul>
-</div></blockquote>
-</li>
-<li><p><strong>All steps are optional</strong> though there are some dependencies and assumptions
-which are noted as they come up.</p></li>
-</ul>
-<section id="step-0-download-and-check">
-<span id="step0"></span><h2>Step 0: Download and check<a class="headerlink" href="#step-0-download-and-check" title="Link to this heading">¶</a></h2>
+</div></details><section id="download-and-check">
+<span id="step0"></span><h2>0: Download and check<a class="headerlink" href="#download-and-check" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Download the latest <a class="reference external" href="https://github.com/daler/dotfiles/archive/master.zip">zip file</a></p></li>
-<li><p>Unzip, and go to the unzipped directory, and run <code class="docutils literal notranslate"><span class="pre">./setup.sh</span></code> to see the help.</p></li>
+<li><p>Unzip it and go to the unzipped directory in your terminal</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">./setup.sh</span></code> to see the help.</p></li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Are you setting up a recent Mac? The default shell is <code class="docutils literal notranslate"><span class="pre">zsh</span></code> which may cause
+issues. See <a class="reference internal" href="post.html#zshmac"><span class="std std-ref">zsh to bash</span></a> for how to change it back to bash.</p>
+</div>
 </section>
 <section id="copy-over-dotfiles">
 <span id="dotfilessection"></span><h2>1. Copy over dotfiles<a class="headerlink" href="#copy-over-dotfiles" title="Link to this heading">¶</a></h2>
 <p>There are two paths to take here:</p>
 <p class="rubric" id="option1"><strong>Option 1: start fresh</strong></p>
-<p>Do this if you’re setting up a new machine, or if you’ve made a backup of your
-files and want to try these out, or if you want the “batteries included”
-experience.</p>
-<p>To start fresh, do this to create or overwrite existing files, and then close
-your terminal and reopen it to use the new configuration:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--dotfiles<span class="w">   </span><span class="c1"># then close your terminal and re-open</span>
+<ul class="simple">
+<li><p>Are you setting up a new machine?</p></li>
+<li><p>Have you made a backup of your files and want to try these out?</p></li>
+<li><p>Do you want the “batteries included” experience?</p></li>
+</ul>
+<p>Then you should probably start fresh. Do this to create or overwrite existing
+files, and then close your terminal and reopen it to use the new configuration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># START FRESH....</span>
+
+./setup.sh<span class="w"> </span>--dotfiles
+
+<span class="c1"># then close your terminal and re-open</span>
 </pre></div>
 </div>
 <details><summary>Details</summary><div id=dotfiles-details class="details"><p><i>Details</i><a class="headerlink" title="Permalink" href="#dotfiles-details">¶</a></p><p>The <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--dotfiles</span></code> command copies all dotfiles over to your home
@@ -109,56 +110,63 @@ will load all the new configuration.</p>
 </div></details><p class="rubric" id="option2"><strong>Option 2: update existing</strong></p>
 <p>Do this if you already have your own files.</p>
 <ul class="simple">
-<li><p>Read through <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>, <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Neovim configuration</span></a>, and <a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux configuration</span></a> to see how things are set up here</p></li>
-<li><p>Browse the dotfiles to look for parts that would be useful for you, and copy them into your own files</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--vim-diffs</span></code> may be helpful to you if you’re updating</p></li>
+<li><p>Read through <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>, <a class="reference internal" href="vim.html#vim"><span class="std std-ref">Neovim configuration</span></a>, and <a class="reference internal" href="tmux.html#tmux"><span class="std std-ref">tmux configuration</span></a> to see how things are set up.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--vim-diffs</span></code> may be helpful to you if you’re updating. See
+<a class="reference internal" href="vim.html#working-with-diffs"><span class="std std-ref">Working with diffs</span></a> if you need a refresher for working with diffs.</p></li>
 <li><p>Use the tool installation commands as-is, but make sure <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code> is on your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></p></li>
 </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># UPDATE EXISTING...</span>
+
+./setup.sh<span class="w"> </span>--vim-diffs
+
+<span class="c1"># use standard vim diff operations, e.g.</span>
+<span class="c1"># ]c, do, dp, :qa</span>
+</pre></div>
+</div>
 <p>The remainder of this documentation will assume you’re starting fresh.</p>
 </section>
 <section id="setup-vim-conda">
 <span id="setupsection"></span><h2>2: Setup vim &amp; conda<a class="headerlink" href="#setup-vim-conda" title="Link to this heading">¶</a></h2>
-<section id="a-set-terminal-font">
-<h3>2a: Set terminal font<a class="headerlink" href="#a-set-terminal-font" title="Link to this heading">¶</a></h3>
+<section id="a-set-a-patched-terminal-font">
+<h3>2a: Set a patched terminal font<a class="headerlink" href="#a-set-a-patched-terminal-font" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Manually download and install your favorite font from <a class="reference external" href="https://www.nerdfonts.com/">nerdfonts.com</a>. This needs to be done <strong>on your local
+machine</strong>.</p></li>
+<li><p>Install by double-clicking the .ttf files. On Mac, for example, this will
+open the font manager, where you can click the “Install” button.</p></li>
+<li><p>Change your terminal program’s preferences to use the new font. You’re
+looking for a font that includes “Nerd Font”. <em>Using Terminal on Mac? You’ll
+also need to set the same font for non-ASCII characters.</em></p></li>
+</ul>
+<details><summary>Details</summary><div class="details"><p>Without a patched font, you’ll get question mark symbols showing up in many places
+in nvim. That’s because many of the plugins expect fonts with additional glyphs.</p>
+<p>Do this <strong>on the machine running the terminal app</strong> because that’s the program
+displaying all the text. This is almost always your local machine. For example,
+even if you’re setting up dotfiles on a remote cluster, the font should not be
+installed there. It should be installed on the laptop you’re using to connect
+to that cluster.</p>
 <p>In <a class="reference external" href="https://raw.githubusercontent.com/wiki/vim-airline/vim-airline/screenshots/demo.gif">this gif</a>,
 you can see arrow shapes for buffers, line number glyphs, and so on. To get
 these, you need a patched font, and your terminal needs to be set to use the
 font.</p>
 <p>Skip this step if you don’t want those.</p>
-<p>This only needs to be done <strong>on the machine you’re running the terminal app
-on.</strong>  If you are setting up your dotfiles on a remote machine (say, on NIH’s
-Biowulf) and your fonts look strange, you need to set install fonts on your
-<em>laptop</em> and set your terminal app (iTerm2, MobaXterm, Terminal.app, etc) to
-use that font.</p>
-<p>There are several options for this:</p>
-<ol class="arabic simple">
-<li><p><strong>If you are using ITerm2</strong>, you can skip this step and instead click
-a checkbox: Preferences -&gt; Profiles -&gt; Text -&gt; Use built-in powerline
-glyphs. You should see the symbols then. You will not get additional icons
-for things like lazy.nvim</p></li>
-<li><p>Manually download and install your favorite font from
-<a class="reference external" href="https://www.nerdfonts.com/">https://www.nerdfonts.com/</a>. Be sure to change your terminal program’s
-preferences to use the new font.</p></li>
-</ol>
-<p>Note that on Terminal on Mac, you’ll also need to set the font for non-ASCII
-characters.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You may get a warning about “cannot load default config file”. As long as
-the new fonts show up, you should be fine.</p>
-</div>
-</section>
+</div></details></section>
 <section id="b-neovim">
 <h3>2b: neovim<a class="headerlink" href="#b-neovim" title="Link to this heading">¶</a></h3>
 <p>Do this if you want to use <a class="reference external" href="https://neovim.io/">neovim</a>. See <a class="reference internal" href="why.html#why"><span class="std std-ref">Why?</span></a> for
 more help on deciding.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">neovim</span>
+
+<span class="c1"># then close and reopen your terminal</span>
 </pre></div>
 </div>
-<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>This installs Neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, and then creates an <code class="docutils literal notranslate"><span class="pre">alias</span>
+<details><summary>Details</summary><div class="details"><p>This installs Neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, and then creates an <code class="docutils literal notranslate"><span class="pre">alias</span>
 <span class="pre">vim=nvim</span></code> in the <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code> file (which is sourced by
 <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code>). This way, whenever you call <code class="docutils literal notranslate"><span class="pre">vim</span></code>, the alias will
 redirect it to <code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
+<p>However it’s important to close and reopen your terminal, because this
+alias is conditional on finding nvim, and the alias is only created upon
+first starting bash.</p>
 <p>If you want to use actual <code class="docutils literal notranslate"><span class="pre">vim</span></code>, provide the full path when calling it.
 For example, on many machines it’s at <code class="file docutils literal notranslate"><span class="pre">/usr/bin/vim</span></code>.</p>
 </div></details></section>
@@ -166,18 +174,20 @@ For example, on many machines it’s at <code class="file docutils literal notra
 <h3>2c: neovim plugin setup<a class="headerlink" href="#c-neovim-plugin-setup" title="Link to this heading">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For long-time users of these dotfiles who may have older vim/nvim configs,
-please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details on
-migrating to this new config method.</p>
+<p>Have you used these dotfiles before? In Oct 2023, the nvim configuration
+changed. Please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details
+on migrating to this new config method.</p>
 </div>
-<p>Plugins are now managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a> manager rather than <code class="docutils literal notranslate"><span class="pre">vim-plug</span></code> (as in
-previous versions of these dotfiles).</p>
-<p>Simply opening neovim should be sufficient to trigger <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> to
-download, install, and configure plugins automatically.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvim
+<p>Plugins are managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a>
+manager. Simply opening neovim should be sufficient to trigger <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> to
+bootstrap itself and then download, install, and configure plugins
+automatically.</p>
+<p>Or you can run this command to have it quit automatically when it’s done:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># this will open nvim, install plugins, and quit when done</span>
+nvim<span class="w"> </span>+<span class="s2">&quot;lua require(&#39;lazy&#39;).restore({wait=true})&quot;</span><span class="w"> </span>+q
 </pre></div>
 </div>
-<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p><code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> will show progress downloading plugins. Treesitter will also
+<details><summary>Details</summary><div class="details"><p><code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> will show progress downloading plugins. Treesitter will also
 automatically install parsers, so you should watch the log on the bottom and
 wait until everything settles down. Then you can quit as normal with
 <code class="docutils literal notranslate"><span class="pre">&lt;Esc&gt;:q</span></code>.</p>
@@ -199,7 +209,13 @@ details on how to activate environments.</p>
 ./setup.sh<span class="w"> </span>--set-up-bioconda
 </pre></div>
 </div>
-<details><summary>Details</summary><div class="details"><p><i>Details</i></p><p>First, this downloads the latest version of <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>, and installs conda and mamba
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Are you on a Mac with an M1 or M2 chip? You will not be able to install
+packages from Bioconda because packages are not built yet for the Apple
+Silicon architecture.</p>
+</div>
+<details><summary>Details</summary><div class="details"><p>First, this downloads the latest version of <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>, and installs conda and mamba
 into <code class="file docutils literal notranslate"><span class="pre">~/mambaforge/condabin</span></code>.</p>
 <p>Then it adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/mambaforge/condabin&quot;</span></code> to the
 <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code> (which you can read more about at <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>).</p>
@@ -253,10 +269,10 @@ descriptions of tools and the commands to install them.</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Start here</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-0-download-and-check">Step 0: Download and check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-and-check">0: Download and check</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#copy-over-dotfiles">1. Copy over dotfiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setup-vim-conda">2: Setup vim &amp; conda</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#a-set-terminal-font">2a: Set terminal font</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-set-a-patched-terminal-font">2a: Set a patched terminal font</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#b-neovim">2b: neovim</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#c-neovim-plugin-setup">2c: neovim plugin setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#d-conda">2d: conda</a></li>
