@@ -8,6 +8,7 @@ Changelog
 
 **vim/nvim**
 
+- Fix inconsistent highlighting of rmarkdown documents
 - Don't force the cursor to always be a block shape; add docs on how to get iTerm cursor looking nice
 - Always highlight the current line (rather than only in insert mode). Keeping
   the previous lines in the config for future reference.
