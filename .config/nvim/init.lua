@@ -165,6 +165,17 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function() vim.cmd("set commentstring=#\\ %s") end,
 })
 
+-- Even though treesitter is configured to not highlight rmarkdown,
+-- highlighting still shows up about about half the time. This enforces
+-- highlights to be disabled in rmarkdown buffers.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rmarkdown",
+  callback = function()
+    require("nvim-treesitter")
+    vim.cmd("TSDisable highlight rmarkdown")
+  end,
+})
+
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
