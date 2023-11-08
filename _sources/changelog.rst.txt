@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2023-11-08
+----------
+- Turn off cursorline in a terminal buffer
+- Fix inconsistent highlighting of rmarkdown documents (treesitter
+  intermittently ignore the highlight ignore when setting up, so now we
+  explicitly disable in an autocommand).
+
 2023-11-07
 ----------
 
@@ -8,7 +15,6 @@ Changelog
 
 **vim/nvim**
 
-- Fix inconsistent highlighting of rmarkdown documents
 - Don't force the cursor to always be a block shape; add docs on how to get iTerm cursor looking nice
 - Always highlight the current line (rather than only in insert mode). Keeping
   the previous lines in the config for future reference.
