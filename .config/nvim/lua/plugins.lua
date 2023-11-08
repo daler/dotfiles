@@ -461,7 +461,7 @@ return {
       -- Language server for Lua. These are the recommended options
       -- when mainly using Lua for Neovim
       lspconfig.lua_ls.setup({
-        autostart = true,
+        autostart = false,
         on_init = function(client)
           local path = client.workspace_folders[1].name
           if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
