@@ -174,7 +174,10 @@ return {
         "/```{r<CR>NjV/```<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>",
         desc = "Send RMarkdown chunk to R",
       },
-      { "<leader>t", ":ToggleTerm direction=vertical<CR>", desc = "New terminal on right" },
+      -- Immiedately after creating the terminal, disable the cursorline.
+      -- This otherwise looks confusing with a single, differently-colored line at
+      -- the bottom of the terminal when commands are running.
+      { "<leader>t", ":ToggleTerm direction=vertical<CR><C-\\><C-n>:set nocul<CR>i", desc = "New terminal on right" },
     },
   },
 
