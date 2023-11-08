@@ -4,7 +4,13 @@ Troubleshooting
 Updating nvim plugins
 ---------------------
 
-In nvim, run ``:Lazy``. In the interface, use ``U`` to update plugins.
+In nvim, run ``:Lazy``. In the interface, use :kbd:`U` to update plugins. Use
+:kbd:`X` to clean up any other plugins. Run ``:Mason`` to select language
+server protocols (more info at :ref:`mason`).
+
+You can optionally remove your :file:`~/.local/share/nvim` directory, which
+will completely clean out any old plugins; you'll need to let lazy.nvim
+reinstall plugins upon next starting nvim.
 
 Vim has light gray text, colorscheme looks broken
 -------------------------------------------------
