@@ -137,7 +137,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 })
 
 vim.api.nvim_create_autocmd("Filetype", {
-  pattern = "markdown",
+  pattern = { "markdown", "rmd" },
   callback = function()
     vim.keymap.set(
       { "n", "i" },
