@@ -50,18 +50,6 @@ return {
   },
 
   {
-    "vim-pandoc/vim-pandoc-syntax", -- improves editing markdown and ReST
-    ft = { "markdown", "rmarkdown" },
-    dependencies = { "vim-pandoc/vim-pandoc" },
-  },
-
-  {
-    "vim-pandoc/vim-rmarkdown", -- improves editing RMarkdown
-    ft = "rmarkdown",
-    dependencies = { "vim-pandoc/vim-pandoc-syntax", "vim-pandoc/vim-pandoc" },
-  },
-
-  {
     "nvim-telescope/telescope.nvim", -- pop-up window used for fuzzy-searching and selecting
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -109,17 +97,6 @@ return {
     config = function()
       -- see :help accelerated_jk_acceleration_table
       vim.cmd("let g:accelerated_jk_acceleration_table = [7, 13, 20, 33, 53, 86]")
-    end,
-  },
-
-  {
-    "vim-pandoc/vim-pandoc", -- improves editing markdown and RMarkdown
-    lazy = true,
-    init = function()
-      vim.cmd("let g:pandoc#syntax#conceal#use = 0") -- " Disable the conversion of ``` to lambda and other fancy concealment/conversion that ends up confusing me
-      vim.cmd("let g:pandoc#folding#fold_fenced_codeblocks = 1") -- " RMarkdown code blocks can be folded too
-      vim.cmd("let g:pandoc#spell#enabled = 0") -- " By default, keep spell-check off. Turn on with `set spell`
-      vim.cmd("let g:pandoc#keyboard#display_motions = 0") -- Disable remapping j to gj and k to gk
     end,
   },
 

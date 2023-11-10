@@ -117,6 +117,8 @@ vim.keymap.set("t", "<leader>q", "<C-\\><C-n>:wincmd h<CR>", { desc = "Move to l
 
 vim.fn.setreg("l", "I'A',j") -- "listify": wrap with quotes and add trailing comma
 
+vim.cmd("hi @text.literal.block.markdown gui=NONE") -- Turn of the default italic italics on fenced code blocks in markdown/rmarkdown
+
 -- Autocommands.
 -- Autocommands are triggered by an action, like opening a particular filetype.
 
@@ -165,9 +167,6 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function() vim.cmd("set commentstring=#\\ %s") end,
 })
 
--- Even though treesitter is configured to not highlight rmarkdown,
--- highlighting still shows up about about half the time. This enforces
--- highlights to be disabled in rmarkdown buffers.
 
 -- Render RMarkdown in R running in terminal
 vim.api.nvim_create_autocmd("FileType", {
@@ -182,11 +181,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Run Python code in IPython running in terminal
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "rmarkdown",
+  pattern = "python",
   callback = function()
-    require("nvim-treesitter")
-    vim.cmd("TSDisable highlight rmarkdown")
+    vim.keymap.set("n", "<leader>k", ":TermExec cmd='run %:p'<CR>", { desc = "Run Python file in IPython" })
   end,
 })
 
