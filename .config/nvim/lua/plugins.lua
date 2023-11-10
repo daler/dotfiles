@@ -42,7 +42,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    lazy = true,
+    lazy = false, -- otherwise, opening a directory as first buffer doesn't trigger it.
     config = true,
     keys = {
       { "<leader>fb", "<cmd>NvimTreeToggle<CR>", desc = "[f]ile [b]rowser toggle" },
