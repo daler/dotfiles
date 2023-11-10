@@ -145,26 +145,6 @@ return {
         end,
       })
 
-      -- Only set this for RMarkdown
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "rmarkdown",
-        callback = function()
-          vim.keymap.set(
-            "n",
-            "<leader>k",
-            ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
-            { desc = "Render RMar[k]down to HTML" }
-          )
-        end,
-      })
-
-      -- Only set this for Python
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "python",
-        callback = function()
-          vim.keymap.set("n", "<leader>k", ":TermExec cmd='run %:p'<CR>", { desc = "Run Python file in IPython" })
-        end,
-      })
     end,
     keys = {
       { "gxx", ":ToggleTermSendCurrentLine<CR><CR>", desc = "Send current line to terminal" },

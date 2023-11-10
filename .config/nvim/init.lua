@@ -168,6 +168,20 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Even though treesitter is configured to not highlight rmarkdown,
 -- highlighting still shows up about about half the time. This enforces
 -- highlights to be disabled in rmarkdown buffers.
+
+-- Render RMarkdown in R running in terminal
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "rmarkdown", "rmd" },
+  callback = function()
+    vim.keymap.set(
+      "n",
+      "<leader>k",
+      ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
+      { desc = "Render RMar[k]down to HTML" }
+    )
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "rmarkdown",
   callback = function()
