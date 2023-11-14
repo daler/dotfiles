@@ -1,6 +1,24 @@
 Changelog
 =========
 
+2023-11-12
+----------
+
+**vim/nvim**
+
+Tweaks for working with RMarkdown documents.
+
+- Decided to remove the vim-pandoc family of plugins; it seems they were
+  conflicting with treesitter highlighting. Treesitter is going a good job of
+  it, and correctly allows :kbd:`gcc` commenting within R code chunks. Various
+  filetypes set to use ``rmd`` rather than ``rmarkdown``.
+- Renable lazy-load of nvim-tree, so that opening a directory works properly.
+- :kbd:`gxx` to send lines to terminal now jumps to the bottom of the selection once sent.
+- By default, treesitter's highlighting of markdown fenced code blocks (e.g.,
+  RMarkdown chunks) makes everything italic. Disable this in
+  :file:`.config/nvim/init.lua`.
+
+
 2023-11-08
 ----------
 - Turn off cursorline in a terminal buffer
