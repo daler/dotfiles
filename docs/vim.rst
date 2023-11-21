@@ -1278,39 +1278,11 @@ Colorschemes
 
 For years I've been using the venerable *zenburn* colorscheme. However, now
 with additional plugins and highlighting mechansims (especially treesitter), it
-became important to be able to configure more than what was available in the 
+became important to be able to configure more than what that colorscheme supported.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The `zenburn.nvim <https://github.com/phha/zenburn.nvim>`_ repo was a reboot of
+this colorscheme, but there were some parts of it that I wanted to change, or
+at least have more control over. Hence `my fork of the repo
+<https://github.com/daler/zenburn.nvim>`_, which is used here. If you're
+interested in tweaking your own colorschemes, I've hopefully documented that
+fork enough to give you an idea of how to modify on your own.
