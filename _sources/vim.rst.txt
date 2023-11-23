@@ -993,7 +993,7 @@ The following algorithms are available:
 
 .. versionadded:: 2019-03-27
 
-`vim-table-mode <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ provides
+`vim-table-mode <https://github.com/dhruvasagar/vim-table-mode>`_ provides
 easy formatting of tables in Markdown and Restructured Text
 
 Nice Markdown tables are a pain to format. This plugin makes it easy, by
@@ -1189,36 +1189,51 @@ No additional commands configured.
 
 .. versionadded:: 2019-02-27
 
-`vim-rmarkdown <https://github.com/vim-pandoc/vim-rmarkdown>`_ provides syntax
-highlighting for R within RMarkdown code chunks. Requires both ``vim-pandoc``
-and ``vim-pandoc-syntax``, described below.
+.. deprecated:: 2023-11-14
+  Removed in favor of treesitter
 
-No additional commands configured.
+.. details:: Deprecation notes
+
+  `vim-rmarkdown <https://github.com/vim-pandoc/vim-rmarkdown>`_ provides syntax
+  highlighting for R within RMarkdown code chunks. Requires both ``vim-pandoc``
+  and ``vim-pandoc-syntax``, described below.
+
+  No additional commands configured.
 
 ``vim-pandoc``
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 2019-02-27
 
-`vim-pandoc <https://github.com/vim-pandoc/vim-pandoc>`_ Integration with
-`pandoc <http://johnmacfarlane.net/pandoc/>`_. Uses vim-pandoc-syntax (see
-below) for syntax highlighting.
+.. deprecated:: 2023-11-14
+   Removed in favor of treesitter
 
-Includes folding and formatting. Lots of shortcuts are defined by this plugin,
-see ``:help vim-pandoc`` for much more.
+.. details:: Deprecation notes
 
-No additional commands configured.
+  `vim-pandoc <https://github.com/vim-pandoc/vim-pandoc>`_ Integration with
+  `pandoc <http://johnmacfarlane.net/pandoc/>`_. Uses vim-pandoc-syntax (see
+  below) for syntax highlighting.
+
+  Includes folding and formatting. Lots of shortcuts are defined by this plugin,
+  see ``:help vim-pandoc`` for much more.
+
+  No additional commands configured.
 
 ``vim-pandoc-syntax``
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2019-02-27
 
-`vim-pandoc-syntax <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ is used
-by vim-pandoc (above). It is a separate plugin because the authors found it
-easier to track bugs separately.
+.. deprecated:: 2023-11-14
+  Removed in favor of treesitter
 
-No additional commands configured.
+.. details:: Deprecation notes
+
+  `vim-pandoc-syntax <https://github.com/vim-pandoc/vim-pandoc-syntax>`_ is used
+  by vim-pandoc (above). It is a separate plugin because the authors found it
+  easier to track bugs separately.
+
+  No additional commands configured.
 
 
 ``vim-tmux-clipboard``
@@ -1257,3 +1272,17 @@ This uses my fork of https://github.com/phha/zenburn.nvim, which adds addtional
 support for plugins and tweaks some of the existing colors to work better.
 
 No additional commands configured.
+
+Colorschemes
+------------
+
+For years I've been using the venerable *zenburn* colorscheme. However, now
+with additional plugins and highlighting mechansims (especially treesitter), it
+became important to be able to configure more than what that colorscheme supported.
+
+The `zenburn.nvim <https://github.com/phha/zenburn.nvim>`_ repo was a reboot of
+this colorscheme, but there were some parts of it that I wanted to change, or
+at least have more control over. Hence `my fork of the repo
+<https://github.com/daler/zenburn.nvim>`_, which is used here. If you're
+interested in tweaking your own colorschemes, I've hopefully documented that
+fork enough to give you an idea of how to modify on your own.
