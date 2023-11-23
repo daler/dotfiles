@@ -42,23 +42,11 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua", -- file browser
-    lazy = true,
+    lazy = false, -- otherwise, opening a directory as first buffer doesn't trigger it.
     config = true,
     keys = {
       { "<leader>fb", "<cmd>NvimTreeToggle<CR>", desc = "[f]ile [b]rowser toggle" },
     },
-  },
-
-  {
-    "vim-pandoc/vim-pandoc-syntax", -- improves editing markdown and ReST
-    ft = { "markdown", "rmarkdown" },
-    dependencies = { "vim-pandoc/vim-pandoc" },
-  },
-
-  {
-    "vim-pandoc/vim-rmarkdown", -- improves editing RMarkdown
-    ft = "rmarkdown",
-    dependencies = { "vim-pandoc/vim-pandoc-syntax", "vim-pandoc/vim-pandoc" },
   },
 
   {
@@ -113,17 +101,6 @@ return {
   },
 
   {
-    "vim-pandoc/vim-pandoc", -- improves editing markdown and RMarkdown
-    lazy = true,
-    init = function()
-      vim.cmd("let g:pandoc#syntax#conceal#use = 0") -- " Disable the conversion of ``` to lambda and other fancy concealment/conversion that ends up confusing me
-      vim.cmd("let g:pandoc#folding#fold_fenced_codeblocks = 1") -- " RMarkdown code blocks can be folded too
-      vim.cmd("let g:pandoc#spell#enabled = 0") -- " By default, keep spell-check off. Turn on with `set spell`
-      vim.cmd("let g:pandoc#keyboard#display_motions = 0") -- Disable remapping j to gj and k to gk
-    end,
-  },
-
-  {
     "akinsho/toggleterm.nvim", -- terminal in vim you can send code to
     config = function()
       -- tweak the sizes of the new terminal
@@ -145,30 +122,10 @@ return {
         end,
       })
 
-      -- Only set this for RMarkdown
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "rmarkdown",
-        callback = function()
-          vim.keymap.set(
-            "n",
-            "<leader>k",
-            ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
-            { desc = "Render RMar[k]down to HTML" }
-          )
-        end,
-      })
-
-      -- Only set this for Python
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "python",
-        callback = function()
-          vim.keymap.set("n", "<leader>k", ":TermExec cmd='run %:p'<CR>", { desc = "Run Python file in IPython" })
-        end,
-      })
     end,
     keys = {
       { "gxx", ":ToggleTermSendCurrentLine<CR><CR>", desc = "Send current line to terminal" },
-      { "gx", ":ToggleTermSendVisualSelection<CR><CR>", desc = "Send selection to terminal", mode = "x" },
+      { "gx", ":ToggleTermSendVisualSelection<CR>'><CR>", desc = "Send selection to terminal", mode = "x" },
       {
         "<leader>cd",
         "/```{r<CR>NjV/```<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>",
@@ -190,7 +147,6 @@ return {
       require("nvim-treesitter.configs").setup({
         highlight = {
           enable = true,
-          disable = { "rmarkdown" }, -- let pandoc handle highlighting for these
         },
         indent = {
           enable = true,

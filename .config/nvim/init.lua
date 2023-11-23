@@ -91,7 +91,7 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Fix <Esc> in terminal buffer
 vim.keymap.set("n", "<Leader>H", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })
 vim.keymap.set("n", "<leader>W", ":%s/\\s\\+$//<cr>:let @/=''<CR>", { desc = "Clean trailing whitespace" })
 vim.keymap.set({ "n", "i" }, "<leader>R", "<Esc>:syntax sync fromstart<CR>", { desc = "Refresh syntax highlighting" })
-vim.keymap.set({ "n", "i" }, "<leader>`", "i```{r}<CR>```<Esc>O", { desc = "New fenced RMarkdown code block" })
+vim.keymap.set({ "n", "i" }, "<leader>`", "<Esc>i```{r}<CR>```<Esc>O", { desc = "New fenced RMarkdown code block" })
 vim.keymap.set(
   { "n", "i" },
   "<leader>ts",
@@ -117,6 +117,8 @@ vim.keymap.set("t", "<leader>q", "<C-\\><C-n>:wincmd h<CR>", { desc = "Move to l
 
 vim.fn.setreg("l", "I'A',j") -- "listify": wrap with quotes and add trailing comma
 
+vim.cmd("hi @text.literal.block.markdown gui=NONE") -- Turn of the default italic italics on fenced code blocks in markdown/rmarkdown
+
 -- Autocommands.
 -- Autocommands are triggered by an action, like opening a particular filetype.
 
@@ -135,7 +137,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 })
 
 vim.api.nvim_create_autocmd("Filetype", {
-  pattern = "markdown",
+  pattern = { "markdown", "rmd" },
   callback = function()
     vim.keymap.set(
       { "n", "i" },
@@ -165,14 +167,25 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function() vim.cmd("set commentstring=#\\ %s") end,
 })
 
--- Even though treesitter is configured to not highlight rmarkdown,
--- highlighting still shows up about about half the time. This enforces
--- highlights to be disabled in rmarkdown buffers.
+
+-- Render RMarkdown in R running in terminal
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "rmarkdown",
+  pattern = { "rmarkdown", "rmd" },
   callback = function()
-    require("nvim-treesitter")
-    vim.cmd("TSDisable highlight rmarkdown")
+    vim.keymap.set(
+      "n",
+      "<leader>k",
+      ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
+      { desc = "Render RMar[k]down to HTML" }
+    )
+  end,
+})
+
+-- Run Python code in IPython running in terminal
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.keymap.set("n", "<leader>k", ":TermExec cmd='run %:p'<CR>", { desc = "Run Python file in IPython" })
   end,
 })
 
