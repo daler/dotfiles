@@ -21,7 +21,6 @@ return {
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
   { "junegunn/gv.vim", cmd = "GV", dependencies = {"tpope/vim-fugitive"}, lazy = true}, -- graphical git log
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
-  { "stsewd/sphinx.nvim", ft = "rst" }, -- syntax/grammar for Sphinx (ReST) documentation
   { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
   { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
@@ -165,7 +164,6 @@ return {
           "vim",
           "yaml",
           "r",
-          "rst",
           "snakemake",
         },
         incremental_selection = {
