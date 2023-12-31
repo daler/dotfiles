@@ -534,6 +534,9 @@ For navigating complex codebases, there are other keys that are automatically
 mapped, which you can read about in the `README for aerial
 <https://github.com/stevearc/aerial.nvim>`_.
 
+
+.. _treesitter:
+
 ``treesitter``
 ~~~~~~~~~~~~~~
 
@@ -545,6 +548,23 @@ are functions, classes, variables, modules, etc. Then it's up to other plugins
 to do something with that. For example, colorschemes can use that information,
 or you can select text based on its semantic meaning within the programming
 language.
+
+In :file:`~/.config/lua/plugins.lua`, treesitter is configured to ensure the
+listed parsers are installed. These will be attempted to be installed
+automatically, but they do require a C compiler to be installed.
+
+
+- On a Mac, this may need XCode Command Line Tools to be installed.
+- A fresh Ubuntu installation will need ``sudo apt install build-essential``
+- RHEL/Fedora will need ``sudo dnf install 'Development Tools'`` (and may need
+  the `EPEL repo <https://docs.fedoraproject.org/en-US/epel/>`__ enabled).
+- Alternatively, if you don't have root access, you can install `compiler
+  packages via conda
+  <https://docs.conda.io/projects/conda-build/en/stable/resources/compiler-tools.html>`_, 
+
+Alternatively, comment out the entire ``ensure_installed`` block in
+:file:`~/.config/lua/plugins.lua`; this means you will not have
+treesitter-enabled syntax highlighting though.
 
 
 .. list-table::

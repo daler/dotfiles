@@ -101,6 +101,19 @@ instructions after running to update your tmux config.</p>
 install docker and use a container, or wait until Bioconda starts building
 those packages.</p>
 </section>
+<section id="errors-about-not-finding-cc-or-gcc-when-opening-vim">
+<h2>Errors about not finding CC or GCC when opening vim<a class="headerlink" href="#errors-about-not-finding-cc-or-gcc-when-opening-vim" title="Link to this heading">¶</a></h2>
+<p>You may get an error like this when opening nvim:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Error detected while processing BufReadPost Autocommands for &quot;*&quot;:
+No C compiler found! &quot;cc&quot;, &quot;gcc&quot;, &quot;clang&quot;, &quot;cl&quot;, &quot;zig&quot; are not executable.
+No C compiler found! &quot;cc&quot;, &quot;gcc&quot;, &quot;clang&quot;, &quot;cl&quot;, &quot;zig&quot; are not executable.
+....
+</pre></div>
+</div>
+<p>This happens because nvim is trying to install the treesitter parsers, but that
+needs a compiler to be available. See <span class="xref std std-ref">treesitter</span> for details on how to
+address this.</p>
+</section>
 </section>
 
 
@@ -150,6 +163,7 @@ those packages.</p>
 <li class="toctree-l2"><a class="reference internal" href="#vim-has-light-gray-text-colorscheme-looks-broken">Vim has light gray text, colorscheme looks broken</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comments-don-t-show-up-as-italic">Comments don’t show up as italic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#can-t-install-conda-packages-from-bioconda">Can’t install conda packages from Bioconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#errors-about-not-finding-cc-or-gcc-when-opening-vim">Errors about not finding CC or GCC when opening vim</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>

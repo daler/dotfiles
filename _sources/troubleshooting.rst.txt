@@ -69,3 +69,20 @@ Can't install conda packages from Bioconda
 Bioconda does not yet build packages for Mac ARM chips (Mac M1 or M2). You can
 install docker and use a container, or wait until Bioconda starts building
 those packages.
+
+
+Errors about not finding CC or GCC when opening vim
+---------------------------------------------------
+
+You may get an error like this when opening nvim:
+
+::
+
+   Error detected while processing BufReadPost Autocommands for "*":
+   No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
+   No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
+   ....
+
+This happens because nvim is trying to install the treesitter parsers, but that
+needs a compiler to be available. See :ref:`treesitter` for details on how to
+address this.
