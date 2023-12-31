@@ -151,6 +151,7 @@ return {
           enable = true,
           disable = { "python", "snakemake" }, -- let vim-python-pep8-indent handle this
         },
+        -- These will be attempted to be installed automatically, but you'll need a C compiler installed.
         ensure_installed = {
           "bash",
           "css",

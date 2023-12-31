@@ -1,6 +1,23 @@
 Changelog
 =========
 
+2023-12-31
+----------
+
+**setup.sh**
+
+Changed the recommended order of events, and added a note to open vim to let it install plugins.
+
+**docs**
+
+Added troubleshooting notes for treesitter if there's no compiler available on the system
+
+**vim/nvim**
+
+Remove ReStructured Text treesitter parser and sphinx plugin, since they do not
+yet support `ReST substitutions
+<https://docutils.sourceforge.io/docs/ref/rst/directives.html#directives-for-substitution-definitions>`__.
+
 2023-11-14
 ----------
 

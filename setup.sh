@@ -92,10 +92,11 @@ function showHelp() {
 
     header "RECOMMENDED ORDER:"
     echo "    1)  ./setup.sh --dotfiles"
-    echo "    2)  CLOSE TERMINAL, OPEN A NEW ONE"
-    echo "    3)  ./setup.sh --install-neovim"
-    echo "    5)  ./setup.sh --install-conda"
-    echo "    6)  ./setup.sh --set-up-bioconda"
+    echo "    2)  ./setup.sh --install-neovim"
+    echo "    3)  ./setup.sh --install-conda"
+    echo "    4)  ./setup.sh --set-up-bioconda"
+    echo "    5) CLOSE TERMINAL, OPEN A NEW ONE"
+    echo "    6) Open vim (which should now be aliased to nvim) and allow plugins to install, then quit"
     echo "    7)  ./setup.sh --install-fzf"
     echo "    8)  ./setup.sh --install-ripgrep"
     echo "    9)  ./setup.sh --install-vd"
@@ -457,7 +458,7 @@ elif [ $task == "--install-conda" ]; then
     bash mambaforge.sh -b -p $MAMBAFORGE_DIR
     rm mambaforge.sh
     echo "export PATH=\$PATH:$MAMBAFORGE_DIR/condabin" >> ~/.path
-    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path.${UNSET}\n"
+    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path. You may need to close and then reopen your terminal.${UNSET}\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
