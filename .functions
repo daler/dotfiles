@@ -34,6 +34,7 @@ function tre() {
 
 # Select a conda env to activate
 sa() {
+    ca    # otherwise: -bash: activate: No such file or directory
     local name=$(conda env list | grep -v "#" | fzf)
     local env=$(echo $name | awk '{print $1}');
     eval "source activate $env";
@@ -78,6 +79,27 @@ function prsetup {
     echo "  git push $contributor HEAD:$contributor_branch"
 }
 
+function update_mac_ls_colors() {
+    # This function checks if 1) OS is MacOS, 2) coreutils installed in conda's base
+    # environment, 3) conda installed to path specified in '.setup.sh'. If so,
+    # resets ls/dircolors for more consistent behavior across environments.
+    if [[ $OSTYPE == darwin* ]]; then
+        MAMBAFORGE_DIR=$HOME/mambaforge
+        if [ -d "$MAMBAFORGE_DIR" ]; then
+            # reset ls alias (from .aliases)
+            file="$MAMBAFORGE_DIR/bin/ls"
+            if [ -r "$file" ] && [ -f "$file" ]; then
+                alias ls="$file --color=auto"
+            fi
+            # re-evaluate dircolors and re-export LS_COLORS (from .bashrc)
+            file="$MAMBAFORGE_DIR/bin/dircolors"
+            if [ -r "$file" ] && [ -f "$file" ]; then
+                test -r ~/.dircolors && eval "$($file -b ~/.dircolors)" || eval "$($file -b)"
+            fi
+        fi
+    fi
+}
+
 function ca() {
     # This function allows you to activate the base env only when you're ready
     # to (and don't activate it on EVERY new shell).
@@ -85,6 +107,7 @@ function ca() {
     # You can also provide an env name or path to activate it.
     eval "$(conda shell.bash hook 2> /dev/null)"
     conda activate "$@"
+    update_mac_ls_colors
 }
 
 

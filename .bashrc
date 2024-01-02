@@ -28,6 +28,7 @@ fi
 if [ `command -v dircolors` ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
+update_mac_ls_colors
 
 if [[ $OSTYPE == darwin* ]]; then
     test -f ~/.git-completion.bash && source ~/.git-completion.bash
