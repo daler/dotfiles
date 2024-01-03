@@ -473,6 +473,24 @@ elif [ $task == "--conda-env" ]; then
     if [[ $OSTYPE == darwin* ]]; then
         ok "Installs dependencies in 'requirements.txt' and 'requirements-mac.txt' into the base conda environment"
         conda install --file requirements.txt --file requirements-mac.txt
+
+        MAMBAFORGE_DIR=$HOME/mambaforge
+        if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
+            MAMBAFORGE_DIR=/data/$USER/mambaforge
+        fi
+        file="$MAMBAFORGE_DIR/bin/ls"
+        if [ -r "$file" ] && [ -f "$file" ]; then
+            ln -sf $file $HOME/opt/bin/ls
+            printf "${YELLOW}- found coreutils ls in $MAMBAFORGE_DIR/bin${UNSET}\n"
+            printf "${YELLOW}- created symlink $HOME/opt/bin/ls${UNSET}\n"
+        fi
+        file="$MAMBAFORGE_DIR/bin/dircolors"
+        if [ -r "$file" ] && [ -f "$file" ]; then
+            ln -sf $file $HOME/opt/bin/dircolors
+            printf "${YELLOW}- found coreutils dircolors in $MAMBAFORGE_DIR/bin${UNSET}\n"
+            printf "${YELLOW}- created symlink $HOME/opt/bin/dircolors${UNSET}\n"
+        fi
+        check_opt_bin_in_path
     else
         ok "Installs dependencies in 'requirements.txt' into the base conda environment"
         conda install --file requirements.txt

@@ -34,6 +34,7 @@ function tre() {
 
 # Select a conda env to activate
 sa() {
+    ca    # avoid '-bash: activate: No such file or directory'
     local name=$(conda env list | grep -v "#" | fzf)
     local env=$(echo $name | awk '{print $1}');
     eval "source activate $env";
