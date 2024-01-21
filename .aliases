@@ -49,8 +49,7 @@ alias grep='grep --color=auto'
 alias D="export DISPLAY=:0"
 
 # View syntax-highlighted files in the current directory, live-filtered by fzf.
-alias v='fzf --preview "bat --color \"always\" {}"'
-
+alias v='fzf --preview "bat --color \"always\" --theme GitHub {}"'
 
 # Save three keystrokes to go up a directory
 alias ..="cd .."
