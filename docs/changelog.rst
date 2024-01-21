@@ -17,6 +17,13 @@ compressed files and images) is not available on Mac. But directories,
 executables, and symlinks will always be shown with color and using the
 built-in ``/bin/ls``, so the end result will be more consistent behavior.
 
+This also removes the ``git-clean-branches-main`` and
+``git-clean-branches-master`` aliases, which could break in some circumstances.
+In order to make it a bit safer to use, these have been replaced with
+a ``git-clean-branches`` function that only prints the branches. If those look
+good, then it can be run again, piping to ``xargs git branch -d``.
+
+
 2023-12-31
 ----------
 
