@@ -1,0 +1,52 @@
+/*
+When using an external, non-Mac keyboard, the modified keybindings below make
+the Home/End keys always jump to the beginning/end of a LINE rather than the
+DOCUMENT.
+
+This file should be placed in ~/Library/KeyBindings/DefaultKeyBinding.dict, and
+programs need to be restarted to pick up the new behavior.
+
+REFERENCES:
+- https://gist.github.com/trusktr/1e5e516df4e8032cbc3d
+- https://www.reddit.com/r/MacOS/comments/pz9vnu/comment/iqn3acw/
+
+Key Modifiers
+^ : Ctrl
+$ : Shift
+~ : Option (Alt)
+@ : Command (Apple)
+# : Numeric Keypad
+
+Non-Printable Key Codes
+
+Standard
+Up Arrow:     \UF700        Backspace:    \U0008        F1:           \UF704
+Down Arrow:   \UF701        Tab:          \U0009        F2:           \UF705
+Left Arrow:   \UF702        Escape:       \U001B        F3:           \UF706
+Right Arrow:  \UF703        Enter:        \U000A        ...
+Insert:       \UF727        Page Up:      \UF72C
+Delete:       \UF728        Page Down:    \UF72D
+Home:         \UF729        Print Screen: \UF72E
+End:          \UF72B        Scroll Lock:  \UF72F
+Break:        \UF732        Pause:        \UF730
+SysReq:       \UF731        Menu:         \UF735
+Help:         \UF746
+
+OS X
+delete:       \U007F
+
+*/
+
+
+{
+
+"\UF729" = "moveToBeginningOfLine:";
+"\UF72B" = "moveToEndOfLine:";
+"$\UF729" = moveToBeginningOfLineAndModifySelection:; // shift-home
+"$\UF72B" = moveToEndOfLineAndModifySelection:; // shift-end
+"^\UF729" = moveToBeginningOfDocument:; // ctrl-home
+"^\UF72B" = moveToEndOfDocument:; // ctrl-end
+"^$\UF729" = moveToBeginningOfDocumentAndModifySelection:; // ctrl-shift-home
+"^$\UF72B" = moveToEndOfDocumentAndModifySelection:; // ctrl-shift-end
+
+}
