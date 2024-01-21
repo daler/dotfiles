@@ -52,10 +52,20 @@ alias D="export DISPLAY=:0"
 alias v='fzf --preview "bat --color \"always\" {}"'
 
 
+# Save three keystrokes to go up a directory
 alias ..="cd .."
 alias git-clean-branches-master="git branch --merged master | grep -v \"\* master\" | xargs -n 1 git branch -d"
 alias git-clean-branches-main="git branch --merged main | grep -v \"\* main\" | xargs -n 1 git branch -d"
 
+# Run git-fugitive.
+# Great for incrementally making git commits in the current directory. I don't
+# remember the original mnemonic for "gsv", but it's muscle memory for me
+# now...but the more logical "fugitive" does the same thing.
 alias gsv="vim -c ':Git' -c ':bunload 1'"
+alias fugitive="vim -c ':Git' -c ':bunload 1'"
+
+# Run diffview.nvim to see the log. Mnemonic is "git log, visual"
 alias glv="vim -c ':DiffviewFileHistory'"
+
+# Start the SSH agent, prompting for your passphrase.
 alias s="start_agent"
