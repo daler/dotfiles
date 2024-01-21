@@ -221,7 +221,9 @@ which-key will provide a description for it.
     * - :kbd:`<leader>p`
       - Paste the contents of the OS clipboard into a formatted link as
         appropriate for the file type (ReST and Markdown currently supported)
-        and puts the cursor in the link description.
+        and puts the cursor in the link description. Note that this will *not*
+        work to paste to vim on a remote server, unless you do tricky things
+        with X forwarding, so consider it local-only.
 
 .. _plugins:
 
