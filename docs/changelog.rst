@@ -31,6 +31,12 @@ jump to the beginning/end of a *line* rather than beginning/end of
 a *document*. This is most noticeable in large text input boxes in a web
 browser.
 
+**vim/nvim**
+
+New :kbd:`<leader>p` command for pasting the contents of the OS clipboard into
+a formatted Markdown or ReST-formatted link, and place the cursor in insert
+mode in the link description.
+
 2023-12-31
 ----------
 
