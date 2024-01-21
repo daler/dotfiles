@@ -160,6 +160,9 @@ function showHelp() {
     cmd "--mac-stuff" \
         "Make some Mac-specific settings"
 
+    cmd "--mac-keyboard-fix" \
+        "Fix Home/End behavior when using an external, non-Mac keyboard"
+
     cmd "--fix-tmux-terminfo" \
         "Update terminfo so that italics work within tmux; " \
         "see https://jdhao.github.io/2018/10/19/tmux_nvim_true_color"
@@ -528,6 +531,12 @@ elif [ $task == "--mac-stuff" ]; then
     chsh -s /bin/bash
     echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
 
+
+elif [ $task == "--mac-keyboard-fix" ]; then
+    ok "Fix Home/End key behavior when using an external, non-Mac keyboard."
+    mkdir -p ~/Library/KeyBindings
+    cp DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
+    printf "${YELLOW}Created ~/Library/KeyBindings/DefaultKeyBinding.dict; restart programs to see the effect.${UNSET}\n"
 
 # ----------------------------------------------------------------------------
 # Individual --install commands

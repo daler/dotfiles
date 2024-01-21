@@ -23,6 +23,13 @@ In order to make it a bit safer to use, these have been replaced with
 a ``git-clean-branches`` function that only prints the branches. If those look
 good, then it can be run again, piping to ``xargs git branch -d``.
 
+**setup.sh**
+
+New argument, ``--mac-keyboard-fix``. This makes Home/End keys on an external,
+non-Mac keyboard behave like they do on Windows and Linux. This makes the keys
+jump to the beginning/end of a *line* rather than beginning/end of
+a *document*. This is most noticeable in large text input boxes in a web
+browser.
 
 2023-12-31
 ----------

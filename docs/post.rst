@@ -29,6 +29,24 @@ To turn off the iTerm2 audio bell (that "donk!" noise you get after hitting
 TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
 "Silence bell" is checked.
 
+
+Fix keyboard on Mac
+~~~~~~~~~~~~~~~~~~~
+
+By default on Mac, unless overridden by a program, Home and End jump to the
+beginning/end of a *document* rather than a *line*. This is different from the
+Windows and Linux behavior of jumping to beginning/end of a line.
+
+The typical workaround is to use Cmd-Left and Cmd-Right. Some programs (like
+Outlook on Mac) already override this. But some don't, noticeable web browsers.
+When editing a large text input box in a web browser, it can be frustrating if
+you mistakenly hit End, expecting to jump to the end of a like in Outlook, but
+instead it jumps to the very end of the text input and you have to go find where you were.
+
+Running ``./setup.sh --mac-keyboard-fix`` fixes this by creating a new
+``~/Library/KeyBindings/DefaultKeyBinding.dict`` file; see that file for
+details. You'll need to restart programs to see the effect.
+
 .. _zshmac:
 
 zsh to bash
@@ -51,6 +69,8 @@ dotfiles are set up.
 
     chsh -s /bin/bash
     echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
+
+This can also be done by using ``./setup.sh --mac-stuff``.
 
 Touchbar
 ~~~~~~~~
