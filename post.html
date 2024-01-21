@@ -77,6 +77,20 @@ cursor color”. Then in Preferences -&gt; Advanced:</p>
 TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
 “Silence bell” is checked.</p>
 </section>
+<section id="fix-keyboard-on-mac">
+<h3>Fix keyboard on Mac<a class="headerlink" href="#fix-keyboard-on-mac" title="Link to this heading">¶</a></h3>
+<p>By default on Mac, unless overridden by a program, Home and End jump to the
+beginning/end of a <em>document</em> rather than a <em>line</em>. This is different from the
+Windows and Linux behavior of jumping to beginning/end of a line.</p>
+<p>The typical workaround is to use Cmd-Left and Cmd-Right. Some programs (like
+Outlook on Mac) already override this. But some don’t, noticeable web browsers.
+When editing a large text input box in a web browser, it can be frustrating if
+you mistakenly hit End, expecting to jump to the end of a like in Outlook, but
+instead it jumps to the very end of the text input and you have to go find where you were.</p>
+<p>Running <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--mac-keyboard-fix</span></code> fixes this by creating a new
+<code class="docutils literal notranslate"><span class="pre">~/Library/KeyBindings/DefaultKeyBinding.dict</span></code> file; see that file for
+details. You’ll need to restart programs to see the effect.</p>
+</section>
 <section id="zsh-to-bash">
 <span id="zshmac"></span><h3>zsh to bash<a class="headerlink" href="#zsh-to-bash" title="Link to this heading">¶</a></h3>
 <p>Recent macOS versions use <code class="docutils literal notranslate"><span class="pre">zsh</span></code> as the default shell instead of bash. These
@@ -93,6 +107,7 @@ dotfiles are set up.</p>
 <span class="n">echo</span> <span class="s2">&quot;export BASH_SILENCE_DEPRECATION_WARNING=1&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">extra</span>
 </pre></div>
 </div>
+<p>This can also be done by using <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--mac-stuff</span></code>.</p>
 </section>
 <section id="touchbar">
 <h3>Touchbar<a class="headerlink" href="#touchbar" title="Link to this heading">¶</a></h3>
@@ -220,6 +235,7 @@ get colors to work on tmux.</p>
 <li class="toctree-l2"><a class="reference internal" href="#mac">Mac</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cursor">Cursor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#disable-bell">Disable bell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fix-keyboard-on-mac">Fix keyboard on Mac</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#zsh-to-bash">zsh to bash</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#touchbar">Touchbar</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#copy-paste">Copy/paste</a></li>

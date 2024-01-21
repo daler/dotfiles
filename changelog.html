@@ -60,6 +60,12 @@ built-in <code class="docutils literal notranslate"><span class="pre">/bin/ls</s
 In order to make it a bit safer to use, these have been replaced with
 a <code class="docutils literal notranslate"><span class="pre">git-clean-branches</span></code> function that only prints the branches. If those look
 good, then it can be run again, piping to <code class="docutils literal notranslate"><span class="pre">xargs</span> <span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-d</span></code>.</p>
+<p><strong>setup.sh</strong></p>
+<p>New argument, <code class="docutils literal notranslate"><span class="pre">--mac-keyboard-fix</span></code>. This makes Home/End keys on an external,
+non-Mac keyboard behave like they do on Windows and Linux. This makes the keys
+jump to the beginning/end of a <em>line</em> rather than beginning/end of
+a <em>document</em>. This is most noticeable in large text input boxes in a web
+browser.</p>
 </section>
 <section id="id2">
 <h2>2023-12-31<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
