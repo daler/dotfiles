@@ -51,9 +51,6 @@ alias D="export DISPLAY=:0"
 # View syntax-highlighted files in the current directory, live-filtered by fzf.
 alias v='fzf --preview "bat --color \"always\" {}"'
 
-if command -v nvim > /dev/null; then
-    alias vim=nvim
-fi
 
 alias ..="cd .."
 alias git-clean-branches-master="git branch --merged master | grep -v \"\* master\" | xargs -n 1 git branch -d"
