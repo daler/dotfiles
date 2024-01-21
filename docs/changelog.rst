@@ -1,6 +1,22 @@
 Changelog
 =========
 
+2023-01-21
+----------
+
+**bash**
+
+Make ``ls`` more consistent on Mac.
+
+Previously, there was sometimes inconsistent behavior depending on the state of
+conda environments (see `#35 <https://github.com/daler/dotfiles/pull/35>`__ for
+some details).
+
+This change means that additional coloring of files by extension (like
+compressed files and images) is not available on Mac. But directories,
+executables, and symlinks will always be shown with color and using the
+built-in ``/bin/ls``, so the end result will be more consistent behavior.
+
 2023-12-31
 ----------
 
