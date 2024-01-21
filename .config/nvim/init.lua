@@ -133,6 +133,12 @@ vim.api.nvim_create_autocmd("Filetype", {
       '<Esc>:r! date "+\\%Y-\\%m-\\%d"<CR>A<CR>----------<CR>',
       { desc = "Insert date as section title" }
     )
+    vim.keymap.set(
+      "n",
+      "<leader>p",
+      'i` <>`__<Esc>F<"+pF`a',
+      { desc = "Paste a ReST-formatted link from system clipboard" }
+    )
   end,
 })
 
@@ -144,6 +150,13 @@ vim.api.nvim_create_autocmd("Filetype", {
       "<leader>d",
       '<Esc>:r! date "+\\# \\%Y-\\%m-\\%d"<CR>A',
       { desc = "Insert date as section title" }
+    )
+
+    vim.keymap.set(
+      "n",
+      "<leader>p",
+      'i[]()<Esc>h"+pF]i',
+      { desc = "Paste a Markdown-formatted link from system clipboard" }
     )
   end,
 })
