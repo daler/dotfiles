@@ -53,8 +53,6 @@ alias v='fzf --preview "bat --color \"always\" --theme GitHub {}"'
 
 # Save three keystrokes to go up a directory
 alias ..="cd .."
-alias git-clean-branches-master="git branch --merged master | grep -v \"\* master\" | xargs -n 1 git branch -d"
-alias git-clean-branches-main="git branch --merged main | grep -v \"\* main\" | xargs -n 1 git branch -d"
 
 # Run git-fugitive.
 # Great for incrementally making git commits in the current directory. I don't
