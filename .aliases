@@ -1,23 +1,48 @@
 #!/usr/bin/env bash
 
-alias grep='grep --color=auto'
-alias ls='ls --color=auto'
+# Set the alias to nvim *only* if we can find nvim on the path.
+# If this is not behaving as expected, try closing and reopening your terminal.
+if command -v nvim > /dev/null; then
+    alias vim=nvim
+fi
 
-# Vanilla MacOS has a different `ls` for which we use -G instead of --color.
-# However if you've conda-installed coreutils, that `ls` will be used.
+
+# Some notes on `ls` on Mac...
 #
-# So the following sets the color differently if we're on Mac and not using
-# coreutils from conda.
+# Vanilla MacOS, based on BSD, has a different `ls`. It uses -G instead
+# of --color. The colors are also handled differently (dircolors is not
+# available by default; uses different env vars for controlling colors).
+#
+# Previously depended on a conda environment with GNU coreutils
+# installed so that we get the exact same colors as on Linux. That proved
+# finicky. See [0] for some details.  so this always uses the system `ls` on Mac, setting the colors to be
+# close enough.
+#
+# The solution here is:
+#  - check $LS_COLORS (note underscore) in an environment with dircolors and GNU ls
+#  - paste the value of $LS_COLORS into [2]
+#  - copy the reported $LSCOLORS (no underscore) value. That will be used by BSD ls.
+#  - export LSCOLORS on Mac.
+#
+# [0] https://github.com/daler/dotfiles/pull/35
+# [1] https://superuser.com/a/1746907
+# [2] https://geoff.greer.fm/lscolors
+#
 if [[ $OSTYPE == darwin* ]]; then
-    if [[ `which ls` == "/usr/bin/ls" ]] || [[ `which ls` == "/bin/ls" ]]; then
-        alias ls='ls -G'
+    export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+    alias ls='/bin/ls -G'
+else
+    if command -v dircolors > /dev/null; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     fi
+    alias ls="ls --color=auto"
 fi
 
 alias ll='ls -lrth'
 alias la='ls -lrthA'
 alias l='ls -CF'
 alias tmux="tmux -u"
+alias grep='grep --color=auto'
 
 # Sometimes when you try to open an X window, especially running tmux, you can
 # get an error about the display variable not being set. This alias fixes that.
