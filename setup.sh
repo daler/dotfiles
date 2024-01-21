@@ -331,7 +331,10 @@ check_for_conda () {
     if command -v conda > /dev/null; then
 
         CONDA_LOCATION=$(conda info --base)
-        MAMBA_LOCATION=$(mamba info --base)
+
+        # In 1.5.5, mamba info --base now alwo reports version. So only grab
+        # the line that has a path on it.
+        MAMBA_LOCATION=$(mamba info --base | grep "/")
 
         # Even if the user has not run conda init, this will enable the use of
         # "conda activate" within the various conda creation steps below.
