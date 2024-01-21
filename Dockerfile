@@ -95,13 +95,13 @@ RUN ./setup.sh --install-npm
 RUN source ~/.bashrc \
     && ca \
     && mamba create -y -n asciinema asciinema \
-    && ln -s $(mamba info --base)/envs/asciinema/bin/asciinema ~/opt/bin
+    && ln -s $(conda info --base)/envs/asciinema/bin/asciinema ~/opt/bin
 
 # imagemagick for converting gifs
 RUN source ~/.bashrc \
     && ca \
     && mamba create -y -n imagemagick imagemagick \
-    && ln -s $(mamba info --base)/envs/imagemagick/bin/convert ~/opt/bin
+    && ln -s $(conda info --base)/envs/imagemagick/bin/convert ~/opt/bin
 
 # Install fonts for use by agg
 RUN wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FantasqueSansMono.zip \

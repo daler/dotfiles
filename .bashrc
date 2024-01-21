@@ -24,11 +24,6 @@ fi
 # makes less work on things like tarballs and images
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# enable color support of ls and also add handy aliases
-if [ `command -v dircolors` ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-fi
-
 if [[ $OSTYPE == darwin* ]]; then
     test -f ~/.git-completion.bash && source ~/.git-completion.bash
 fi
