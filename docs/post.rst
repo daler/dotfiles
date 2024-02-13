@@ -83,6 +83,12 @@ Copy/paste
 In iTerm preferences, click the "General" icon, and check "Applications in
 terminal may access clipboard"
 
+Mac Terminal
+~~~~~~~~~~~~
+If you're using Mac Terminal, the colorscheme for nvim will not work because
+the built-in Mac Terminal.app does not support true color for some reason. See
+:ref:`mac-terminal-colors` for details on how to fix this.
+
 SSH config
 ----------
 
@@ -161,5 +167,4 @@ In :file:`.config/nvim/init.vim`::
 
     set termguicolors
     colorscheme yourfavcolorscheme
-
 
