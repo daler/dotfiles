@@ -31,6 +31,7 @@ BFG_VERSION=1.14.0
 FD_VERSION=8.5.3
 BLACK_VERSION=22.6.0
 PYP_VERSION=1.1.0
+JLESS_VERSION=0.9.0
 
 function showHelp() {
 
@@ -254,6 +255,10 @@ function showHelp() {
     cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
     echo
+
+    cmd "--install-jless" \
+        "Installs jless, for inspecting large JSON. " \
+        "Homepage: https://jless.io/"
 }
 
 # Deal with possibly-unset variables before we do set -u
@@ -770,6 +775,22 @@ elif [ $task == "--install-npm" ]; then
     MAMBA_LOCATION=$(mamba info --base)
     echo "export PATH=\$PATH:$MAMBA_LOCATION/envs/npm/bin" >> ~/.path
     printf "${YELLOW}Installed npm to $MAMBA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
+
+elif [ $task == "--install-jless" ]; then
+    ok "Install jless to ~/opt/bin?"
+
+    if [[ $OSTYPE == darwin* ]]; then
+        download https://github.com/PaulJuliusMartinez/jless/releases/download/v${JLESS_VERSION}/jless-v${JLESS_VERSION}-aarch64-apple-darwin.zip jless.zip
+    else
+        download https://github.com/PaulJuliusMartinez/jless/releases/download/${JLESS_VERSION}/jless-v${JLESS_VERSION}-x86_64-unknown-linux-gnu.zip jless.zip
+    fi
+    unzip jless.zip
+    mv jless ~/opt/bin
+    rm jless.zip
+    chmod +x ~/opt/bin/jless
+    printf "${YELLOW}Installed to ~/opt/bin/jless${UNSET}\n"
+    check_opt_bin_in_path
+
 
 elif [ $task == "--dotfiles" ]; then
     set -x
