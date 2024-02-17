@@ -5,3 +5,4 @@ vd --version	saul.pw/VisiData v2.11
 rg --version | grep ripgrep	ripgrep 13.0.0 (rev af6b6c543b)
 fd --version	fd 8.5.3
 fzf --version	0.46.1 (3c0a630)
+jless --version	jless 0.9.0
