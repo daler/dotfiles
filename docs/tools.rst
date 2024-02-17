@@ -194,6 +194,20 @@ Alternatives:
 - ``diff``, which doesn't do side-by-side or colored diffs
 - ``vim -d``, which I still use quite often
 
+``jless``
+~~~~~~~~~
+
+.. code-block:: bash
+
+    ./setup.sh --install-jless
+
+`jless <https://jless.io>`_ makes it easy to inspect large JSON files. From
+within the terminal you can fold large sections to get a better sense of the
+structure, using vim-like keybindings.
+
+Alternatives:
+
+- a combination of less, grep, and text editor
 
 ``jq``
 ~~~~~~
