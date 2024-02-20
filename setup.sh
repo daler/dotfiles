@@ -771,8 +771,8 @@ elif [ $task == "--install-bfg" ]; then
 
 elif [ $task == "--install-npm" ]; then
     ok "Install npm in a named conda env and add to ~/.path?"
+    check_for_conda
     mamba create -n npm -y nodejs
-    MAMBA_LOCATION=$(mamba info --base)
     echo "export PATH=\$PATH:$MAMBA_LOCATION/envs/npm/bin" >> ~/.path
     printf "${YELLOW}Installed npm to $MAMBA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
 
