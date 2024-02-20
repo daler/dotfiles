@@ -58,3 +58,21 @@ html_static_path = ['_static']
 html_theme_options = {
     'show_relbars': True,
 }
+
+# Running `make linkcheck` will ensure links are working. However, some sites
+# are resistant to scraping, so need some tweaks here:
+linkcheck_request_headers = {
+    # Add a user agent to everything
+    "*": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    }
+}
+
+# Avoids downloading the entire page to check anchors.
+linkcheck_anchors = False
+
+# Completely ignore these regexes
+linkcheck_ignore = [
+    r'https://apple.stackexchange.com',
+    r'https://stackoverflow.com',
+]
