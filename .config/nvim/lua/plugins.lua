@@ -104,6 +104,7 @@ return {
     config = function()
       -- tweak the sizes of the new terminal
       require("toggleterm").setup({
+        commit = "c80844fd52ba76f48fabf83e2b9f9b93273f418d", -- later versions break sending visual selection with gxx
         size = function(term)
           if term.direction == "horizontal" then
             return 15
