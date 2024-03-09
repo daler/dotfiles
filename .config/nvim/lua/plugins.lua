@@ -256,7 +256,14 @@ return {
   {
     "nvim-lualine/lualine.nvim", -- status line along the bottom
     config = true,
-    opts = { options = { theme = "zenburn" } }, -- this theme is supplied by the zenburn.nvim plugin
+    opts = {
+      options = { theme = "zenburn" }, -- this theme is supplied by the zenburn.nvim plugin
+      sections = {
+        lualine_c = { {'filename', path = 2 }},
+      },
+
+    }, 
+
 
   },
   {
