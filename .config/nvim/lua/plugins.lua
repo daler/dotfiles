@@ -188,12 +188,7 @@ return {
     end,
   },
 
-  {
-    "ggandor/leap.nvim", -- quickly jump around the buffer without counting lines
-    config = function()
-      require("leap").set_default_keymaps()
-    end,
-  },
+  
 
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
@@ -515,6 +510,17 @@ return {
       end,
     },
   },
-}
 
+  {
+    "folke/flash.nvim", -- search and select, including with treesitter
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+
+}
 -- vim: nowrap
