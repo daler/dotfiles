@@ -421,6 +421,8 @@ return {
       -- pyright is the language server for Python
       lspconfig.pyright.setup({ autostart = false })
 
+      lspconfig.bashls.setup({ autostart = false })
+
       -- language server for R
       lspconfig.r_language_server.setup({ autostart = false })
 
