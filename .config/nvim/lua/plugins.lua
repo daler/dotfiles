@@ -467,8 +467,8 @@ return {
       -- Because autostart=false above, need to manually start the language server.
       { "<leader>cl", "<cmd>LspStart<CR>", desc = "Start LSP" },
       { "<leader>ce", vim.diagnostic.open_float, desc = "Open diagnostics/errors" },
-      { "]e", vim.diagnostic.goto_next, desc = "Next diagnostic/error" },
-      { "[e", vim.diagnostic.goto_prev, desc = "Prev diagnostic/error" },
+      { "]d", vim.diagnostic.goto_next, desc = "Next diagnostic/error" },
+      { "[d", vim.diagnostic.goto_prev, desc = "Prev diagnostic/error" },
     },
   },
   {
