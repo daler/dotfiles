@@ -31,6 +31,7 @@ BFG_VERSION=1.14.0
 FD_VERSION=8.5.3
 BLACK_VERSION=22.6.0
 PYP_VERSION=1.1.0
+FZF_VERSION=0.48.1
 
 function showHelp() {
 
@@ -543,12 +544,32 @@ elif [ $task == "--mac-keyboard-fix" ]; then
 
 elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
-    (
-      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-      ~/.fzf/install --no-update-rc --completion --key-bindings
-    )
-    printf "${YELLOW}fzf installed; see ~/.fzf${UNSET}\n"
+    mkdir -p /tmp/fzf
+    if [[ $OSTYPE == darwin* ]]; then
+        URL=https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION}-darwin_arm64.zip
+        download $URL /tmp/fzf/fzf.zip
+        (
+            cd /tmp/fzf
+            unzip fzf.zip
+            cp fzf ~/opt/bin
+        )
+    else
+        URL=https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
+        download $URL /tmp/fzf/fzf.tar.gz
+        (
+            cd /tmp/fzf
+            tar -xf fzf.tar.gz
+            cp fzf ~/opt/bin
+        )
+    fi
+    rm -r /tmp/fzf
 
+    if [ ! $(grep -q "(fzf --bash)" ~/.bashrc) ]; then
+        echo "" >> ~/.bashrc
+        echo "# Set up fzf keybindings and fuzzy completion" >> ~/.bashrc
+        echo 'eval "$(fzf --bash)"' >> ~/.bashrc
+    fi
+    printf "${YELLOW}fzf installed; see ~/.fzf${UNSET}\n"
 
 elif [ $task == "--install-ripgrep" ]; then
     ok "Installs ripgrep to $HOME/opt/bin"
@@ -564,6 +585,7 @@ elif [ $task == "--install-ripgrep" ]; then
     cd /tmp/rg
     tar -xf ripgrep.tar.gz
     cp ripgrep*/rg ~/opt/bin
+    rm -r /tmp/rg
     printf "${YELLOW}Installed to ~/opt/bin/rg${UNSET}\n"
     check_opt_bin_in_path
 
