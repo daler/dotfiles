@@ -188,12 +188,7 @@ return {
     end,
   },
 
-  {
-    "ggandor/leap.nvim", -- quickly jump around the buffer without counting lines
-    config = function()
-      require("leap").set_default_keymaps()
-    end,
-  },
+  
 
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
@@ -421,6 +416,8 @@ return {
       -- pyright is the language server for Python
       lspconfig.pyright.setup({ autostart = false })
 
+      lspconfig.bashls.setup({ autostart = false })
+
       -- language server for R
       lspconfig.r_language_server.setup({ autostart = false })
 
@@ -465,8 +462,8 @@ return {
       -- Because autostart=false above, need to manually start the language server.
       { "<leader>cl", "<cmd>LspStart<CR>", desc = "Start LSP" },
       { "<leader>ce", vim.diagnostic.open_float, desc = "Open diagnostics/errors" },
-      { "]e", vim.diagnostic.goto_next, desc = "Next diagnostic/error" },
-      { "[e", vim.diagnostic.goto_prev, desc = "Prev diagnostic/error" },
+      { "]d", vim.diagnostic.goto_next, desc = "Next diagnostic/error" },
+      { "[d", vim.diagnostic.goto_prev, desc = "Prev diagnostic/error" },
     },
   },
   {
@@ -476,6 +473,54 @@ return {
       { "<leader>ct", "<cmd>TroubleToggle<CR>", desc = "Toggle trouble.nvim" },
     },
   },
-}
 
+  {
+    "stevearc/conform.nvim", -- run code through formatter
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          require("conform").format({ async = true, lsp_fallback = true })
+        end,
+        mode = "",
+        desc = "Run buffer through formatter",
+      },
+    },
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "isort", "black" },
+        javascript = { { "prettierd", "prettier" } },
+        bash = { { "shfmt" } },
+        sh = { { "shfmt" } },
+      },
+      formatters = {
+        shfmt = {
+          prepend_args = { "-i", "2" },
+        },
+        stylua = {
+          prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" }
+        },
+      },
+      init = function()
+        -- If you want the formatexpr, here is the place to set it
+        vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      end,
+    },
+  },
+
+  {
+    "folke/flash.nvim", -- search and select, including with treesitter
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+
+}
 -- vim: nowrap

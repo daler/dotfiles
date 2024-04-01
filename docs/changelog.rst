@@ -1,6 +1,16 @@
 Changelog
 =========
 
+2024-03-31
+----------
+
+**vim/nvim**
+
+- new plugin, *conform.nvim*, for running formatter/stylers on buffer
+- new plugin, *flash*, which replaces *leap* for searching in buffer
+- include lsp setup for bash
+- for jumping between diagnostics, use ``]d`` rather than ``]e``
+
 2024-03-09
 ----------
 **vim/nvim**
