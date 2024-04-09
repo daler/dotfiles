@@ -85,8 +85,6 @@ RUN ./setup.sh --install-hub
 RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
 RUN ./setup.sh --install-npm
-RUN ./setup.sh --install-jless
-
 
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian

@@ -782,7 +782,8 @@ elif [ $task == "--install-jless" ]; then
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/PaulJuliusMartinez/jless/releases/download/v${JLESS_VERSION}/jless-v${JLESS_VERSION}-aarch64-apple-darwin.zip jless.zip
     else
-        download https://github.com/PaulJuliusMartinez/jless/releases/download/v${JLESS_VERSION}/jless-v${JLESS_VERSION}-x86_64-unknown-linux-gnu.zip jless.zip
+        printf "${RED}Binary download is not currently (easily) supported on Linux${UNSET}\n\n"
+        exit 1
     fi
     unzip jless.zip
     mv jless ~/opt/bin
