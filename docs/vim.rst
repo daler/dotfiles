@@ -595,6 +595,10 @@ treesitter-enabled syntax highlighting though.
 
 .. versionadded:: 2023-11-01
 
+.. versionchanged:: 2024-03-31
+   Changed next diagnostic to :kbd:`]d` rather than :kbd:`]e` for better
+   mnemonic (and similar for :kbd:`[d`)
+
 `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ provides access to
 nvim's Language Server Protocol (LSP). You install an LSP server for each
 language you want to use it with (see :ref:`mason` for installing these).
@@ -625,9 +629,9 @@ diagnostics.
       - Start the LSP server for this buffer
     * - :kbd:`<leader>ce`
       - Open diagnostic details
-    * - :kbd:`[e`
+    * - :kbd:`[d`
       - Prev diagnostic
-    * - :kbd:`]e`
+    * - :kbd:`]d`
       - Next diagnostic
     * - :kbd:`<leader>cgd`
       - Goto definition (e.g., when cursor is over a function)
@@ -773,6 +777,10 @@ E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 2022-12-27
+
+.. versionchanged:: 2024-03-31
+   Version of toggleterm is pinned because later versions have issues with
+   sending multiple selected lines to the terminal.
 
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
 interact with a terminal within vim.
@@ -1059,9 +1067,17 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2022-12-27
+.. versionchanged:: 2024-03-31
+   Removed in favor of the :ref:`flash` plugin, which behaves similarly but
+   also supports treesitter selections
 
-`leap <https://github.com/ggandor/leap.nvim>`_ lets you jump around in a buffer
-with low mental effort.
+
+.. _flash:
+
+``flash``
+~~~~~~~~~
+`flash <https://github.com/folke/flash.nvim>`__ lets you jump around in a buffer with low mental effort.
+
 
 .. list-table::
     :header-rows: 1
@@ -1070,18 +1086,34 @@ with low mental effort.
     * - command
       - description
 
+    * - :kbd:`Ctrl-s` when searching
+      - Toggle flash during search
+
     * - :kbd:`s` in normal mode
-      - jump below (see details)
+      - jump to match (see details)
 
     * - :kbd:`S` in normal mode
-      - jump above (see details)
+      - select this treesitter node (see details)
 
-After hitting :kbd:`s` or :kbd:`S`, type two of the characters you want to leap
-to. You will see highlighted letters pop up at all the possible destinations.
-These label possible jump points. Hit the letter corresponding to the jump
-point to go right there.
+When searching with :kbd:`/` or :kbd:`?`, **an additional suffix letter will be
+shown after each match**. Typing this additional letter lets you jump right to
+that instance.
 
-This works best when keeping your eyes on the place you want to jump to.
+Or just hit :kbd:`Enter` like normal to do a typical search.
+
+Either way, :kbd:`n` and :kbd:`N` for next/prev hit work as normal.
+
+With :kbd:`s`, this changes the syntax highlighting to hide everything but the
+search hit and the suffix.
+
+With :kbd:`S`, if a treesitter parser is installed for this filetype, suffix
+letters will be shown at different levels of the syntax tree.
+
+For example, :kbd:`S` within an R for-loop within an RMarkdown chunk will show
+suffixes to type that will select the inner body of the for-loop, the entire
+for-loop, or the entire body of the chunk. If you wanted to select the
+backticks as well, you could use :kbd:`S` when on the backticks.
+
 
 ``vim-surround``
 ~~~~~~~~~~~~~~~~
@@ -1177,6 +1209,47 @@ See the homepage for details.
 
     * - ``:DiffviewFileHistory``
       - View diffs for this file throughout git history
+
+``conform``
+~~~~~~~~~~~
+`conform <https://github.com/stevearc/conform.nvim>`__ runs style formatters on
+the current buffer.
+
+For example, if ``black`` is avaiable it will run that on the code, but in
+a way that the changes can be undone (in contrast to running ``black``
+manually on the file, which overwrites it).
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>cf`
+      - Run configured formatter on buffer (mnemonic: [c]ode [f]ormat)
+
+You can install formatters via :ref:`mason`; search
+:file:`.config/nvim/lua/plugins.lua` for ``conform.nvim`` to see the
+configuration.
+
+For example, for Python I have ``isort`` and ``black``; for Lua, ``stylua``; for
+bash, ``shfmt``.
+
+``todo-comments``
+~~~~~~~~~~~~~~~~~
+
+`todo-comments <https://github.com/folke/todo-comments.nvim>`__ lets you jump
+across ``TODO``, ``FIXME``, ``NOTE``, and related comments within your code.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - ``:TodoTrouble``
+      - Opens trouble.nvim so you can bounce between comments
+
+    * - :kbd:`[t`, :kbd:`]t`
+      - Jump to next todo/fixme/note comment
 
 
 ``lualine``
