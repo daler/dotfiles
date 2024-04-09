@@ -1,6 +1,32 @@
 Changelog
 =========
 
+2024-03-31
+----------
+
+**vim/nvim**
+
+- new plugin, *conform.nvim*, for running formatter/stylers on buffer
+- new plugin, *flash*, which replaces *leap* for searching in buffer
+- include lsp setup for bash
+- for jumping between diagnostics, use ``]d`` rather than ``]e``
+
+2024-03-09
+----------
+**vim/nvim**
+
+- pin toggleterm version; newer versions break when sending visual selections
+- show full path of file in footer
+
+**bash**
+
+- update fzf version
+- fix npm installation path
+
+**docs**
+
+- Add link to troubleshooting from Mac post-setup section
+
 2023-01-21
 ----------
 
