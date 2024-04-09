@@ -4,5 +4,4 @@ black --version | head -n1	black, 22.6.0 (compiled: no)
 vd --version	saul.pw/VisiData v2.11
 rg --version | grep ripgrep	ripgrep 13.0.0 (rev af6b6c543b)
 fd --version	fd 8.5.3
-jless --version	jless 0.9.0
 fzf --version	0.48.1 (d579e33)
