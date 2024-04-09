@@ -1,4 +1,5 @@
 git
+unzip
 rsync
 automake             # for compiling tools requiring automake
 build-essential      # gcc and make are in here
@@ -9,3 +10,8 @@ wget                 # for downloading
 htop                 # top, but better
 openssh-server       # so we can ssh into this machine
 tmux                 # for persistent sessions
+fontconfig
+pkg-config           # for using the right compiler options
+zlib1g-dev           # dep lib for compiling tools needing zlib
+ncurses-dev          # for TUI programs
+ htop                 # top, but better
