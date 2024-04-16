@@ -3,12 +3,9 @@
 Neovim configuration
 ====================
 
-.. note::
 
-    See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
-    versions of these dotfiles.
-
-The :file:`.vimrc` file has only basic setup for vim.
+Files
+-----
 
 The file :file:`.config/nvim/init.lua` is the entry point of the nvim config.
 Unless otherwise specified, paths on this page are relative to
@@ -17,6 +14,14 @@ Unless otherwise specified, paths on this page are relative to
 
 - :file:`~/.config/nvim/init.lua` has general settings.
 - :file:`~/.config/nvim/lua/plugins.lua` has plugin settings.
+
+The :file:`.vimrc` file has only basic setup for vim, in case you need to use
+:file:`/usr/bin/vim`.
+
+.. note::
+
+    See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
+    versions of these dotfiles.
 
 
 Using the mouse
@@ -36,7 +41,7 @@ Non-printing characters (tab characters and trailing spaces) are displayed.
 Differentiating between tabs and spaces is extremely helpful in tricky
 debugging situations.
 
-The vim config has these lines:
+:file:`~/.config/nvim/init.lua` has these lines:
 
 .. code-block:: lua
 
@@ -56,6 +61,9 @@ text offscreen.
 Switching buffers
 -----------------
 
+.. versionadded:: 2023-11-01
+   :kbd:`<leader>b` using bufferline plugin
+
 Three main ways of **opening** file in a new buffer:
 
 .. list-table::
@@ -73,6 +81,8 @@ Three main ways of **opening** file in a new buffer:
 
    * - :kbd:`<leader>fb`
      - Toggle file browser, hit Enter on file (nvim-tree)
+
+See :ref:`nvimtree` for more on navigating the file tree shown by :kbd:`<leader>fb`.
 
 Once you have multiple buffers, you can **switch** between them in these ways:
 
@@ -97,12 +107,7 @@ Once you have multiple buffers, you can **switch** between them in these ways:
 
 The display of the bufferline is configured in :file:`lua/plugins.lua`, as part
 of the bufferline plugin. It is additionally styled using the
-daler/zenburn.nvim plugin/colorscheme.
-
-.. versionadded:: 2023-11-01
-   :kbd:`<leader>b` using bufferline plugin
-
-  
+:ref:`zenburn` plugin/colorscheme.
 
 Format options explanation
 --------------------------
@@ -151,6 +156,15 @@ In case you're not aware, vim has built-in spellcheck.
 
 Shortcuts
 ---------
+
+.. versionchanged:: 2024-01-21
+
+  Added :kbd:`<leader>p` for pasting formatted Markdown/ReST links 
+
+.. versionchanged:: 2024-03-31
+
+   Added :kbd:`<leader>cp` for a convenient "copy mode"
+
 
 Here are some general shortcuts that are defined in the included config. With
 the ``which-key`` plugin, many of these are also discoverable by hitting the
@@ -225,7 +239,12 @@ which-key will provide a description for it.
         work to paste to vim on a remote server, unless you do tricky things
         with X forwarding, so consider it local-only.
 
-.. _plugins:
+    * - :kbd:`<leader>cp`
+      - Toggle a sort of "copy mode". Turns off line numbers and the vertical
+        indentation lines from indent-blankline, so you can more easily copy
+        text into another app.
+
+.. _plugins_:
 
 Plugins
 -------
@@ -239,6 +258,8 @@ be used.
 <https://github.com/folke/lazy.nvim>`_. This supports lazy-loading of plugins
 to keep a snappy startup time, and only load plugins when they're needed. See
 :ref:`nvim-lua` for my rationale on that.
+
+
 
 Each plugin spec in :file:`lua/plugins.lua` is a table. The first property is
 the name of the plugin. Other properties:
@@ -309,6 +330,7 @@ toggle comments on lines or blocks of code.
 .. versionadded:: 2023-10-15
 
 .. versionchanged:: 2023-11-07
+
    Only commands below will trigger the beacon
 
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
@@ -327,6 +349,8 @@ marker to show where the cursor is.
     * - :kbd:`n` or :kbd:`N` after search
       - Flash beacon at search hit
 
+
+.. _telescope_:
 
 ``telescope``
 ~~~~~~~~~~~~~
@@ -378,11 +402,19 @@ Other useful things you can do with Telescope:
   vim_options``, ``:Telescope man_pages`` are some other built-in pickers that
   are interesting to browse through.
 
+
+.. _nvimtree:
+
+
 ``nvim-tree``
 ~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-10
+
 `nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`_ is a file browser.
 
 .. list-table::
+    :header-rows: 1
 
     * - command
       - description
@@ -549,7 +581,7 @@ mapped, which you can read about in the `README for aerial
 
 .. versionadded:: 2023-10-15
 
-`treesitter <https://github.com/nvim-treesitter/nvim-treesitter>`_ is a parsing
+`treesitter <https://github.com/nvim-treesitter/nvim-treesitter>`__ is a parsing
 library. You install a parser for a language, and it figures out which tokens
 are functions, classes, variables, modules, etc. Then it's up to other plugins
 to do something with that. For example, colorschemes can use that information,
@@ -596,8 +628,11 @@ treesitter-enabled syntax highlighting though.
 .. versionadded:: 2023-11-01
 
 .. versionchanged:: 2024-03-31
+
    Changed next diagnostic to :kbd:`]d` rather than :kbd:`]e` for better
    mnemonic (and similar for :kbd:`[d`)
+
+
 
 `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ provides access to
 nvim's Language Server Protocol (LSP). You install an LSP server for each
@@ -618,6 +653,16 @@ using, LSP is disabled by default. The current exception is for Lua, but you
 can configure this behavior in :file:`lua/plugins.lua`. Use :kbd:`<leader>cl`
 to start the LSP for a buffer. See :ref:`trouble` for easily viewing all the
 diagnostics.
+
+.. note::
+
+   You'll need to install NodeJS
+
+  .. code-block:: bash
+
+     ./setup.sh --install-npm  # install nodejs into conda env
+
+
 
 .. list-table::
     :header-rows: 1
@@ -781,6 +826,7 @@ E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 .. versionchanged:: 2024-03-31
    Version of toggleterm is pinned because later versions have issues with
    sending multiple selected lines to the terminal.
+
 
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
 interact with a terminal within vim.
@@ -1067,7 +1113,7 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2022-12-27
-.. versionchanged:: 2024-03-31
+.. deprecated:: 2023-03-31
    Removed in favor of the :ref:`flash` plugin, which behaves similarly but
    also supports treesitter selections
 
@@ -1076,8 +1122,10 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 
 ``flash``
 ~~~~~~~~~
-`flash <https://github.com/folke/flash.nvim>`__ lets you jump around in a buffer with low mental effort.
 
+.. versionadded:: 2023-03-31
+
+`flash <https://github.com/folke/flash.nvim>`__ lets you jump around in a buffer with low mental effort.
 
 .. list-table::
     :header-rows: 1
@@ -1162,6 +1210,8 @@ just the visual block selection, for example when editing TSV files.
     * - :kbd:`<C-v>`, then use :kbd:`:B` instead of :kbd:`:`
       - Operates on visual block selection only
 
+.. _bufferline:
+
 ``bufferline.nvim``
 ~~~~~~~~~~~~~~~~~~~
 
@@ -1212,6 +1262,9 @@ See the homepage for details.
 
 ``conform``
 ~~~~~~~~~~~
+
+.. versionadded:: 2023-03-31
+
 `conform <https://github.com/stevearc/conform.nvim>`__ runs style formatters on
 the current buffer.
 
@@ -1362,6 +1415,8 @@ integrations for Sphinx and ReStructured Text.
 
 No additional commands configured.
 
+
+.. _zenburn:
 
 ``zenburn.nvim``
 ~~~~~~~~~~~~~~~~
