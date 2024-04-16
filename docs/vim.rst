@@ -23,6 +23,26 @@ The :file:`.vimrc` file has only basic setup for vim, in case you need to use
     See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
     versions of these dotfiles.
 
+Screencasts
+-----------
+
+.. versionadded:: 2023-03-31
+
+Sometimes it's much easier to see what's going on than to read about it...
+
+.. details:: screencast of lazy.nvim setting up plugins
+
+   See :ref:`plugins_` for more details.
+
+  .. image:: gifs/lazy_annotated.gif
+
+.. details:: screencast of switching buffers
+
+   See :ref:`buffers` for more; this uses :ref:`bufferline` for the tabs,
+   :ref:`nvimtree` for the file tree, and :ref:`telescope_` for the
+   fuzzy-finder.
+
+  .. image:: gifs/buffers_annotated.gif
 
 Using the mouse
 ---------------
