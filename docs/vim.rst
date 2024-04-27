@@ -26,7 +26,7 @@ The :file:`.vimrc` file has only basic setup for vim, in case you need to use
 Screencasts
 -----------
 
-.. versionadded:: 2023-03-31
+.. versionadded:: 2024-03-31
 
 Sometimes it's much easier to see what's going on than to read about it...
 
@@ -39,7 +39,7 @@ Sometimes it's much easier to see what's going on than to read about it...
 .. details:: screencast of switching buffers
 
    See :ref:`buffers` for more; this uses :ref:`bufferline` for the tabs,
-   :ref:`nvimtree` for the file tree, and :ref:`telescope_` for the
+   :ref:`nvimtree` for the file tree, and :ref:`telescope_ref` for the
    fuzzy-finder.
 
   .. image:: gifs/buffers_annotated.gif
@@ -179,7 +179,7 @@ Shortcuts
 
 .. versionchanged:: 2024-01-21
 
-  Added :kbd:`<leader>p` for pasting formatted Markdown/ReST links 
+  Added :kbd:`<leader>p` for pasting formatted Markdown/ReST links
 
 .. versionchanged:: 2024-03-31
 
@@ -318,10 +318,176 @@ commands come first.
 
     Or delete it, or comment it out.
 
-Here is a list of the plugins documented below:
 
-.. contents::
-    :local:
+The vim config has changed over the years. Depending on when you last updated,
+there may be plugins added or removed or changed in some way. This table keeps
+track of what has changed recently.
+
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - plugin
+     - date added
+     - date changed
+
+   * - :ref:`vimtmuxclipboard`
+     - 2016
+     -
+
+   * - :ref:`vimpythonpep8indent`
+     - 2017
+     -
+
+   * - :ref:`vimfugitive`
+     - 2018-09-26
+     -
+
+   * - :ref:`vimdiffenhanced`
+     - 2019-02-27
+     -
+
+   * - :ref:`vimtablemode`
+     - 2019-03-27
+     -
+
+   * - :ref:`vis_ref`
+     - 2019-09-30
+     -
+
+   * - :ref:`vimgv`
+     - 2021-02-14
+     -
+
+   * - :ref:`vimmergetool`
+     - 2021-02-14
+     -
+
+   * - :ref:`toggleterm_ref`
+     - 2022-12-27
+     - 2024-03-31
+
+   * - :ref:`vimsurround`
+     - 2022-12-27
+     -
+
+   * - :ref:`nvimtree`
+     - 2023-10-10
+     -
+
+   * - :ref:`diffview`
+     - 2023-10-11
+     -
+
+   * - :ref:`acceleratedjk`
+     - 2023-10-15
+     -
+
+   * - :ref:`beacon_ref`
+     - 2023-10-15
+     - 2023-11-07
+
+   * - :ref:`gitsigns_ref`
+     - 2023-10-15
+     -
+
+   * - :ref:`indentblankline`
+     - 2023-10-15
+     -
+
+   * - :ref:`nvimcmp`
+     - 2023-10-15
+     -
+
+   * - :ref:`telescope_ref`
+     - 2023-10-15
+     -
+
+   * - :ref:`vimcommentary`
+     - 2023-10-15
+     -
+
+   * - :ref:`whichkey`
+     - 2023-10-15
+     -
+
+   * - :ref:`aerial_ref`
+     - 2023-10-15
+     -
+
+   * - :ref:`treesitter`
+     - 2023-10-15
+     -
+
+   * - :ref:`bufferline`
+     - 2023-11-01
+     -
+
+   * - :ref:`lualine_ref`
+     - 2023-11-01
+     -
+
+   * - :ref:`mason`
+     - 2023-11-01
+     -
+
+   * - :ref:`nvimlspconfig`
+     - 2023-11-01
+     - 2024-03-31
+
+   * - :ref:`trouble`
+     - 2023-11-01
+     -
+
+   * - :ref:`zenburn`
+     - 2023-11-01
+     -
+
+   * - :ref:`conform`
+     - 2024-03-31
+     -
+
+   * - :ref:`flash`
+     - 2024-03-31
+     -
+
+   * - :ref:`lspprogress`
+     - 2024-04-27
+     -
+
+   * - :ref:`stickybuf_ref`
+     - 2024-04-27
+     -
+
+Sometimes there are better plugins for a particular functionality. I've kept
+the documentation, but noted when they've been deprecated here and in the
+linked description.
+
+.. list-table::
+   :header-rows: 1
+   :align: left
+
+   * - plugin
+     - date added
+     - deprecated
+
+   * - :ref:`leap`
+     - 2022-12-27
+     - deprecated 2024-03-31 in favor of :ref:`flash`
+
+   * - :ref:`vimrmarkdown`
+     - 2019-02-27
+     - deprecated 2023-11-14 in favor of treesitter
+
+   * - :ref:`vimpandoc`
+     - 2019-02-2
+     - deprecated 2023-11-14 in favor of treesitter
+
+   * - :ref:`vimpandocsyntax`
+     - 2019-02-27
+     - deprecated 2023-11-14 in favor of treesitter
+
+.. _vimcommentary:
 
 ``vim-commentary``
 ~~~~~~~~~~~~~~~~~~
@@ -343,6 +509,8 @@ toggle comments on lines or blocks of code.
 
     * - :kbd:`gcc` on a single line
       - toggle comment
+
+.. _beacon_ref:
 
 ``beacon``
 ~~~~~~~~~~
@@ -370,7 +538,7 @@ marker to show where the cursor is.
       - Flash beacon at search hit
 
 
-.. _telescope_:
+.. _telescope_ref:
 
 ``telescope``
 ~~~~~~~~~~~~~
@@ -414,7 +582,7 @@ Other useful things you can do with Telescope:
 
 - ``:Telescope builtin`` to see a picker of all the built-in pickers.
   Selecting one opens that picker. Very meta. But also very interesting for
-  poking around to see what's configured. 
+  poking around to see what's configured.
 
 - ``:Telescope planets`` to use a telescope
 
@@ -424,7 +592,6 @@ Other useful things you can do with Telescope:
 
 
 .. _nvimtree:
-
 
 ``nvim-tree``
 ~~~~~~~~~~~~~
@@ -451,6 +618,7 @@ Other useful things you can do with Telescope:
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
 windows left and right respectively) also work
 
+.. _whichkey:
 
 ``which-key``
 ~~~~~~~~~~~~~
@@ -515,6 +683,7 @@ still be shown.
    * - :kbd:`"`
      - Show popup with list of registers
 
+.. _acceleratedjk:
 
 ``accelerated-jk``
 ~~~~~~~~~~~~~~~~~~
@@ -537,6 +706,8 @@ the acceleration curve depending on your system's keyboard repeat rate settings
 
     * - :kbd:`j`, :kbd:`k`
       - Keep holding for increasing vertical scroll speed
+
+.. _nvimcmp:
 
 ``nvim-cmp``
 ~~~~~~~~~~~~
@@ -566,6 +737,8 @@ to fill them in.
     * - :kbd:`<Tab>`
       - Tab completion
 
+.. _aerial_ref:
+
 ``aerial``
 ~~~~~~~~~~
 
@@ -582,7 +755,7 @@ contents.
 
     * - command
       - description
-  
+
     * - :kbd:`<leader>a`
       - Toggle aerial sidebar
 
@@ -619,7 +792,7 @@ automatically, but they do require a C compiler to be installed.
   the `EPEL repo <https://docs.fedoraproject.org/en-US/epel/>`__ enabled).
 - Alternatively, if you don't have root access, you can install `compiler
   packages via conda
-  <https://docs.conda.io/projects/conda-build/en/stable/resources/compiler-tools.html>`_, 
+  <https://docs.conda.io/projects/conda-build/en/stable/resources/compiler-tools.html>`_,
 
 Alternatively, comment out the entire ``ensure_installed`` block in
 :file:`~/.config/lua/plugins.lua`; this means you will not have
@@ -641,6 +814,8 @@ treesitter-enabled syntax highlighting though.
 
     * - :kbd:`<S-Tab>` (in incremental selection)
       - Decrease selection by node
+
+.. _nvimlspconfig:
 
 ``nvim-lspconfig``
 ~~~~~~~~~~~~~~~~~~
@@ -838,6 +1013,8 @@ E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 
    :ref:`vimfugitive`, :ref:`gitsigns_ref`, :ref:`vimgv`,  and :ref:`diffview` are other complementary plugins for working with Git.
 
+.. _toggleterm_ref:
+
 ``toggleterm``
 ~~~~~~~~~~~~~~
 
@@ -1006,6 +1183,9 @@ view and browse git history.
 
    :ref:`vimfugitive`, :ref:`gitsigns_ref`, :ref:`vimgv`,  and :ref:`diffview` are other complementary plugins for working with Git.
 
+
+.. _vimmergetool:
+
 ``vim-mergetool``
 ~~~~~~~~~~~~~~~~~
 
@@ -1043,6 +1223,7 @@ enough flexibility in configuration to be able to reproduce default behaviors.
 
 Save and quit, or use :kbd:`:MergetoolStop`.
 
+.. _vimdiffenhanced:
 
 ``vim-diff-enhanced``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1088,6 +1269,7 @@ The following algorithms are available:
     * - histogram
       - Histogram is similar to patience but slightly faster
 
+.. _vimtablemode:
 
 ``vim-table-mode``
 ~~~~~~~~~~~~~~~~~~
@@ -1128,12 +1310,13 @@ auto-padding table cells and adding the header lines as needed.
 
 See the homepage for, e.g., using ``||`` to auto-create header lines.
 
+.. _leap:
 
 ``leap.nvim``
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2022-12-27
-.. deprecated:: 2023-03-31
+.. deprecated:: 2024-03-31
    Removed in favor of the :ref:`flash` plugin, which behaves similarly but
    also supports treesitter selections
 
@@ -1143,7 +1326,7 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 ``flash``
 ~~~~~~~~~
 
-.. versionadded:: 2023-03-31
+.. versionadded:: 2024-03-31
 
 `flash <https://github.com/folke/flash.nvim>`__ lets you jump around in a buffer with low mental effort.
 
@@ -1183,6 +1366,8 @@ for-loop, or the entire body of the chunk. If you wanted to select the
 backticks as well, you could use :kbd:`S` when on the backticks.
 
 
+.. _vimsurround:
+
 ``vim-surround``
 ~~~~~~~~~~~~~~~~
 
@@ -1207,6 +1392,7 @@ surrounding characters.
     * - :kbd:`csw{`
       - same, but include a space
 
+.. _vis_ref:
 
 ``vis``
 ~~~~~~~
@@ -1280,10 +1466,12 @@ See the homepage for details.
     * - ``:DiffviewFileHistory``
       - View diffs for this file throughout git history
 
+.. _conform:
+
 ``conform``
 ~~~~~~~~~~~
 
-.. versionadded:: 2023-03-31
+.. versionadded:: 2024-03-31
 
 `conform <https://github.com/stevearc/conform.nvim>`__ runs style formatters on
 the current buffer.
@@ -1307,22 +1495,7 @@ configuration.
 For example, for Python I have ``isort`` and ``black``; for Lua, ``stylua``; for
 bash, ``shfmt``.
 
-``todo-comments``
-~~~~~~~~~~~~~~~~~
-
-`todo-comments <https://github.com/folke/todo-comments.nvim>`__ lets you jump
-across ``TODO``, ``FIXME``, ``NOTE``, and related comments within your code.
-
-.. list-table::
-
-    * - command
-      - description
-
-    * - ``:TodoTrouble``
-      - Opens trouble.nvim so you can bounce between comments
-
-    * - :kbd:`[t`, :kbd:`]t`
-      - Jump to next todo/fixme/note comment
+.. _lualine_ref:
 
 
 ``lualine``
@@ -1333,6 +1506,8 @@ across ``TODO``, ``FIXME``, ``NOTE``, and related comments within your code.
 `lualine <https://github.com/nvim-lualine/lualine.nvim>`_ provides the status line along the bottom.
 
 No additional commands configured.
+
+.. _indentblankline:
 
 ``indent-blankline``
 ~~~~~~~~~~~~~~~~~~~~
@@ -1346,6 +1521,8 @@ vertical lines to indicate the current `scope
 
 No additional commands configured.
 
+.. _vimpythonpep8indent:
+
 ``vim-python-pep8-indent``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1356,6 +1533,8 @@ auto-indents Python using pep8 recommendations. This happens as you’re typing,
 or when you use :kbd:`gq` on a selection to wrap.
 
 No additional commands configured.
+
+.. _vimrmarkdown:
 
 ``vim-rmarkdown``
 ~~~~~~~~~~~~~~~~~
@@ -1372,6 +1551,8 @@ No additional commands configured.
   and ``vim-pandoc-syntax``, described below.
 
   No additional commands configured.
+
+.. _vimpandoc:
 
 ``vim-pandoc``
 ~~~~~~~~~~~~~~
@@ -1392,6 +1573,8 @@ No additional commands configured.
 
   No additional commands configured.
 
+.. _vimpandocsyntax:
+
 ``vim-pandoc-syntax``
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -1408,6 +1591,7 @@ No additional commands configured.
 
   No additional commands configured.
 
+.. _vimtmuxclipboard:
 
 ``vim-tmux-clipboard``
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1425,16 +1609,6 @@ to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
 
 No additional commands configured.
 
-``sphinx.nvim``
-~~~~~~~~~~~~~~~
-
-.. versionadded:: 2023-10-11
-
-`sphinx.nvim <https://github.com/stsewd/sphinx.nvim>`_ provides some
-integrations for Sphinx and ReStructured Text.
-
-No additional commands configured.
-
 
 .. _zenburn:
 
@@ -1448,6 +1622,8 @@ support for plugins and tweaks some of the existing colors to work better.
 
 No additional commands configured.
 
+.. _stickybuf_ref:
+
 ``stickybuf.nvim``
 ~~~~~~~~~~~~~~~~~~
 
@@ -1457,6 +1633,8 @@ No additional commands configured.
 buffers from opening up inside a terminal buffer.
 
 No additional commands configured.
+
+.. _lspprogress:
 
 ``lsp-progress.nvim``
 ~~~~~~~~~~~~~~~~~~~~~
