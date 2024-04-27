@@ -19,9 +19,9 @@ return {
   { "daler/vim-python-pep8-indent", ft = { "python", "snakemake" } }, -- better indentation for python
   { "samoshkin/vim-mergetool", cmd = "MergetoolStart" }, -- easily work with 3-way merge conflicts
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
-  { "junegunn/gv.vim", cmd = "GV", dependencies = {"tpope/vim-fugitive"}, lazy = true}, -- graphical git log
+  { "junegunn/gv.vim", cmd = "GV", dependencies = { "tpope/vim-fugitive" }, lazy = true }, -- graphical git log
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
-  { "folke/which-key.nvim", lazy = false, config = true, }, -- pop up a window showing possible keybindings
+  { "folke/which-key.nvim", lazy = false, config = true }, -- pop up a window showing possible keybindings
   { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
@@ -74,7 +74,7 @@ return {
   {
     "danilamihailov/beacon.nvim", -- flash a beacon to show where you are
     lazy = false, -- otherwise, on first KJ you get a double-flash
-    config = function ()
+    config = function()
       -- Disable the beacon globally; only the commands below will activate it.
       vim.cmd("let g:beacon_enable=0")
     end,
@@ -121,7 +121,6 @@ return {
           vim.cmd("if &buftype == 'terminal' | startinsert | endif")
         end,
       })
-
     end,
     keys = {
       { "gxx", ":ToggleTermSendCurrentLine<CR><CR>", desc = "Send current line to terminal" },
@@ -188,8 +187,6 @@ return {
     end,
   },
 
-  
-
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
     lazy = false,
@@ -250,51 +247,61 @@ return {
 
   {
     "nvim-lualine/lualine.nvim", -- status line along the bottom
-    config = true,
-    opts = {
-      options = { theme = "zenburn" }, -- this theme is supplied by the zenburn.nvim plugin
-      sections = {
-        lualine_c = { {'filename', path = 2 }},
-      },
-
-    }, 
-
-
+    dependencies = {
+      "linrongbin16/lsp-progress.nvim",
+    },
+    config = function()
+      require("lualine").setup({
+        options = { theme = "zenburn" },
+        sections = {
+          lualine_c = { { "filename", path = 2 } },
+          lualine_x = {
+            function()
+              return require("lsp-progress").progress()
+            end,
+          },
+        },
+      })
+    end,
   },
+
   {
-    "akinsho/bufferline.nvim", config = true, lazy = false, -- tabs for buffers along the top
+    "akinsho/bufferline.nvim",
+    config = true,
+    lazy = false, -- tabs for buffers along the top
     keys = {
-      {"<leader>b", "<cmd>BufferLinePick<CR>", desc = "Pick buffer"},
+      { "<leader>b", "<cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
     opts = {
       options = {
         right_mouse_command = "vertical sbufer %d",
         separator_style = "slant",
         hover = {
-          enabled = true, delay = 200, reveal = { "close" },
+          enabled = true,
+          delay = 200,
+          reveal = { "close" },
         },
         diagnostics = "nvim_lsp",
         custom_filter = function(buf_number, buf_numbers)
           if vim.bo[buf_number].filetype ~= "fugitive" then
             return true
-        end
+          end
         end,
         show_buffer_icons = false,
         offsets = {
-        {
-          filetype = "NvimTree",
-          highlight = "Directory",
-          separator = true,
-        },
-        {
-          filetype = "aerial",
-          highlight = "Directory",
-          separator = true,
+          {
+            filetype = "NvimTree",
+            highlight = "Directory",
+            separator = true,
+          },
+          {
+            filetype = "aerial",
+            highlight = "Directory",
+            separator = true,
           },
         },
       },
     },
-
   },
 
   {
@@ -401,7 +408,8 @@ return {
   },
   {
     "williamboman/mason.nvim", -- convenient installation of LSP clients
-    lazy = false, config = true,
+    lazy = false,
+    config = true,
   },
   {
     "neovim/nvim-lspconfig", -- convenient configuration of LSP clients
@@ -501,7 +509,7 @@ return {
           prepend_args = { "-i", "2" },
         },
         stylua = {
-          prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" }
+          prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
         },
       },
       init = function()
@@ -516,11 +524,50 @@ return {
     event = "VeryLazy",
     opts = {},
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
+      },
+      {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash Treesitter",
+      },
+      {
+        "<c-s>",
+        mode = { "c" },
+        function()
+          require("flash").toggle()
+        end,
+        desc = "Toggle Flash Search",
+      },
     },
   },
 
+  {
+    "stevearc/stickybuf.nvim", -- Prevents opening buffers in terminal buffer
+    opts = {},
+    config = function()
+      require("stickybuf").setup({
+        get_auto_pin = function(bufnr)
+          return require("stickybuf").should_auto_pin(bufnr)
+        end,
+      })
+    end,
+  },
+
+  {
+    "linrongbin16/lsp-progress.nvim", -- Adds LSP status to the bottom line so you know it's running
+    config = function()
+      require("lsp-progress").setup()
+    end,
+  },
 }
 -- vim: nowrap

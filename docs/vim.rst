@@ -1448,6 +1448,27 @@ support for plugins and tweaks some of the existing colors to work better.
 
 No additional commands configured.
 
+``stickybuf.nvim``
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-04-27
+
+`stickybuf.nvim <https://github.com/stevearc/stickybuf.nvim>`__ prevents text
+buffers from opening up inside a terminal buffer.
+
+No additional commands configured.
+
+``lsp-progress.nvim``
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-04-27
+
+`lsp-progress.nvim <https://github.com/linrongbin16/lsp-progress.nvim>`__ adds
+a status/progress indicator to the lualine (at the bottom of a window) so you
+know when it's running.
+
+No additional commands configured.
+
 Colorschemes
 ------------
 
