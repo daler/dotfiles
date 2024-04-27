@@ -260,7 +260,24 @@ return {
     }, 
 
 
+    dependencies = {
+      "linrongbin16/lsp-progress.nvim",
+    },
+    config = function()
+      require("lualine").setup({
+        options = { theme = "zenburn" },
+        sections = {
+          lualine_c = { { "filename", path = 2 } },
+          lualine_x = {
+            function()
+              return require("lsp-progress").progress()
+            end,
+          },
+        },
+      })
+    end,
   },
+
   {
     "akinsho/bufferline.nvim", config = true, lazy = false, -- tabs for buffers along the top
     keys = {
@@ -534,5 +551,11 @@ return {
     end,
   },
 
+  {
+    "linrongbin16/lsp-progress.nvim", -- Adds LSP status to the bottom line so you know it's running
+    config = function()
+      require("lsp-progress").setup()
+    end,
+  },
 }
 -- vim: nowrap
