@@ -1,5 +1,12 @@
 Changelog
 =========
+2024-04-27
+----------
+
+**vim/nvim**
+
+- new plugin, *stickybuf.nvim*, which prevents buffers from opening inside a terminal window
+- new plugin, *lsp-progress.nvim*, which add LSP status to the lualine at the bottom
 
 2024-03-31
 ----------
