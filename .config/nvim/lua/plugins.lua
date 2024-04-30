@@ -163,6 +163,7 @@ return {
           "markdown_inline",
           "python",
           "vim",
+          "vimdoc",
           "yaml",
           "r",
           "snakemake",
