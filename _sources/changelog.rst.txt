@@ -1,5 +1,17 @@
 Changelog
 =========
+
+2024-04-30
+----------
+
+**vim/nvim**
+
+- update nvim version to 0.9.5
+- include ``vimdoc`` as a treesitter parser to install. Resolves
+  ``treesitter/query.lua:219: query: invalid node type...`` error when viewing
+  vim help
+
+
 2024-04-27
 ----------
 
