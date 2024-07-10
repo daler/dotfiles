@@ -194,6 +194,7 @@ return {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
     lazy = false,
     main = "ibl",
+    ft = { "python", "snakemake" }, -- enabled for whitespace-sensitive languages
     opts = {
       indent = { char = "┊" }, -- make the character a little less dense
       scope = { exclude = { language = { "markdown", "rst" } } }, -- don't need scope for text docs
