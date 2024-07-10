@@ -574,6 +574,15 @@ return {
     end,
   },
   {
+    "lukas-reineke/headlines.nvim", -- nice headings and codeblocks for markdown
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    opts = {
+      -- Don't use bullets or thick underlines for headers
+      markdown = { fat_headlines = false, bullets = {}, },
+      rmd = { fat_headlines = false, bullets = {}, },
+    },
+  },
+  {
     "epwalsh/obsidian.nvim", -- convenient highlighting for markdown, and obsidian-like notes
     version = "*",
     lazy = true,
