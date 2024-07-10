@@ -88,6 +88,7 @@ vim.opt.fillchars:append { diff = "╱" } -- in diffs, show deleted lines with s
 local wk = require('which-key')
 wk.register( { ["<leader>c"] = { name = "+code" } } )
 wk.register( { ["<leader>f"] = { name = "+file or +find" } } )
+wk.register( { ["<leader>o"] = { name = "+obsidian" } } )
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Fix <Esc> in terminal buffer
 vim.keymap.set("n", "<Leader>H", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })

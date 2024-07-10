@@ -573,5 +573,46 @@ return {
       require("lsp-progress").setup()
     end,
   },
+  {
+    "epwalsh/obsidian.nvim", -- convenient highlighting for markdown, and obsidian-like notes
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    preferred_link_style = "markdown",
+    event = {"BufReadPre " .. vim.fn.expand "~" .. "/notes/**.md"},
+    dependencies = { "nvim-lua/plenary.nvim", },
+    opts = {
+      -- Set this to where you're 
+      workspaces = {
+        {
+          name = "notes",
+          path = "~/notes",
+        },
+        -- The following allows obsidian.nvim to work on general markdown files outside of obsidian vaults.
+        {
+          name = "no-vault",
+          path = function() return assert(vim.fs.dirname(vim.api.nvim_buf_get_name(0))) end,
+          overrides = {
+            notes_subdir = vim.NIL,
+            new_notes_location = "current_dir",
+            templates = { folder = vim.NIL, },
+            disable_frontmatter = true,
+          },
+        },
+      },
+      -- Open URL in browser (use `open` for MacOS)
+      follow_url_func = function(url) vim.fn.jobstart({"open", url}) end,
+      -- Disable the bright purple highlighting for links, and let the
+      -- colorscheme handle it.
+      ui = { hl_groups = { } },
+    },
+    keys = {
+      { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "[o]bsidian [s]earch" },
+      { "<leader>on", "<cmd>ObsidianLinkNew<cr>", mode = { "v" },  desc = "[o]bsidian [n]ew link" },
+      { "<leader>ol", "<cmd>ObsidianLink<cr>", mode = {"v"}, desc = "[o]bsidian [l]ink to existing" },
+      { "<leader>od", "<cmd>ObsidianDailies<cr>", desc = "[o]bsidian [d]ailies" },
+      { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
+    },
+  },
 }
 -- vim: nowrap
