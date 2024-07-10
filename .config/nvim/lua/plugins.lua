@@ -149,7 +149,9 @@ return {
         },
         indent = {
           enable = true,
-          disable = { "python", "snakemake" }, -- let vim-python-pep8-indent handle this
+          -- Let vim-python-pep8-indent handle the python and snakemake indentation;
+          -- disable markdown indentation because it prevents bulleted lists from wrapping correctly with `gq`.
+          disable = { "python", "snakemake", "markdown" },
         },
         -- These will be attempted to be installed automatically, but you'll need a C compiler installed.
         ensure_installed = {
