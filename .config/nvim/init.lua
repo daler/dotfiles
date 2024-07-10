@@ -175,6 +175,14 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
+-- Set conceallevel for markdown so that links will be collapsed.
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt.conceallevel = 2
+  end,
+})
+
 -- Tell nvim about the snakemake filetype
 vim.filetype.add({
   filename = {
@@ -205,6 +213,9 @@ vim.api.nvim_create_autocmd("FileType", {
       ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
       { desc = "Render RMar[k]down to HTML" }
     )
+    -- Don't conceal for Rmd, which otherwise would conceal both links *and* code chunks.
+    -- It's currently all or nothing (we can't just conceal links, for example), so we turn it off completely.
+    vim.opt.conceallevel = 0
   end,
 })
 
