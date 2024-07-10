@@ -72,6 +72,8 @@ vim.cmd("set wildmenu") -- Make tab completion for files/buffers act like bash
 vim.cmd("set wildmode=list:full") -- Show a list when pressing tab; complete first full match
 vim.cmd("set wildignore=*.swp,*.bak,*.pyc,*.class") -- Ignore these when autocompleting
 vim.cmd("set cursorline") -- Highlight line where the cursor is
+vim.opt.fillchars:append { diff = "╱" } -- in diffs, show deleted lines with slashes rather than dashes
+
 -- vim.cmd(":autocmd InsertEnter * set cul") -- Color the current line in upon entering insert mode
 -- vim.cmd(":autocmd InsertLeave * set nocul") -- Remove color upon existing insert mode
 -- vim.cmd("set guicursor=i:block") -- Always use block cursor. In some terminals and fonts (like iTerm), it can be hard to see the cursor when it changes to a line.
