@@ -400,6 +400,7 @@ return {
           { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
+          { name = "mkdnflow" },
         }),
         experimental = {
           ghost_text = {
@@ -622,6 +623,17 @@ return {
       { "<leader>od", "<cmd>ObsidianDailies<cr>", desc = "[o]bsidian [d]ailies" },
       { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
     },
+  },
+
+  { 'jakewvincent/mkdnflow.nvim',
+    config = function()
+      require('mkdnflow').setup({
+          -- Config goes here; leave blank for defaults
+        links = {
+          conceal = true,
+        },
+      })
+    end
   },
 }
 -- vim: nowrap
