@@ -459,6 +459,11 @@ track of what has changed recently.
      - 2024-04-27
      -
 
+   * - :ref:`obsidian`
+     - 2024-07-10
+     - 
+
+
 Sometimes there are better plugins for a particular functionality. I've kept
 the documentation, but noted when they've been deprecated here and in the
 linked description.
@@ -1646,6 +1651,37 @@ a status/progress indicator to the lualine (at the bottom of a window) so you
 know when it's running.
 
 No additional commands configured.
+
+.. _obsidian:
+
+``obsidian.nvim``
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-07-10
+
+`obsidian.nvim <https://github.com/epwalsh/obsidian.nvim>`__ is a plugin
+originally written for working with `Obsidian <https://obsidian.md/>`__ which is a GUI
+notetaking app (that uses markdown and has vim keybindings). If you're an
+Obsidian user, this plugin makes the experience with nvim quite nice.
+
+The mapped commands below use :kbd:`o` ([o]bsidian)
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>od`
+      - Choose or create a daily note
+
+    * - :kbd:`<leader>os`
+      - [o]bsidian [s]search
+
+    * - :kbd:`<leader>ot`
+      - [o]bsidian [t]ags
+
+    * - :kbd:`<leader>on`
+      - [o]bsidian [n]ew link
 
 Colorschemes
 ------------
