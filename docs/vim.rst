@@ -195,7 +195,7 @@ first key and then waiting a second for the menu to pop up.
   **Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
   file and are described below under the respective plugin's section.
 
-If you're definign your own keymappings, add a ``desc`` argument so that
+If you're defining your own keymappings, add a ``desc`` argument so that
 which-key will provide a description for it.
 
 .. list-table::
