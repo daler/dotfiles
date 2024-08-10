@@ -21,8 +21,8 @@ return {
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
   { "junegunn/gv.vim", cmd = "GV", dependencies = { "tpope/vim-fugitive" }, lazy = true }, -- graphical git log
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
-  { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
   { "folke/which-key.nvim", lazy = false, config = true, commit = "0539da005b98b02cf730c1d9da82b8e8edb1c2d2" }, -- pop up a window showing possible keybindings
+  { "daler/zenburn.nvim", lazy = false, priority = 1000, branch = "markdown-improvements" }, -- colorscheme
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
   { "norcalli/nvim-colorizer.lua", config = true, lazy = true, cmd = "ColorizerToggle" }, -- color hex codes by their actual color
