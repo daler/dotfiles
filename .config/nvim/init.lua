@@ -98,7 +98,7 @@ vim.keymap.set({ "n", "i" }, "<leader>`", "<Esc>i```{r}<CR>```<Esc>O", { desc = 
 vim.keymap.set(
   { "n", "i" },
   "<leader>ts",
-  '<Esc>o<Esc>:r! date "+[\\%Y-\\%m-\\%d \\%H:\\%M] "<CR>A',
+  '<Esc>o<Esc>:r! date "+\\%Y-\\%m-\\%d \\%H:\\%M "<CR>A',
   { desc = "Insert timestamp" }
 )
 vim.keymap.set("n", "<leader>-", "80A-<Esc>d80<bar>", { desc = "Fill rest of line with -" })
