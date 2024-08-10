@@ -793,6 +793,12 @@ elif [ $task == "--install-npm" ]; then
     echo "export PATH=\$PATH:$MAMBA_LOCATION/envs/npm/bin" >> ~/.path
     printf "${YELLOW}Installed npm to $MAMBA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
 
+elif [ $task == "--install-gh" ]; then
+    ok "Install gh (GitHub CLI) in a named conda env and add to ~/.path?"
+    install_env_and_symlink gh gh gh
+    printf "${YELLOW}Installed to ~/opt/bin/gh${UNSET}\n"
+    check_opt_bin_in_path
+
 elif [ $task == "--dotfiles" ]; then
     set -x
 
