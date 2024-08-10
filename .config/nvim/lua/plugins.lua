@@ -593,7 +593,29 @@ return {
     event = {"BufReadPre " .. vim.fn.expand "~" .. "/notes/**.md"},
     dependencies = { "nvim-lua/plenary.nvim", },
     opts = {
-      -- Set this to where you're 
+
+      disable_frontmatter = true,
+      mappings = {
+      -- Default <CR> mapping will toggle a checkbox if not in a link or follow it if in a link.
+      -- This makes it only follow a link.
+        ["<CR>"] = {
+        action = function()
+          if require('obsidian').util.cursor_on_markdown_link(nil, nil, true) then
+            return "<cmd>ObsidianFollowLink<CR>"
+          end
+        end,
+          opts = { buffer = true, expr = true },
+        },
+      },
+      -- default is to add a unique id to the beginning
+      note_id_func = function(title)
+        return title
+      end,
+
+      -- default is "wiki"; this keeps it regular markdown
+      preferred_link_style = "markdown",
+
+      -- Set this to where you're storing your local notes
       workspaces = {
         {
           name = "notes",
@@ -611,8 +633,9 @@ return {
           },
         },
       },
-      -- Open URL in browser (use `open` for MacOS)
+      -- Open URL under cursor in browser (uses `open` for MacOS)
       follow_url_func = function(url) vim.fn.jobstart({"open", url}) end,
+
       -- Disable the bright purple highlighting for links, and let the
       -- colorscheme handle it.
       ui = { hl_groups = { } },
