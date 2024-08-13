@@ -683,22 +683,25 @@ return {
       })
     end
   },
-  -- { 'MeanderingProgrammer/markdown.nvim', -- nice rendering of callouts, evertyhing else disabled
-  --   -- enabled = false,
-  --   name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-  --   config = function()
-  --     require('render-markdown').setup({
-  --       heading = { enabled = false },
-  --       sign = { enabled = false },
-  --       code = { enabled = false },
-  --       dash = { enabled = false },
-  --       bullet = { enabled = false },
-  --       checkbock = { enabled = false },
-  --       link = { enabled = false },
-  --       win_options = {} ,
-  --     })
-  --   end,
-  -- }
+  { 'MeanderingProgrammer/render-markdown.nvim', -- nice rendering of callouts, evertyhing else disabled
+    -- enabled = false,
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    config = function()
+      require('render-markdown').setup({
+        heading = { enabled = true, position = 'inline', signs = { "§"}, backgrounds = { "@markup.heading" }, foregrounds = { "@markup.heading" }, },
+        sign = { enabled = true },
+        code = { enabled = true },
+        dash = { enabled = false },
+        bullet = { enabled = false },
+        checkbox = { enabled = false },
+        link = { enabled = false },
+        win_options = {
+          conceallevel = {
+            rendered = 1,
+          },
+        },
+      })
+    end,
+  }
 }
 -- vim: nowrap
