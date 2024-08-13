@@ -180,7 +180,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 vim.api.nvim_create_autocmd("Filetype", {
   pattern = { "markdown" },
   callback = function()
-    vim.opt.conceallevel = 2
+    vim.opt.conceallevel = 1
   end,
 })
 
