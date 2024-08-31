@@ -595,6 +595,7 @@ return {
     opts = {
 
       disable_frontmatter = true,
+      ui = { enable = false },
       mappings = {
       -- Default <CR> mapping will toggle a checkbox if not in a link or follow it if in a link.
       -- This makes it only follow a link.
@@ -633,12 +634,9 @@ return {
           },
         },
       },
-      -- Open URL under cursor in browser (uses `open` for MacOS)
-      follow_url_func = function(url) vim.fn.jobstart({"open", url}) end,
 
-      -- Disable the bright purple highlighting for links, and let the
-      -- colorscheme handle it.
-      ui = { hl_groups = { } },
+      -- Open URL under cursor in browser (uses `open` for MacOS)
+      follow_url_func = function(url) vim.inspect(vim.system({"open", url})) end,
     },
     keys = {
       { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "[o]bsidian [s]earch" },

@@ -176,14 +176,6 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
--- Set conceallevel for markdown so that links will be collapsed.
-vim.api.nvim_create_autocmd("Filetype", {
-  pattern = { "markdown" },
-  callback = function()
-    vim.opt.conceallevel = 1
-  end,
-})
-
 -- Tell nvim about the snakemake filetype
 vim.filetype.add({
   filename = {
