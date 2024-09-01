@@ -216,6 +216,26 @@ vim.api.nvim_create_autocmd("FileType", {
       ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
       { desc = "Render RMar[k]down to HTML" }
     )
+    -- Don't conceal for Rmd, which otherwise would conceal both links *and* code chunks.
+    -- It's currently all or nothing (we can't just conceal links, for example), so we turn it off completely.
+    -- vim.opt.conceallevel = 0
+    vim.keymap.set(
+      "n",
+      "<leader>rm",
+      function ()
+        ft = vim.opt.ft:get()
+        if ft == "rmarkdown" or ft == "rmd" then
+          vim.cmd("set ft=markdown")
+          vim.cmd("RenderMarkdown enable")
+        end
+        if ft == "markdown" then
+          vim.cmd("set ft=rmarkdown")
+          vim.cmd("RenderMarkdown disable")
+        end
+      end
+      -- { desc = "enable render-markdown on an RMa
+      -- rkdown file" }
+    )
   end,
 })
 
