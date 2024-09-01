@@ -646,43 +646,6 @@ return {
       { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
     },
   },
-
-  -- originally used for hitting "<CR>" on a note, but obsidian handles that well.
-  -- also kind of nice for collapsing headings, but i no longer think it's worth the setup hassle.
-  -- nice for creating links instead of the zettle thing.
-  { 'jakewvincent/mkdnflow.nvim',
-    enabled = false,
-    config = function()
-      require('mkdnflow').setup({
-        links = {
-          -- Seemed to be double-concealing along with obsidian.nvim
-          conceal = false,
-        },
-        -- foldtext = {
-        -- object_count_icon_set = 'nerdfont', -- Use/fall back on the nerdfont icon set
-        -- object_count_opts = function()
-        --     local opts = {
-        --         link = false, -- Prevent links from being counted
-        --         blockquote = { -- Count block quotes (these aren't counted by default)
-        --             icon = ' ',
-        --             count_method = {
-        --                 pattern = { '^>.+$' },
-        --                 tally = 'blocks',
-        --             }
-        --         },
-        --         fncblk = {
-        --             -- Override the icon for fenced code blocks with 
-        --             icon = ' '
-        --         }
-        --     }
-        --     return opts
-        -- end,
-    -- },
-      })
-    end
-  },
-  { 'MeanderingProgrammer/render-markdown.nvim', -- nice rendering of callouts, evertyhing else disabled
-    -- enabled = false,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     config = function()
       require('render-markdown').setup({
