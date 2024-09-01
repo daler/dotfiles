@@ -193,6 +193,8 @@ return {
 
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
+    -- Disabling since it makes copy-paste awkward
+    -- enabled = false,
     lazy = false,
     main = "ibl",
     opts = {
@@ -278,20 +280,18 @@ return {
     },
     opts = {
       options = {
-        -- right_mouse_command = "vertical sbufer %d",
-        -- separator_style = "slant",
-        -- hover = {
-        --   enabled = true,
-        --   delay = 200,
-        --   reveal = { "close" },
-        -- },
-        diagnostics = "nvim_lsp",
-        custom_filter = function(buf_number, buf_numbers)
+        diagnostics = "nvim_lsp", -- buffer label will indicate errors
+        custom_filter = function(buf_number, buf_numbers) -- don't show tabs for fugitive
           if vim.bo[buf_number].filetype ~= "fugitive" then
             return true
           end
         end,
+
+        -- Disable the filetype icons in tabs
         show_buffer_icons = false,
+
+        -- When using aerial or file tree, shift the tab so it's over the
+        -- actual file.
         offsets = {
           {
             filetype = "NvimTree",
@@ -589,13 +589,12 @@ return {
     version = "*",
     lazy = true,
     ft = "markdown",
-    preferred_link_style = "markdown",
     event = {"BufReadPre " .. vim.fn.expand "~" .. "/notes/**.md"},
     dependencies = { "nvim-lua/plenary.nvim", },
     opts = {
 
-      disable_frontmatter = true,
-      ui = { enable = false },
+      disable_frontmatter = true, -- don't add yaml frontmatter automatically to markdown
+      ui = { enable = false }, -- disable the icons and highlighting, since this is taken care of by render-markdown plugin
       mappings = {
       -- Default <CR> mapping will convert a line into a checkbox if not in
       -- a link or follow it if in a link. This makes it only follow a link.
@@ -609,8 +608,8 @@ return {
         },
       },
 
-      -- default is to add a unique id to the beginning of a note; this
-      -- disables it
+      -- Default is to add a unique id to the beginning of a note filename;
+      -- this disables it
       note_id_func = function(title)
         return title
       end,
@@ -633,9 +632,10 @@ return {
         },
       },
 
-      -- Open URL under cursor in browser (uses `open` for MacOS)
+      -- Open URL under cursor in browser (uses `open` for MacOS).
       follow_url_func = function(url) vim.inspect(vim.system({"open", url})) end,
     },
+
     keys = {
       { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "[o]bsidian [s]earch" },
       { "<leader>on", "<cmd>ObsidianLinkNew<cr>", mode = { "v" },  desc = "[o]bsidian [n]ew link" },
@@ -644,23 +644,29 @@ return {
       { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
     },
   },
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+  { 'MeanderingProgrammer/render-markdown.nvim', -- nice rendering of markdown callouts, tables, heading symbols, and code blocks; evertyhing else disabled
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('render-markdown').setup({
-        heading = { enabled = true, position = 'inline', signs = { "§"}, backgrounds = { "@markup.heading" }, foregrounds = { "@markup.heading" }, },
-        sign = { enabled = true },
-        code = { enabled = true },
-        dash = { enabled = false },
-        bullet = { enabled = false },
-        checkbox = { enabled = false },
-        link = { enabled = false },
-        win_options = {
-          conceallevel = {
-            rendered = 1,
+        heading = {
+          position = 'inline',  -- don't indent subsequent headers
+          icons = { }, -- don't replace ### with icons
+          sign = false, -- don't add a sign column indicator (it gets distracting when enter/exit insert mode)
+        },
+        code = {
+          sign = false, -- don't add a sign column indicator
+        },
+        bullet = {
+          icons = { '•' }, -- make bullets of all indentations the same
+        },
+        link = {  -- internal links get a symbol in front of them; regular (web) links do not
+          custom = {
+              web = { pattern = '^http[s]?://', icon = '', highlight = 'RenderMarkdownLink' },
+              internal = { pattern = '.*', icon = '⛬ ', highlight = 'RenderMarkdownLink' },
           },
         },
       })
     end,
-  }
+  },
 }
 -- vim: nowrap
