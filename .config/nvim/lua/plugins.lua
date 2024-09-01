@@ -278,13 +278,13 @@ return {
     },
     opts = {
       options = {
-        right_mouse_command = "vertical sbufer %d",
-        separator_style = "slant",
-        hover = {
-          enabled = true,
-          delay = 200,
-          reveal = { "close" },
-        },
+        -- right_mouse_command = "vertical sbufer %d",
+        -- separator_style = "slant",
+        -- hover = {
+        --   enabled = true,
+        --   delay = 200,
+        --   reveal = { "close" },
+        -- },
         diagnostics = "nvim_lsp",
         custom_filter = function(buf_number, buf_numbers)
           if vim.bo[buf_number].filetype ~= "fugitive" then
@@ -597,8 +597,8 @@ return {
       disable_frontmatter = true,
       ui = { enable = false },
       mappings = {
-      -- Default <CR> mapping will toggle a checkbox if not in a link or follow it if in a link.
-      -- This makes it only follow a link.
+      -- Default <CR> mapping will convert a line into a checkbox if not in
+      -- a link or follow it if in a link. This makes it only follow a link.
         ["<CR>"] = {
         action = function()
           if require('obsidian').util.cursor_on_markdown_link(nil, nil, true) then
@@ -608,21 +608,19 @@ return {
           opts = { buffer = true, expr = true },
         },
       },
-      -- default is to add a unique id to the beginning
+
+      -- default is to add a unique id to the beginning of a note; this
+      -- disables it
       note_id_func = function(title)
         return title
       end,
 
-      -- default is "wiki"; this keeps it regular markdown
+      -- Default is "wiki"; this keeps it regular markdown
       preferred_link_style = "markdown",
 
-      -- Set this to where you're storing your local notes
+      -- The following allows obsidian.nvim to work on general markdown files
+      -- outside of obsidian vaults.
       workspaces = {
-        {
-          name = "notes",
-          path = "~/notes",
-        },
-        -- The following allows obsidian.nvim to work on general markdown files outside of obsidian vaults.
         {
           name = "no-vault",
           path = function() return assert(vim.fs.dirname(vim.api.nvim_buf_get_name(0))) end,
@@ -642,7 +640,7 @@ return {
       { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "[o]bsidian [s]earch" },
       { "<leader>on", "<cmd>ObsidianLinkNew<cr>", mode = { "v" },  desc = "[o]bsidian [n]ew link" },
       { "<leader>ol", "<cmd>ObsidianLink<cr>", mode = {"v"}, desc = "[o]bsidian [l]ink to existing" },
-      { "<leader>od", "<cmd>ObsidianDailies<cr>", desc = "[o]bsidian [d]ailies" },
+      { "<leader>od", "<cmd>ObsidianDailies -999 0<cr>", desc = "[o]bsidian [d]ailies" },
       { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
     },
   },
