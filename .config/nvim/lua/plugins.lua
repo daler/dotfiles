@@ -195,7 +195,6 @@ return {
 
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
-    commit = "db926997af951da38e5004ec7b9fbdc480b48f5d",
     lazy = false,
     main = "ibl",
     opts = {
@@ -574,16 +573,6 @@ return {
     config = function()
       require("lsp-progress").setup()
     end,
-  },
-  {
-    "lukas-reineke/headlines.nvim", -- nice headings and codeblocks for markdown
-    enabled = false,
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    opts = {
-      -- Don't use bullets or thick underlines for headers
-      markdown = { fat_headlines = false, bullets = {}, },
-      rmd = { fat_headlines = false, bullets = {}, },
-    },
   },
   {
     "epwalsh/obsidian.nvim", -- convenient highlighting for markdown, and obsidian-like notes
