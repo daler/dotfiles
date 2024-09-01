@@ -634,7 +634,7 @@ return {
       { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
     },
   },
-  { 'MeanderingProgrammer/render-markdown.nvim', -- nice rendering of markdown callouts, tables, heading symbols, and code blocks; evertyhing else disabled
+  { 'MeanderingProgrammer/render-markdown.nvim', -- nice rendering of markdown callouts, tables, heading symbols, and code blocks
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('render-markdown').setup({
