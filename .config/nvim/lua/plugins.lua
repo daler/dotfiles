@@ -73,6 +73,7 @@ return {
 
   {
     "danilamihailov/beacon.nvim", -- flash a beacon to show where you are
+    commit = "5ab668c4123bc51269bf6f0a34828e68c142e764", -- later versions are lua-only and not as nice to configure
     lazy = false, -- otherwise, on first KJ you get a double-flash
     config = function()
       -- Disable the beacon globally; only the commands below will activate it.
