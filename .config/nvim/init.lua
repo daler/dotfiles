@@ -109,7 +109,28 @@ vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>cp", ":IBLToggle<CR>:set nu!<CR>:Gitsigns toggle_signs<CR>", { desc = "Prepare for copying text to another program"}) 
+vim.keymap.set("n", "<leader>cp",
+  function()
+    -- Turn off various symbols and text that shouldn't be copied, such as
+    -- indent-blankline vertical lines, indicators of git changes, and various
+    -- virtual text and symbols.
+    --
+    -- Also toggles line numbers.
+    --
+    -- In all cases, only disable if the plugin is loaded in the first place.
+    if package.loaded["ibl"] ~= nil then
+      vim.cmd("IBLToggle")
+    end
+    if package.loaded["gitsigns"] ~= nil then
+      vim.cmd("Gitsigns toggle_signs")
+    end
+    if package.loaded["render-markdown"] ~= nil then
+      vim.cmd(":RenderMarkdown toggle")
+    end
+    vim.cmd("set nu!")
+  end,
+  { desc = "Prepare for copying text to another program"}
+)
 
 -- Keymappings for navigating terminals.
 -- <leader>q and <leader>w move to left and right windows respectively. Useful
