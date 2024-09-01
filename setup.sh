@@ -22,7 +22,7 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.9.5
+NVIM_VERSION=0.10.1
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -487,12 +487,18 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
+    if [ -d ~/opt/neovim ]; then
+        printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
+        exit 1
+    fi
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
+
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-arm64.tar.gz nvim-macos.tar.gz
+        xattr -c ./nvim-macos.tar.gz
         tar -xzf nvim-macos.tar.gz
         mkdir -p "$HOME/opt/bin"
-        mv nvim-macos "$HOME/opt/neovim"
+        mv nvim-macos-arm64 "$HOME/opt/neovim"
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
         tar -xzf nvim-linux64.tar.gz
@@ -507,7 +513,7 @@ elif [ $task == "--install-neovim" ]; then
 elif [ $task == "--compile-neovim" ]; then
     NVIM_VERSION=stable
     ok "Clones the stable branch of the neovim repo, compiles it, and installs it into $HOME/opt/bin/nvim"
-    if [ -e "$HOME/opt/neovim" ];
+    if [ -d "$HOME/opt/neovim" ];
     then
         ok "Warning, need to delete $HOME/opt/neovim, is that ok?"
         rm -rv "$HOME/opt/neovim"
