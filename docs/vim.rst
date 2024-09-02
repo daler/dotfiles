@@ -9,6 +9,13 @@ Vim (neovim) configuration
     and :ref:`Why Lua <why-lua>` if you're coming here from using older
     versions of these dotfiles.
 
+.. note::
+
+    As of 2024-09-01, you can use ``./setup.sh --prep-clean-nvim`` to test out the
+    latest nvim configs without affecting anything with other dotfiles (like
+    bash). This moves existing config and plugins to backup directories without
+    deleting anything so you can always roll back to what you had before.
+
 Files
 -----
 
