@@ -254,6 +254,10 @@ function showHelp() {
 
     cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
+
+    cmd "--prep-clean-nvim" \
+        "Move nvim binary, plugins, and config to backup directories so you can " \
+        "try new updates from these dotfiles. Does not delete anything."
     echo
 }
 
@@ -850,6 +854,32 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     rm terminfo.src
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
+elif [ $task == "--prep-clean-nvim" ]; then
+    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles"
+    timestamp=$(date +"%Y%m%d%H%M")
+    NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
+    NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
+    if [ -e ~/.config/nvim ]; then
+        mv ~/.config/nvim ~/.config/nvim-$timestamp
+        printf "${YELLOW}Moved ~/.config/nvim to $NVIM_CONFIG_BACKUP\n${UNSET}"
+    fi
+    if [ -e ~/.local/share/nvim/lazy ]; then
+        mv ~/.local/share/nvim/lazy ~/.local/share/nvim/lazy-$timestamp
+        printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
+    fi
+    rsync --no-perms -rvh .config/nvim ~/.config
+    printf "${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
+    printf "${GREEN}Now open nvim${UNSET} to trigger a reinstallation of plugins.\n"
+    printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
+    printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
+    printf "  rm -r ~/.config/nvim\n"
+    printf "  rm -rf ~/.local/share/nvim/lazy\n"
+    printf "  mv $NVIM_CONFIG_BACKUP ~/.config/nvim\n"
+    printf "  mv $NVIM_PLUGIN_BACKUP ~/.local/share/nvim/lazy\n\n"
+    printf "${GREEN}To keep these changes${YELLOW} then remove the backups:\n\n"
+    printf "  rm -r $NVIM_CONFIG_BACKUP\n"
+    printf "  rm -rf $NVIM_PLUGIN_BACKUP\n"
+    printf "${UNSET}"
 
 
 # ----------------------------------------------------------------------------
