@@ -1,6 +1,18 @@
 Changelog
 =========
 
+2024-09-01
+----------
+
+**vim/nvim**
+- update nvim version to 0.10.1
+- improvements for supporting markdown (*obsidian.nvim* and *render-markdown* plugins)
+- :kbd:`<leader>cp` is more complete in turning off characters that shouldn't be copied
+- pinned beacon and which-key plugins
+- reverted to default bufferline style
+- exlude indent-blankline for markdown and restructured text
+
+
 2024-04-30
 ----------
 
