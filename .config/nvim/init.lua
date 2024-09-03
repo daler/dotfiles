@@ -10,26 +10,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.cmd("set termguicolors") -- use full color in colorschemes
 
--- Bootstrap lazy.nvim in case it's not already installed.
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
---
--- Plugins.
--- Plugins are handled separately, see the lua/plugins.lua file.
--- This command tells lazy.nvim, the plugin manager, where to find that file.
---
-require("lazy").setup("plugins")
+require("config.lazy")
 
 --
 -- Colorscheme.
