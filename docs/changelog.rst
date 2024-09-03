@@ -8,9 +8,13 @@ Changelog
 - new command ``--prep-clean-nvim``, which moves existing config and plugin
   directories to backup locations, so you can test these new changes. Also
   provides commands to roll back the process.
+- new command ``--restore-nvim-plugins`` which copies just the lazy-lock.json
+  file to your ~/.config/nvim/lazy-lock.json, and triggers a plugin
+  restoration (without changing any other config).
 
 **vim/nvim**
 - update nvim version to 0.10.1
+- add lazy-lock.json to repo to allow rollback when updated plugins break
 - in diff views, show deleted lines with slashes rather than dashes
 - treesitter: disable treesitter indentation for markdown (it seemed to be messing up bulleted lists)
 - new plugin: obsidian.nvim for working with markdown and notes. See docs for new mappings.

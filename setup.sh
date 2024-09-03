@@ -258,6 +258,11 @@ function showHelp() {
     cmd "--prep-clean-nvim" \
         "Move nvim binary, plugins, and config to backup directories so you can " \
         "try new updates from these dotfiles. Does not delete anything."
+
+    cmd "--restore-nvim-plugins" \
+        "Copy over the nvim plugin lockfile from the repo to your " \
+        "~/.config/nvim/lazy-lock.json, and run an nvim command to restore " \
+        "plugin versions from that file."
     echo
 }
 
@@ -855,7 +860,7 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
 elif [ $task == "--prep-clean-nvim" ]; then
-    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles"
+    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
     NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
@@ -868,8 +873,8 @@ elif [ $task == "--prep-clean-nvim" ]; then
         printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
     fi
     rsync --no-perms -rvh .config/nvim ~/.config
-    printf "${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
-    printf "${GREEN}Now open nvim${UNSET} to trigger a reinstallation of plugins.\n"
+    nvim --headless "+Lazy! restore" "+TSUpdate" +qa
+    printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
     printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
     printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
     printf "  rm -r ~/.config/nvim\n"
@@ -880,6 +885,20 @@ elif [ $task == "--prep-clean-nvim" ]; then
     printf "  rm -r $NVIM_CONFIG_BACKUP\n"
     printf "  rm -rf $NVIM_PLUGIN_BACKUP\n"
     printf "${UNSET}"
+
+elif [ $task == "--restore-nvim-plugins" ]; then
+    ok "Restore nvim plugins using the lazy-lock.json file in this repo? This will not change any other config."
+    timestamp=$(date +"%Y%m%d%H%M")
+    NVIM_LOCKFILE_BACKUP="$HOME/.config/nvim/lazy-lock_${timestamp}.json"
+    [ -e $HOME/.config/nvim/lazy-lock.json ] && cp $HOME/.config/nvim/lazy-lock.json "$NVIM_LOCKFILE_BACKUP"
+    cp .config/nvim/lazy-lock.json $HOME/.config/nvim/lazy-lock.json
+    nvim --headless "+Lazy! restore" +qa
+    printf "${YELLOW}Here is the diff of what changed (new compared to old):\n${UNSET}"
+    diff -u $NVIM_LOCKFILE_BACKUP ~/.config/nvim/lazy-lock.json
+    printf "${YELLOW}Restored plugins using ~/.config/nvim/lazy-lock.json.\n"
+    printf "Any original file was renamed to $NVIM_LOCKFILE_BACKUP if you "
+    printf "need the previous version, otherwise you can delete it.\n${UNSET}"
+
 
 
 # ----------------------------------------------------------------------------
