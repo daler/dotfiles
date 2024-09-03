@@ -72,6 +72,8 @@ vim.cmd("set wildmenu") -- Make tab completion for files/buffers act like bash
 vim.cmd("set wildmode=list:full") -- Show a list when pressing tab; complete first full match
 vim.cmd("set wildignore=*.swp,*.bak,*.pyc,*.class") -- Ignore these when autocompleting
 vim.cmd("set cursorline") -- Highlight line where the cursor is
+vim.opt.fillchars:append { diff = "╱" } -- in diffs, show deleted lines with slashes rather than dashes
+
 -- vim.cmd(":autocmd InsertEnter * set cul") -- Color the current line in upon entering insert mode
 -- vim.cmd(":autocmd InsertLeave * set nocul") -- Remove color upon existing insert mode
 -- vim.cmd("set guicursor=i:block") -- Always use block cursor. In some terminals and fonts (like iTerm), it can be hard to see the cursor when it changes to a line.
@@ -86,6 +88,7 @@ vim.cmd("set cursorline") -- Highlight line where the cursor is
 local wk = require('which-key')
 wk.register( { ["<leader>c"] = { name = "+code" } } )
 wk.register( { ["<leader>f"] = { name = "+file or +find" } } )
+wk.register( { ["<leader>o"] = { name = "+obsidian" } } )
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>") -- Fix <Esc> in terminal buffer
 vim.keymap.set("n", "<Leader>H", ":set hlsearch!<CR>", { desc = "Toggle search highlight" })
@@ -95,7 +98,7 @@ vim.keymap.set({ "n", "i" }, "<leader>`", "<Esc>i```{r}<CR>```<Esc>O", { desc = 
 vim.keymap.set(
   { "n", "i" },
   "<leader>ts",
-  '<Esc>o<Esc>:r! date "+[\\%Y-\\%m-\\%d \\%H:\\%M] "<CR>A',
+  '<Esc>o<Esc>:r! date "+\\%Y-\\%m-\\%d \\%H:\\%M "<CR>A',
   { desc = "Insert timestamp" }
 )
 vim.keymap.set("n", "<leader>-", "80A-<Esc>d80<bar>", { desc = "Fill rest of line with -" })
@@ -106,7 +109,28 @@ vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>cp", ":IBLToggle<CR>:set nu!<CR>:Gitsigns toggle_signs<CR>", { desc = "Prepare for copying text to another program"}) 
+vim.keymap.set("n", "<leader>cp",
+  function()
+    -- Turn off various symbols and text that shouldn't be copied, such as
+    -- indent-blankline vertical lines, indicators of git changes, and various
+    -- virtual text and symbols.
+    --
+    -- Also toggles line numbers.
+    --
+    -- In all cases, only disable if the plugin is loaded in the first place.
+    if package.loaded["ibl"] ~= nil then
+      vim.cmd("IBLToggle")
+    end
+    if package.loaded["gitsigns"] ~= nil then
+      vim.cmd("Gitsigns toggle_signs")
+    end
+    if package.loaded["render-markdown"] ~= nil then
+      vim.cmd(":RenderMarkdown toggle")
+    end
+    vim.cmd("set nu!")
+  end,
+  { desc = "Prepare for copying text to another program"}
+)
 
 -- Keymappings for navigating terminals.
 -- <leader>q and <leader>w move to left and right windows respectively. Useful
@@ -191,6 +215,26 @@ vim.api.nvim_create_autocmd("FileType", {
       "<leader>k",
       ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
       { desc = "Render RMar[k]down to HTML" }
+    )
+    -- Don't conceal for Rmd, which otherwise would conceal both links *and* code chunks.
+    -- It's currently all or nothing (we can't just conceal links, for example), so we turn it off completely.
+    -- vim.opt.conceallevel = 0
+    vim.keymap.set(
+      "n",
+      "<leader>rm",
+      function ()
+        ft = vim.opt.ft:get()
+        if ft == "rmarkdown" or ft == "rmd" then
+          vim.cmd("set ft=markdown")
+          vim.cmd("RenderMarkdown enable")
+        end
+        if ft == "markdown" then
+          vim.cmd("set ft=rmarkdown")
+          vim.cmd("RenderMarkdown disable")
+        end
+      end
+      -- { desc = "enable render-markdown on an RMa
+      -- rkdown file" }
     )
   end,
 })

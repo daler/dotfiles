@@ -21,8 +21,8 @@ return {
   { "tpope/vim-fugitive", cmd = "Git", lazy = true }, -- convenient git interface, with incremental commits
   { "junegunn/gv.vim", cmd = "GV", dependencies = { "tpope/vim-fugitive" }, lazy = true }, -- graphical git log
   { "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } }, -- nice diff interface
-  { "folke/which-key.nvim", lazy = false, config = true }, -- pop up a window showing possible keybindings
   { "daler/zenburn.nvim", lazy = false, priority = 1000 }, -- colorscheme
+  { "folke/which-key.nvim", lazy = false, config = true, commit = "0539da005b98b02cf730c1d9da82b8e8edb1c2d2" }, -- pop up a window showing possible keybindings
   { "morhetz/gruvbox", enabled = false }, -- example of an alternative colorscheme, here disabled
   { "joshdick/onedark.vim", lazy = false }, -- another colorscheme, here enabled as a fallback for terminals with no true-color support like Terminal.app.
   { "norcalli/nvim-colorizer.lua", config = true, lazy = true, cmd = "ColorizerToggle" }, -- color hex codes by their actual color
@@ -73,6 +73,7 @@ return {
 
   {
     "danilamihailov/beacon.nvim", -- flash a beacon to show where you are
+    commit = "5ab668c4123bc51269bf6f0a34828e68c142e764", -- later versions are lua-only and not as nice to configure
     lazy = false, -- otherwise, on first KJ you get a double-flash
     config = function()
       -- Disable the beacon globally; only the commands below will activate it.
@@ -149,7 +150,9 @@ return {
         },
         indent = {
           enable = true,
-          disable = { "python", "snakemake" }, -- let vim-python-pep8-indent handle this
+          -- Let vim-python-pep8-indent handle the python and snakemake indentation;
+          -- disable markdown indentation because it prevents bulleted lists from wrapping correctly with `gq`.
+          disable = { "python", "snakemake", "markdown" },
         },
         -- These will be attempted to be installed automatically, but you'll need a C compiler installed.
         ensure_installed = {
@@ -190,11 +193,13 @@ return {
 
   {
     "lukas-reineke/indent-blankline.nvim", -- show vertical lines at tabstops
+    -- Disabling since it makes copy-paste awkward
+    -- enabled = false,
     lazy = false,
     main = "ibl",
     opts = {
       indent = { char = "┊" }, -- make the character a little less dense
-      scope = { exclude = { language = { "markdown", "rst" } } }, -- don't need scope for text docs
+      exclude = { filetypes = {"markdown", "rst" } },
     },
   },
 
@@ -275,20 +280,18 @@ return {
     },
     opts = {
       options = {
-        right_mouse_command = "vertical sbufer %d",
-        separator_style = "slant",
-        hover = {
-          enabled = true,
-          delay = 200,
-          reveal = { "close" },
-        },
-        diagnostics = "nvim_lsp",
-        custom_filter = function(buf_number, buf_numbers)
+        diagnostics = "nvim_lsp", -- buffer label will indicate errors
+        custom_filter = function(buf_number, buf_numbers) -- don't show tabs for fugitive
           if vim.bo[buf_number].filetype ~= "fugitive" then
             return true
           end
         end,
+
+        -- Disable the filetype icons in tabs
         show_buffer_icons = false,
+
+        -- When using aerial or file tree, shift the tab so it's over the
+        -- actual file.
         offsets = {
           {
             filetype = "NvimTree",
@@ -569,6 +572,65 @@ return {
     config = function()
       require("lsp-progress").setup()
     end,
+  },
+  {
+    "epwalsh/obsidian.nvim", -- convenient highlighting for markdown, and obsidian-like notes
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    event = {"BufReadPre " .. vim.fn.expand "~" .. "/notes/**.md"},
+    dependencies = { "nvim-lua/plenary.nvim", },
+    opts = {
+
+      disable_frontmatter = true, -- don't add yaml frontmatter automatically to markdown
+      ui = { enable = false }, -- disable the icons and highlighting, since this is taken care of by render-markdown plugin
+      mappings = {
+      -- Default <CR> mapping will toggle a checkbox if not in a link or follow it if in a link.
+      -- This makes it only follow a link.
+        ["<CR>"] = {
+        action = function()
+          if require('obsidian').util.cursor_on_markdown_link(nil, nil, true) then
+            return "<cmd>ObsidianFollowLink<CR>"
+          end
+        end,
+          opts = { buffer = true, expr = true },
+        },
+      },
+
+      -- Default is to add a unique id to the beginning of a note filename;
+      -- this disables it
+      note_id_func = function(title)
+        return title
+      end,
+
+      -- default is "wiki"; this keeps it regular markdown
+      preferred_link_style = "markdown",
+
+      -- Set this to where you're storing your local notes
+      workspaces = {
+        {
+          name = "no-vault",
+          path = function() return assert(vim.fs.dirname(vim.api.nvim_buf_get_name(0))) end,
+          overrides = {
+            notes_subdir = vim.NIL,
+            new_notes_location = "current_dir",
+            templates = { folder = vim.NIL, },
+            disable_frontmatter = true,
+          },
+        },
+      },
+
+      -- Open URL under cursor in browser (uses `open` for MacOS).
+      follow_url_func = function(url) vim.inspect(vim.system({"open", url})) end,
+    },
+
+    keys = {
+      { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "[o]bsidian [s]earch" },
+      { "<leader>on", "<cmd>ObsidianLinkNew<cr>", mode = { "v" },  desc = "[o]bsidian [n]ew link" },
+      { "<leader>ol", "<cmd>ObsidianLink<cr>", mode = {"v"}, desc = "[o]bsidian [l]ink to existing" },
+      { "<leader>od", "<cmd>ObsidianDailies -999 0<cr>", desc = "[o]bsidian [d]ailies" },
+      { "<leader>ot", "<cmd>ObsidianTags<cr>", desc = "[o]bsidian [t]ags" },
+    },
   },
 }
 -- vim: nowrap
