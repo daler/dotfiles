@@ -837,7 +837,7 @@ elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
 
     function doIt() {
-        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -avh --files-from=include.file . $HOME
+        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -rvh --times --files-from=include.file . $HOME
     }
 
     if [ $DOTFILES_FORCE == "true" ]; then
