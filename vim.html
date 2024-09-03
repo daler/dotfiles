@@ -5,9 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Neovim configuration &#8212; dotfiles  documentation</title>
+    <title>Vim (neovim) configuration &#8212; dotfiles  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -47,8 +48,21 @@
 
           <div class="body" role="main">
             
-  <section id="neovim-configuration">
-<span id="vim"></span><h1>Neovim configuration<a class="headerlink" href="#neovim-configuration" title="Link to this heading">¶</a></h1>
+  <section id="vim-neovim-configuration">
+<span id="vim"></span><h1>Vim (neovim) configuration<a class="headerlink" href="#vim-neovim-configuration" title="Link to this heading">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This config is now specific to Neovim rather than vim. See <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a>
+and <a class="reference internal" href="why.html#why-lua"><span class="std std-ref">Why Lua</span></a> if you’re coming here from using older
+versions of these dotfiles.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of 2024-09-01, you can use <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--prep-clean-nvim</span></code> to test out the
+latest nvim configs without affecting anything with other dotfiles (like
+bash). This moves existing config and plugins to backup directories without
+deleting anything so you can always roll back to what you had before.</p>
+</div>
 <section id="files">
 <h2>Files<a class="headerlink" href="#files" title="Link to this heading">¶</a></h2>
 <p>The file <code class="file docutils literal notranslate"><span class="pre">.config/nvim/init.lua</span></code> is the entry point of the nvim config.
@@ -60,10 +74,8 @@ Unless otherwise specified, paths on this page are relative to
 </ul>
 <p>The <code class="file docutils literal notranslate"><span class="pre">.vimrc</span></code> file has only basic setup for vim, in case you need to use
 <code class="file docutils literal notranslate"><span class="pre">/usr/bin/vim</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>See <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> and <a class="reference internal" href="why.html#why-lua"><span class="std std-ref">Why Lua</span></a> if you’re coming here from using older
-versions of these dotfiles.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-09-01: </span>Updated nvim installation version to 0.10.1 for macOS</p>
 </div>
 </section>
 <section id="screencasts">
@@ -213,6 +225,9 @@ of the bufferline plugin. It is additionally styled using the
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2024-03-31: </span>Added <kbd class="kbd docutils literal notranslate">&lt;leader&gt;cp</kbd> for a convenient “copy mode”</p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-09-01: </span><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cp</kbd> is more complete (toggles render-markdown and sign columns, too)</p>
+</div>
 <p>Here are some general shortcuts that are defined in the included config. With
 the <code class="docutils literal notranslate"><span class="pre">which-key</span></code> plugin, many of these are also discoverable by hitting the
 first key and then waiting a second for the menu to pop up.</p>
@@ -221,7 +236,7 @@ first key and then waiting a second for the menu to pop up.</p>
 <p><strong>Mappings that use a plugin</strong> are configured in the <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code>
 file and are described below under the respective plugin’s section.</p>
 </div>
-<p>If you’re definign your own keymappings, add a <code class="docutils literal notranslate"><span class="pre">desc</span></code> argument so that
+<p>If you’re defining your own keymappings, add a <code class="docutils literal notranslate"><span class="pre">desc</span></code> argument so that
 which-key will provide a description for it.</p>
 <table class="docutils align-left">
 <thead>
@@ -285,9 +300,10 @@ work to paste to vim on a remote server, unless you do tricky things
 with X forwarding, so consider it local-only.</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cp</kbd></p></td>
-<td><p>Toggle a sort of “copy mode”. Turns off line numbers and the vertical
-indentation lines from indent-blankline, so you can more easily copy
-text into another app.</p></td>
+<td><p>Toggle a sort of “copy mode”. Turns off line numbers, the vertical
+indentation lines from indent-blankline, any sign columns, and
+render-markdown (if enabled) so you can more easily copy text into
+another app.</p></td>
 </tr>
 </tbody>
 </table>
@@ -394,7 +410,7 @@ track of what has changed recently.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#beacon-ref"><span class="std std-ref">beacon</span></a></p></td>
 <td><p>2023-10-15</p></td>
-<td><p>2023-11-07</p></td>
+<td><p>2023-09-01</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#gitsigns-ref"><span class="std std-ref">gitsigns</span></a></p></td>
 <td><p>2023-10-15</p></td>
@@ -418,7 +434,7 @@ track of what has changed recently.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#whichkey"><span class="std std-ref">which-key</span></a></p></td>
 <td><p>2023-10-15</p></td>
-<td></td>
+<td><p>2024-09-01</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#aerial-ref"><span class="std std-ref">aerial</span></a></p></td>
 <td><p>2023-10-15</p></td>
@@ -430,7 +446,7 @@ track of what has changed recently.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#bufferline"><span class="std std-ref">bufferline.nvim</span></a></p></td>
 <td><p>2023-11-01</p></td>
-<td></td>
+<td><p>2024-09-01</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lualine-ref"><span class="std std-ref">lualine</span></a></p></td>
 <td><p>2023-11-01</p></td>
@@ -466,6 +482,14 @@ track of what has changed recently.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#stickybuf-ref"><span class="std std-ref">stickybuf.nvim</span></a></p></td>
 <td><p>2024-04-27</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#obsidian"><span class="std std-ref">obsidian.nvim</span></a></p></td>
+<td><p>2024-09-01</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rendermarkdown"><span class="std std-ref">render-markdown</span></a></p></td>
+<td><p>2024-09-01</p></td>
 <td></td>
 </tr>
 </tbody>
@@ -529,6 +553,9 @@ toggle comments on lines or blocks of code.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2023-11-07: </span>Only commands below will trigger the beacon</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-09-01: </span>Pinned version to latest prior to Lua rewrite (which is making configuration more difficult)</p>
 </div>
 <p><a class="reference external" href="https://github.com/danilamihailov/beacon.nvim">Beacon</a> provides an animated
 marker to show where the cursor is.</p>
@@ -626,6 +653,9 @@ windows left and right respectively) also work</p>
 <span id="whichkey"></span><h3><code class="docutils literal notranslate"><span class="pre">which-key</span></code><a class="headerlink" href="#which-key" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 2023-10-15.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-09-01: </span>Pinned version; later versions are raising warnings that still need to be addressed</p>
 </div>
 <p><a class="reference external" href="https://github.com/folke/which-key.nvim">which-key</a> displays a popup with
 possible key bindings of the command you started typing. This is wonderful for
@@ -1387,6 +1417,9 @@ just the visual block selection, for example when editing TSV files.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 2023-11-01.</span></p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-09-01: </span>Changing to default style since newer versions of nvim add additional, currently-unstyled elements</p>
+</div>
 <p><a class="reference external" href="https://github.com/akinsho/bufferline.nvim">bufferline.nvim</a> provides the
 tabs along the top.</p>
 <table class="docutils align-left">
@@ -1468,6 +1501,9 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <span id="indentblankline"></span><h3><code class="docutils literal notranslate"><span class="pre">indent-blankline</span></code><a class="headerlink" href="#indent-blankline" title="Link to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 2023-10-15.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-09-01: </span>Exclude entirely for markdown and ReStructured Text filetypes</p>
 </div>
 <p><a class="reference external" href="https://github.com/lukas-reineke/indent-blankline.nvim">indent-blankline</a>
 shows vertical lines where there is indentation, and highlights one of these
@@ -1566,6 +1602,99 @@ a status/progress indicator to the lualine (at the bottom of a window) so you
 know when it’s running.</p>
 <p>No additional commands configured.</p>
 </section>
+<section id="obsidian-nvim">
+<span id="obsidian"></span><h3><code class="docutils literal notranslate"><span class="pre">obsidian.nvim</span></code><a class="headerlink" href="#obsidian-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 2024-09-01.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/epwalsh/obsidian.nvim">obsidian.nvim</a> is a plugin
+originally written for working with <a class="reference external" href="https://obsidian.md/">Obsidian</a> which is a GUI
+notetaking app (that uses markdown and has vim keybindings). If you’re an
+Obsidian user, this plugin makes the experience with nvim quite nice.</p>
+<p>However, after using it for a bit I really like it for markdown files in
+general, in combination with the <code class="docutils literal notranslate"><span class="pre">render-markdown</span></code> plugin (described below).</p>
+<p>I’ve been using it to take daily notes.</p>
+<p>Notes on other plugins:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jakewvincent/mkdnflow.nvim</span></code> was nice for hitting <kbd class="kbd docutils literal notranslate">&lt;CR&gt;</kbd> to open
+a linked file and then <kbd class="kbd docutils literal notranslate">&lt;BS&gt;</kbd> to go back. But I realized I needed to
+keep the context in my head of where I came from. I prefer having separate
+buffers open so I can keep track of that (and buffer navigation helps move
+between them). This plugin is also pretty nice for collapsing sections into
+fancy headers. But I didn’t consider it sufficiently useful to warrant
+including and configuring it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lukas-reineke/headlines.nvim</span></code> had nice section headers, and it had
+backgrounds for code blocks. However that ended up having too much visual
+noise for my taste.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nvim-telekasten/telekasten.nvim</span></code> has nice pickers for tags and files and
+making links, but it was too opinionated for forcing the “telekasten” style
+of note-taking.</p></li>
+<li></li>
+</ul>
+<p>The mapped commands below use <kbd class="kbd docutils literal notranslate">o</kbd> ([o]bsidian) as a a prefix.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">Enter</kbd> on any link</p></td>
+<td><p>Open the link in a browser (if http) or open the file in a new buffer</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;od</kbd></p></td>
+<td><p>[o]bsidian [d]ailies: choose or create a daily note</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;os</kbd></p></td>
+<td><p>[o]bsidian [s]search for notes with ripgrep</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ot</kbd></p></td>
+<td><p>[o]bsidian [t]ags finds occurrences of <code class="docutils literal notranslate"><span class="pre">#tagname</span></code> across files in directory</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;on</kbd></p></td>
+<td><p>[o]bsidian [n]ew link with a word selected will make a link to that new file</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="render-markdown">
+<span id="rendermarkdown"></span><h3><code class="docutils literal notranslate"><span class="pre">render-markdown</span></code><a class="headerlink" href="#render-markdown" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 2024-09-01.</span></p>
+</div>
+<p><a class="reference external" href="https://github.com/MeanderingProgrammer/render-markdown.nvim">render-markdown</a> provides
+a nicer reading experience for markdown files. This includes bulleted list and
+checkbox icons, fancy table rendering, colored background for code blocks, and
+more.</p>
+<p>In my testing I found it to be more configurable and performant than the
+<code class="docutils literal notranslate"><span class="pre">obsidian.nvim</span></code> equivalent functionality, and in <code class="docutils literal notranslate"><span class="pre">daler/zenburn.nvim</span></code> I’ve
+added highlight groups for this plugin.</p>
+<p>Some notes about its behavior:</p>
+<ul class="simple">
+<li><p>It uses “conceal” functionality to replace things like <code class="docutils literal notranslate"><span class="pre">-</span></code> (for bulleted
+lists) with the unicode <code class="docutils literal notranslate"><span class="pre">•</span></code>. It hides URLs and only shows the link text
+(like a website does)</p></li>
+<li><p>It’s configured to differentiate between a web link (http) and an internal
+link (no http) and show an icon for an internal link.</p></li>
+<li><p>It has functionality for parsing headlines and making them stand out more in
+a document. The actual styling of headlines is configured in the colorscheme.</p></li>
+<li><p>Code blocks have an icon indicating their language, and the background of
+code blocks is different from surrounding text.</p></li>
+<li><p>Tables are rendered nicely</p></li>
+</ul>
+<p>This plugin is <strong>specifically disabled for RMarkdown files</strong>, which are
+typically heavy on the source code, and the background of code chunks can get
+distracting when entering and exiting insert mode. However, this plugin can be
+useful when reviewing a long RMarkdown file to focus on the narrative text.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;rm</kbd></p></td>
+<td><p>Toggle [r]ender[m]arkdown on an [r][m]arkdown file</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="colorschemes">
 <h2>Colorschemes<a class="headerlink" href="#colorschemes" title="Link to this heading">¶</a></h2>
@@ -1600,7 +1729,7 @@ fork enough to give you an idea of how to modify on your own.</p>
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">dotfiles</a></h1>
 
@@ -1611,12 +1740,21 @@ fork enough to give you an idea of how to modify on your own.</p>
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Neovim configuration</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Vim (neovim) configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#files">Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#screencasts">Screencasts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-mouse">Using the mouse</a></li>
@@ -1662,6 +1800,8 @@ fork enough to give you an idea of how to modify on your own.</p>
 <li class="toctree-l3"><a class="reference internal" href="#zenburn-nvim"><code class="docutils literal notranslate"><span class="pre">zenburn.nvim</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stickybuf-nvim"><code class="docutils literal notranslate"><span class="pre">stickybuf.nvim</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lsp-progress-nvim"><code class="docutils literal notranslate"><span class="pre">lsp-progress.nvim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obsidian-nvim"><code class="docutils literal notranslate"><span class="pre">obsidian.nvim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#render-markdown"><code class="docutils literal notranslate"><span class="pre">render-markdown</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#colorschemes">Colorschemes</a></li>
@@ -1685,16 +1825,6 @@ fork enough to give you an idea of how to modify on your own.</p>
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 

@@ -1,8 +1,20 @@
 .. _vim:
 
-Neovim configuration
-====================
+Vim (neovim) configuration
+==========================
 
+.. note::
+
+    This config is now specific to Neovim rather than vim. See :ref:`nvim-lua`
+    and :ref:`Why Lua <why-lua>` if you're coming here from using older
+    versions of these dotfiles.
+
+.. note::
+
+    As of 2024-09-01, you can use ``./setup.sh --prep-clean-nvim`` to test out the
+    latest nvim configs without affecting anything with other dotfiles (like
+    bash). This moves existing config and plugins to backup directories without
+    deleting anything so you can always roll back to what you had before.
 
 Files
 -----
@@ -18,10 +30,9 @@ Unless otherwise specified, paths on this page are relative to
 The :file:`.vimrc` file has only basic setup for vim, in case you need to use
 :file:`/usr/bin/vim`.
 
-.. note::
+.. versionchanged:: 2024-09-01
 
-    See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from using older
-    versions of these dotfiles.
+   Updated nvim installation version to 0.10.1 for macOS
 
 Screencasts
 -----------
@@ -185,6 +196,10 @@ Shortcuts
 
    Added :kbd:`<leader>cp` for a convenient "copy mode"
 
+.. versionchanged:: 2024-09-01
+
+   :kbd:`<leader>cp` is more complete (toggles render-markdown and sign columns, too)
+
 
 Here are some general shortcuts that are defined in the included config. With
 the ``which-key`` plugin, many of these are also discoverable by hitting the
@@ -195,7 +210,7 @@ first key and then waiting a second for the menu to pop up.
   **Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
   file and are described below under the respective plugin's section.
 
-If you're definign your own keymappings, add a ``desc`` argument so that
+If you're defining your own keymappings, add a ``desc`` argument so that
 which-key will provide a description for it.
 
 .. list-table::
@@ -260,9 +275,10 @@ which-key will provide a description for it.
         with X forwarding, so consider it local-only.
 
     * - :kbd:`<leader>cp`
-      - Toggle a sort of "copy mode". Turns off line numbers and the vertical
-        indentation lines from indent-blankline, so you can more easily copy
-        text into another app.
+      - Toggle a sort of "copy mode". Turns off line numbers, the vertical
+        indentation lines from indent-blankline, any sign columns, and
+        render-markdown (if enabled) so you can more easily copy text into
+        another app.
 
 .. _plugins_:
 
@@ -385,7 +401,7 @@ track of what has changed recently.
 
    * - :ref:`beacon_ref`
      - 2023-10-15
-     - 2023-11-07
+     - 2023-09-01
 
    * - :ref:`gitsigns_ref`
      - 2023-10-15
@@ -409,7 +425,7 @@ track of what has changed recently.
 
    * - :ref:`whichkey`
      - 2023-10-15
-     -
+     - 2024-09-01
 
    * - :ref:`aerial_ref`
      - 2023-10-15
@@ -421,7 +437,7 @@ track of what has changed recently.
 
    * - :ref:`bufferline`
      - 2023-11-01
-     -
+     - 2024-09-01
 
    * - :ref:`lualine_ref`
      - 2023-11-01
@@ -458,6 +474,15 @@ track of what has changed recently.
    * - :ref:`stickybuf_ref`
      - 2024-04-27
      -
+
+   * - :ref:`obsidian`
+     - 2024-09-01
+     -
+
+   * - :ref:`rendermarkdown`
+     - 2024-09-01
+     - 
+
 
 Sometimes there are better plugins for a particular functionality. I've kept
 the documentation, but noted when they've been deprecated here and in the
@@ -520,6 +545,10 @@ toggle comments on lines or blocks of code.
 .. versionchanged:: 2023-11-07
 
    Only commands below will trigger the beacon
+
+.. versionchanged:: 2024-09-01
+
+   Pinned version to latest prior to Lua rewrite (which is making configuration more difficult)
 
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
@@ -624,6 +653,10 @@ windows left and right respectively) also work
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. versionchanged:: 2024-09-01
+
+  Pinned version; later versions are raising warnings that still need to be addressed
 
 `which-key <https://github.com/folke/which-key.nvim>`_ displays a popup with
 possible key bindings of the command you started typing. This is wonderful for
@@ -1423,6 +1456,10 @@ just the visual block selection, for example when editing TSV files.
 
 .. versionadded:: 2023-11-01
 
+.. versionchanged:: 2024-09-01
+
+   Changing to default style since newer versions of nvim add additional, currently-unstyled elements
+
 `bufferline.nvim <https://github.com/akinsho/bufferline.nvim>`_ provides the
 tabs along the top.
 
@@ -1513,6 +1550,10 @@ No additional commands configured.
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. versionchanged:: 2024-09-01
+
+   Exclude entirely for markdown and ReStructured Text filetypes
 
 `indent-blankline <https://github.com/lukas-reineke/indent-blankline.nvim>`_
 shows vertical lines where there is indentation, and highlights one of these
@@ -1646,6 +1687,106 @@ a status/progress indicator to the lualine (at the bottom of a window) so you
 know when it's running.
 
 No additional commands configured.
+
+.. _obsidian:
+
+``obsidian.nvim``
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-09-01
+
+`obsidian.nvim <https://github.com/epwalsh/obsidian.nvim>`__ is a plugin
+originally written for working with `Obsidian <https://obsidian.md/>`__ which is a GUI
+notetaking app (that uses markdown and has vim keybindings). If you're an
+Obsidian user, this plugin makes the experience with nvim quite nice.
+
+However, after using it for a bit I really like it for markdown files in
+general, in combination with the ``render-markdown`` plugin (described below).
+
+I've been using it to take daily notes.
+
+Notes on other plugins:
+
+- ``jakewvincent/mkdnflow.nvim`` was nice for hitting :kbd:`<CR>` to open
+  a linked file and then :kbd:`<BS>` to go back. But I realized I needed to
+  keep the context in my head of where I came from. I prefer having separate
+  buffers open so I can keep track of that (and buffer navigation helps move
+  between them). This plugin is also pretty nice for collapsing sections into
+  fancy headers. But I didn't consider it sufficiently useful to warrant
+  including and configuring it.
+- ``lukas-reineke/headlines.nvim`` had nice section headers, and it had
+  backgrounds for code blocks. However that ended up having too much visual
+  noise for my taste.
+- ``nvim-telekasten/telekasten.nvim`` has nice pickers for tags and files and
+  making links, but it was too opinionated for forcing the "telekasten" style
+  of note-taking.
+- 
+
+The mapped commands below use :kbd:`o` ([o]bsidian) as a a prefix.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`Enter` on any link
+      - Open the link in a browser (if http) or open the file in a new buffer
+
+    * - :kbd:`<leader>od`
+      - [o]bsidian [d]ailies: choose or create a daily note
+
+    * - :kbd:`<leader>os`
+      - [o]bsidian [s]search for notes with ripgrep
+
+    * - :kbd:`<leader>ot`
+      - [o]bsidian [t]ags finds occurrences of ``#tagname`` across files in directory
+
+    * - :kbd:`<leader>on`
+      - [o]bsidian [n]ew link with a word selected will make a link to that new file
+
+
+.. _rendermarkdown:
+
+``render-markdown``
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-09-01
+
+`render-markdown
+<https://github.com/MeanderingProgrammer/render-markdown.nvim>`__ provides
+a nicer reading experience for markdown files. This includes bulleted list and
+checkbox icons, fancy table rendering, colored background for code blocks, and
+more.
+
+In my testing I found it to be more configurable and performant than the
+``obsidian.nvim`` equivalent functionality, and in ``daler/zenburn.nvim`` I've
+added highlight groups for this plugin.
+
+Some notes about its behavior:
+
+- It uses "conceal" functionality to replace things like ``-`` (for bulleted
+  lists) with the unicode ``•``. It hides URLs and only shows the link text
+  (like a website does)
+- It's configured to differentiate between a web link (http) and an internal
+  link (no http) and show an icon for an internal link.
+- It has functionality for parsing headlines and making them stand out more in
+  a document. The actual styling of headlines is configured in the colorscheme.
+- Code blocks have an icon indicating their language, and the background of
+  code blocks is different from surrounding text.
+- Tables are rendered nicely
+
+This plugin is **specifically disabled for RMarkdown files**, which are
+typically heavy on the source code, and the background of code chunks can get
+distracting when entering and exiting insert mode. However, this plugin can be
+useful when reviewing a long RMarkdown file to focus on the narrative text.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>rm`
+      - Toggle [r]ender[m]arkdown on an [r][m]arkdown file
 
 Colorschemes
 ------------
