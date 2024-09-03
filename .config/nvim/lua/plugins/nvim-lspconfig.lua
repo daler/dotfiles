@@ -1,4 +1,4 @@
--- convenient configuration of LSP clients
+-- nvim-lspconfig allows convenient configuration of LSP clients
 return {
   {
     "neovim/nvim-lspconfig",
@@ -7,6 +7,9 @@ return {
       local lspconfig = require("lspconfig")
 
       -- Below, autostart = false means that you need to explicity call :LspStart (<leader>cl)
+      --
+      -- ----------------------------------------------------------------------
+      -- CONFIGURE ADDITIONAL LANGUAGE SERVERS HERE
       --
       -- pyright is the language server for Python
       lspconfig.pyright.setup({ autostart = false })

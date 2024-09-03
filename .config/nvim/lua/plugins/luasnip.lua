@@ -1,4 +1,4 @@
--- allow tab completion of snippets
+-- luasnip allows tab completion of snippets
 return {
   {
     "L3MON4D3/LuaSnip",

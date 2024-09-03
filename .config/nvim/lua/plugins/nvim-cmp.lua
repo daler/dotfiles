@@ -1,4 +1,4 @@
--- tab completion
+-- nvim-cmp provides tab completion for many things
 return {
   {
     "hrsh7th/nvim-cmp",

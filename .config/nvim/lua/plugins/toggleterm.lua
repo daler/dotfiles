@@ -1,7 +1,8 @@
--- terminal in vim you can send code to
+-- toggleterm provides a terminal in vim you can send code to
 return {
   {
     "akinsho/toggleterm.nvim",
+
     -- later versions break sending visual selection with gxx
     commit = "c80844fd52ba76f48fabf83e2b9f9b93273f418d",
 
@@ -16,6 +17,7 @@ return {
           end
         end,
       })
+
       -- Always use insert mode when entering a terminal buffer, even with mouse click.
       -- NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.
       vim.api.nvim_create_autocmd("BufEnter", {

@@ -1,4 +1,4 @@
--- split window to show issues found by LSP
+-- trouble splits window to show issues found by LSP
 return {
   {
     "folke/trouble.nvim",

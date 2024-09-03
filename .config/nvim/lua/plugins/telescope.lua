@@ -1,4 +1,4 @@
--- pop-up window used for fuzzy-searching and selecting
+-- telescope provides a pop-up window used for fuzzy-searching and selecting
 return {
   {
     "nvim-telescope/telescope.nvim",

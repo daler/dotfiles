@@ -1,4 +1,4 @@
--- status line along the bottom
+-- lualine is a status line along the bottom
 return {
   {
     "nvim-lualine/lualine.nvim",

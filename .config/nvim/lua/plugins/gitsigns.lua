@@ -1,4 +1,4 @@
--- show changes in file, when working in a git repo
+-- gitsigns shows changes in file, when working in a git repo
 return {
   {
     "lewis6991/gitsigns.nvim",

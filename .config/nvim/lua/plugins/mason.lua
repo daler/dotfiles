@@ -1,4 +1,4 @@
--- convenient installation of LSP clients
+-- mason allows convenient installation of LSP clients
 return {
   {
     "williamboman/mason.nvim",

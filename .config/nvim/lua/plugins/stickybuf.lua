@@ -1,4 +1,4 @@
--- Prevents opening buffers in terminal buffer
+-- stickybuf prevents opening buffers in terminal buffer
 return {
   {
     "stevearc/stickybuf.nvim",

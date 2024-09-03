@@ -1,4 +1,4 @@
--- family of colorschemes (nightfox, dawnfox, terrafox, etc)
+-- nightfox is a family of colorschemes (nightfox, dawnfox, terrafox, etc)
 return {
   {
     "EdenEast/nightfox.nvim",

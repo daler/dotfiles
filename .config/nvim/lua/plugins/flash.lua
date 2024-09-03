@@ -1,4 +1,4 @@
--- search and select, including with treesitter
+-- flash is for search and select, including parts of code parsed by treesitter
 return {
   {
     "folke/flash.nvim",

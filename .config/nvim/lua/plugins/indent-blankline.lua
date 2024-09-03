@@ -1,4 +1,4 @@
--- show vertical lines at tabstops
+-- indent-blankline shows vertical lines at tabstops
 return {
   {
     "lukas-reineke/indent-blankline.nvim",

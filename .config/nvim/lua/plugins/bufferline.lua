@@ -2,7 +2,6 @@
 return {
   {
     "akinsho/bufferline.nvim",
-    config = true,
     lazy = false,
     keys = {
       { "<leader>b", "<cmd>BufferLinePick<CR>", desc = "Pick buffer" },

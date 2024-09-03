@@ -1,4 +1,4 @@
--- run code through formatter
+-- conform runs code through a formatter
 return {
   {
     "stevearc/conform.nvim",

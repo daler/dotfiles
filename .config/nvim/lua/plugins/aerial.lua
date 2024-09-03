@@ -1,4 +1,4 @@
--- code (or document) navigation with an "aerial view"
+-- navigation with an "aerial view" on the left side
 return {
   {
     "stevearc/aerial.nvim",

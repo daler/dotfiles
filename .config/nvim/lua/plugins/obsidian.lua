@@ -1,4 +1,4 @@
--- convenient highlighting for markdown, and obsidian-like notes
+-- obsidian provides convenient highlighting for markdown, and obsidian-like notetaking
 return {
   {
     "epwalsh/obsidian.nvim",
@@ -7,10 +7,13 @@ return {
     ft = "markdown",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
+
       -- don't add yaml frontmatter automatically to markdown
       disable_frontmatter = true,
+
       -- disable the icons and highlighting, since this is taken care of by render-markdown plugin
       ui = { enable = false },
+
       mappings = {
         -- Default <CR> mapping will convert a line into a checkbox if not in
         -- a link or follow it if in a link. This makes it only follow a link.

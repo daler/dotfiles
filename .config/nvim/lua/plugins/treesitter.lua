@@ -1,4 +1,4 @@
--- sophisticated syntax highlighting and code inspection
+-- treesitter provides sophisticated syntax highlighting and code inspection
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -16,6 +16,8 @@ return {
           -- disable markdown indentation because it prevents bulleted lists from wrapping correctly with `gq`.
           disable = { "python", "snakemake", "markdown" },
         },
+        -- --------------------------------------------------------------------
+        -- CONFIGURE ADDITIONAL PARSERS HERE
         -- These will be attempted to be installed automatically, but you'll need a C compiler installed.
         ensure_installed = {
           "bash",
