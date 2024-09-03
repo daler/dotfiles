@@ -855,7 +855,7 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
 elif [ $task == "--prep-clean-nvim" ]; then
-    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles"
+    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
     NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
@@ -868,8 +868,8 @@ elif [ $task == "--prep-clean-nvim" ]; then
         printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
     fi
     rsync --no-perms -rvh .config/nvim ~/.config
-    printf "${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
-    printf "${GREEN}Now open nvim${UNSET} to trigger a reinstallation of plugins.\n"
+    nvim --headless "+Lazy! restore" "+TSUpdate" +qa
+    printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
     printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
     printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
     printf "  rm -r ~/.config/nvim\n"
