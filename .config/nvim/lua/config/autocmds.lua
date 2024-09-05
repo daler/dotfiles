@@ -1,5 +1,4 @@
 -- Autocommands.
--- Autocommands are triggered by an action, like opening a particular filetype.
 
 -- Display nonprinting characters (tab characters and trailing spaces).
 vim.cmd(":autocmd InsertEnter * set listchars=tab:>•")
@@ -30,6 +29,7 @@ vim.api.nvim_create_autocmd("Filetype", {
   end,
 })
 
+-- (R)Markdown-specific mappings
 vim.api.nvim_create_autocmd("Filetype", {
   pattern = { "markdown", "rmd" },
   callback = function()
@@ -69,7 +69,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
--- Render RMarkdown in R running in terminal
+-- Render RMarkdown in R running in terminal with <leader>k
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "rmarkdown", "rmd" },
   callback = function()
@@ -79,9 +79,6 @@ vim.api.nvim_create_autocmd("FileType", {
       ":TermExec cmd='rmarkdown::render(\"%:p\")'<CR>",
       { desc = "Render RMar[k]down to HTML" }
     )
-    -- Don't conceal for Rmd, which otherwise would conceal both links *and* code chunks.
-    -- It's currently all or nothing (we can't just conceal links, for example), so we turn it off completely.
-    -- vim.opt.conceallevel = 0
     vim.keymap.set(
       "n",
       "<leader>rm",
@@ -95,9 +92,8 @@ vim.api.nvim_create_autocmd("FileType", {
           vim.cmd("set ft=rmarkdown")
           vim.cmd("RenderMarkdown disable")
         end
-      end
-      -- { desc = "enable render-markdown on an RMa
-      -- rkdown file" }
+      end,
+      { desc = "Toggle render-markdown on an RMarkdown file" }
     )
   end,
 })
@@ -110,7 +106,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Highlight yanked text
+-- Briefly highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank{higroup = "IncSearch", timeout=100}

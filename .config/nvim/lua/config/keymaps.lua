@@ -6,7 +6,6 @@
 -- In general, see the `desc` fields for the keymap description.
 
 
-
 -- Set up labeled groupings in which-key
 local wk = require('which-key')
 wk.register( { ["<leader>c"] = { name = "+code" } } )
@@ -26,6 +25,8 @@ vim.keymap.set(
 )
 vim.keymap.set("n", "<leader>-", "80A-<Esc>d80<bar>", { desc = "Fill rest of line with -" })
 vim.keymap.set("n", "<leader><tab>", ":set nowrap tabstop=", { desc = "Prepare for viewing TSV" })
+
+-- Buffer navigation keymappings
 vim.keymap.set("n", "<leader>1", ":bfirst<CR>", { desc = "First buffer" })
 vim.keymap.set("n", "<leader>2", ":blast<CR>", { desc = "Last buffer" })
 vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer" })
@@ -33,9 +34,9 @@ vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Next buffer" })
 
--- Turn off various symbols and text that shouldn't be copied, such as
--- indent-blankline vertical lines, indicators of git changes, and various
--- virtual text and symbols. Also toggle line numbers.
+-- In preparation for copying, turn off various symbols and text that shouldn't
+-- be copied, such as indent-blankline vertical lines, indicators of git
+-- changes, and various virtual text and symbols. Also toggle line numbers.
 --
 -- In all cases, only disable things if the plugin is loaded in the first
 -- place.

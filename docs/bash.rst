@@ -101,7 +101,7 @@ for the commands set for each alias.
       - Opens vim and runs vim-fugitive. See :ref:`vimfugitive` for details.
 
     * - ``glv``
-      - Opens vim and runs vim-gv for browsing git history. See :ref:`vimgv`
+      - Opens vim and runs diffview for browsing git history. See :ref:`diffview`
         for details.
 
     * - ``s``
