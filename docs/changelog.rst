@@ -1,6 +1,35 @@
 Changelog
 =========
 
+2024-09-01
+----------
+**setup.sh**
+
+- new command ``--prep-clean-nvim``, which moves existing config and plugin
+  directories to backup locations, so you can test these new changes. Also
+  provides commands to roll back the process.
+- new command ``--restore-nvim-plugins`` which copies just the lazy-lock.json
+  file to your ~/.config/nvim/lazy-lock.json, and triggers a plugin
+  restoration (without changing any other config).
+
+**vim/nvim**
+- update nvim version to 0.10.1
+- add lazy-lock.json to repo to allow rollback when updated plugins break
+- in diff views, show deleted lines with slashes rather than dashes
+- treesitter: disable treesitter indentation for markdown (it seemed to be messing up bulleted lists)
+- new plugin: obsidian.nvim for working with markdown and notes. See docs for new mappings.
+- new plugin: render-markdown, for nice rendering of markdown elements
+- updated :kbd:`<leader>cp` mapping to be more complete in turning off characters that shouldn't be copied
+- beacon: pinned version of plugin
+- which-key: pinned version of plugin
+- bufferline: reverted to default style
+- indent-blankline: exclude markdown and restructured text
+
+**other**
+
+Add ``colors.sh`` script for viewing color codes in terminal.
+
+
 2024-04-30
 ----------
 

@@ -22,7 +22,7 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.9.5
+NVIM_VERSION=0.10.1
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -254,6 +254,15 @@ function showHelp() {
 
     cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
+
+    cmd "--prep-clean-nvim" \
+        "Move nvim binary, plugins, and config to backup directories so you can " \
+        "try new updates from these dotfiles. Does not delete anything."
+
+    cmd "--restore-nvim-plugins" \
+        "Copy over the nvim plugin lockfile from the repo to your " \
+        "~/.config/nvim/lazy-lock.json, and run an nvim command to restore " \
+        "plugin versions from that file."
     echo
 }
 
@@ -487,12 +496,18 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
+    if [ -d ~/opt/neovim ]; then
+        printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
+        exit 1
+    fi
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos.tar.gz nvim-macos.tar.gz
+
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-arm64.tar.gz nvim-macos.tar.gz
+        xattr -c ./nvim-macos.tar.gz
         tar -xzf nvim-macos.tar.gz
         mkdir -p "$HOME/opt/bin"
-        mv nvim-macos "$HOME/opt/neovim"
+        mv nvim-macos-arm64 "$HOME/opt/neovim"
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
         tar -xzf nvim-linux64.tar.gz
@@ -507,7 +522,7 @@ elif [ $task == "--install-neovim" ]; then
 elif [ $task == "--compile-neovim" ]; then
     NVIM_VERSION=stable
     ok "Clones the stable branch of the neovim repo, compiles it, and installs it into $HOME/opt/bin/nvim"
-    if [ -e "$HOME/opt/neovim" ];
+    if [ -d "$HOME/opt/neovim" ];
     then
         ok "Warning, need to delete $HOME/opt/neovim, is that ok?"
         rm -rv "$HOME/opt/neovim"
@@ -793,6 +808,12 @@ elif [ $task == "--install-npm" ]; then
     echo "export PATH=\$PATH:$MAMBA_LOCATION/envs/npm/bin" >> ~/.path
     printf "${YELLOW}Installed npm to $MAMBA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
 
+elif [ $task == "--install-gh" ]; then
+    ok "Install gh (GitHub CLI) in a named conda env and add to ~/.path?"
+    install_env_and_symlink gh gh gh
+    printf "${YELLOW}Installed to ~/opt/bin/gh${UNSET}\n"
+    check_opt_bin_in_path
+
 elif [ $task == "--dotfiles" ]; then
     set -x
 
@@ -837,6 +858,46 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     tic -xe tmux-256color,screen-256color terminfo.src
     rm terminfo.src
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
+
+elif [ $task == "--prep-clean-nvim" ]; then
+    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
+    timestamp=$(date +"%Y%m%d%H%M")
+    NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
+    NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
+    if [ -e ~/.config/nvim ]; then
+        mv ~/.config/nvim ~/.config/nvim-$timestamp
+        printf "${YELLOW}Moved ~/.config/nvim to $NVIM_CONFIG_BACKUP\n${UNSET}"
+    fi
+    if [ -e ~/.local/share/nvim/lazy ]; then
+        mv ~/.local/share/nvim/lazy ~/.local/share/nvim/lazy-$timestamp
+        printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
+    fi
+    rsync --no-perms -rvh .config/nvim ~/.config
+    nvim --headless "+Lazy! restore" "+TSUpdate" +qa
+    printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
+    printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
+    printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
+    printf "  rm -r ~/.config/nvim\n"
+    printf "  rm -rf ~/.local/share/nvim/lazy\n"
+    printf "  mv $NVIM_CONFIG_BACKUP ~/.config/nvim\n"
+    printf "  mv $NVIM_PLUGIN_BACKUP ~/.local/share/nvim/lazy\n\n"
+    printf "${GREEN}To keep these changes${YELLOW} then remove the backups:\n\n"
+    printf "  rm -r $NVIM_CONFIG_BACKUP\n"
+    printf "  rm -rf $NVIM_PLUGIN_BACKUP\n"
+    printf "${UNSET}"
+
+elif [ $task == "--restore-nvim-plugins" ]; then
+    ok "Restore nvim plugins using the lazy-lock.json file in this repo? This will not change any other config."
+    timestamp=$(date +"%Y%m%d%H%M")
+    NVIM_LOCKFILE_BACKUP="$HOME/.config/nvim/lazy-lock_${timestamp}.json"
+    [ -e $HOME/.config/nvim/lazy-lock.json ] && cp $HOME/.config/nvim/lazy-lock.json "$NVIM_LOCKFILE_BACKUP"
+    cp .config/nvim/lazy-lock.json $HOME/.config/nvim/lazy-lock.json
+    nvim --headless "+Lazy! restore" +qa
+    printf "${YELLOW}Here is the diff of what changed (new compared to old):\n${UNSET}"
+    diff -u $NVIM_LOCKFILE_BACKUP ~/.config/nvim/lazy-lock.json
+    printf "${YELLOW}Restored plugins using ~/.config/nvim/lazy-lock.json.\n"
+    printf "Any original file was renamed to $NVIM_LOCKFILE_BACKUP if you "
+    printf "need the previous version, otherwise you can delete it.\n${UNSET}"
 
 
 
