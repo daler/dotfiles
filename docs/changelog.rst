@@ -1,6 +1,19 @@
 Changelog
 =========
 
+2024-09-05
+----------
+**setup.sh**
+
+Renamed ``--prep-clean-nvim`` argument to ``--nvim-test-drive``
+
+**nvim**
+
+Modularize configuration according to lazy.nvim recommendations. This splits
+what was the ``lua/plugins.lua`` file into one separate file per plugin, and
+splits what was ``init.lua`` into separate files for keymaps, autocommands, and
+settings.
+
 2024-09-01
 ----------
 **setup.sh**
