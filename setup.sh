@@ -255,7 +255,7 @@ function showHelp() {
     cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
 
-    cmd "--prep-clean-nvim" \
+    cmd "--nvim-test-drive" \
         "Move nvim binary, plugins, and config to backup directories so you can " \
         "try new updates from these dotfiles. Does not delete anything."
 
@@ -859,7 +859,7 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     rm terminfo.src
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
-elif [ $task == "--prep-clean-nvim" ]; then
+elif [ $task == "--nvim-test-drive" ]; then
     ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
