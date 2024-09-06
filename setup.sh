@@ -884,7 +884,16 @@ elif [ $task == "--nvim-test-drive" ]; then
         printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
     fi
     rsync --no-perms -rvh .config/nvim ~/.config
-    nvim --headless "+Lazy! restore" "+TSUpdate" +qa
+    nvim --headless -E \
+        "+Lazy! restore" \
+        -c 'echo "\n\nWaiting for 9 sec for parsers to finish installing...\n"' \
+        -c 'sleep 3' \
+        -c 'echo "\n\nWaiting for 7 sec for parsers to finish installing..\n"' \
+        -c 'sleep 3' \
+        -c 'echo "\n\nWaiting for 3 sec for parsers to finish installing..\n"' \
+        -c 'sleep 3' \
+        -c 'echo "\n"' \
+        +qa
     printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
     printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
     printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
