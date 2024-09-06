@@ -874,7 +874,13 @@ elif [ $task == "--nvim-test-drive" ]; then
     printf "\n${RED}NOTE:${UNSET} currently-open nvim windows will detect changes to config. "
     printf "You might want to close other running nvim instances before running this.\n\n${UNSET}"
 
+    if [ "$(nvim --version | head -n1 )" != "NVIM v$NVIM_VERSION" ]; then
+        printf "\n${RED}nvim v0.10.1 not found -- please update before running this command.\n\n"
+        exit 1
+    fi
+
     ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
+
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
     NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
