@@ -5,12 +5,13 @@ Changelog
 ----------
 **setup.sh**
 
-Renamed ``--prep-clean-nvim`` argument to ``--nvim-test-drive``
+- Renamed ``--prep-clean-nvim`` argument to ``--nvim-test-drive``
+- Add various error detection to this command and print warnings appropriately
 
 **nvim**
 
 Modularize configuration according to lazy.nvim recommendations. This splits
-what was the ``lua/plugins.lua`` file into one separate file per plugin, and
+what was the ``lua/plugins.lua`` file into separate files for each plugin, and
 splits what was ``init.lua`` into separate files for keymaps, autocommands, and
 settings.
 
