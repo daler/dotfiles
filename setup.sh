@@ -871,6 +871,9 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
 elif [ $task == "--nvim-test-drive" ]; then
+    printf "\n${RED}NOTE:${UNSET} currently-open nvim windows will detect changes to config. "
+    printf "You might want to close other running nvim instances before running this.\n\n${UNSET}"
+
     ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
