@@ -496,6 +496,16 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
+
+    # Too-old of a GLIBC on the system will not work with later nvim versions
+    if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
+        printf "\n${RED}Looks like you're on helix/biowulf. You should use the nvim installed on Biowulf "
+        printf "for compatibility with the system's glibc.\n\nTwo ways to do this: either add 'module load neovim/$NVIM_VERSION' "
+        printf "to your .extra file or .bashrc, or directly add the path shown from "
+        printf "'module show neovim/$NVIM_VERSION' to your PATH.${UNSET}\n\n"
+        exit 1
+    fi
+
     if [ -d ~/opt/neovim ]; then
         printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
         exit 1
@@ -518,6 +528,7 @@ elif [ $task == "--install-neovim" ]; then
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
+
 
 elif [ $task == "--compile-neovim" ]; then
     NVIM_VERSION=stable
