@@ -39,6 +39,7 @@ vim.opt.wildmode="list:full" -- Show a list when pressing tab; complete first fu
 vim.opt.wildignore:append("*.swp,*.bak,*.pyc,*.class") -- Ignore these when autocompleting
 vim.opt.cursorline = true  -- Highlight line where the cursor is
 vim.opt.fillchars:append { diff = "╱" } -- in diffs, show deleted lines with slashes rather than dashes
+vim.opt.signcolumn = "yes" -- always show the signcolumn to minimize distraction of appearing and disappearing
 
 -- vim.cmd(":autocmd InsertEnter * set cul") -- Color the current line in upon entering insert mode
 -- vim.cmd(":autocmd InsertLeave * set nocul") -- Remove color upon existing insert mode
