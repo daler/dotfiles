@@ -24,7 +24,7 @@
   "nvim-colorizer.lua": { "branch": "master", "commit": "a065833f35a3a7cc3ef137ac88b5381da2ba302e" },
   "nvim-lspconfig": { "branch": "master", "commit": "0ef64599b8aa0187ee5f6d92cb39c951f348f041" },
   "nvim-tree.lua": { "branch": "master", "commit": "ea55ef12036897fdc4476b115a395d2a34965c82" },
-  "nvim-treesitter": { "branch": "master", "commit": "a1573a9135c608e68cb383f752623527be84bdce" },
+  "nvim-treesitter": { "branch": "master", "commit": "5b8b126de02ebfd92e46ed5986b3e58e870b85de" },
   "nvim-web-devicons": { "branch": "master", "commit": "3722e3d1fb5fe1896a104eb489e8f8651260b520" },
   "obsidian.nvim": { "branch": "main", "commit": "ae1f76a75c7ce36866e1d9342a8f6f5b9c2caf9b" },
   "onedark.vim": { "branch": "main", "commit": "390b893d361c356ac1b00778d849815f2aa44ae4" },
@@ -45,5 +45,5 @@
   "vim-tmux-clipboard": { "branch": "master", "commit": "d4774dc7dfdd4b8a60613355ed32e6a1c18220cf" },
   "vis": { "branch": "master", "commit": "6a87efbfbd97238716b602c2b53564aa6329b5de" },
   "which-key.nvim": { "branch": "main", "commit": "0539da005b98b02cf730c1d9da82b8e8edb1c2d2" },
-  "zenburn.nvim": { "branch": "markdown-improvements", "commit": "7516d367089228a73b5fd6244aa48f5371101968" }
+  "zenburn.nvim": { "branch": "master", "commit": "834a6c59c257c3eb5e19a4f25456fc471f20b36e" }
 }

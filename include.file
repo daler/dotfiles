@@ -3,10 +3,6 @@
 .bash_prompt
 .bashrc
 .config/nvim/
-.config/nvim/init.lua
-.config/nvim/lua/
-.config/nvim/lua/plugins.lua
-.config/nvim/lazy-lock.json
 .dircolors
 .exports
 .functions

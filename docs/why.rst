@@ -13,7 +13,7 @@ repo also serves as a compilation of useful tools and config options, so that
 I can easily reference a line number in the repo to illustrate how to fix an
 issue.
 
-**Why neovim?** The biggest reason is the within-editor terminal. It lets us
+**Why neovim?** At first, the biggest reason is the within-editor terminal. It let us
 work in an RStudio-like environment, but completely within the terminal on an
 HPC cluster. While the latest version of vim (version 8) is approaching feature
 parity with neovim especially with a terminal, vim 8 is just about as difficult
@@ -21,6 +21,12 @@ to install as nvim. On Biowulf, nvim (but not vim8) is installed. That makes it
 easier to use the same features both locally and on Biowulf. There are a couple
 of nice additions and plugins that work only with nvim, but honestly the
 differences now are pretty subtle.
+
+The major difference now is the incredibly robust plugin ecosystem. Nvim is
+scripted with Lua (a nice general language) rather than vimscript (obtuse, and
+only relevant to vim), which allows for huge amounts of customization, and this
+has let the plugin community do some amazing things that we can take advantage
+of.
 
 **Why have all those install commands?** Each tool has its own way of
 installing and/or compiling. Many tools have been turned into conda
