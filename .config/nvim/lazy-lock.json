@@ -43,6 +43,7 @@
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "vim-table-mode": { "branch": "master", "commit": "e4365bde024f73e205eefa2fb78e3029ddb92ea9" },
   "vim-tmux-clipboard": { "branch": "master", "commit": "d4774dc7dfdd4b8a60613355ed32e6a1c18220cf" },
+  "vim-tmux-yank": { "branch": "master", "commit": "8432fd440f61ddead070093be06b3dd6b0b5790e" },
   "vis": { "branch": "master", "commit": "6a87efbfbd97238716b602c2b53564aa6329b5de" },
   "which-key.nvim": { "branch": "main", "commit": "0539da005b98b02cf730c1d9da82b8e8edb1c2d2" },
   "zenburn.nvim": { "branch": "master", "commit": "834a6c59c257c3eb5e19a4f25456fc471f20b36e" }
