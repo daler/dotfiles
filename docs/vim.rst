@@ -33,7 +33,7 @@ Files
 
    Updated nvim installation version to 0.10.1 for macOS
 
-.. versionchanged:: 2024-09-04
+.. versionchanged:: 2024-09-20
 
    Modularized configuration: split up config files according to `structured
    setup <https://lazy.folke.io/installation>`__ recommendations from
