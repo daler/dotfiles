@@ -400,7 +400,7 @@ track of what has changed recently.
 
    * - :ref:`vimtmuxclipboard`
      - 2016
-     -
+     - 2024-10-24 (removed)
      - makes tmux play nicer with vim clipboard
 
    * - :ref:`vimpythonpep8indent`
@@ -1921,24 +1921,25 @@ No additional commands configured.
 
 .. versionadded:: 2016
 
-.. details:: Config
+.. deprecated:: 2024-10-14
+   Removed because OSC 52 support in modern terminals/tmux/nvim makes things
+   much easier for handling copy/paste. See :ref:`tmuxcopy`.
 
-  This can be found in :file:`.config/nvim/lua/plugins/vim-tmux-clipboard.lua`:
+.. details:: Deprecation notes
 
-  .. literalinclude:: ../.config/nvim/lua/plugins/vim-tmux-clipboard.lua
-     :language: lua
+   Removed because OSC 52 support in modern terminals/tmux/nvim makes things
+   much easier for handling copy/paste. See :ref:`tmuxcopy`.
 
-`vim-tmux-clipboard <https://github.com/roxma/vim-tmux-clipboard>`_
-automatically copies yanked text from vim into the tmux clipboard. Similarly,
-anything copied in tmux makes it into the vim clipboard.
+  `vim-tmux-clipboard <https://github.com/roxma/vim-tmux-clipboard>`_
+  automatically copies yanked text from vim into the tmux clipboard. Similarly,
+  anything copied in tmux makes it into the vim clipboard.
 
-See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
-usage details. Note that this also requires the `vim-tmux-focus-events
-<https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin. You'll need
-to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
+  See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
+  usage details. Note that this also requires the `vim-tmux-focus-events
+  <https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin. You'll need
+  to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
 
-No additional commands configured.
-
+  No additional commands configured.
 
 .. _zenburn:
 
