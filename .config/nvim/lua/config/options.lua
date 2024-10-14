@@ -44,3 +44,7 @@ vim.opt.signcolumn = "yes" -- always show the signcolumn to minimize distraction
 -- vim.cmd(":autocmd InsertEnter * set cul") -- Color the current line in upon entering insert mode
 -- vim.cmd(":autocmd InsertLeave * set nocul") -- Remove color upon existing insert mode
 -- vim.cmd("set guicursor=i:block") -- Always use block cursor. In some terminals and fonts (like iTerm), it can be hard to see the cursor when it changes to a line.
+
+-- Copy all yanked/deleted lines to the "+" buffer. Useful when you want to use
+-- the OS clipboard.
+vim.cmd("set clipboard=unnamedplus")
