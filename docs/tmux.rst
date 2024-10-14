@@ -18,6 +18,14 @@ Here are the general features of the ``.tmux.conf`` file:
 -  When creating a new window or pane, automatically change to the
    directory of the current window or pane.
 
+
+.. versionadded:: 2024-10-14
+
+   When selecting with the mouse, it will no longer automatically exit copy
+   mode. This lets you scroll up through history and select text without
+   jumping back down to the prompt. To copy the text, hit :kbd:`Enter` after
+   selecting.
+
 Here are some shortcuts for window and pane navigation:
 
 .. list-table::
@@ -32,48 +40,46 @@ Here are some shortcuts for window and pane navigation:
    * - :kbd:`Shift-arrows`
      - switch windows (left/right only)
 
+
+.. _tmuxcopy:
+
 Copy/paste in vim and tmux
 --------------------------
 
-In general, if things seem strange, try adding Shift to select/copy/paste
-commands.
+.. versionchanged:: 2024-10-14
 
-This is by far the most annoying part about using tmux and vim together.
+   With OSC 52 support in recent versions of nvim, Alacritty, iTerm2, and tmux,
+   copy/paste is dramatically simplified.
 
-.. list-table::
-  :header-rows: 1
-  :align: left
+Historically, copy/paste in tmux has been very annoying. Now, with ``OSC 52``
+support in modern terminal applications, it's much smoother experience.
 
-  * - copy method (Linux)
-    - copy method (Mac)
-    - where does it go
-    - how to paste (Linux)
-    - how to paste (Mac)
-  * - shift-select text
-    -
-    - middle-click buffer
-    - :kbd:`shift-middle click`
-    - 
-  * - shift-select text, then Ctrl-shift-C
-    - shift-select text, then Cmd-shift-C
-    - clipboard
-    - ctrl-shift-v
-    - cmd-shift-v
-  * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
-      this inside vim.
-    - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
-      this inside vim.
-    - tmux clipboard
-    - :kbd:`ctrl-j`:kbd:`]`
-    - :kbd:`ctrl-j`:kbd:`]`
+Specifically, you should use a modern terminal emulator like iTerm2 or
+Alacritty. Among other things, these terminals support the ``OSC 52`` escape
+code, which allows you to copy text from a remote machine running vim within
+tmux...all the way to your OS clipboard (that is, on the machine running the
+terminal app).
 
+The built-in macOS Terminal.app does NOT do this.
 
-Another annoying situation is when copying text from the terminal into
-an email. In this case, we cannot use tmux copy mode, because X windows
-doesn’t know about it. Instead:
+This support was added in nvim 0.10, and recent versions of tmux support it.
+Alacritty supports it by default. iTerm2 has had support for a while now, but
+you do need to manually enable it:
 
--  if you’re in a pane, make it full screen (:kbd:`Ctrl-j`, :kbd:`z`)
--  if you’re in vim, turn off line numbers (``:set nonu``), or maybe
-   quit out of vim and just cat the file
--  shift-select text in terminal
--  middle-click to paste into email
+.. image:: images/iterm2_clipboard.png
+
+Using these dotfiles, and using recent versions of iTerm2 or Alacritty, you
+should be able copy text in any of the following ways, and it will make it onto
+the vim, tmux, and OS clipboards:
+
+- yank or delete text in nvim
+- use the mouse to select text in tmux (automatically enters copy mode) from the shell and press enter
+- use tmux copy mode in the shell
+
+You can use :kbd:`Cmd-v` to paste anywhere, :kbd:`p` in nvim, :kbd:`<prefix>]` in tmux. That is, all the ways of pasting should work.
+
+You can optionally hold :kbd:`Shift` to *only* copy the OS clipboard (bypassing
+tmux and nvim).
+
+When copying from vim, use :kbd:`<leader>cp` to toggle additional decorations
+(like the vertical lines showing indentations) to make copied text cleaner.

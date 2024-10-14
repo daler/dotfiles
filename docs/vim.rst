@@ -3,36 +3,98 @@
 Vim (neovim) configuration
 ==========================
 
+See :ref:`why` for why nvim (short for `Neovim <https://neovim.io/>`__)
+instead of vim.
+
+This page documents my nvim configuration. Because the nvim community
+(specifically, the plugin community) moves so quickly, this config and these
+accompanying docs change more often than any other configs in this repo.
+
+**You can take these new changes for a test drive** by running
+
+.. code-block:: bash
+
+   ./setup.sh --nvim-test-drive
+
+to move existing nvim config and plugins to backup directories.
+This does not affect any other config (like bash). You can always roll back to
+what you had before. The commands to roll back are printed at the end of the
+command.
+
 .. note::
 
-    This config is now specific to Neovim rather than vim. See :ref:`nvim-lua`
-    and :ref:`Why Lua <why-lua>` if you're coming here from using older
-    versions of these dotfiles.
-
-.. note::
-
-    As of 2024-09-01, you can use ``./setup.sh --prep-clean-nvim`` to test out the
-    latest nvim configs without affecting anything with other dotfiles (like
-    bash). This moves existing config and plugins to backup directories without
-    deleting anything so you can always roll back to what you had before.
+    See :ref:`nvim-lua` and :ref:`Why Lua <why-lua>` if you're coming here from
+    using older versions of these dotfiles that used vimscript instead of Lua.
 
 Files
 -----
 
-The file :file:`.config/nvim/init.lua` is the entry point of the nvim config.
-Unless otherwise specified, paths on this page are relative to
-:file:`~/.config/nvim`.
-
-
-- :file:`~/.config/nvim/init.lua` has general settings.
-- :file:`~/.config/nvim/lua/plugins.lua` has plugin settings.
-
-The :file:`.vimrc` file has only basic setup for vim, in case you need to use
-:file:`/usr/bin/vim`.
-
 .. versionchanged:: 2024-09-01
 
    Updated nvim installation version to 0.10.1 for macOS
+
+.. versionchanged:: 2024-09-20
+
+   Modularized configuration: split up config files according to `structured
+   setup <https://lazy.folke.io/installation>`__ recommendations from
+   lazy.nvim.
+
+The nvim configuration is split over multiple files. This keeps any changes
+more tightly confined to individual files, which makes it easier to see what
+changed, and decide if you want it or not. It also enables us to import the
+files into this documentation to easily view them on an individual plugin
+basis. Hopefully this better makes the connection between the description and
+the config, encouraging better understanding. Unfold each file below to see the
+details.
+
+.. details:: init.lua
+
+  The file :file:`.config/nvim/init.lua` is the entry point of the nvim config.
+  This in turn loads files in the :file:`lua` subdirectory. For example, the
+  syntax ``require("config.lazy")`` will load
+  :file:`.config/nvim/lua/config/lazy.lua`.
+
+  .. literalinclude:: ../.config/nvim/init.lua
+    :language: lua
+
+.. details:: lua/config/lazy.lua
+
+  :file:`.config/nvim/lua/config/lazy.lua` loads the `lazy.nvim
+  <https://github.com/folke/lazy.nvim>`__ plugin manager. The plugins in the
+  :file:`.config/nvim/lua/plugins` directory are loaded here.
+
+  .. literalinclude:: ../.config/nvim/lua/config/lazy.lua
+    :language: lua
+
+.. details:: lua/config/options.lua
+
+  :file:`.config/nvim/lua/config/options.lua` sets global options.
+
+  .. literalinclude:: ../.config/nvim/lua/config/options.lua
+    :language: lua
+
+.. details:: lua/config/autocmds.lua
+
+  :file:`.config/nvim/lua/config/autocmds.lua` configures autocommands --
+  settings that are specific to a filetype or that should be triggered on
+  certain events.
+
+  .. literalinclude:: ../.config/nvim/lua/config/autocmds.lua
+    :language: lua
+
+.. details:: lua/config/keymaps.lua
+
+  :file:`.config/nvim/lua/config/keymaps.lua` configures keymappings that are
+  not otherwise configured in the individual plugin configs.
+
+
+  .. literalinclude:: ../.config/nvim/lua/config/keymaps.lua
+    :language: lua
+
+.. details:: lua/plugins/
+
+  Each plugin is described in more detail below in its own section. Each has
+  its own file in the :file:`.config/nvim/lua/plugins` directory.
 
 Screencasts
 -----------
@@ -55,24 +117,13 @@ Sometimes it's much easier to see what's going on than to read about it...
 
   .. image:: gifs/buffers_annotated.gif
 
-Using the mouse
----------------
-
-In addition to allowing clicking and scrolling, ``set mouse=a`` also:
-
-- Supports mouse-enabled motions. To try this, left-click to place the cursor.
-  Type :kbd:`y` then left-click to yank from current cursor to where you next
-  clicked.
-- Drag the status-line or vertical separator to resize
-- Double-click to select word; triple-click for line
-
 Non-printing characters
 -----------------------
 Non-printing characters (tab characters and trailing spaces) are displayed.
 Differentiating between tabs and spaces is extremely helpful in tricky
 debugging situations.
 
-:file:`~/.config/nvim/init.lua` has these lines:
+:file:`~/.config/nvim/lua/config/autocmds.lua` has these lines:
 
 .. code-block:: lua
 
@@ -136,9 +187,9 @@ Once you have multiple buffers, you can **switch** between them in these ways:
    * - :kbd:`<leader>b` then type highlighted letter in tab
      - Switch buffer
 
-The display of the bufferline is configured in :file:`lua/plugins.lua`, as part
-of the bufferline plugin. It is additionally styled using the
-:ref:`zenburn` plugin/colorscheme.
+The display of the bufferline is configured in
+:file:`lua/plugins/bufferline.lua`, as part of the bufferline plugin. It is
+additionally styled using the :ref:`zenburn` plugin/colorscheme.
 
 Format options explanation
 --------------------------
@@ -147,7 +198,7 @@ The following options change the behavior of various formatting; see ``:h format
 
 .. code-block:: lua
 
-    vim.cmd("set formatoptions=qrn1coj")
+    vim.opt.formatoptions = "qrn1coj"
 
 Explanation of these options:
 
@@ -207,8 +258,9 @@ first key and then waiting a second for the menu to pop up.
 
 .. note::
 
-  **Mappings that use a plugin** are configured in the :file:`lua/plugins.lua`
-  file and are described below under the respective plugin's section.
+  **Mappings that use a plugin** are configured in the plugin's respective file
+  in :file:`lua/plugins/` and are described below under the respective plugin's
+  section.
 
 If you're defining your own keymappings, add a ``desc`` argument so that
 which-key will provide a description for it.
@@ -285,7 +337,7 @@ which-key will provide a description for it.
 Plugins
 -------
 
-The plugins configured in :file:`lua/plugins.lua` have lots and lots of
+The plugins configured in :file:`lua/plugins/*.lua` have lots and lots of
 options. Here I’m only highlighting the options I use the most, but definitely
 check out each homepage to see all the other weird and wonderful ways they can
 be used.
@@ -295,9 +347,7 @@ be used.
 to keep a snappy startup time, and only load plugins when they're needed. See
 :ref:`nvim-lua` for my rationale on that.
 
-
-
-Each plugin spec in :file:`lua/plugins.lua` is a table. The first property is
+Each plugin spec in :file:`lua/plugins/*.lua` is a table. The first property is
 the name of the plugin. Other properties:
 
 * ``lazy``: only load when requested by something else. Saves on initial load
@@ -346,142 +396,177 @@ track of what has changed recently.
    * - plugin
      - date added
      - date changed
+     - description
 
    * - :ref:`vimtmuxclipboard`
      - 2016
-     -
+     - 2024-10-24 (removed)
+     - makes tmux play nicer with vim clipboard
 
    * - :ref:`vimpythonpep8indent`
      - 2017
      -
+     - nice indentation for python
 
    * - :ref:`vimfugitive`
      - 2018-09-26
      -
+     - a wonderful and powerful interface for git, in vim
 
    * - :ref:`vimdiffenhanced`
      - 2019-02-27
      -
+     - additional diff algorithms
 
    * - :ref:`vimtablemode`
      - 2019-03-27
      -
+     - makes markdown and restructured text tables easy 
 
    * - :ref:`vis_ref`
      - 2019-09-30
      -
+     - replace text in visual selections
 
    * - :ref:`vimgv`
      - 2021-02-14
      -
+     - git log viewer
 
    * - :ref:`vimmergetool`
      - 2021-02-14
      -
+     - sane approach to handling merge conflicts in git
 
    * - :ref:`toggleterm_ref`
      - 2022-12-27
      - 2024-03-31
+     - open a terminal inside vim and send text to it
 
    * - :ref:`vimsurround`
      - 2022-12-27
      -
+     - add and change surrounding characters easily
 
    * - :ref:`nvimtree`
      - 2023-10-10
      -
+     - provides a file browser window in vim
 
    * - :ref:`diffview`
      - 2023-10-11
      -
+     - a wonderful tool for exploring git history
 
    * - :ref:`acceleratedjk`
      - 2023-10-15
      -
+     - speeds up vertical navigation
 
    * - :ref:`beacon_ref`
      - 2023-10-15
      - 2023-09-01
+     - flash a beacon where the cursor is
 
    * - :ref:`gitsigns_ref`
      - 2023-10-15
      -
+     - unobtrusively indicate git changes within a file
 
    * - :ref:`indentblankline`
      - 2023-10-15
      -
+     - show vertical lines at tab stops
 
    * - :ref:`nvimcmp`
      - 2023-10-15
      -
+     - autocomplete
 
    * - :ref:`telescope_ref`
      - 2023-10-15
      -
+     - a menu tool for picking (selecting files, etc)
 
    * - :ref:`vimcommentary`
      - 2023-10-15
      -
+     - easily comment/uncomment
 
    * - :ref:`whichkey`
      - 2023-10-15
      - 2024-09-01
+     - automated help for keymappings
 
    * - :ref:`aerial_ref`
      - 2023-10-15
      -
+     - optional navigational menu for navigating large files
 
    * - :ref:`treesitter`
      - 2023-10-15
      -
+     - provides parsers for advanced syntax and manipulation
 
    * - :ref:`bufferline`
      - 2023-11-01
      - 2024-09-01
+     - ergonomic buffer management
 
    * - :ref:`lualine_ref`
      - 2023-11-01
      -
+     - statusline
 
    * - :ref:`mason`
      - 2023-11-01
      -
+     - tool for easily installing LSPs, linters, and other tools
 
    * - :ref:`nvimlspconfig`
      - 2023-11-01
      - 2024-03-31
+     - handles the configuration of LSP servers
 
    * - :ref:`trouble`
      - 2023-11-01
      -
+     - provides a separate window for diagnostics from LSPs
 
    * - :ref:`zenburn`
      - 2023-11-01
      -
+     - colorscheme
 
    * - :ref:`conform`
      - 2024-03-31
      -
+     - run linters and code formatters
 
    * - :ref:`flash`
      - 2024-03-31
      -
+     - rapidly jump to places in code without counting lines
 
    * - :ref:`lspprogress`
      - 2024-04-27
      -
+     - indicator that LSP is running
 
    * - :ref:`stickybuf_ref`
      - 2024-04-27
      -
+     - prevents buffers from opening within a terminal
 
    * - :ref:`obsidian`
      - 2024-09-01
      -
+     - provides nice editing and navigation tools for markdown
 
    * - :ref:`rendermarkdown`
      - 2024-09-01
-     - 
+     -
+     - fancy rendering of markdown files
 
 
 Sometimes there are better plugins for a particular functionality. I've kept
@@ -519,8 +604,16 @@ linked description.
 
 .. versionadded:: 2023-10-15
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-commentary.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-commentary.lua
+     :language: lua
+
 `vim-commentary <https://github.com/tpope/vim-commentary>`_ lets you easily
 toggle comments on lines or blocks of code.
+
 
 .. list-table::
     :header-rows: 1
@@ -550,8 +643,16 @@ toggle comments on lines or blocks of code.
 
    Pinned version to latest prior to Lua rewrite (which is making configuration more difficult)
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/beacon.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/beacon.lua
+     :language: lua
+
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
+
 
 .. list-table::
     :header-rows: 1
@@ -573,6 +674,13 @@ marker to show where the cursor is.
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/telescope.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/telescope.lua
+     :language: lua
 
 `Telescope <https://github.com/nvim-telescope/telescope.nvim>`_ opens
 a floating window with fuzzy-search selection.
@@ -627,6 +735,13 @@ Other useful things you can do with Telescope:
 
 .. versionadded:: 2023-10-10
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/nvim-tree.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-tree.lua
+     :language: lua
+
 `nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`_ is a file browser.
 
 .. list-table::
@@ -657,6 +772,13 @@ windows left and right respectively) also work
 .. versionchanged:: 2024-09-01
 
   Pinned version; later versions are raising warnings that still need to be addressed
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/which-key.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/which-key.lua
+     :language: lua
 
 `which-key <https://github.com/folke/which-key.nvim>`_ displays a popup with
 possible key bindings of the command you started typing. This is wonderful for
@@ -723,6 +845,13 @@ still be shown.
 
 .. versionadded:: 2023-10-15
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/accelerated-jk.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/accelerated-jk.lua
+     :language: lua
+
 `accelerated-jk <https://github.com/rhysd/accelerated-jk>`_ speeds up j and
 k movements: longer presses will jump more and more lines.
 
@@ -746,6 +875,13 @@ the acceleration curve depending on your system's keyboard repeat rate settings
 ~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/nvim-cmp.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-cmp.lua
+     :language: lua
 
 `nvim-cmp <https://github.com/hrsh7th/nvim-cmp>`_ provides tab-completion.
 
@@ -777,6 +913,13 @@ to fill them in.
 
 .. versionadded:: 2023-10-15
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/aerial.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/aerial.lua
+     :language: lua
+
 `aerial <https://github.com/stevearc/aerial.nvim>`_ provides a navigation
 sidebar for quickly moving around code (for example, jumping to functions or
 classes or methods). For markdown or ReStructured Text, it acts like a table of
@@ -806,6 +949,13 @@ mapped, which you can read about in the `README for aerial
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/treesitter.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/treesitter.lua
+     :language: lua
 
 `treesitter <https://github.com/nvim-treesitter/nvim-treesitter>`__ is a parsing
 library. You install a parser for a language, and it figures out which tokens
@@ -861,6 +1011,12 @@ treesitter-enabled syntax highlighting though.
    mnemonic (and similar for :kbd:`[d`)
 
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/nvim-lspconfig.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-lspconfig.lua
+     :language: lua
 
 `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ provides access to
 nvim's Language Server Protocol (LSP). You install an LSP server for each
@@ -924,6 +1080,14 @@ diagnostics.
 
 .. versionadded:: 2023-11-01
 
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/mason.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/mason.lua
+     :language: lua
+
 `mason.nvim <https://github.com/williamboman/mason.nvim>`_ easily installs
 Language Server Protocols, debuggers, linters, and formatters. Use ``:Mason``
 to open the interface, and hit :kbd:`i` on what you want to install, or
@@ -963,6 +1127,13 @@ have that many features yet, either.
 .. versionadded:: 2023-11-01
 
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/trouble.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/trouble.lua
+     :language: lua
+
 `trouble.nvim <https://github.com/folke/trouble.nvim>`_ organizes all the LSP
 diagnostics into a single window. You can use that to navigate the issues found
 in your code.
@@ -983,6 +1154,13 @@ in your code.
 ~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-15
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/gitsigns.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/gitsigns.lua
+     :language: lua
 
 `gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
 the left side of the line numbers, indicating where there were changes in
@@ -1057,6 +1235,12 @@ E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
    Version of toggleterm is pinned because later versions have issues with
    sending multiple selected lines to the terminal.
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/toggleterm.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/toggleterm.lua
+     :language: lua
 
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
 interact with a terminal within vim.
@@ -1120,6 +1304,13 @@ the terminal use.
 ~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2018-09-26
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-fugitive.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-fugitive.lua
+     :language: lua
 
 `vim-fugitive <https://github.com/tpope/vim-fugitive>`_ provides a git interface in vim.
 
@@ -1190,10 +1381,17 @@ Working with diffs
 
 .. _vimgv:
 
-``vim.gv``
+``gv``
 ~~~~~~~~~~
 
 .. versionadded:: 2021-02-14
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/gv.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/gv.lua
+     :language: lua
 
 `vim.gv <https://github.com/junegunn/gv.vim>`_ provides an interface to easily
 view and browse git history.
@@ -1223,6 +1421,13 @@ view and browse git history.
 ~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2021-02-14
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-mergetool.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-mergetool.lua
+     :language: lua
 
 `vim-mergetool <https://github.com/samoshkin/vim-mergetool>`_ makes 3-way merge
 conflicts much easier to deal with by only focusing on what needs to be
@@ -1262,6 +1467,13 @@ Save and quit, or use :kbd:`:MergetoolStop`.
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2019-02-27
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-diff-enhanced.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-diff-enhanced.lua
+     :language: lua
 
 `vim-diff-enhanced <https://github.com/chrisbra/vim-diff-enhanced>`_ provides
 additional diff algorithms that work better on certain kinds of files. If your
@@ -1308,6 +1520,13 @@ The following algorithms are available:
 ~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2019-03-27
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-table-mode.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-table-mode.lua
+     :language: lua
 
 `vim-table-mode <https://github.com/dhruvasagar/vim-table-mode>`_ provides
 easy formatting of tables in Markdown and Restructured Text
@@ -1361,6 +1580,13 @@ See the homepage for, e.g., using ``||`` to auto-create header lines.
 
 .. versionadded:: 2024-03-31
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/flash.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/flash.lua
+     :language: lua
+
 `flash <https://github.com/folke/flash.nvim>`__ lets you jump around in a buffer with low mental effort.
 
 .. list-table::
@@ -1406,6 +1632,13 @@ backticks as well, you could use :kbd:`S` when on the backticks.
 
 .. versionadded:: 2022-12-27
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-surround.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-surround.lua
+     :language: lua
+
 `vim-surround <https://github.com/tpope/vim-surround>`_ lets you easily change
 surrounding characters.
 
@@ -1431,6 +1664,13 @@ surrounding characters.
 ~~~~~~~
 
 .. versionadded:: 2019-09-30
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vis.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vis.lua
+     :language: lua
 
 `vis <https://github.com/vim-scripts/vis>`_ provides better behavior on visual
 blocks.
@@ -1460,6 +1700,13 @@ just the visual block selection, for example when editing TSV files.
 
    Changing to default style since newer versions of nvim add additional, currently-unstyled elements
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/bufferline.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/bufferline.lua
+     :language: lua
+
 `bufferline.nvim <https://github.com/akinsho/bufferline.nvim>`_ provides the
 tabs along the top.
 
@@ -1479,6 +1726,13 @@ tabs along the top.
 ~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2023-10-11
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/diffview.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/diffview.lua
+     :language: lua
 
 `diffview.nvim <https://github.com/sindrets/diffview.nvim>`_ supports viewing
 diffs across multiple files. It also has a nice interface for browsing previous
@@ -1510,6 +1764,13 @@ See the homepage for details.
 
 .. versionadded:: 2024-03-31
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/conform.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/conform.lua
+     :language: lua
+
 `conform <https://github.com/stevearc/conform.nvim>`__ runs style formatters on
 the current buffer.
 
@@ -1540,6 +1801,13 @@ bash, ``shfmt``.
 
 .. versionadded:: 2023-11-01
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/lualine.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/lualine.lua
+     :language: lua
+
 `lualine <https://github.com/nvim-lualine/lualine.nvim>`_ provides the status line along the bottom.
 
 No additional commands configured.
@@ -1555,6 +1823,13 @@ No additional commands configured.
 
    Exclude entirely for markdown and ReStructured Text filetypes
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/indent-blankline.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/indent-blankline.lua
+     :language: lua
+
 `indent-blankline <https://github.com/lukas-reineke/indent-blankline.nvim>`_
 shows vertical lines where there is indentation, and highlights one of these
 vertical lines to indicate the current `scope
@@ -1568,6 +1843,13 @@ No additional commands configured.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2017
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/vim-python-pep8-indent.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/vim-python-pep8-indent.lua
+     :language: lua
 
 `vim-python-pep8-indent <https://github.com/Vimjas/vim-python-pep8-indent>`_
 auto-indents Python using pep8 recommendations. This happens as you’re typing,
@@ -1639,17 +1921,25 @@ No additional commands configured.
 
 .. versionadded:: 2016
 
-`vim-tmux-clipboard <https://github.com/roxma/vim-tmux-clipboard>`_
-automatically copies yanked text from vim into the tmux clipboard. Similarly,
-anything copied in tmux makes it into the vim clipboard.
+.. deprecated:: 2024-10-14
+   Removed because OSC 52 support in modern terminals/tmux/nvim makes things
+   much easier for handling copy/paste. See :ref:`tmuxcopy`.
 
-See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
-usage details. Note that this also requires the `vim-tmux-focus-events
-<https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin. You'll need
-to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
+.. details:: Deprecation notes
 
-No additional commands configured.
+   Removed because OSC 52 support in modern terminals/tmux/nvim makes things
+   much easier for handling copy/paste. See :ref:`tmuxcopy`.
 
+  `vim-tmux-clipboard <https://github.com/roxma/vim-tmux-clipboard>`_
+  automatically copies yanked text from vim into the tmux clipboard. Similarly,
+  anything copied in tmux makes it into the vim clipboard.
+
+  See this `screencast <https://asciinema.org/a/7qzb7c12ykv3kcleo4jgrl2jy>`_ for
+  usage details. Note that this also requires the `vim-tmux-focus-events
+  <https://github.com/tmux-plugins/vim-tmux-focus-events>`_ plugin. You'll need
+  to make sure ``set -g focus-events on`` is in your :file:`.tmux.conf`.
+
+  No additional commands configured.
 
 .. _zenburn:
 
@@ -1657,6 +1947,13 @@ No additional commands configured.
 ~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2023-11-01
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/zenburn.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/zenburn.lua
+     :language: lua
 
 This uses my fork of https://github.com/phha/zenburn.nvim, which adds addtional
 support for plugins and tweaks some of the existing colors to work better.
@@ -1670,6 +1967,13 @@ No additional commands configured.
 
 .. versionadded:: 2024-04-27
 
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/stickybuf.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/stickybuf.lua
+     :language: lua
+
 `stickybuf.nvim <https://github.com/stevearc/stickybuf.nvim>`__ prevents text
 buffers from opening up inside a terminal buffer.
 
@@ -1681,6 +1985,13 @@ No additional commands configured.
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2024-04-27
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/lsp-progress.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/lsp-progress.lua
+     :language: lua
 
 `lsp-progress.nvim <https://github.com/linrongbin16/lsp-progress.nvim>`__ adds
 a status/progress indicator to the lualine (at the bottom of a window) so you
@@ -1694,6 +2005,13 @@ No additional commands configured.
 ~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2024-09-01
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/obsidian.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/obsidian.lua
+     :language: lua
 
 `obsidian.nvim <https://github.com/epwalsh/obsidian.nvim>`__ is a plugin
 originally written for working with `Obsidian <https://obsidian.md/>`__ which is a GUI
@@ -1720,7 +2038,7 @@ Notes on other plugins:
 - ``nvim-telekasten/telekasten.nvim`` has nice pickers for tags and files and
   making links, but it was too opinionated for forcing the "telekasten" style
   of note-taking.
-- 
+-
 
 The mapped commands below use :kbd:`o` ([o]bsidian) as a a prefix.
 
@@ -1751,6 +2069,13 @@ The mapped commands below use :kbd:`o` ([o]bsidian) as a a prefix.
 ~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2024-09-01
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/render-markdown.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/render-markdown.lua
+     :language: lua
 
 `render-markdown
 <https://github.com/MeanderingProgrammer/render-markdown.nvim>`__ provides
@@ -1787,6 +2112,34 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.
 
     * - :kbd:`<leader>rm`
       - Toggle [r]ender[m]arkdown on an [r][m]arkdown file
+
+
+
+``nvim-colorizer``
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-09-01
+
+.. details:: Config
+
+  This can be found in :file:`.config/nvim/lua/plugins/nvim-colorizer.lua`:
+
+  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-colorizer.lua
+     :language: lua
+
+`nvim-colorizer <https://github.com/norcalli/nvim-colorizer.lua>`__ is
+a high-performance color highlighter. It converts hex codes to their actual
+colors.
+
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - ``ColorizerToggle``
+      - Toggle colorizing of hex codes
+
 
 Colorschemes
 ------------
