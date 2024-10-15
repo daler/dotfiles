@@ -482,7 +482,9 @@ elif [ $task == "--set-up-bioconda" ]; then
     conda config --add channels bioconda
     conda config --add channels conda-forge
     conda config --set channel_priority strict
-    echo "env_prompt: '({name}) '" >> ~/.condarc
+    if ! grep -q "env_prompt:" ~/.condarc; then
+        echo "env_prompt: '({name}) '" >> ~/.condarc
+    fi
     printf "${YELLOW}Channels configured, see ~/.condarc${UNSET}\n"
 
 
