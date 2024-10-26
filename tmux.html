@@ -64,6 +64,12 @@ set up conda (with <code class="docutils literal notranslate"><span class="pre">
 <li><p>When creating a new window or pane, automatically change to the
 directory of the current window or pane.</p></li>
 </ul>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 2024-10-14: </span>When selecting with the mouse, it will no longer automatically exit copy
+mode. This lets you scroll up through history and select text without
+jumping back down to the prompt. To copy the text, hit <kbd class="kbd docutils literal notranslate">Enter</kbd> after
+selecting.</p>
+</div>
 <p>Here are some shortcuts for window and pane navigation:</p>
 <table class="docutils align-left">
 <thead>
@@ -81,52 +87,36 @@ directory of the current window or pane.</p></li>
 </tbody>
 </table>
 <section id="copy-paste-in-vim-and-tmux">
-<h2>Copy/paste in vim and tmux<a class="headerlink" href="#copy-paste-in-vim-and-tmux" title="Link to this heading">¶</a></h2>
-<p>In general, if things seem strange, try adding Shift to select/copy/paste
-commands.</p>
-<p>This is by far the most annoying part about using tmux and vim together.</p>
-<table class="docutils align-left">
-<thead>
-<tr class="row-odd"><th class="head"><p>copy method (Linux)</p></th>
-<th class="head"><p>copy method (Mac)</p></th>
-<th class="head"><p>where does it go</p></th>
-<th class="head"><p>how to paste (Linux)</p></th>
-<th class="head"><p>how to paste (Mac)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>shift-select text</p></td>
-<td></td>
-<td><p>middle-click buffer</p></td>
-<td><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">shift</kbd>-<kbd class="kbd docutils literal notranslate">middle</kbd> <kbd class="kbd docutils literal notranslate">click</kbd></kbd></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>shift-select text, then Ctrl-shift-C</p></td>
-<td><p>shift-select text, then Cmd-shift-C</p></td>
-<td><p>clipboard</p></td>
-<td><p>ctrl-shift-v</p></td>
-<td><p>cmd-shift-v</p></td>
-</tr>
-<tr class="row-even"><td><p>tmux copy mode (<kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">ctrl</kbd>-<kbd class="kbd docutils literal notranslate">j</kbd></kbd><kbd class="kbd docutils literal notranslate">[</kbd>). You probably want to avoid using
-this inside vim.</p></td>
-<td><p>tmux copy mode (<kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">ctrl</kbd>-<kbd class="kbd docutils literal notranslate">j</kbd></kbd><kbd class="kbd docutils literal notranslate">[</kbd>). You probably want to avoid using
-this inside vim.</p></td>
-<td><p>tmux clipboard</p></td>
-<td><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">ctrl</kbd>-<kbd class="kbd docutils literal notranslate">j</kbd></kbd><kbd class="kbd docutils literal notranslate">]</kbd></p></td>
-<td><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">ctrl</kbd>-<kbd class="kbd docutils literal notranslate">j</kbd></kbd><kbd class="kbd docutils literal notranslate">]</kbd></p></td>
-</tr>
-</tbody>
-</table>
-<p>Another annoying situation is when copying text from the terminal into
-an email. In this case, we cannot use tmux copy mode, because X windows
-doesn’t know about it. Instead:</p>
+<span id="tmuxcopy"></span><h2>Copy/paste in vim and tmux<a class="headerlink" href="#copy-paste-in-vim-and-tmux" title="Link to this heading">¶</a></h2>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-10-14: </span>With OSC 52 support in recent versions of nvim, Alacritty, iTerm2, and tmux,
+copy/paste is dramatically simplified.</p>
+</div>
+<p>Historically, copy/paste in tmux has been very annoying. Now, with <code class="docutils literal notranslate"><span class="pre">OSC</span> <span class="pre">52</span></code>
+support in modern terminal applications, it’s much smoother experience.</p>
+<p>Specifically, you should use a modern terminal emulator like iTerm2 or
+Alacritty. Among other things, these terminals support the <code class="docutils literal notranslate"><span class="pre">OSC</span> <span class="pre">52</span></code> escape
+code, which allows you to copy text from a remote machine running vim within
+tmux…all the way to your OS clipboard (that is, on the machine running the
+terminal app).</p>
+<p>The built-in macOS Terminal.app does NOT do this.</p>
+<p>This support was added in nvim 0.10, and recent versions of tmux support it.
+Alacritty supports it by default. iTerm2 has had support for a while now, but
+you do need to manually enable it:</p>
+<img alt="images/iterm2_clipboard.png" src="images/iterm2_clipboard.png" />
+<p>Using these dotfiles, and using recent versions of iTerm2 or Alacritty, you
+should be able copy text in any of the following ways, and it will make it onto
+the vim, tmux, and OS clipboards:</p>
 <ul class="simple">
-<li><p>if you’re in a pane, make it full screen (<kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>-<kbd class="kbd docutils literal notranslate">j</kbd></kbd>, <kbd class="kbd docutils literal notranslate">z</kbd>)</p></li>
-<li><p>if you’re in vim, turn off line numbers (<code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">nonu</span></code>), or maybe
-quit out of vim and just cat the file</p></li>
-<li><p>shift-select text in terminal</p></li>
-<li><p>middle-click to paste into email</p></li>
+<li><p>yank or delete text in nvim</p></li>
+<li><p>use the mouse to select text in tmux (automatically enters copy mode) from the shell and press enter</p></li>
+<li><p>use tmux copy mode in the shell</p></li>
 </ul>
+<p>You can use <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Cmd</kbd>-<kbd class="kbd docutils literal notranslate">v</kbd></kbd> to paste anywhere, <kbd class="kbd docutils literal notranslate">p</kbd> in nvim, <kbd class="kbd docutils literal notranslate">&lt;prefix&gt;]</kbd> in tmux. That is, all the ways of pasting should work.</p>
+<p>You can optionally hold <kbd class="kbd docutils literal notranslate">Shift</kbd> to <em>only</em> copy the OS clipboard (bypassing
+tmux and nvim).</p>
+<p>When copying from vim, use <kbd class="kbd docutils literal notranslate">&lt;leader&gt;cp</kbd> to toggle additional decorations
+(like the vertical lines showing indentations) to make copied text cleaner.</p>
 </section>
 </section>
 
