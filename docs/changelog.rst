@@ -1,6 +1,26 @@
 Changelog
 =========
 
+2024-09-20
+----------
+**setup.sh**
+
+- Renamed ``--prep-clean-nvim`` argument to ``--nvim-test-drive``
+- Add various error detection to this command and print warnings appropriately
+- Support nvim v0.10.1 installation on both Intel and ARM MacOS.
+
+**nvim**
+
+**Modularize nvim configuration** according to lazy.nvim recommendations.
+
+- split the original ``lua/plugins.lua`` file into separate files for each plugin
+- split the original ``init.lua`` into separate files for keymaps,
+  autocommands, and settings.
+
+The intention is that this will make configuration easier to find and
+understand. It also allows the respective plugin's config to be pulled directly
+into the docs.
+
 2024-09-01
 ----------
 **setup.sh**

@@ -255,7 +255,7 @@ function showHelp() {
     cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
 
-    cmd "--prep-clean-nvim" \
+    cmd "--nvim-test-drive" \
         "Move nvim binary, plugins, and config to backup directories so you can " \
         "try new updates from these dotfiles. Does not delete anything."
 
@@ -499,18 +499,31 @@ elif [ $task == "--conda-env" ]; then
 
 
 elif [ $task == "--install-neovim" ]; then
+
+    # Too-old of a GLIBC on the system will not work with later nvim versions
+    if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
+        printf "\n${RED}Looks like you're on helix/biowulf. You should use the nvim installed on Biowulf "
+        printf "for compatibility with the system's glibc.\n\nTwo ways to do this: either add 'module load neovim/$NVIM_VERSION' "
+        printf "to your .extra file or .bashrc, or directly add the path shown from "
+        printf "'module show neovim/$NVIM_VERSION' to your PATH.${UNSET}\n\n"
+        exit 1
+    fi
+
     if [ -d ~/opt/neovim ]; then
         printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
         exit 1
     fi
     ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
     if [[ $OSTYPE == darwin* ]]; then
-
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-arm64.tar.gz nvim-macos.tar.gz
+        if [ "$(arch)" == "arm64" ]; then 
+            download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-arm64.tar.gz nvim-macos.tar.gz
+        else
+            download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-x86_64.tar.gz nvim-macos.tar.gz
+        fi
         xattr -c ./nvim-macos.tar.gz
         tar -xzf nvim-macos.tar.gz
         mkdir -p "$HOME/opt/bin"
-        mv nvim-macos-arm64 "$HOME/opt/neovim"
+        mv nvim-macos-*64 "$HOME/opt/neovim"
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
         tar -xzf nvim-linux64.tar.gz
@@ -521,6 +534,7 @@ elif [ $task == "--install-neovim" ]; then
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
+
 
 elif [ $task == "--compile-neovim" ]; then
     NVIM_VERSION=stable
@@ -840,7 +854,7 @@ elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
 
     function doIt() {
-        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -avh --files-from=include.file . $HOME
+        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -rvh --times --files-from=include.file . $HOME
     }
 
     if [ $DOTFILES_FORCE == "true" ]; then
@@ -862,8 +876,17 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     rm terminfo.src
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
-elif [ $task == "--prep-clean-nvim" ]; then
+elif [ $task == "--nvim-test-drive" ]; then
+    printf "\n${RED}NOTE:${UNSET} currently-open nvim windows will detect changes to config. "
+    printf "You might want to close other running nvim instances before running this.\n\n${UNSET}"
+
+    if [ "$(nvim --version | head -n1 )" != "NVIM v$NVIM_VERSION" ]; then
+        printf "\n${RED}nvim v0.10.1 not found -- please update before running this command.\n\n"
+        exit 1
+    fi
+
     ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
+
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
     NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
@@ -876,7 +899,16 @@ elif [ $task == "--prep-clean-nvim" ]; then
         printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
     fi
     rsync --no-perms -rvh .config/nvim ~/.config
-    nvim --headless "+Lazy! restore" "+TSUpdate" +qa
+    nvim --headless -E \
+        "+Lazy! restore" \
+        -c 'echo "\n\nWaiting for 9 sec for parsers to finish installing...\n"' \
+        -c 'sleep 3' \
+        -c 'echo "\n\nWaiting for 7 sec for parsers to finish installing..\n"' \
+        -c 'sleep 3' \
+        -c 'echo "\n\nWaiting for 3 sec for parsers to finish installing..\n"' \
+        -c 'sleep 3' \
+        -c 'echo "\n"' \
+        +qa
     printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
     printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
     printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
