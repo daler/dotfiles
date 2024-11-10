@@ -144,7 +144,7 @@ function showHelp() {
     header "conda setup:"
 
     cmd "--install-conda" \
-        "Install conda using the Mambaforge installation" \
+        "Install conda using the Miniforge installation" \
         "Homepage: https://github.com/conda-forge/miniforge"
 
     cmd "--set-up-bioconda" \
@@ -453,28 +453,28 @@ elif [ $task == "--install-docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--install-conda" ]; then
-    ok "Installs conda using the Mambaforge installation"
+    ok "Installs conda using the Miniforge installation"
 
     # On Biowulf/Helix, if we install into $HOME then the installation might
     # larger than the quota for the home directory. Instead, install to user's
     # data directory which has much more space.
     # Also, .path needs to reflect this change.
-    MAMBAFORGE_DIR=$HOME/mambaforge
+    MINIFORGE_DIR=$HOME/miniforge
     if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
-        MAMBAFORGE_DIR=/data/$USER/mambaforge
+        MINIFORGE_DIR=/data/$USER/miniforge
 
         # Newer versions of the installer cannot run from a noexec directory
         # which may be the case on some hosts. See discussion at
         # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
-        export TMPDIR=/data/$USER/mambaforge
+        export TMPDIR=/data/$USER/miniforge
 
    fi
 
-    download "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" mambaforge.sh
-    bash mambaforge.sh -b -p $MAMBAFORGE_DIR
-    rm mambaforge.sh
-    echo "export PATH=\$PATH:$MAMBAFORGE_DIR/condabin" >> ~/.path
-    printf "${YELLOW}conda installed at ${MAMBAFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path. You may need to close and then reopen your terminal.${UNSET}\n"
+    download "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" miniforge.sh
+    bash miniforge.sh -b -p $MINIFORGE_DIR
+    rm miniforge.sh
+    echo "export PATH=\$PATH:$MINIFORGE_DIR/condabin" >> ~/.path
+    printf "${YELLOW}conda installed at ${MINIFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path. You may need to close and then reopen your terminal.${UNSET}\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
