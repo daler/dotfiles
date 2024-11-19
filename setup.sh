@@ -255,6 +255,9 @@ function showHelp() {
     cmd "--install-npm" \
         "Installs nodejs and npm into a conda directory"
 
+    cmd "--install-gh" \
+        "Installs gh, the github CLI"
+
     cmd "--nvim-test-drive" \
         "Move nvim binary, plugins, and config to backup directories so you can " \
         "try new updates from these dotfiles. Does not delete anything."
