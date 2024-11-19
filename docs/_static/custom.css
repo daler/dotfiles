@@ -78,3 +78,7 @@ kbd.compound {
     font-size: .8em;
     padding-left: 5px;
 }
+
+div.document {
+    width: unset;
+}

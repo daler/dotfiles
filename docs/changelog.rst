@@ -1,6 +1,88 @@
 Changelog
 =========
 
+2024-11-19
+----------
+
+**vim**
+
+- Better support for pasting Python into a running IPython interpreter
+  (:kbd:`gx` on selected lines) using the `cpaste
+  <https://ipython.readthedocs.io/en/stable/api/generated/IPython.terminal.magics.html#IPython.terminal.magics.TerminalMagics.cpaste>`__
+  magic function.
+
+**setup**
+
+- Include ``--install-gh`` in command-line help
+
+2024-11-09
+----------
+**conda**
+
+- Use miniforge instead of mambaforge for installing. See `this announcment
+  <https://conda-forge.org/news/2024/07/29/sunsetting-mambaforge/>`__ for
+  details.
+- Patch :file:`~/.condarc` to show just the env name in the prompt, rather than
+  the whole path.
+
+.. note::
+
+    If you reinstall conda to use the new location of :file:`miniforge` rather
+    than :file:`mambaforge`, you may want to consider removing all named
+    environments installed by setup.sh using that old conda installation and
+    re-installing them using the new installation.
+
+    Since the new conda has a different location for named environments,
+    removal will need to happen using their path rather than name. As an
+    example, here updating the installed `fd` env:
+
+    .. code-block:: bash
+
+      conda env list
+      conda env remove ~/mambaforge/envs/fd
+      ./setup.sh --install-fd
+
+2024-10-14
+----------
+
+**tmux**
+
+- In general, *much* improved behavior for copy/paste in tmux. First, this
+  assumes OSC52 support in the terminal emulator (like iTerm2 and Alacritty),
+  which support using the OS clipboard for vim, tmux, and other applications --
+  even when running on a remote server. However, this was previously hindered
+  by the vim-tmux-clipboard plugin, which caused issues with stripped newlines
+  upon pasting, which made it frustrating to use. This plugin has now been
+  removed, allowing normal copy/paste behavior.
+
+- The tmux behavior was correspondingly changed so that highlighting text with
+  the mouse no longer immediately exits copy mode. The color of the highlight
+  was also slightly changed as a visual indicator of this new behavior. Hit
+  :kbd:`Enter` after selecting in tmux copy mode to copy text to the OS
+  clipboard.
+
+- See :ref:`tmuxcopy` for more details. Note that this needs nvim >0.10.
+
+2024-09-20
+----------
+**setup.sh**
+
+- Renamed ``--prep-clean-nvim`` argument to ``--nvim-test-drive``
+- Add various error detection to this command and print warnings appropriately
+- Support nvim v0.10.1 installation on both Intel and ARM MacOS.
+
+**nvim**
+
+**Modularize nvim configuration** according to lazy.nvim recommendations.
+
+- split the original ``lua/plugins.lua`` file into separate files for each plugin
+- split the original ``init.lua`` into separate files for keymaps,
+  autocommands, and settings.
+
+The intention is that this will make configuration easier to find and
+understand. It also allows the respective plugin's config to be pulled directly
+into the docs.
+
 2024-09-01
 ----------
 **setup.sh**

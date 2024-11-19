@@ -142,6 +142,12 @@ In :file:`.config/alacritty/alacritty.yml`::
     env:
         TERM: xterm-256color
 
+Or in recent versions of Alacritty, in :file:`.config/alacritty/alacritty.toml`::
+
+    [env]
+    TERM = "xterm-256color"
+
+
 In :file:`.tmux.conf`::
 
     set -g default-terminal "tmux-256color"
