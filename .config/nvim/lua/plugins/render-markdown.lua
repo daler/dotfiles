@@ -11,9 +11,6 @@ return {
 
         -- don't replace ### with icons
         icons = {},
-
-        -- don't add a sign column indicator (it gets distracting when enter/exit insert mode)
-        sign = false,
       },
       code = {
 
