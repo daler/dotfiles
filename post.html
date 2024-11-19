@@ -171,6 +171,11 @@ get colors to work on tmux.</p>
     <span class="n">TERM</span><span class="p">:</span> <span class="n">xterm</span><span class="o">-</span><span class="mi">256</span><span class="n">color</span>
 </pre></div>
 </div>
+<p>Or in recent versions of Alacritty, in <code class="file docutils literal notranslate"><span class="pre">.config/alacritty/alacritty.toml</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">env</span><span class="p">]</span>
+<span class="n">TERM</span> <span class="o">=</span> <span class="s2">&quot;xterm-256color&quot;</span>
+</pre></div>
+</div>
 <p>In <code class="file docutils literal notranslate"><span class="pre">.tmux.conf</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">default</span><span class="o">-</span><span class="n">terminal</span> <span class="s2">&quot;tmux-256color&quot;</span>
 <span class="nb">set</span> <span class="o">-</span><span class="n">ag</span> <span class="n">terminal</span><span class="o">-</span><span class="n">overrides</span> <span class="s2">&quot;,xterm-256color:RGB&quot;</span>

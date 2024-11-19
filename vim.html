@@ -1841,11 +1841,32 @@ sending multiple selected lines to the terminal.</p>
           <span class="n">vim</span><span class="p">.</span><span class="n">cmd</span><span class="p">(</span><span class="s2">&quot;if &amp;buftype == &#39;terminal&#39; | startinsert | endif&quot;</span><span class="p">)</span>
         <span class="kr">end</span><span class="p">,</span>
       <span class="p">})</span>
+
+      <span class="c1">-- IPython has the %cpaste magic command that will correctly handle</span>
+      <span class="c1">-- whitespace of all kinds. &quot;--&quot; alone on a line ends the input.</span>
+      <span class="c1">-- Directly creating this function in the keymapping was not passing over</span>
+      <span class="c1">-- the correct arguments, hence creating a new command here.</span>
+      <span class="n">vim</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">nvim_create_user_command</span><span class="p">(</span>
+        <span class="s2">&quot;ToggleTermSendToIPython&quot;</span><span class="p">,</span>
+        <span class="kr">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;%cpaste</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+          <span class="c1">-- do not trim whitespace, we want to let IPython %cpaste handle it.</span>
+          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">send_lines_to_terminal</span><span class="p">(</span><span class="s2">&quot;visual_selection&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;--</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="kr">end</span><span class="p">,</span>
+        <span class="p">{</span> <span class="n">range</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">nargs</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="p">}</span>
+      <span class="p">)</span>
     <span class="kr">end</span><span class="p">,</span>
 
     <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
       <span class="p">{</span> <span class="s2">&quot;gxx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendCurrentLine&lt;CR&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send current line to terminal&quot;</span> <span class="p">},</span>
       <span class="p">{</span> <span class="s2">&quot;gx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendVisualSelection&lt;CR&gt;&#39;&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send selection to terminal&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="p">},</span>
+
+      <span class="c1">-- Override specifically for Python</span>
+      <span class="p">{</span> <span class="s2">&quot;gx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendToIPython&lt;CR&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send selection to IPython&quot;</span><span class="p">,</span> <span class="n">ft</span> <span class="o">=</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="p">},</span>
+
       <span class="p">{</span>
         <span class="s2">&quot;&lt;leader&gt;cd&quot;</span><span class="p">,</span>
         <span class="s2">&quot;/```{r&lt;CR&gt;NjV/```&lt;CR&gt;k&lt;Esc&gt;:ToggleTermSendVisualSelection&lt;CR&gt;/```{r&lt;CR&gt;&quot;</span><span class="p">,</span>
@@ -2778,8 +2799,13 @@ know when it’s running.</p>
             <span class="n">new_notes_location</span> <span class="o">=</span> <span class="s2">&quot;current_dir&quot;</span><span class="p">,</span>
             <span class="n">templates</span> <span class="o">=</span> <span class="p">{</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">vim</span><span class="p">.</span><span class="n">NIL</span> <span class="p">},</span>
             <span class="n">disable_frontmatter</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="n">daily_notes</span> <span class="o">=</span> <span class="p">{</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">vim</span><span class="p">.</span><span class="n">NIL</span> <span class="p">},</span>
           <span class="p">},</span>
         <span class="p">},</span>
+      <span class="p">},</span>
+
+      <span class="n">daily_notes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;daily&quot;</span><span class="p">,</span>
       <span class="p">},</span>
 
       <span class="c1">-- Open URL under cursor in browser (uses `open` for MacOS).</span>
