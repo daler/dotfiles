@@ -49,8 +49,13 @@ return {
             new_notes_location = "current_dir",
             templates = { folder = vim.NIL },
             disable_frontmatter = true,
+            daily_notes = { folder = vim.NIL },
           },
         },
+      },
+
+      daily_notes = {
+        folder = "daily",
       },
 
       -- Open URL under cursor in browser (uses `open` for MacOS).

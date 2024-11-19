@@ -26,11 +26,32 @@ return {
           vim.cmd("if &buftype == 'terminal' | startinsert | endif")
         end,
       })
+
+      -- IPython has the %cpaste magic command that will correctly handle
+      -- whitespace of all kinds. "--" alone on a line ends the input.
+      -- Directly creating this function in the keymapping was not passing over
+      -- the correct arguments, hence creating a new command here.
+      vim.api.nvim_create_user_command(
+        "ToggleTermSendToIPython",
+        function(args)
+          require("toggleterm").exec("%cpaste\n", 1)
+
+          -- do not trim whitespace, we want to let IPython %cpaste handle it.
+          require("toggleterm").send_lines_to_terminal("visual_selection", false, args)
+
+          require("toggleterm").exec("--\n", 1)
+        end,
+        { range = true, nargs = "?" }
+      )
     end,
 
     keys = {
       { "gxx", ":ToggleTermSendCurrentLine<CR><CR>", desc = "Send current line to terminal" },
       { "gx", ":ToggleTermSendVisualSelection<CR>'><CR>", desc = "Send selection to terminal", mode = "x" },
+
+      -- Override specifically for Python
+      { "gx", ":ToggleTermSendToIPython<CR><CR>", desc = "Send selection to IPython", ft = "python", mode = "x" },
+
       {
         "<leader>cd",
         "/```{r<CR>NjV/```<CR>k<Esc>:ToggleTermSendVisualSelection<CR>/```{r<CR>",
