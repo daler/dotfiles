@@ -33,6 +33,7 @@ return {
           "vimdoc",
           "yaml",
           "r",
+          "rst",
           "snakemake",
         },
         incremental_selection = {
