@@ -14,7 +14,8 @@ return {
           enable = true,
           -- Let vim-python-pep8-indent handle the python and snakemake indentation;
           -- disable markdown indentation because it prevents bulleted lists from wrapping correctly with `gq`.
-          disable = { "python", "snakemake", "markdown" },
+          disable = { "snakemake", "markdown" },
+          additional_vim_regex_highlighting = { "python" },
         },
         -- --------------------------------------------------------------------
         -- CONFIGURE ADDITIONAL PARSERS HERE
