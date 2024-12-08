@@ -1,6 +1,16 @@
 Changelog
 =========
 
+2024-12-08
+----------
+
+**vim**
+
+- Fix Python (and snakemake) indentation. treesitter indentation is not that
+  great for Python, getting confused with `(`, `{`, `[`, and `:` in strings and
+  comments. This is now fixed
+- update the lazy-lock with latest plugin versions
+
 2024-11-19
 ----------
 
