@@ -1235,6 +1235,14 @@ E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
    Version of toggleterm is pinned because later versions have issues with
    sending multiple selected lines to the terminal.
 
+.. versionchanged:: 2024-11-19
+   Added a custom command for sending Python code to IPython using IPython's
+   ``%cpaste`` magic command.
+
+.. versionchanged:: 2024-12-15
+   Removed the ``%cpaste`` functionality added 2024-11-19 due to IPython lag on
+   some systems. Use the more general bracketed paste mechanism.
+
 .. details:: Config
 
   This can be found in :file:`.config/nvim/lua/plugins/toggleterm.lua`:
@@ -2122,7 +2130,7 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.
 
 .. details:: Config
 
-  This can be found in :file:`.config/nvim/lua/plugins/nvim-colorizer.lua`:
+   This can be found in :file:`.config/nvim/lua/plugins/nvim-colorizer.lua`:
 
   .. literalinclude:: ../.config/nvim/lua/plugins/nvim-colorizer.lua
      :language: lua
@@ -2140,6 +2148,39 @@ colors.
     * - ``ColorizerToggle``
       - Toggle colorizing of hex codes
 
+
+``browsher.nvim``
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-12-15
+
+.. details:: Config
+
+   This can be found in :file:`.config/nvim/lua/plugins/browsher.lua`:
+
+   .. literalinclude:: ../.config/nvim/lua/plugins/browsher.lua
+      :language: lua
+
+`browsher.nvim <https://github.com/claydugo/browsher.nvim>`_ constructs a URL
+for GitHub or GitLab that includes line highlighting, based on your visual
+selection.
+
+It is currently configured to store the URL on your OS clipboard, which makes
+it useful for working on remote systems. However, you can comment out the
+``open_cmd`` config option if you want it to automatically open a browser tab.
+
+It is also currently configured to optionally read from a file stored outside
+of a dotfiles repo, for example to support the construction of URLs for private
+GitHub/GitLab instances. See the config file
+:file:`.config/nvim/lua/plugins/browsher.lua` for details.
+
+.. list-table::
+
+   * - command
+     - description
+
+   * - ``Browsher``
+     - Store URL on OS clipboard
 
 Colorschemes
 ------------
