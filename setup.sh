@@ -339,15 +339,10 @@ can_make_conda_env () {
 
 # Find the conda installation location
 CONDA_LOCATION=
-MAMBA_LOCATION=
 check_for_conda () {
     if command -v conda > /dev/null; then
 
         CONDA_LOCATION=$(conda info --base)
-
-        # In 1.5.5, mamba info --base now alwo reports version. So only grab
-        # the line that has a path on it.
-        MAMBA_LOCATION=$(mamba info --base | grep "/")
 
         # Even if the user has not run conda init, this will enable the use of
         # "conda activate" within the various conda creation steps below.
@@ -408,8 +403,8 @@ install_env_and_symlink () {
     EXECUTABLE=$3
 
     can_make_conda_env $ENVNAME
-    mamba create -y -n $ENVNAME $CONDAPKG
-    ln -sf "$MAMBA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
+    conda create -y -n $ENVNAME $CONDAPKG
+    ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
     printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
     check_opt_bin_in_path
     set -u
@@ -682,10 +677,10 @@ elif [ $task == "--install-radian" ]; then
     set +u
     # Note: radian needs R installed to compile the rchitect dependency. It
     # is unclear whether radian is dependent on a particular R version.
-    mamba create -y -n radian python r
+    conda create -y -n radian python r
     conda activate radian
     pip install radian
-    ln -sf $MAMBA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
+    ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
     conda deactivate
     set -u
     printf "${YELLOW}Installed $HOME/opt/bin/radian${UNSET}\n"
@@ -787,7 +782,7 @@ elif [ $task == "--install-pyp" ]; then
     ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
     set +u
     can_make_conda_env "pyp"
-    mamba create -y -n pyp python
+    conda create -y -n pyp python
     conda activate pyp
     pip install pypyp==${PYP_VERSION}
     ln -sf $(which pyp) $HOME/opt/bin/pyp
@@ -824,9 +819,9 @@ elif [ $task == "--install-bfg" ]; then
 elif [ $task == "--install-npm" ]; then
     ok "Install npm in a named conda env and add to ~/.path?"
     check_for_conda
-    mamba create -n npm -y nodejs
-    echo "export PATH=\$PATH:$MAMBA_LOCATION/envs/npm/bin" >> ~/.path
-    printf "${YELLOW}Installed npm to $MAMBA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
+    conda create -n npm -y nodejs
+    echo "export PATH=\$PATH:$CONDA_LOCATION/envs/npm/bin" >> ~/.path
+    printf "${YELLOW}Installed npm to $CONDA_LOCATION/envs/npm/bin and added that to your ~/.path file. You may need to restart your terminal or source ~/.bashrc.${UNSET}\n\n"
 
 elif [ $task == "--install-gh" ]; then
     ok "Install gh (GitHub CLI) in a named conda env and add to ~/.path?"
