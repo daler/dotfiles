@@ -1,6 +1,22 @@
 Changelog
 =========
 
+2024-12-15
+----------
+
+**vim**
+
+- The previous changes (2024-11-19) for better Python code pasting did not work
+  on all systems. IPython would sometimes have a lag using ``%cpaste``. So this
+  time, we use `bracketed paste <https://en.wikipedia.org/wiki/Bracketed-paste>
+  `__ when pasting into a running terminal. This seems to have better behavior
+  in general (including R) by reducing the noise of pasted lines.
+
+- new plugin, `browsher`, to construct a URL for github/gitlab that highlights
+  the relevant code based on a visual selection in nvim. The plugin config
+  includes support for optional custom providers stored outside the dotfiles
+  repo.
+
 2024-11-19
 ----------
 

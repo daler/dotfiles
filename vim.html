@@ -1813,6 +1813,14 @@ E.g., select a hunk with <kbd class="kbd docutils literal notranslate">vih</kbd>
 <p><span class="versionmodified changed">Changed in version 2024-03-31: </span>Version of toggleterm is pinned because later versions have issues with
 sending multiple selected lines to the terminal.</p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-11-19: </span>Added a custom command for sending Python code to IPython using IPython’s
+<code class="docutils literal notranslate"><span class="pre">%cpaste</span></code> magic command.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2024-12-15: </span>Removed the <code class="docutils literal notranslate"><span class="pre">%cpaste</span></code> functionality added 2024-11-19 due to IPython lag on
+some systems. Use the more general bracketed paste mechanism.</p>
+</div>
 <details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/toggleterm.lua</span></code>:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- toggleterm provides a terminal in vim you can send code to</span>
 <span class="kr">return</span> <span class="p">{</span>
@@ -1843,19 +1851,16 @@ sending multiple selected lines to the terminal.</p>
         <span class="kr">end</span><span class="p">,</span>
       <span class="p">})</span>
 
-      <span class="c1">-- IPython has the %cpaste magic command that will correctly handle</span>
-      <span class="c1">-- whitespace of all kinds. &quot;--&quot; alone on a line ends the input.</span>
-      <span class="c1">-- Directly creating this function in the keymapping was not passing over</span>
-      <span class="c1">-- the correct arguments, hence creating a new command here.</span>
+      <span class="c1">-- Patch toggleterm to use bracketed paste (special escape codes before</span>
+      <span class="c1">-- and after the text to be pasted)</span>
+      <span class="c1">-- https://en.wikipedia.org/wiki/Bracketed-paste</span>
+      <span class="c1">-- https://cirw.in/blog/bracketed-paste</span>
       <span class="n">vim</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">nvim_create_user_command</span><span class="p">(</span>
-        <span class="s2">&quot;ToggleTermSendToIPython&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ToggleTermSendBracketedPaste&quot;</span><span class="p">,</span>
         <span class="kr">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;%cpaste</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-          <span class="c1">-- do not trim whitespace, we want to let IPython %cpaste handle it.</span>
+          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[200~&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
           <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">send_lines_to_terminal</span><span class="p">(</span><span class="s2">&quot;visual_selection&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
-
-          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;--</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+          <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;toggleterm&quot;</span><span class="p">).</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[201~&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="kr">end</span><span class="p">,</span>
         <span class="p">{</span> <span class="n">range</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">nargs</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="p">}</span>
       <span class="p">)</span>
@@ -1863,14 +1868,11 @@ sending multiple selected lines to the terminal.</p>
 
     <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
       <span class="p">{</span> <span class="s2">&quot;gxx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendCurrentLine&lt;CR&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send current line to terminal&quot;</span> <span class="p">},</span>
-      <span class="p">{</span> <span class="s2">&quot;gx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendVisualSelection&lt;CR&gt;&#39;&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send selection to terminal&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="p">},</span>
-
-      <span class="c1">-- Override specifically for Python</span>
-      <span class="p">{</span> <span class="s2">&quot;gx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendToIPython&lt;CR&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send selection to IPython&quot;</span><span class="p">,</span> <span class="n">ft</span> <span class="o">=</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;gx&quot;</span><span class="p">,</span> <span class="s2">&quot;:ToggleTermSendBracketedPaste&lt;CR&gt;&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send selection to terminal&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="p">},</span>
 
       <span class="p">{</span>
         <span class="s2">&quot;&lt;leader&gt;cd&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;/```{r&lt;CR&gt;NjV/```&lt;CR&gt;k&lt;Esc&gt;:ToggleTermSendVisualSelection&lt;CR&gt;/```{r&lt;CR&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/```{r&lt;CR&gt;NjV/```&lt;CR&gt;k&lt;Esc&gt;:ToggleTermSendBracketedPaste&lt;CR&gt;/```{r&lt;CR&gt;&quot;</span><span class="p">,</span>
         <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Send RMarkdown chunk to R&quot;</span><span class="p">,</span>
       <span class="p">},</span>
       <span class="c1">-- Immiedately after creating the terminal, disable the cursorline.</span>
@@ -2957,7 +2959,9 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 2024-09-01.</span></p>
 </div>
-<details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/nvim-colorizer.lua</span></code>:</p>
+<details><summary>Config</summary><div class="details"><blockquote>
+<div><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/nvim-colorizer.lua</span></code>:</p>
+</div></blockquote>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- nvim-colorizer colors hex codes by their actual color</span>
 <span class="kr">return</span> <span class="p">{</span>
   <span class="p">{</span>
@@ -2979,6 +2983,76 @@ colors.</p>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ColorizerToggle</span></code></p></td>
 <td><p>Toggle colorizing of hex codes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="browsher-nvim">
+<h3><code class="docutils literal notranslate"><span class="pre">browsher.nvim</span></code><a class="headerlink" href="#browsher-nvim" title="Link to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 2024-12-15.</span></p>
+</div>
+<details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/browsher.lua</span></code>:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">return</span> <span class="p">{</span>
+  <span class="s1">&#39;claydugo/browsher.nvim&#39;</span><span class="p">,</span>
+  <span class="n">event</span> <span class="o">=</span> <span class="s2">&quot;VeryLazy&quot;</span><span class="p">,</span>
+  <span class="n">config</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+
+    <span class="kr">function</span> <span class="nf">get_custom_providers</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+      <span class="c1">-- You may have custom providers that you don&#39;t want to publish in</span>
+      <span class="c1">-- a dotfiles repo. If so, store them in `filename`.</span>
+      <span class="c1">--</span>
+      <span class="c1">-- If `filename` doesn&#39;t exist, just return an empty table, which will</span>
+      <span class="c1">-- give the default browsher behavior (i.e., providers for just</span>
+      <span class="c1">-- github.com and gitlab.com).</span>
+      <span class="c1">--</span>
+      <span class="c1">-- For example, the file ~/.browsher.lua might contain the following:</span>
+      <span class="c1">--</span>
+      <span class="c1">-- return {</span>
+      <span class="c1">--   [&quot;gitlab.private.com&quot;] = {</span>
+      <span class="c1">--     url_template = &quot;%s/-/blob/%s/%s&quot;,</span>
+      <span class="c1">--     single_line_format = &quot;#L%d&quot;,</span>
+      <span class="c1">--     multi_line_format = &quot;#L%d-%d&quot;,</span>
+      <span class="c1">--   },</span>
+      <span class="c1">-- }</span>
+      <span class="kd">local</span> <span class="n">f</span> <span class="o">=</span> <span class="nb">io.open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+      <span class="kr">if</span> <span class="n">f</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="nb">io.close</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="nb">dofile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+      <span class="kr">else</span>
+        <span class="kr">return</span> <span class="p">{}</span>
+      <span class="kr">end</span>
+    <span class="kr">end</span>
+
+    <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;browsher&#39;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
+      <span class="c1">-- Copy URL to OS clipboard. If you want a browser to open automatically,</span>
+      <span class="c1">-- don&#39;t specify open_cmd here.</span>
+      <span class="n">open_cmd</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+
+      <span class="c1">-- Default location of custom providers is ~/.browsher.lua, but it&#39;s OK</span>
+      <span class="c1">-- if it doesn&#39;t exist.</span>
+      <span class="n">providers</span> <span class="o">=</span> <span class="n">get_custom_providers</span><span class="p">(</span><span class="n">vim</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">HOME</span> <span class="o">..</span> <span class="s1">&#39;/.browsher.lua&#39;</span><span class="p">),</span>
+    <span class="p">})</span>
+  <span class="kr">end</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></details><p><a class="reference external" href="https://github.com/claydugo/browsher.nvim">browsher.nvim</a> constructs a URL
+for GitHub or GitLab that includes line highlighting, based on your visual
+selection.</p>
+<p>It is currently configured to store the URL on your OS clipboard, which makes
+it useful for working on remote systems. However, you can comment out the
+<code class="docutils literal notranslate"><span class="pre">open_cmd</span></code> config option if you want it to automatically open a browser tab.</p>
+<p>It is also currently configured to optionally read from a file stored outside
+of a dotfiles repo, for example to support the construction of URLs for private
+GitHub/GitLab instances. See the config file
+<code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/browsher.lua</span></code> for details.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Browsher</span></code></p></td>
+<td><p>Store URL on OS clipboard</p></td>
 </tr>
 </tbody>
 </table>
@@ -3090,6 +3164,7 @@ fork enough to give you an idea of how to modify on your own.</p>
 <li class="toctree-l3"><a class="reference internal" href="#obsidian-nvim"><code class="docutils literal notranslate"><span class="pre">obsidian.nvim</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#render-markdown"><code class="docutils literal notranslate"><span class="pre">render-markdown</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nvim-colorizer"><code class="docutils literal notranslate"><span class="pre">nvim-colorizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browsher-nvim"><code class="docutils literal notranslate"><span class="pre">browsher.nvim</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#colorschemes">Colorschemes</a></li>
