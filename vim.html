@@ -1395,7 +1395,7 @@ mapped, which you can read about in the <a class="reference external" href="http
           <span class="n">enable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
           <span class="c1">-- Let vim-python-pep8-indent handle the python and snakemake indentation;</span>
           <span class="c1">-- disable markdown indentation because it prevents bulleted lists from wrapping correctly with `gq`.</span>
-          <span class="n">disable</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;snakemake&quot;</span><span class="p">,</span> <span class="s2">&quot;markdown&quot;</span> <span class="p">},</span>
+          <span class="n">disable</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;markdown&quot;</span> <span class="p">},</span>
         <span class="p">},</span>
         <span class="c1">-- --------------------------------------------------------------------</span>
         <span class="c1">-- CONFIGURE ADDITIONAL PARSERS HERE</span>
@@ -1674,12 +1674,11 @@ have that many features yet, either.</p>
 <details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/trouble.lua</span></code>:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- trouble splits window to show issues found by LSP</span>
 <span class="kr">return</span> <span class="p">{</span>
-  <span class="p">{</span>
-    <span class="s2">&quot;folke/trouble.nvim&quot;</span><span class="p">,</span>
-    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;nvim-tree/nvim-web-devicons&quot;</span> <span class="p">},</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="p">{</span> <span class="s2">&quot;&lt;leader&gt;ct&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;cmd&gt;TroubleToggle&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Toggle trouble.nvim&quot;</span> <span class="p">},</span>
-    <span class="p">},</span>
+  <span class="s2">&quot;folke/trouble.nvim&quot;</span><span class="p">,</span>
+  <span class="n">opts</span> <span class="o">=</span> <span class="p">{},</span> <span class="c1">-- for default options, refer to the configuration section for custom setup.</span>
+  <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;Trouble&quot;</span><span class="p">,</span>
+  <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span> <span class="s2">&quot;&lt;leader&gt;ct&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;cmd&gt;Trouble diagnostics toggle&lt;cr&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Diagnostics (Trouble)&quot;</span><span class="p">,</span> <span class="p">},</span>
   <span class="p">},</span>
 <span class="p">}</span>
 </pre></div>
@@ -2571,6 +2570,13 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
       <span class="c1">-- make the character a little less dense</span>
       <span class="n">indent</span> <span class="o">=</span> <span class="p">{</span> <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;┊&quot;</span> <span class="p">},</span>
       <span class="n">exclude</span> <span class="o">=</span> <span class="p">{</span> <span class="n">filetypes</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;rst&quot;</span> <span class="p">}</span> <span class="p">},</span>
+
+      <span class="c1">-- don&#39;t underline beginning and end (I think it adds too much visual</span>
+      <span class="c1">-- clutter)</span>
+      <span class="n">scope</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">show_start</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="n">show_end</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="p">},</span>
     <span class="p">},</span>
   <span class="p">},</span>
 <span class="p">}</span>
@@ -2587,15 +2593,6 @@ vertical lines to indicate the current <a class="reference external" href="https
 <p><span class="versionmodified added">Added in version 2017.</span></p>
 </div>
 <details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/vim-python-pep8-indent.lua</span></code>:</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- vim-python-pep8-indent gives better indentation for python</span>
-<span class="kr">return</span> <span class="p">{</span>
-  <span class="p">{</span>
-    <span class="s2">&quot;daler/vim-python-pep8-indent&quot;</span><span class="p">,</span>
-    <span class="n">ft</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;snakemake&quot;</span> <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 </div></details><p><a class="reference external" href="https://github.com/Vimjas/vim-python-pep8-indent">vim-python-pep8-indent</a>
 auto-indents Python using pep8 recommendations. This happens as you’re typing,
 or when you use <kbd class="kbd docutils literal notranslate">gq</kbd> on a selection to wrap.</p>
