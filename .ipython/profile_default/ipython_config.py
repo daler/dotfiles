@@ -4,15 +4,21 @@
 c = get_config()  #noqa
 
 # Default traceback color of dark yellow is a bit painful. This sets the
-# background color to "bg:ansiwhite" to disable that highlighting. I
+# background color to "bg:ansiwhite" to disable that highlighting.
+#
+# Needs to be set differently in versions before vs after
+# https://github.com/ipython/ipython/pull/14518/files, so we do it both here.
 from IPython.core.ultratb import VerboseTB
 VerboseTB.tb_highlight = "bg:ansiwhite"
+VerboseTB._tb_highlight = "bg:ansiwhite"
 
 # Set style of both input as well as tracebacks; any pygments styles are fair
-# game.
-style = "zenburn"
+# game. This one is minimalistic but works well with light or dark terminal
+# backgrounds.
+style = "bw"
 c.TerminalInteractiveShell.highlighting_style = style
 VerboseTB.tb_highlight_style = style
+VerboseTB._tb_highlight_style = style
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
