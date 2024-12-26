@@ -8,7 +8,7 @@
 .functions
 .git-completion.bash
 .gitconfig
-.ipython/profile_default
+.ipython/profile_default/
 .path
 .tmux.conf
 .vimrc
