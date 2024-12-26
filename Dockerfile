@@ -65,6 +65,8 @@ requirements.txt \
 # Directories have to be ADDed one at a time
 ADD .config ./.config
 ADD .config/nvim/lua ./.config/nvim/lua
+ADD .ipython ./.ipython
+ADD .ipython/profile_default ./.ipython/profile_default
 
 # Run setup in order
 RUN ./setup.sh --dotfiles
