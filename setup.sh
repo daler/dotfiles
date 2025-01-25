@@ -20,7 +20,7 @@ fi
 set -eo pipefail
 
 # Change tool versions here
-VISIDATA_VERSION=2.11
+VISIDATA_VERSION=3.1.1
 HUB_VERSION=2.14.2
 NVIM_VERSION=0.10.1
 RG_VERSION=13.0.0
@@ -638,6 +638,8 @@ elif [ $task == "--install-tmux" ]; then
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
     install_env_and_symlink visidata visidata="${VISIDATA_VERSION}" vd
+    conda activate visidata
+    pip install visidata==${VISIDATA_VERSION}
     printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
 
