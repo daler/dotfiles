@@ -24,6 +24,7 @@ VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
 NVIM_VERSION=0.10.1
 RG_VERSION=13.0.0
+RG_VERSION=14.1.1
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
 ICDIFF_VERSION=2.0.4
@@ -606,7 +607,7 @@ elif [ $task == "--install-ripgrep" ]; then
     mkdir -p /tmp/rg
 
     if [[ $OSTYPE == darwin* ]]; then
-        URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-apple-darwin.tar.gz
+        URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-aarch64-apple-darwin.tar.gz
     else
         URL=https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz
     fi
