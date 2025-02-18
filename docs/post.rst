@@ -38,9 +38,9 @@ beginning/end of a *document* rather than a *line*. This is different from the
 Windows and Linux behavior of jumping to beginning/end of a line.
 
 The typical workaround is to use Cmd-Left and Cmd-Right. Some programs (like
-Outlook on Mac) already override this. But some don't, noticeable web browsers.
+Outlook on Mac) already override this. But some don't, like web browsers.
 When editing a large text input box in a web browser, it can be frustrating if
-you mistakenly hit End, expecting to jump to the end of a like in Outlook, but
+you mistakenly hit End, expecting to jump to the end of a line in Outlook, but
 instead it jumps to the very end of the text input and you have to go find where you were.
 
 Running ``./setup.sh --mac-keyboard-fix`` fixes this by creating a new
@@ -58,14 +58,15 @@ systems which typically default to bash as well). See `this post
 <https://apple.stackexchange.com/a/361957>`_ for a great explanation of the
 differences. 
 
-The ``chsh`` command just has to be run once to change the shell to bash. To
-avoid the message about zsh popping up all the time (as `documented at
-support.apple.com <https://support.apple.com/en-us/HT208050>`_), set
+The ``chsh`` command just has to be run once to change the shell to bash. But
+the warning will still show up. To avoid the message about zsh popping up all
+the time (as `documented at support.apple.com
+<https://support.apple.com/en-us/HT208050>`_), set
 ``BASH_SILENCE_DEPRECATION_WARNING=1``. Here, we export it in :file:`~/.extra`,
 which as :ref:`bashrc` describes, will be sourced by :file:`.bashrc` once these
 dotfiles are set up.
 
-.. code-block::
+.. code-block:: bash
 
     chsh -s /bin/bash
     echo "export BASH_SILENCE_DEPRECATION_WARNING=1" >> ~/.extra
@@ -114,7 +115,7 @@ exist). Then, by using the ``s`` alias, your SSH key will be added to the
 session using your login to MacOS as the authentication, without needing to
 type in your passphrase
 
-.. code-block::
+.. code-block:: bash
 
     # this goes in ~/.ssh/config
     Host *
