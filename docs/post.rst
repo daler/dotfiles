@@ -1,3 +1,5 @@
+.. _postinstall:
+
 Post-setup tasks
 ================
 
@@ -126,10 +128,45 @@ type in your passphrase
 Git config
 ----------
 
+Setting up git is important for your commits to be attributed to you.
+
 .. code-block:: bash
 
     git config --global user.name "your name here"
     git config --global user.email "your email here"
+
+
+Alternatively you can edit :file:`~/.gitconfig` to add:
+
+.. code-block:: ini
+
+   [user]
+       name = "your name here"
+       email = "your email here"
+
+Optionally, you can conditionally include other files. This is useful, for
+example, if you have different emails configured for different remotes (GitHub,
+GitLab):
+
+.. code-block:: ini
+
+   # In main .gitconfig, this will be the default...
+   [user]
+       name = "your name here"
+       email = "your email here"
+
+   # ...unless the configured SSH remote matches "git@gitlab.com:*/**"
+   [includeIf "hasconfig:remote.*.url:git@gitlab.com:*/**"]
+       # ...in which case this file will be included verbatim
+       path = .gitlab.inc
+
+.. code-block:: ini
+
+   # In .gitlab.inc
+   [user]
+       # Override the email
+       email = "your OTHER email here"
+
 
 Alacritty config
 ----------------
