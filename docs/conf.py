@@ -75,4 +75,5 @@ linkcheck_anchors = False
 linkcheck_ignore = [
     r'https://apple.stackexchange.com',
     r'https://stackoverflow.com',
+    r'www.gnu.org/software',
 ]
