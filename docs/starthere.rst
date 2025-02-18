@@ -252,9 +252,15 @@ details on how to activate environments.
     <https://bioconda.github.io>`_.
 
 
+3: Post-installation
+--------------------
+
+Now that the files are copied, see :ref:`postinstall` for some next steps to
+take, like setting up SSH keys, macOS-specific tweaks, git config, and more.
+
 .. _toolsection:
 
-3: Installing programs
+4: Installing programs
 ----------------------
 
 The :file:`setup.sh` script has many commands for installing various tools
