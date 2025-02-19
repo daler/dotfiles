@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Migrating to Neovim Lua config &#8212; dotfiles  documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
@@ -155,15 +155,15 @@ info.</p></li>
 associative array, sort of like like a Python dict, or an R named list, or
 a Perl hash.</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- a table</span>
-<span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;asdf&quot;</span> <span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;asdf&quot;</span><span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
 </li>
 <li><p>Functions are defined with a <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">...</span> <span class="pre">end</span></code> block. Functions can be
 called multiple different ways. Functions can be anonymous (omit the “myfunc”
 identifier below).</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">myfunc</span> <span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
-  <span class="kr">return</span> <span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span><span class="w"> </span><span class="nf">myfunc</span><span class="w"> </span><span class="p">(</span><span class="nv">arg1</span><span class="p">,</span><span class="w"> </span><span class="nv">arg2</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">return</span><span class="w"> </span><span class="nv">arg1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">arg2</span>
 <span class="kr">end</span>
 </pre></div>
 </div>
@@ -207,18 +207,18 @@ these dotfiles.</p>
 <p>For Lua, see the <a class="reference external" href="https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings">nvim docs on creating mappings with Lua</a> for more
 details. This is for mappings created within <code class="file docutils literal notranslate"><span class="pre">init.lua</span></code>, for example.</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- directly in Lua</span>
-<span class="n">vim</span><span class="p">.</span><span class="n">keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;leader&gt;1&quot;</span><span class="p">,</span> <span class="s2">&quot;:bfirst&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;First buffer&quot;</span> <span class="p">})</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;:bfirst&lt;CR&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;First buffer&quot;</span><span class="w"> </span><span class="p">})</span>
 </pre></div>
 </div>
 <p>For plugins managed by lazy.nvim, they are instead specified in the <code class="docutils literal notranslate"><span class="pre">keys</span></code>
 property of the plugin’s table:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- in a plugin</span>
 <span class="p">{</span>
-  <span class="s2">&quot;plugin/name&quot;</span><span class="p">,</span>
-  <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">{</span> <span class="s2">&quot;&lt;leader&gt;1&quot;</span><span class="p">,</span> <span class="s2">&quot;:bfirst&lt;CR&gt;&quot;</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;First buffer&quot;</span> <span class="p">},</span>
-  <span class="p">},</span>
-  <span class="c1">-- possibly other stuff for plugin...</span>
+<span class="w">  </span><span class="s2">&quot;plugin/name&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;:bfirst&lt;CR&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;First buffer&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="c1">-- possibly other stuff for plugin...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -231,17 +231,17 @@ needs to be in a table. When setting in a plugin config, it’s not in a table.<
 <p>Edit <code class="file docutils literal notranslate"><span class="pre">lua/plugins.lua</span></code>.</p>
 <p>Follow the existing plugin files for a guide, but basically you’re aiming for
 something like this:</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">return</span> <span class="p">{</span>
-  <span class="s2">&quot;username/reponame&quot;</span><span class="p">,</span>
-  <span class="n">config</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-    <span class="c1">-- stuff here for setup. Might include keybindings or more complicated</span>
-    <span class="c1">-- things.</span>
-  <span class="kr">end</span><span class="p">,</span>
-  <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1">-- ... see above for discussion of keys</span>
-  <span class="p">},</span>
-  <span class="n">cmd</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1">--</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;username/reponame&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="c1">-- stuff here for setup. Might include keybindings or more complicated</span>
+<span class="w">    </span><span class="c1">-- things.</span>
+<span class="w">  </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- ... see above for discussion of keys</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">--</span>
 <span class="p">}</span>
 </pre></div>
 </div>

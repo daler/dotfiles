@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Post-setup tasks &#8212; dotfiles  documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
@@ -49,7 +49,7 @@
           <div class="body" role="main">
             
   <section id="post-setup-tasks">
-<h1>Post-setup tasks<a class="headerlink" href="#post-setup-tasks" title="Link to this heading">¶</a></h1>
+<span id="postinstall"></span><h1>Post-setup tasks<a class="headerlink" href="#post-setup-tasks" title="Link to this heading">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code> script tries to automate as much as possible, but there are
 some things that have to be manually done. This page documents those additional
 tasks.</p>
@@ -84,9 +84,9 @@ TAB): under preferences, go to Profiles, then the Terminal tab. Make sure
 beginning/end of a <em>document</em> rather than a <em>line</em>. This is different from the
 Windows and Linux behavior of jumping to beginning/end of a line.</p>
 <p>The typical workaround is to use Cmd-Left and Cmd-Right. Some programs (like
-Outlook on Mac) already override this. But some don’t, noticeable web browsers.
+Outlook on Mac) already override this. But some don’t, like web browsers.
 When editing a large text input box in a web browser, it can be frustrating if
-you mistakenly hit End, expecting to jump to the end of a like in Outlook, but
+you mistakenly hit End, expecting to jump to the end of a line in Outlook, but
 instead it jumps to the very end of the text input and you have to go find where you were.</p>
 <p>Running <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--mac-keyboard-fix</span></code> fixes this by creating a new
 <code class="docutils literal notranslate"><span class="pre">~/Library/KeyBindings/DefaultKeyBinding.dict</span></code> file; see that file for
@@ -98,14 +98,14 @@ details. You’ll need to restart programs to see the effect.</p>
 dotfiles assume bash as the default shell (for compatibility with HPC (Linux)
 systems which typically default to bash as well). See <a class="reference external" href="https://apple.stackexchange.com/a/361957">this post</a> for a great explanation of the
 differences.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">chsh</span></code> command just has to be run once to change the shell to bash. To
-avoid the message about zsh popping up all the time (as <a class="reference external" href="https://support.apple.com/en-us/HT208050">documented at
-support.apple.com</a>), set
+<p>The <code class="docutils literal notranslate"><span class="pre">chsh</span></code> command just has to be run once to change the shell to bash. But
+the warning will still show up. To avoid the message about zsh popping up all
+the time (as <a class="reference external" href="https://support.apple.com/en-us/HT208050">documented at support.apple.com</a>), set
 <code class="docutils literal notranslate"><span class="pre">BASH_SILENCE_DEPRECATION_WARNING=1</span></code>. Here, we export it in <code class="file docutils literal notranslate"><span class="pre">~/.extra</span></code>,
 which as <a class="reference internal" href="bash.html#bashrc"><span class="std std-ref">.bashrc</span></a> describes, will be sourced by <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code> once these
 dotfiles are set up.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chsh</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
-<span class="n">echo</span> <span class="s2">&quot;export BASH_SILENCE_DEPRECATION_WARNING=1&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">extra</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chsh<span class="w"> </span>-s<span class="w"> </span>/bin/bash
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export BASH_SILENCE_DEPRECATION_WARNING=1&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.extra
 </pre></div>
 </div>
 <p>This can also be done by using <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--mac-stuff</span></code>.</p>
@@ -146,18 +146,45 @@ more specific commands.</p>
 exist). Then, by using the <code class="docutils literal notranslate"><span class="pre">s</span></code> alias, your SSH key will be added to the
 session using your login to MacOS as the authentication, without needing to
 type in your passphrase</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this goes in ~/.ssh/config</span>
-<span class="n">Host</span> <span class="o">*</span>
-  <span class="n">UseKeychain</span> <span class="n">yes</span>
-  <span class="n">AddKeysToAgent</span> <span class="n">yes</span>
-  <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_ed25519</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># this goes in ~/.ssh/config</span>
+Host<span class="w"> </span>*
+<span class="w">  </span>UseKeychain<span class="w"> </span>yes
+<span class="w">  </span>AddKeysToAgent<span class="w"> </span>yes
+<span class="w">  </span>IdentityFile<span class="w"> </span>~/.ssh/id_ed25519
 </pre></div>
 </div>
 </section>
 <section id="git-config">
 <h2>Git config<a class="headerlink" href="#git-config" title="Link to this heading">¶</a></h2>
+<p>Setting up git is important for your commits to be attributed to you.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;your name here&quot;</span>
 git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;your email here&quot;</span>
+</pre></div>
+</div>
+<p>Alternatively you can edit <code class="file docutils literal notranslate"><span class="pre">~/.gitconfig</span></code> to add:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[user]</span>
+<span class="w">    </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your name here&quot;</span>
+<span class="w">    </span><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your email here&quot;</span>
+</pre></div>
+</div>
+<p>Optionally, you can conditionally include other files. This is useful, for
+example, if you have different emails configured for different remotes (GitHub,
+GitLab):</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># In main .gitconfig, this will be the default...</span>
+<span class="k">[user]</span>
+<span class="w">    </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your name here&quot;</span>
+<span class="w">    </span><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your email here&quot;</span>
+
+<span class="c1"># ...unless the configured SSH remote matches &quot;git@gitlab.com:*/**&quot;</span>
+<span class="k">[includeIf &quot;hasconfig:remote.*.url:git@gitlab.com:*/**&quot;]</span>
+<span class="w">    </span><span class="c1"># ...in which case this file will be included verbatim</span>
+<span class="w">    </span><span class="na">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">.gitlab.inc</span>
+</pre></div>
+</div>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># In .gitlab.inc</span>
+<span class="k">[user]</span>
+<span class="w">    </span><span class="c1"># Override the email</span>
+<span class="w">    </span><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;your OTHER email here&quot;</span>
 </pre></div>
 </div>
 </section>
