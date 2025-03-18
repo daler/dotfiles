@@ -20,6 +20,7 @@ return {
                     vim.api.nvim_buf_set_keymap(0, "n", "gxx", "<Plug>RDSendLine", {})
                     vim.api.nvim_buf_set_keymap(0, "v", "gx", "<Plug>RSendSelection", {})
                     vim.api.nvim_buf_set_keymap(0, "n", "<leader>k", "<Plug>RMakeHTML", {})
+                    vim.api.nvim_buf_set_keymap(0, "n", "<leader>cd", "<Plug>RSendChunk<CR><Plug>RNextRChunk", {})
                 end
             },
             R_args = {"--no-save"},
