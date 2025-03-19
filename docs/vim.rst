@@ -568,10 +568,19 @@ track of what has changed recently.
      -
      - fancy rendering of markdown files
 
+   * - :ref:`browsher`
+     - 2024-12-15
+     -
+     - open corresponding github/gitlab page directly from your code
 
-Sometimes there are better plugins for a particular functionality. I've kept
-the documentation, but noted when they've been deprecated here and in the
-linked description.
+   * - :ref:`r.nvim`
+     - 2025-03-18
+     -
+     - lots of features for working in R
+
+Sometimes there are better plugins for a particular functionality, in which
+case the old one will be deprecated. I've kept the documentation, but noted
+when they've been deprecated here and in the linked description.
 
 .. list-table::
    :header-rows: 1
@@ -2181,6 +2190,162 @@ GitHub/GitLab instances. See the config file
 
    * - ``Browsher``
      - Store URL on OS clipboard
+
+``r.nvim``
+~~~~~~~~~~
+
+`r.nvim <https://github.com/R-nvim/R.nvim/>`__ provides *extensive* integration with R.
+
+.. versionadded:: 2025-03-18
+
+.. details:: Config
+
+   This can be found in :file:`.config/nvim/lua/plugins/r.nvim.lua`:
+
+   .. literalinclude:: ../.config/nvim/lua/plugins/r.nvim.lua
+      :language: lua
+
+This is still in testing mode, so to try it out you'll need to comment out the
+``enable = false`` line in the config.
+
+This plugin needs:
+
+- R available in the environment *before* opening an R or Rmd file
+- nvim v0.10.4 or later
+- gcc compilre to build the ``nvimcom`` package
+
+It also needs a one-time installation of the package ``nvimcom``, which
+happends automatically the first time you open an R or Rmd file with this
+plugin activated. This package is used to communicate between R and nvim.
+
+This gets tricky when using an R installation in a conda environment that will
+be saved with ``conda env export`` for reproducibility. That's because we want
+to avoid "contaminating" that R environment with this ``nvimcom`` package which
+has nothing to do with the actual analysis.
+
+For this, we should use the ``R_LIBS_USER`` environment variable, which in turn
+needs to be versioned for particular versions of R. This can be accomplished
+with the following function that will set the ``R_LIBS_USER`` appropriately
+depending on the particular version of R you happen to be using.
+
+.. note::
+
+    If you are intending to run ``install.packages()`` within a conda
+    environment to add analysis dependencies, then do not use this function 
+    because it will put installed packages in your home directory, which will
+    not be reproducible for others.
+
+
+.. code-block:: bash
+
+   # Usage: Ropen <filename>
+   # (*.R, *.Rmd)
+
+   function Ropen () {
+     R_VERSION=$(R --version | head -n1 | grep -Eo "[0-9]+\.[0-9]+")
+     export R_LIBS_USER="/home/$USER/R/$R_VERSION"
+     mkdir -p R_LIBS_USER
+     nvim $1
+   }
+
+
+.. details:: Notes on this function
+
+  ``R_LIBS_USER`` can be specified with a ``%v`` as a placeholder for
+  major.minor version, which R will fill in. It also has a default value
+  *within* R, but not in bash.
+
+  Our goal is to install ``nvimcom`` in the ``R_LIBS_USER`` directory so that
+  we are not adding in *interface* dependencies into *analysis* dependencies.
+
+  R will only use ``R_LIBS_USER`` to install packages into if the directory
+  already exists -- which might not be the case, if this is the first time
+  we're running this version of R.
+
+  We can't use the ``%v`` placeholder and create the directory outside of R,
+  because bash doesn't know how to fill in the ``%v``. Our options are to have
+  R interpret ``%v`` and make the directory::
+
+    Rscript -e "dir.create(Sys.getenv('R_LIBS_USER'), showWarnings=FALSE)"
+
+  Or parse the output of ``R --version``::
+
+    R_VERSION=$(R --version | head -n1 | grep -Eo "[0-9]+\.[0-9]+")
+
+  It appears that ``Rscript`` takes a little bit longer to start up than ``R
+  --version``, so I opted to go with the bash version. See ``help(.libPaths)``
+  for more info.
+
+Interesting things that this plugin provides:
+
+
+- run a command in R, copy the output, and insert into the current file
+  commented out. Perfect for things like ``df %>% head`` to document what
+  a dataframe looks like in your code.
+
+- help shows up in a panel in nvim instead of less
+
+- tab completion of objects in R terminal
+
+- tab completion of objects in nvim .R / .Rmd file
+
+- inspect an object -- for dataframes, this will save the object under the
+  cursor to a file, open a new tmux pane, open the file in visidata in that
+  pane. Quitting visidata closes the pane as well. This is equivalent to the
+  ``View()`` function in RStudio
+
+- an object browser. This is equivalent to the object browser panel in RStudio
+
+- capability to map arbitrary nvim commands to arbitrary R commands on the
+  identifier in the code. For example, you could map ``dim({object})`` to
+  ``<leader>do``, and then you could use ``<leader>do`` when your cursor is
+  over an object in .R or .Rmd to quickly check dimensions.
+
+
+.. note::
+
+   This plugin is configured by default to use the ``<localleader>``, which is
+   ``\\`` (backslash) by default. Local leader is intended to be used for
+   filetype-specific mappings (see ``:help maplocalleader``). These dotfiles
+   are not good about doing so, but the ``r.nvim`` plugin is, hence most of the
+   mappings using local leader. For consistency other mapped commands with
+   other plugins, I've remapped some commands to use leader, as indicated in
+   the table below.
+
+.. list-table::
+
+   * - command
+     - description
+
+   * - :kbd:`<localleader>rf`
+     - Start R in a terminal to the right
+
+   * - :kbd:`<localleader>ro`
+     - Open the object browser
+
+   * - :kbd:`<localleader>rq`
+     - Quit R without saving workspace
+
+   * - :kbd:`<leader>k`
+     - Render Rmd into HTML
+
+   * - :kbd:`<localleader>rv`
+     - View the dataframe or matrix under the cursor in visidata
+
+   * - :kbd:`<localleader>o`
+     - Send the line to R, capture the output, and insert it here as a comment
+
+   * - :kbd:`<leader>cd`
+     - Send the current chunk to R and move to the next
+
+   * - :kbd:`gx`
+     - Send the current selection to R
+
+   * - :kbd:`gxx`
+     - Send the current line to R
+
+   * - ``RMapsDesc``
+     - List all mappings for this plugin (there are a lot!)
 
 Colorschemes
 ------------
