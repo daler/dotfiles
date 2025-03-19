@@ -5,6 +5,9 @@ return {
     version = false,
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     config = function()
       require("nvim-treesitter.configs").setup({
         highlight = {
@@ -49,6 +52,35 @@ return {
             node_incremental = "<Tab>",
             scope_incremental = false,
             node_decremental = "<S-Tab>",
+          },
+        },
+
+        -- Support selecting objects based on parser. E.g., vaf to visually
+        -- select a function, or cip to change inside a parameter. More can be
+        -- added, see
+        -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["af"] = { query = "@function.outer", desc = "Select function (outer)" },
+              ["if"] = { query = "@function.inner", desc = "Select function (inner)" },
+              ["ap"] = { query = "@parameter.outer", desc = "Select parameter (outer)" },
+              ["ip"] = { query = "@parameter.inner", desc = "Select parameter (inner)" },
+            },
+
+            -- use the entire line V) or just characters (v (default)) when
+            -- selecting
+            selection_modes = {
+              ["@parameter.inner"] = "v", -- charwise
+              ["@parameter.outer"] = "v", -- charwise
+              ["@function.inner"] = "V", -- linewise
+              ["@function.outer"] = "V", -- linewise
+              ["@class.inner"] = "V", -- linewise
+              ["@class.outer"] = "V", -- linewise
+              ["@scope"] = "v",
+            },
           },
         },
       })
