@@ -12,13 +12,15 @@ return {
         },
         indent = {
           enable = true,
-          -- Let vim-python-pep8-indent handle the python and snakemake indentation;
-          -- disable markdown indentation because it prevents bulleted lists from wrapping correctly with `gq`.
+
+          -- Disable markdown indentation because it prevents bulleted lists
+          -- from wrapping correctly with `gq`.
           disable = { "markdown" },
         },
         -- --------------------------------------------------------------------
         -- CONFIGURE ADDITIONAL PARSERS HERE
-        -- These will be attempted to be installed automatically, but you'll need a C compiler installed.
+        -- These will be attempted to be installed automatically, but you'll
+        -- need a C compiler installed.
         ensure_installed = {
           "bash",
           "css",
@@ -30,13 +32,16 @@ return {
           "markdown_inline",
           "python",
           "r",
-          "rnoweb", 
+          "rnoweb",
           "rst",
           "snakemake",
           "vim",
           "vimdoc",
           "yaml",
         },
+
+        -- Starting from the current line, use Tab or Shift-Tab to increase or
+        -- decrease the selection depending on scope.
         incremental_selection = {
           enable = true,
           keymaps = {
