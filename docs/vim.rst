@@ -1764,6 +1764,8 @@ I'm still figuring out when it's better to use this, fugitive, or gitsigns.
 See the homepage for details.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -1796,6 +1798,8 @@ a way that the changes can be undone (in contrast to running ``black``
 manually on the file, which overwrites it).
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -2060,6 +2064,8 @@ Notes on other plugins:
 The mapped commands below use :kbd:`o` ([o]bsidian) as a a prefix.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -2123,6 +2129,8 @@ distracting when entering and exiting insert mode. However, this plugin can be
 useful when reviewing a long RMarkdown file to focus on the narrative text.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -2150,6 +2158,8 @@ colors.
 
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -2184,6 +2194,8 @@ GitHub/GitLab instances. See the config file
 :file:`.config/nvim/lua/plugins/browsher.lua` for details.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
    * - command
      - description
@@ -2305,14 +2317,16 @@ Interesting things that this plugin provides:
 .. note::
 
    This plugin is configured by default to use the ``<localleader>``, which is
-   ``\\`` (backslash) by default. Local leader is intended to be used for
+   ``\`` (backslash) by default. Local leader is intended to be used for
    filetype-specific mappings (see ``:help maplocalleader``). These dotfiles
-   are not good about doing so, but the ``r.nvim`` plugin is, hence most of the
+   are not good about doing this, but the ``r.nvim`` plugin is, hence most of the
    mappings using local leader. For consistency other mapped commands with
    other plugins, I've remapped some commands to use leader, as indicated in
    the table below.
 
 .. list-table::
+    :header-rows: 1
+    :align: left
 
    * - command
      - description
