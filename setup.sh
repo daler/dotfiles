@@ -948,10 +948,21 @@ elif [ $task == "--diffs" ]; then
 
 elif [ $task == "--vim-diffs" ]; then
     ok "Opens up vim -d to display differences between files in this repo and your home directory. Your existing files will be on the RIGHT"
+
     for i in $(cat include.file); do
-        if ! diff $i ~/$i &> /dev/null; then
-            nvim -d $i ~/$i;
+        # if a directory, list files inside it recursively
+        # otherwise, use as is
+        if [[ -d $i ]]; then
+            all_files=$( find $i -type f )
+        else
+            all_files=( $i )
         fi
+
+        for j in ${all_files[@]}; do
+            if ! diff $j ~/$j &> /dev/null; then
+                nvim -d $j ~/$j;
+            fi
+        done
     done
 else
     showHelp
