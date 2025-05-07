@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2025-05-07
+----------
+
+**setup**
+
+- ``setup.sh --vim-diffs`` now correctly shows diffs from inside included directories (thanks @mitraak)
+
 2024-12-15
 ----------
 
