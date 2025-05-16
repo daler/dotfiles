@@ -852,7 +852,53 @@ elif [ $task == "--dotfiles" ]; then
     cd "$(dirname "${BASH_SOURCE}")";
 
     function doIt() {
-        rsync --no-perms --backup --backup-dir="$BACKUP_DIR" -rvh --times --files-from=include.file . $HOME
+        # create backup dir
+        if [ ! -e $BACKUP_DIR ]; then
+            mkdir -p $BACKUP_DIR
+        fi
+
+        # now we go through include.file making copies from HOME to BACKUP_DIR
+        # and replacing with new dotfiles
+        for f in $( cat include.file );
+        do
+            # this is the final destination
+            dest=$HOME/$f
+
+            # if a directory
+            if [ -d $f ]; then
+                # strip trailing slash
+                ff=$( echo $f | sed -e "s/\/$//" )
+
+                # update the final destination
+                dest=$HOME/$ff
+
+                # - if destination exists make a backup
+                # - otherwise, just make the folder
+                if [ -e $dest ]; then
+                    mkdir -p ${BACKUP_DIR}/$ff
+
+                    # copy recursively (including hidden), then force delete to clean up
+                    # - NOTE: should we use 'mv' or 'rsync --delete' instead?
+                    cp -r -p ${dest}/. ${BACKUP_DIR}/${ff}/
+                    rm -rf $dest
+                else
+                    mkdir -p $dest
+                fi
+
+                # actually copy the files (including hidden) to destination
+                cp -r ${ff}/. ${dest}/
+            else
+                # if a regular file
+
+                # if it exists copy to backup
+                if [ -e $dest ]; then
+                    cp -p $dest ${BACKUP_DIR}/
+                fi
+
+                # then copy to destination
+                cp $f $dest
+            fi
+        done
     }
 
     if [ $DOTFILES_FORCE == "true" ]; then
