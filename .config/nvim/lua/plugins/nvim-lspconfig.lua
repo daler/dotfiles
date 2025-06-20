@@ -2,6 +2,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    dependencies = { "saghen/blink.cmp" },
     cmd = "LspStart",
     init = function()
       local lspconfig = require("lspconfig")
@@ -10,38 +11,41 @@ return {
       --
       -- ----------------------------------------------------------------------
       -- CONFIGURE ADDITIONAL LANGUAGE SERVERS HERE
-      --
-      -- pyright is the language server for Python
-      lspconfig.pyright.setup({ autostart = false })
-
-      lspconfig.bashls.setup({ autostart = false })
-
-      -- language server for R
-      lspconfig.r_language_server.setup({ autostart = false })
-
-      -- Language server for Lua. These are the recommended options
-      -- when mainly using Lua for Neovim
-      lspconfig.lua_ls.setup({
-        autostart = false,
-        on_init = function(client)
-          local path = client.workspace_folders[1].name
-          if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
-            client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
-              Lua = {
-                runtime = { version = "LuaJIT" },
-                workspace = {
-                  checkThirdParty = false,
-                  library = {
-                    vim.env.VIMRUNTIME,
+      opts = {
+        servers = {
+          pyright = { autostart = false },
+          bashls = { autostart = false },
+          lua_ls = {
+            autostart = false,
+            -- These are the recommended options when mainly using Lua for
+            -- Neovim
+            on_init = function(client)
+              local path = client.workspace_folders[1].name
+              if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+                client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
+                  Lua = {
+                    runtime = { version = "LuaJIT" },
+                    workspace = {
+                      checkThirdParty = false,
+                      library = {
+                        vim.env.VIMRUNTIME,
+                      },
+                    },
                   },
-                },
-              },
-            })
+                })
 
-            client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-          end
-        end,
-      })
+                client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+              end
+            end,
+          },
+        },
+      }
+
+      local lspconfig = require("lspconfig")
+      for server, config in pairs(opts.servers) do
+        config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+        lspconfig[server].setup(config)
+      end
 
       -- Use LspAttach autocommand to only map the following keys after
       -- the language server attaches to the current buffer

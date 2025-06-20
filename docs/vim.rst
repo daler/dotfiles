@@ -886,32 +886,39 @@ the acceleration curve depending on your system's keyboard repeat rate settings
     * - :kbd:`j`, :kbd:`k`
       - Keep holding for increasing vertical scroll speed
 
-.. _nvimcmp:
 
-``nvim-cmp``
-~~~~~~~~~~~~
+.. _blink:
 
-.. versionadded:: 2023-10-15
+``blink``
+~~~~~~~~~
+
+.. versionadded:: 2025-06-20
 
 .. details:: Config
 
-  This can be found in :file:`.config/nvim/lua/plugins/nvim-cmp.lua`:
+  This can be found in :file:`.config/nvim/lua/plugins/blink.lua`:
 
-  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-cmp.lua
+  .. literalinclude:: ../.config/nvim/lua/plugins/blink.lua
      :language: lua
 
-`nvim-cmp <https://github.com/hrsh7th/nvim-cmp>`_ provides tab-completion.
+`blink <https://github.com/Saghen/blink.cmp>`__ offers autocomplete.
 
-By default, this would show a tab completion window on every keypress, which to
-me is annoying and distracting. So this is configured to only show up when
-I hit :kbd:`<Tab>`.
+You may want to experiment with different settings -- for example letting the
+menu always show up, or using ghost text to show what hitting :kbd:`<Tab>`
+would fill in automatically.
 
-Hit :kbd:`<Tab>` to initiate. Hit :kbd:`<Tab>` until you like what you see.
-Then hit Enter. Arrow keys work to select, too.
+In this config (see above), I've chosen the "super-tab" style of selection and
+the commands documented here reflect that. I've also disabled the menu popping
+up all the time, and disabled the automatic addition of parentheses. There are
+a lot of ways you can customize this yourself though -- see the `blink docs
+<https://cmp.saghen.dev/>`__.
 
-Snippets are configured as well. If you hit Enter to complete a snippet, you
-can then use :kbd:`<Tab>` and :kbd:`<S-Tab>` to move between the placeholders
-to fill them in.
+Autocompletion includes snippets. For example, try typing ``def`` in a Python
+file and then hit :kbd:`<C-Space>` right after typing the ``f``. Some options
+will show up with a trailing ``~`` which indicates a snippet. Hitting
+:kbd:`<Tab>` on that will add the snippet, where fields will have a different
+color. Hit :kbd:`<Tab>` to cycle through them. For example, the ``def`` snippet
+will let you jump to the function name, the arguments, and the function body.
 
 .. list-table::
     :header-rows: 1
@@ -920,8 +927,26 @@ to fill them in.
     * - command
       - description
 
-    * - :kbd:`<Tab>`
-      - Tab completion
+    * - :kbd:`<C-space>`
+      - Open completion menu
+
+    * - :kbd:`<Tab>` (in menu)
+      - Select entry
+
+    * - up/down arrow (in menu)
+      - Select entry
+
+
+.. _nvimcmp:
+
+``nvim-cmp``
+~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
+.. deprecated:: 2025-06-20
+   Deprecated in favor of :ref:`blink`, which has similar configurability but
+   does not *require* it. blink also seems to play nicer with LSP.
 
 .. _aerial_ref:
 
