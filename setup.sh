@@ -84,9 +84,11 @@ function showHelp() {
     printf "${YELLOW}Usage:${UNSET}\n\n"
     echo "   $0 [ARGUMENT]"
     echo
-    echo "     - Options are intended to be run one-at-a-time."
-    echo "     - Each command will prompt if you want to continue."
-    echo "     - Set the env var DOTFILES_FORCE=true if you want always say yes."
+    echo "     Options are intended to be run one-at-a-time."
+    echo "     Each command will prompt if you want to continue."
+    echo "     Environment variables:"
+    echo "       - DOTFILES_FORCE=true to all confirmation prompts"
+    echo "       - CONDA_INSTALLATION_DIR=/path/to/dir: Custom installation location for conda"
     echo
     printf "   ${BLUE}Documentation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
@@ -451,25 +453,19 @@ elif [ $task == "--install-docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--install-conda" ]; then
-    ok "Installs conda using the Miniforge installation"
+    MINIFORGE_DIR=${CONDA_INSTALLATION_DIR-:"$HOME/miniforge"}
+    ok "Installs conda using the Miniforge installation to $MINIFORGE_DIR. Set CONDA_INSTALLATION_DIR to change."
+    printf "${YELLOW}Installing Miniforge to: ${MINIFORGE_DIR}${UNSET}\n"
 
-    # On Biowulf/Helix, if we install into $HOME then the installation might
-    # larger than the quota for the home directory. Instead, install to user's
-    # data directory which has much more space.
-    # Also, .path needs to reflect this change.
-    MINIFORGE_DIR=$HOME/miniforge
-    if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
-        MINIFORGE_DIR=/data/$USER/miniforge
-
-        # Newer versions of the installer cannot run from a noexec directory
-        # which may be the case on some hosts. See discussion at
-        # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
-        export TMPDIR=/data/$USER/miniforge
-
-   fi
+    mkdir -p $(dirname $MINIFORGE_DIR)
 
     download "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" miniforge.sh
-    bash miniforge.sh -b -p $MINIFORGE_DIR
+
+    # Newer versions of the installer cannot run from a noexec directory
+    # which may be the case on some hosts. See discussion at
+    # https://github.com/ContinuumIO/anaconda-issues/issues/11154#issuecomment-535571313
+    TMPDIR=$MINIFORGE_DIR bash miniforge.sh -b -p $MINIFORGE_DIR
+
     rm miniforge.sh
     echo "export PATH=\$PATH:$MINIFORGE_DIR/condabin" >> ~/.path
     printf "${YELLOW}conda installed at ${MINIFORGE_DIR}/condabin. This has been added to your ~/.path file, but you should double-check to make sure it gets on your path. You may need to close and then reopen your terminal.${UNSET}\n"
