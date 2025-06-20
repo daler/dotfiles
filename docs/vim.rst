@@ -2182,6 +2182,43 @@ GitHub/GitLab instances. See the config file
    * - ``Browsher``
      - Store URL on OS clipboard
 
+
+``vim-sleuth``
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-09-03
+
+.. deprecated:: 2025-06-20
+   Removed in favor indent-o-matic
+
+.. details:: Deprecation notes
+
+   vim-sleuth would often get things wrong. indent-o-matic's simpler algorithm
+   seems to work better.
+
+``indent-o-matic``
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2025-06-20
+
+.. details:: Config
+
+   This can be found in :file:`.config/nvim/lua/plugins/indent-o-matic.lua`:
+
+   .. literalinclude:: ../.config/nvim/lua/plugins/indent-o-matic.lua
+      :language: lua
+
+`indent-o-matic <https://github.com/Darazaki/indent-o-matic>`__ provides "dumb automatic fast indentation detection".
+
+To quote more from the home page, "Instead of trying to be smart about
+detecting an indentation using statistics, it will find the first thing that
+looks like a standard indentation (tab or 8/4/2 spaces) and assume that's what
+the file's indentation is. This has the advantage of being fast and very often
+correct while being simple enough that most people will understand what it will
+do predictably"
+
+No additional commands configured.
+
 Colorschemes
 ------------
 
