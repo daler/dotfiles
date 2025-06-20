@@ -162,7 +162,7 @@ Three main ways of **opening** file in a new buffer:
      - Search for file in directory to open in new buffer (Telescope)
 
    * - :kbd:`<leader>fb`
-     - Toggle file browser, hit Enter on file (nvim-tree)
+     - Toggle file browser, hit Enter on file (neo-tree)
 
 See :ref:`nvimtree` for more on navigating the file tree shown by :kbd:`<leader>fb`.
 
@@ -728,21 +728,21 @@ Other useful things you can do with Telescope:
   are interesting to browse through.
 
 
-.. _nvimtree:
+.. _neotree:
 
-``nvim-tree``
-~~~~~~~~~~~~~
+``neo-tree``
+~~~~~~~~~~~~
 
-.. versionadded:: 2023-10-10
+.. versionadded:: 2025-06-20
 
 .. details:: Config
 
-  This can be found in :file:`.config/nvim/lua/plugins/nvim-tree.lua`:
+  This can be found in :file:`.config/nvim/lua/plugins/neo-tree.lua`:
 
-  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-tree.lua
+  .. literalinclude:: ../.config/nvim/lua/plugins/neo-tree.lua
      :language: lua
 
-`nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`_ is a file browser.
+`neo-tree <https://github.com/nvim-neo-tree/neo-tree.nvim>`__ provides a filesystem tree for browsing.
 
 .. list-table::
     :header-rows: 1
@@ -753,14 +753,31 @@ Other useful things you can do with Telescope:
     * - :kbd:`<leader>fb`
       - Toggle file browser
 
-    * - :kbd:`-` (within browser)
-      - Go up a directory
+    * - :kbd:`<Backspace>` (within browser)
+      - Go up a directory. NOTE: different than previous nvim-tree, which was :kbd:`-`.
 
     * - :kbd:`Enter` (within browser)
       - Open file or directory, or close directory
 
+    * - :kbd:`?` (within browser)
+      - View neo-tree specific keymappings. Try :kbd:`P`, :kbd:`H`, and even copying and deleting commands.
+
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
-windows left and right respectively) also work
+windows left and right respectively) also work.
+
+
+.. _nvimtree:
+
+``nvim-tree``
+~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-10
+
+.. deprecated:: 2025-06-20
+   Removed in favor of :ref:`neotree`, which has more advanced features and
+   works especially well with nvim-aider. Mappings are largely the same, except
+   :kbd:`-` to move up a directory is now :kbd:`<Backspace>`.
+
 
 .. _whichkey:
 
