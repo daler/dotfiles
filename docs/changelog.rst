@@ -1,6 +1,29 @@
 Changelog
 =========
 
+2025-06-20
+----------
+
+**vim**
+
+- Replace vim-sleuth with indent-o-matic for better indentation detection
+- Replace nvim-cmp with blink.cmp for autocompletion (about the same features but much simplified config)
+- Replace nvim-tree with neo-tree for file browsing (more features plus better integration with nvim-aider)
+- Add nvim-aider plugin
+- Update checkbox rendering in markdown files
+
+
+**setup**
+
+- conda installation dir can be configured via env var ``CONDA_INSTALLATION_DIR``
+
+2025-05-07
+----------
+
+**setup**
+
+- ``setup.sh --vim-diffs`` now correctly shows diffs from inside included directories (thanks @mitraak)
+
 2025-05-07
 ----------
 
