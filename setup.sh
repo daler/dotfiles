@@ -22,7 +22,7 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.10.1
+NVIM_VERSION=0.10.4
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -498,15 +498,6 @@ elif [ $task == "--conda-env" ]; then
 
 elif [ $task == "--install-neovim" ]; then
 
-    # Too-old of a GLIBC on the system will not work with later nvim versions
-    if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
-        printf "\n${RED}Looks like you're on helix/biowulf. You should use the nvim installed on Biowulf "
-        printf "for compatibility with the system's glibc.\n\nTwo ways to do this: either add 'module load neovim/$NVIM_VERSION' "
-        printf "to your .extra file or .bashrc, or directly add the path shown from "
-        printf "'module show neovim/$NVIM_VERSION' to your PATH.${UNSET}\n\n"
-        exit 1
-    fi
-
     if [ -d ~/opt/neovim ]; then
         printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
         exit 1
@@ -523,10 +514,11 @@ elif [ $task == "--install-neovim" ]; then
         mkdir -p "$HOME/opt/bin"
         mv nvim-macos-*64 "$HOME/opt/neovim"
     else
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
-        tar -xzf nvim-linux64.tar.gz
-        mv nvim-linux64 "$HOME/opt/neovim"
-        rm nvim-linux64.tar.gz
+        # Use release built with older glibc
+        download https://github.com/neovim/neovim-releases/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux-x86_64.tar.gz
+        tar -xzf nvim-linux-x86_64.tar.gz
+        mv nvim-linux-x86_64 "$HOME/opt/neovim"
+        rm nvim-linux-x86_64.tar.gz
     fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
