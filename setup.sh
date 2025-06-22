@@ -453,7 +453,7 @@ elif [ $task == "--install-docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--install-conda" ]; then
-    MINIFORGE_DIR=${CONDA_INSTALLATION_DIR-:"$HOME/miniforge"}
+    MINIFORGE_DIR=${CONDA_INSTALLATION_DIR:-"$HOME/miniforge"}
     ok "Installs conda using the Miniforge installation to $MINIFORGE_DIR. Set CONDA_INSTALLATION_DIR to change."
     printf "${YELLOW}Installing Miniforge to: ${MINIFORGE_DIR}${UNSET}\n"
 
