@@ -2261,6 +2261,47 @@ do predictably"
 
 No additional commands configured.
 
+.. _nvimaider:
+
+``nvim-aider``
+~~~~~~~~~~~~~
+
+`nvim-aider <https://github.com/GeorgesAlkhouri/nvim-aider>`__ integrates
+`aider <https://aider.chat/>`__ into nvim. This is a lightweight wrapper that
+makes it a bit more convenient to add/drop entire files to the context window
+or snippets of text but does not add functionality to aider itself.
+
+When aider is started (see commands below), it will open a terminal-like window
+to the right; you can use the typical :kbd:`<leader>q` and :kbd:`<leader>w`
+mappings to move between them.
+
+This configuration relies on a :file:`~/.aider.config.yml` file to hold your
+settings, and you'll need to separately set up the model and API keys.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>A`
+      - Prefix for aider-related commands
+
+    * - :kbd:`<leader>A/`
+      - Start an aider prompt
+
+    * - :kbd:`<leader>A+`
+      - Add the file in the current buffer to aider (starting it if needed)
+
+    * - :kbd:`<leader>A+`, :kbd:`<leaader>A-`
+      - Add current buffer to aider (starting it if needed) or drop the file from aider
+
+    * - :kbd:`+` or :kbd:`-` (while in filebrowser opened by :kbd:`fb`)
+      - Add file to aider context or drop file from aider context (starting aider if needed)
+
+    * - :kbd:`<leaer>As`
+      - Add selection to aider context (gives the opportunity to add an additional prompt)
+
+
 Colorschemes
 ------------
 
