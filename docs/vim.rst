@@ -568,6 +568,11 @@ track of what has changed recently.
      -
      - fancy rendering of markdown files
 
+   * - :ref:`indentomatic`
+     - 2025-06-20
+     - 
+     - indentation detection
+
 
 Sometimes there are better plugins for a particular functionality. I've kept
 the documentation, but noted when they've been deprecated here and in the
@@ -596,6 +601,11 @@ linked description.
    * - :ref:`vimpandocsyntax`
      - 2019-02-27
      - deprecated 2023-11-14 in favor of treesitter
+
+   * - :ref:`vim-sleuth`
+     - 2024-09-03
+     - deprecated 2025-06-20 in favor of indent-o-matic
+
 
 .. _vimcommentary:
 
@@ -1396,7 +1406,7 @@ a terminal-only version of git-cola or an alternative to tig. Specifically:
         message
 
     * - :kbd:`dd` (when over a file)
-      - Open the file in diff mode
+      - Open the file in diff mode (to better see intraline diffs)
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``, so here is a reminder:
