@@ -59,5 +59,8 @@ return {
       completion_menu_current_color = "#181926",
       completion_menu_current_bg_color = "#f4dbd6",
     },
+    win = {
+      position = "bottom"
+    },
   },
 }
