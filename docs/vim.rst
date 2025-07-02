@@ -568,10 +568,35 @@ track of what has changed recently.
      -
      - fancy rendering of markdown files
 
+   * - :ref:`browsher`
+     - 2024-12-15
+     -
+     - create GitHub/GitLab links with line highlighting
+
+   * - :ref:`blink`
+     - 2025-06-20
+     -
+     - autocomplete
+
    * - :ref:`indentomatic`
      - 2025-06-20
      - 
      - indentation detection
+
+   * - :ref:`neotree`
+     - 2025-06-20
+     -
+     - provides a filesystem tree for browsing
+
+   * - :ref:`nvimaider`
+     - 2025-06-20
+     -
+     - integrates aider into nvim
+
+   * - :ref:`nvimcolorizer`
+     - 2024-09-01
+     -
+     - highlights color codes with their actual colors
 
 
 Sometimes there are better plugins for a particular functionality. I've kept
@@ -2274,7 +2299,7 @@ No additional commands configured.
 .. _nvimaider:
 
 ``nvim-aider``
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 `nvim-aider <https://github.com/GeorgesAlkhouri/nvim-aider>`__ integrates
 `aider <https://aider.chat/>`__ into nvim. This is a lightweight wrapper that
@@ -2302,13 +2327,13 @@ settings, and you'll need to separately set up the model and API keys.
     * - :kbd:`<leader>A+`
       - Add the file in the current buffer to aider (starting it if needed)
 
-    * - :kbd:`<leader>A+`, :kbd:`<leaader>A-`
+    * - :kbd:`<leader>A+`, :kbd:`<leader>A-`
       - Add current buffer to aider (starting it if needed) or drop the file from aider
 
     * - :kbd:`+` or :kbd:`-` (while in filebrowser opened by :kbd:`fb`)
       - Add file to aider context or drop file from aider context (starting aider if needed)
 
-    * - :kbd:`<leaer>As`
+    * - :kbd:`<leader>As`
       - Add selection to aider context (gives the opportunity to add an additional prompt)
 
 
