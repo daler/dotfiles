@@ -944,9 +944,8 @@ would fill in automatically.
 
 In this config (see above), I've chosen the "super-tab" style of selection and
 the commands documented here reflect that. I've also disabled the menu popping
-up all the time, and disabled the automatic addition of parentheses. There are
-a lot of ways you can customize this yourself though -- see the `blink docs
-<https://cmp.saghen.dev/>`__.
+up all the time. There are a lot of ways you can customize this yourself though
+-- see the `blink docs <https://cmp.saghen.dev/>`__.
 
 Autocompletion includes snippets. For example, try typing ``def`` in a Python
 file and then hit :kbd:`<C-Space>` right after typing the ``f``. Some options
@@ -964,6 +963,9 @@ will let you jump to the function name, the arguments, and the function body.
 
     * - :kbd:`<C-space>`
       - Open completion menu
+
+    * - :kbd:`C-n`, :kbd:`C-p`
+      - Next entry, previous entry
 
     * - :kbd:`<Tab>` (in menu)
       - Select entry
@@ -2349,3 +2351,8 @@ at least have more control over. Hence `my fork of the repo
 <https://github.com/daler/zenburn.nvim>`_, which is used here. If you're
 interested in tweaking your own colorschemes, I've hopefully documented that
 fork enough to give you an idea of how to modify on your own.
+
+I've also tweaked it a bit to be a little warmer and more faded, see the
+`zenfade <https://github.com/daler/zenfade/>`__ colorscheme. Since zenburn has
+been the default for a while and other people are using it (and are probably
+used to it), I'm not setting zenfade to be the default.
