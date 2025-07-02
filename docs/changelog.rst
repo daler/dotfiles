@@ -11,11 +11,21 @@ Changelog
 - Replace nvim-tree with neo-tree for file browsing (more features plus better integration with nvim-aider)
 - Add nvim-aider plugin
 - Update checkbox rendering in markdown files
+- Add zenfade colorscheme (not enabled by default)
 
 
 **setup**
 
 - conda installation dir can be configured via env var ``CONDA_INSTALLATION_DIR``
+
+2025-05-16
+----------
+
+**setup**
+
+``--dotfiles`` now properly handles backups of existing files, using a manual
+copy approach rather than rsync (thanks @mitraak)
+
 
 2025-05-07
 ----------
