@@ -2307,8 +2307,7 @@ makes it a bit more convenient to add/drop entire files to the context window
 or snippets of text but does not add functionality to aider itself.
 
 When aider is started (see commands below), it will open a terminal-like window
-to the right; you can use the typical :kbd:`<leader>q` and :kbd:`<leader>w`
-mappings to move between them.
+on the bottom.
 
 This configuration relies on a :file:`~/.aider.config.yml` file to hold your
 settings, and you'll need to separately set up the model and API keys.
@@ -2330,8 +2329,8 @@ settings, and you'll need to separately set up the model and API keys.
     * - :kbd:`<leader>A+`, :kbd:`<leader>A-`
       - Add current buffer to aider (starting it if needed) or drop the file from aider
 
-    * - :kbd:`+` or :kbd:`-` (while in filebrowser opened by :kbd:`fb`)
-      - Add file to aider context or drop file from aider context (starting aider if needed)
+    * - :kbd:`+` or :kbd:`-` or :kbd:`=` (while in filebrowser opened by :kbd:`fb`)
+      - Add or drop or add read-only a file to aider context (starting aider if needed)
 
     * - :kbd:`<leader>As`
       - Add selection to aider context (gives the opportunity to add an additional prompt)
