@@ -162,7 +162,7 @@ Three main ways of **opening** file in a new buffer:
      - Search for file in directory to open in new buffer (Telescope)
 
    * - :kbd:`<leader>fb`
-     - Toggle file browser, hit Enter on file (nvim-tree)
+     - Toggle file browser, hit Enter on file (neo-tree)
 
 See :ref:`nvimtree` for more on navigating the file tree shown by :kbd:`<leader>fb`.
 
@@ -568,6 +568,36 @@ track of what has changed recently.
      -
      - fancy rendering of markdown files
 
+   * - :ref:`browsher`
+     - 2024-12-15
+     -
+     - create GitHub/GitLab links with line highlighting
+
+   * - :ref:`blink`
+     - 2025-06-20
+     -
+     - autocomplete
+
+   * - :ref:`indentomatic`
+     - 2025-06-20
+     - 
+     - indentation detection
+
+   * - :ref:`neotree`
+     - 2025-06-20
+     -
+     - provides a filesystem tree for browsing
+
+   * - :ref:`nvimaider`
+     - 2025-06-20
+     -
+     - integrates aider into nvim
+
+   * - :ref:`nvimcolorizer`
+     - 2024-09-01
+     -
+     - highlights color codes with their actual colors
+
 
 Sometimes there are better plugins for a particular functionality. I've kept
 the documentation, but noted when they've been deprecated here and in the
@@ -596,6 +626,11 @@ linked description.
    * - :ref:`vimpandocsyntax`
      - 2019-02-27
      - deprecated 2023-11-14 in favor of treesitter
+
+   * - :ref:`vim-sleuth`
+     - 2024-09-03
+     - deprecated 2025-06-20 in favor of indent-o-matic
+
 
 .. _vimcommentary:
 
@@ -728,21 +763,21 @@ Other useful things you can do with Telescope:
   are interesting to browse through.
 
 
-.. _nvimtree:
+.. _neotree:
 
-``nvim-tree``
-~~~~~~~~~~~~~
+``neo-tree``
+~~~~~~~~~~~~
 
-.. versionadded:: 2023-10-10
+.. versionadded:: 2025-06-20
 
 .. details:: Config
 
-  This can be found in :file:`.config/nvim/lua/plugins/nvim-tree.lua`:
+  This can be found in :file:`.config/nvim/lua/plugins/neo-tree.lua`:
 
-  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-tree.lua
+  .. literalinclude:: ../.config/nvim/lua/plugins/neo-tree.lua
      :language: lua
 
-`nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`_ is a file browser.
+`neo-tree <https://github.com/nvim-neo-tree/neo-tree.nvim>`__ provides a filesystem tree for browsing.
 
 .. list-table::
     :header-rows: 1
@@ -753,14 +788,31 @@ Other useful things you can do with Telescope:
     * - :kbd:`<leader>fb`
       - Toggle file browser
 
-    * - :kbd:`-` (within browser)
-      - Go up a directory
+    * - :kbd:`<Backspace>` (within browser)
+      - Go up a directory. NOTE: different than previous nvim-tree, which was :kbd:`-`.
 
     * - :kbd:`Enter` (within browser)
       - Open file or directory, or close directory
 
+    * - :kbd:`?` (within browser)
+      - View neo-tree specific keymappings. Try :kbd:`P`, :kbd:`H`, and even copying and deleting commands.
+
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
-windows left and right respectively) also work
+windows left and right respectively) also work.
+
+
+.. _nvimtree:
+
+``nvim-tree``
+~~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-10
+
+.. deprecated:: 2025-06-20
+   Removed in favor of :ref:`neotree`, which has more advanced features and
+   works especially well with nvim-aider. Mappings are largely the same, except
+   :kbd:`-` to move up a directory is now :kbd:`<Backspace>`.
+
 
 .. _whichkey:
 
@@ -869,32 +921,38 @@ the acceleration curve depending on your system's keyboard repeat rate settings
     * - :kbd:`j`, :kbd:`k`
       - Keep holding for increasing vertical scroll speed
 
-.. _nvimcmp:
 
-``nvim-cmp``
-~~~~~~~~~~~~
+.. _blink:
 
-.. versionadded:: 2023-10-15
+``blink``
+~~~~~~~~~
+
+.. versionadded:: 2025-06-20
 
 .. details:: Config
 
-  This can be found in :file:`.config/nvim/lua/plugins/nvim-cmp.lua`:
+  This can be found in :file:`.config/nvim/lua/plugins/blink.lua`:
 
-  .. literalinclude:: ../.config/nvim/lua/plugins/nvim-cmp.lua
+  .. literalinclude:: ../.config/nvim/lua/plugins/blink.lua
      :language: lua
 
-`nvim-cmp <https://github.com/hrsh7th/nvim-cmp>`_ provides tab-completion.
+`blink <https://github.com/Saghen/blink.cmp>`__ offers autocomplete.
 
-By default, this would show a tab completion window on every keypress, which to
-me is annoying and distracting. So this is configured to only show up when
-I hit :kbd:`<Tab>`.
+You may want to experiment with different settings -- for example letting the
+menu always show up, or using ghost text to show what hitting :kbd:`<Tab>`
+would fill in automatically.
 
-Hit :kbd:`<Tab>` to initiate. Hit :kbd:`<Tab>` until you like what you see.
-Then hit Enter. Arrow keys work to select, too.
+In this config (see above), I've chosen the "super-tab" style of selection and
+the commands documented here reflect that. I've also disabled the menu popping
+up all the time. There are a lot of ways you can customize this yourself though
+-- see the `blink docs <https://cmp.saghen.dev/>`__.
 
-Snippets are configured as well. If you hit Enter to complete a snippet, you
-can then use :kbd:`<Tab>` and :kbd:`<S-Tab>` to move between the placeholders
-to fill them in.
+Autocompletion includes snippets. For example, try typing ``def`` in a Python
+file and then hit :kbd:`<C-Space>` right after typing the ``f``. Some options
+will show up with a trailing ``~`` which indicates a snippet. Hitting
+:kbd:`<Tab>` on that will add the snippet, where fields will have a different
+color. Hit :kbd:`<Tab>` to cycle through them. For example, the ``def`` snippet
+will let you jump to the function name, the arguments, and the function body.
 
 .. list-table::
     :header-rows: 1
@@ -903,8 +961,29 @@ to fill them in.
     * - command
       - description
 
-    * - :kbd:`<Tab>`
-      - Tab completion
+    * - :kbd:`<C-space>`
+      - Open completion menu
+
+    * - :kbd:`C-n`, :kbd:`C-p`
+      - Next entry, previous entry
+
+    * - :kbd:`<Tab>` (in menu)
+      - Select entry
+
+    * - up/down arrow (in menu)
+      - Select entry
+
+
+.. _nvimcmp:
+
+``nvim-cmp``
+~~~~~~~~~~~~
+
+.. versionadded:: 2023-10-15
+
+.. deprecated:: 2025-06-20
+   Deprecated in favor of :ref:`blink`, which has similar configurability but
+   does not *require* it. blink also seems to play nicer with LSP.
 
 .. _aerial_ref:
 
@@ -1354,7 +1433,7 @@ a terminal-only version of git-cola or an alternative to tig. Specifically:
         message
 
     * - :kbd:`dd` (when over a file)
-      - Open the file in diff mode
+      - Open the file in diff mode (to better see intraline diffs)
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with ``:Gdiff``, so here is a reminder:
@@ -2182,6 +2261,83 @@ GitHub/GitLab instances. See the config file
    * - ``Browsher``
      - Store URL on OS clipboard
 
+
+``vim-sleuth``
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2024-09-03
+
+.. deprecated:: 2025-06-20
+   Removed in favor indent-o-matic
+
+.. details:: Deprecation notes
+
+   vim-sleuth would often get things wrong. indent-o-matic's simpler algorithm
+   seems to work better.
+
+``indent-o-matic``
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2025-06-20
+
+.. details:: Config
+
+   This can be found in :file:`.config/nvim/lua/plugins/indent-o-matic.lua`:
+
+   .. literalinclude:: ../.config/nvim/lua/plugins/indent-o-matic.lua
+      :language: lua
+
+`indent-o-matic <https://github.com/Darazaki/indent-o-matic>`__ provides "dumb automatic fast indentation detection".
+
+To quote more from the home page, "Instead of trying to be smart about
+detecting an indentation using statistics, it will find the first thing that
+looks like a standard indentation (tab or 8/4/2 spaces) and assume that's what
+the file's indentation is. This has the advantage of being fast and very often
+correct while being simple enough that most people will understand what it will
+do predictably"
+
+No additional commands configured.
+
+.. _nvimaider:
+
+``nvim-aider``
+~~~~~~~~~~~~~~
+
+`nvim-aider <https://github.com/GeorgesAlkhouri/nvim-aider>`__ integrates
+`aider <https://aider.chat/>`__ into nvim. This is a lightweight wrapper that
+makes it a bit more convenient to add/drop entire files to the context window
+or snippets of text but does not add functionality to aider itself.
+
+When aider is started (see commands below), it will open a terminal-like window
+on the bottom.
+
+This configuration relies on a :file:`~/.aider.config.yml` file to hold your
+settings, and you'll need to separately set up the model and API keys.
+
+.. list-table::
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>A`
+      - Prefix for aider-related commands
+
+    * - :kbd:`<leader>A/`
+      - Start an aider prompt
+
+    * - :kbd:`<leader>A+`
+      - Add the file in the current buffer to aider (starting it if needed)
+
+    * - :kbd:`<leader>A+`, :kbd:`<leader>A-`
+      - Add current buffer to aider (starting it if needed) or drop the file from aider
+
+    * - :kbd:`+` or :kbd:`-` or :kbd:`=` (while in filebrowser opened by :kbd:`fb`)
+      - Add or drop or add read-only a file to aider context (starting aider if needed)
+
+    * - :kbd:`<leader>As`
+      - Add selection to aider context (gives the opportunity to add an additional prompt)
+
+
 Colorschemes
 ------------
 
@@ -2195,3 +2351,8 @@ at least have more control over. Hence `my fork of the repo
 <https://github.com/daler/zenburn.nvim>`_, which is used here. If you're
 interested in tweaking your own colorschemes, I've hopefully documented that
 fork enough to give you an idea of how to modify on your own.
+
+I've also tweaked it a bit to be a little warmer and more faded, see the
+`zenfade <https://github.com/daler/zenfade/>`__ colorscheme. Since zenburn has
+been the default for a while and other people are using it (and are probably
+used to it), I'm not setting zenfade to be the default.
