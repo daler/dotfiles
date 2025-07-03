@@ -24,5 +24,5 @@ return {
     lazy = false,
     priority = 1000,
   },
-  {"daler/zenfade"},
+  { "daler/zenfade", dependencies = { "rktjmp/lush.nvim" }, lazy = false, priority = 1000 },
 }
