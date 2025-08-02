@@ -1,3 +1,4 @@
+-- blink.cmp provides autocompletion
 return {
   "saghen/blink.cmp",
   dependencies = {
