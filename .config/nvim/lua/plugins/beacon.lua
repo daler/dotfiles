@@ -15,7 +15,6 @@ return {
 
     end,
     keys = {
-      { "<S-k><S-j>", ":Beacon<CR>", desc = "Flash beacon" },
       { "N", "N:Beacon<CR>", desc = "Prev search hit and flash beacon" },
       { "n", "n:Beacon<CR>", desc = "Next search hit and flash beacon" },
       { "%", "%:Beacon<CR>", desc = "Go to matching bracket and flash beacon" },
