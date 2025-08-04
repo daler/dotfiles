@@ -519,8 +519,8 @@ elif [ $task == "--install-neovim" ]; then
         mkdir -p "$HOME/opt/bin"
         mv nvim-macos-*64 "$HOME/opt/neovim"
     else
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux64.tar.gz
-        tar -xzf nvim-linux64.tar.gz
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux-x86_64.tar.gz
+        tar -xzf nvim-linux-x86_64.tar.gz
         mv nvim-linux64 "$HOME/opt/neovim"
         rm nvim-linux64.tar.gz
     fi
