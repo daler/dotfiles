@@ -521,8 +521,8 @@ elif [ $task == "--install-neovim" ]; then
     else
         download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux-x86_64.tar.gz
         tar -xzf nvim-linux-x86_64.tar.gz
-        mv nvim-linux64 "$HOME/opt/neovim"
-        rm nvim-linux64.tar.gz
+        mv nvim-linux-x86_64 "$HOME/opt/neovim"
+        rm nvim-linux-x86_64.tar.gz
     fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
