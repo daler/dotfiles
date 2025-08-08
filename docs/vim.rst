@@ -2037,7 +2037,7 @@ No additional commands configured.
 
 .. details:: Config
 
-  This can be found in :file:`.config/nvim/lua/plugins/zenburn.lua`:
+  This can be found in :file:`.config/nvim/lua/plugins/colorschemes.lua`:
 
   .. literalinclude:: ../.config/nvim/lua/plugins/zenburn.lua
      :language: lua
@@ -2201,6 +2201,7 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.
       - Toggle [r]ender[m]arkdown on an [r][m]arkdown file
 
 
+.. _nvimcolorizer:
 
 ``nvim-colorizer``
 ~~~~~~~~~~~~~~~~~~
@@ -2227,6 +2228,8 @@ colors.
     * - ``ColorizerToggle``
       - Toggle colorizing of hex codes
 
+
+.. _browsher:
 
 ``browsher.nvim``
 ~~~~~~~~~~~~~~~~~
@@ -2261,6 +2264,7 @@ GitHub/GitLab instances. See the config file
    * - ``Browsher``
      - Store URL on OS clipboard
 
+.. _vim-sleuth:
 
 ``vim-sleuth``
 ~~~~~~~~~~~~~~
@@ -2274,6 +2278,8 @@ GitHub/GitLab instances. See the config file
 
    vim-sleuth would often get things wrong. indent-o-matic's simpler algorithm
    seems to work better.
+
+.. _indentomatic:
 
 ``indent-o-matic``
 ~~~~~~~~~~~~~~~~~~
