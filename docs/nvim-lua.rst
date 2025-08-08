@@ -24,37 +24,18 @@ config you don't know what's going on!
 
 **TL;DR: to try out the new version**
 
-First, back up your existing config.
-
 .. code-block:: bash
 
-   # Back up old files
-   mv ~/.config/nvim ~/.config/nvim-backup
-   mv ~/.vimrc ~/.vimrc-backup
-   mv ~/.vim ~/.vim-backup
-
-Then manually copy the relevant files from this repo (that is, don't use the
-``--dotfiles`` argument to :file:`setup.sh` since that will copy over more than
-just these):
-
-.. code-block:: bash
-
-   # here we refer to the dotfiles repo dir;
-   # modify accordingly for where you put it.
-   cp -r dotfiles/.config/nvim ~/.config/nvim
-   cp dotfiles/.vimrc ~/.vimrc
-
-Then open up nvim, and wait for the installations to complete. You should be
-good to go.
+   ./setup.sh --nvim-test-drive
 
 Here are some initial things to try:
 
-- :kbd:`<leader>` (by default, :kbd:`,`) and then wait a second. You'll get
-  a menu that pops up, showing you the currently-configured key mappings that
-  follow <leader>. Hitting a listed key will execute the command. Sometimes
-  you'll see ``-> +prefix`` in the menu, which means you can hit that key to see
-  a menu of the things you can type after that. If you go too far, use
-  :kbd:`<Backspace>` to go back a step.
+- Press :kbd:`<leader>` (by default, :kbd:`,`) . . . and then wait a second. You'll get
+  a menu that pops up at the bottom of the window, showing you the
+  currently-configured key mappings that follow <leader>. Hitting a listed key
+  will execute the command. Sometimes you'll see ``-> +prefix`` in the menu,
+  which means you can hit that key to see a menu of the things you can type
+  after that. If you go too far, use :kbd:`<Backspace>` to go back a step.
 
   In fact, you can hit backspace a few times to get to the base vim commands. It
   can be helpful to look through to see if there's any you've forgotten about!
@@ -64,57 +45,23 @@ Here are some initial things to try:
 
 - :kbd:`z=` over a word to get a pop-up for spelling suggestions
 
-- Saner tab completion (hit tab until you like what you see). Snippets are
-  enabled, so if you're in a Python file for example, type ``def`` and then hit
-  :kbd:`<Tab>`. One of the options will be a snippet to create a Python
-  function. There are also other "flavors" of snippets, for example whether you
-  want to return from the function, o if you're writing method. Use
-  :kbd:`<Tab>` to jump between the placeholders, and immediately start typing
-  to replace them.
-
-- :kbd:`KJ` (so, hold down shift and type ``kj``) to flash a beacon
-  where the cursor is. This also works when jumping between search hits.
+- Saner tab completion (hit tab until you like what you see).
 
 - :kbd:`<leader>ff` to open a file selector within this directory
 
 - :kbd:`<leader>fg` to live-grep within the directory (hit enter on the search
   result to open the file at that location). Great for exploring new codebases.
 
-- Open a file in a git repo with some changes. Then use :kbd:`]c` to go to the
+- Open a file in a git repo with some changes. Then use :kbd:`]h` to go to the
   next change (hunk) and :kbd:`<leader>hp` to preview hunks.
 
-- Open a file browser with :kbd:`<leader>fbo`, hit Enter to select, or :kbd:`-`
+- Open a file browser with :kbd:`<leader>fb`, hit Enter to select, or :kbd:`<Backspace>`
   to go up a level
 
 - Open a Python file with lots of classes/functions, or a markdown or RMarkdown
   file. Use :kbd:`<leader>a` to open a panel for navigation within the file.
 
-
-Don't like it? Do this to revert:
-
-.. code-block::
-
-  # aaaaah! revert! revert!
-  mv ~/.config/nvim ~/.config/nvim-lua
-  mv ~/.config/nvim-backup ~/.config/nvim
-  rm ~/.vimrc
-  mv ~/.vimrc-backup ~/.vimrc
-  mv ~/.vim-backup ~/.vim
-
 The rest of this page gives some more context so you can make your own changes.
-
-Structure
----------
-
-First, there's no more ``init.vim``. It's ``init.lua`` instead.
-
-There is an additional :file:`lua/plugins/init.lua` which holds plugin configuration.
-
-I had initially completely modularized things into separate settings,
-autocommands, mappings, colorscheme, and plugins files. But after living with
-that a bit, I decided to go back to a single main config with settings,
-mappings, autocommands, and colorscheme, and only having a separate plugins
-file.
 
 Lua
 ---
@@ -126,7 +73,7 @@ More info on Lua:
 
 But for a quick intro, here are some of my notes:
 
-- Any vim commands can be trivially converted to Lua by wrapping them in
+- **Any vim commands can be trivially converted to Lua** by wrapping them in
   ``vim.cmd()``. See the `nvim docs on running Vim commands with Lua
   <https://neovim.io/doc/user/lua-guide.html#lua-guide-vim-commands>`_ for more
   info.
@@ -190,6 +137,8 @@ things to load as well as the ability to update or clean up plugins. This is
 similar to ``:PlugInstall`` and ``:PlugClean`` from the previous versions of
 these dotfiles.
 
+.. _creatingkeymappings:
+
 Creating keymappings
 --------------------
 
@@ -226,9 +175,9 @@ needs to be in a table. When setting in a plugin config, it's not in a table.
 How to add/configure plugins
 ----------------------------
 
-Edit :file:`lua/plugins.lua`.
-
-Follow the existing plugin files for a guide, but basically you're aiming for
+Follow the existing plugin files for a guide, but if you're adding a new
+plugin, create a new file in :file:`lua/plugins` named after the plugin, and
+follow the plugin author's instructions. Typically the new file will look
 something like this:
 
 .. code-block:: lua

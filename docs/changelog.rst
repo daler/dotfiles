@@ -34,13 +34,6 @@ copy approach rather than rsync (thanks @mitraak)
 
 - ``setup.sh --vim-diffs`` now correctly shows diffs from inside included directories (thanks @mitraak)
 
-2025-05-07
-----------
-
-**setup**
-
-- ``setup.sh --vim-diffs`` now correctly shows diffs from inside included directories (thanks @mitraak)
-
 2024-12-15
 ----------
 
@@ -48,8 +41,8 @@ copy approach rather than rsync (thanks @mitraak)
 
 - The previous changes (2024-11-19) for better Python code pasting did not work
   on all systems. IPython would sometimes have a lag using ``%cpaste``. So this
-  time, we use `bracketed paste <https://en.wikipedia.org/wiki/Bracketed-paste>
-  `__ when pasting into a running terminal. This seems to have better behavior
+  time, we use `bracketed paste <https://en.wikipedia.org/wiki/Bracketed-paste>`__
+  when pasting into a running terminal. This seems to have better behavior
   in general (including R) by reducing the noise of pasted lines.
 
 - new plugin, `browsher`, to construct a URL for github/gitlab that highlights
