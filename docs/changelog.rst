@@ -1,6 +1,44 @@
 Changelog
 =========
 
+2025-08-14
+----------
+
+**vim**
+
+- Replace vim-sleuth with indent-o-matic for better indentation detection
+- Replace nvim-cmp with blink.cmp for autocompletion (about the same features but with simplified config)
+- Update checkbox rendering in markdown files
+- Add zenfade colorscheme (not enabled by default)
+- Nicer diff deletion symbol
+- Add lush plugin
+- Add treesj plugin
+- Bump installed nvim version to 0.10.4
+
+**setup**
+
+- conda installation dir can be configured via env var ``CONDA_INSTALLATION_DIR``
+- dockerfile uses conda rather than mamba for testing
+
+**docs**
+
+Nvim documentation overhaul. This now includes a new sphinx extension which
+inspects the git history to create a changelog of a plugin. This looks for the
+plugin name in filenames, commit messages, and changed text in an attempt to be
+more transparent about changes over time.
+
+The updates also include splitting the vim plugins from the main vim docs and
+rewriting some supporting docs for vim.
+
+2025-05-16
+----------
+
+**setup**
+
+``--dotfiles`` now properly handles backups of existing files, using a manual
+copy approach rather than rsync (thanks @mitraak)
+
+
 2025-05-07
 ----------
 
@@ -15,8 +53,8 @@ Changelog
 
 - The previous changes (2024-11-19) for better Python code pasting did not work
   on all systems. IPython would sometimes have a lag using ``%cpaste``. So this
-  time, we use `bracketed paste <https://en.wikipedia.org/wiki/Bracketed-paste>
-  `__ when pasting into a running terminal. This seems to have better behavior
+  time, we use `bracketed paste <https://en.wikipedia.org/wiki/Bracketed-paste>`__
+  when pasting into a running terminal. This seems to have better behavior
   in general (including R) by reducing the noise of pasted lines.
 
 - new plugin, `browsher`, to construct a URL for github/gitlab that highlights
