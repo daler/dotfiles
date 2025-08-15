@@ -43,6 +43,7 @@ Ready? :ref:`starthere`!
     tools
     bash
     vim
+    nvim-plugins
     tmux
     conda
     post
