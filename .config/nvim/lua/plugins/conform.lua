@@ -18,9 +18,8 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "isort", "black" },
-        javascript = { { "prettierd", "prettier" } },
-        bash = { { "shfmt" } },
-        sh = { { "shfmt" } },
+        bash = { "shfmt" },
+        sh = { "shfmt" },
       },
       formatters = {
         shfmt = {
