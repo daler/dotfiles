@@ -95,6 +95,10 @@ vim.api.nvim_create_autocmd("FileType", {
       end,
       { desc = "Toggle render-markdown on an RMarkdown file" }
     )
+    vim.keymap.set({
+      "n",
+      "i",
+    }, "<leader>`", "<Esc>i```{r}<CR>```<Esc>O", { desc = "New fenced RMarkdown code block" })
   end,
 })
 
