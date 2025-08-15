@@ -96,13 +96,13 @@ RUN ./setup.sh --install-npm
 # Additional for this container: asciinema for screen casts
 RUN source ~/.bashrc \
     && ca \
-    && mamba create -y -n asciinema asciinema \
+    && conda create -y -n asciinema asciinema \
     && ln -s $(conda info --base)/envs/asciinema/bin/asciinema ~/opt/bin
 
 # imagemagick for converting gifs
 RUN source ~/.bashrc \
     && ca \
-    && mamba create -y -n imagemagick imagemagick \
+    && conda create -y -n imagemagick imagemagick \
     && ln -s $(conda info --base)/envs/imagemagick/bin/convert ~/opt/bin
 
 # Install fonts for use by agg
