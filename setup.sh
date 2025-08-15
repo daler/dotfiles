@@ -22,7 +22,7 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=2.11
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.10.1
+NVIM_VERSION=0.10.4
 RG_VERSION=13.0.0
 BAT_VERSION=0.19.0
 JQ_VERSION=1.6
@@ -519,10 +519,10 @@ elif [ $task == "--install-neovim" ]; then
         mkdir -p "$HOME/opt/bin"
         mv nvim-macos-*64 "$HOME/opt/neovim"
     else
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz nvim-linux64.tar.gz
-        tar -xzf nvim-linux64.tar.gz
-        mv nvim-linux64 "$HOME/opt/neovim"
-        rm nvim-linux64.tar.gz
+        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux-x86_64.tar.gz
+        tar -xzf nvim-linux-x86_64.tar.gz
+        mv nvim-linux-x86_64 "$HOME/opt/neovim"
+        rm nvim-linux-x86_64.tar.gz
     fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
