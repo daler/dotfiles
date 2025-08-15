@@ -1,3 +1,4 @@
+-- browsher will copy a link to github/gitlab based on where you are in the code
 return {
   'claydugo/browsher.nvim',
   event = "VeryLazy",

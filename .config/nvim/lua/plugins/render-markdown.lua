@@ -30,6 +30,9 @@ return {
           internal = { pattern = ".*", icon = "⛬ ", highlight = "RenderMarkdownLink" },
         },
       },
+      checkbox = {
+        checked = { icon = "✓" }
+      }
     },
   },
 }
