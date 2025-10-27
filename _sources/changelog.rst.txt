@@ -1,6 +1,18 @@
 Changelog
 =========
 
+2025-10-27
+----------
+
+**vim**
+
+- Use `zenfade <https://github.com/daler/zenfade/>`__ as the default colorscheme
+
+**bash**
+
+- New alias, ``st``, for refreshing the SSH_AUTH_SOCKET when reconnecting to
+  a tmux session where you're forwarding SSH keys to the remote host.
+
 2025-08-14
 ----------
 
