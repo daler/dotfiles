@@ -66,3 +66,11 @@ alias glv="vim -c ':DiffviewFileHistory'"
 
 # Start the SSH agent, prompting for your passphrase.
 alias s="start_agent"
+
+# If you connect to remote host with key forwarding, start a tmux session, then
+# disconnect and reconnect, the SSH_AUTH_SOCK file is recreated in a different
+# path but the still-running tmux session is still using the old path. So it
+# behaves like keys are not forwarded. Run this fix to update the path so that
+# the key is forwarded again.
+alias st='[ -n "$TMUX" ] && eval $(tmux show-environment -s SSH_AUTH_SOCK)'
+
