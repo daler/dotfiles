@@ -107,6 +107,12 @@ for the commands set for each alias.
     * - ``s``
       - Runs the start_agent function (see :file:`.functions` below)
 
+    * - ``st``
+    - If you connect to a host with SSH key fowarding, start a tmux session,
+      and then disconnect and reconnect to the remote tmux session, the
+      ``SSH_AUTH_SOCKET`` path used by tmux is stale, preventing key fowarding.
+      This refreshes the path so that key forwarding works.
+
     * - ``git-clean-branches-master``
       - Deletes any git branches that have been merged into the master branch
 

@@ -23,6 +23,7 @@ return {
           "bash",
           "css",
           "dockerfile",
+          "hcl",
           "html",
           "json",
           "lua",
