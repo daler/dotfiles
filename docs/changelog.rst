@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2025-11-21
+----------
+
+**vim**
+
+- Update installed nvim to v0.11.5, and update LSP configs accordingly. This
+  LSP config is backwards-compatible with the previously-used version, v0.10.
+
 2025-10-27
 ----------
 
