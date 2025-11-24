@@ -63,11 +63,16 @@ if post_v011 then
           vim.keymap.set("n", "<leader>crn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Rename" })
           vim.keymap.set("n", "<leader>cgr", vim.lsp.buf.references, { buffer = ev.buf, desc = "Goto references" })
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "Code action" })
+          vim.keymap.set(
+            "n",
+            "<leader>ce",
+            vim.diagnostic.open_float,
+            { buffer = ev.buf, desc = "Open diagnostics/errors" }
+          )
         end,
       })
     end,
     keys = {
-      { "<leader>ce", vim.diagnostic.open_float, desc = "Open diagnostics/errors" },
       {
         "<leader>cl",
         function()
