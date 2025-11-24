@@ -67,8 +67,19 @@ if post_v011 then
       })
     end,
     keys = {
-      { "<leader>cl", "<cmd>LspStart<cr>", desc = "Start LSP" },
       { "<leader>ce", vim.diagnostic.open_float, desc = "Open diagnostics/errors" },
+      {
+        "<leader>cl",
+        function()
+          local clients = vim.lsp.get_clients({ bufnr = 0 })
+          if #clients > 0 then
+            vim.cmd("LspStop")
+          else
+            vim.cmd("LspStart")
+          end
+        end,
+        desc = "Toggle LSP",
+      },
     },
   }
 else
@@ -121,7 +132,18 @@ else
     end,
     keys = {
       -- because autostart=false above, need to manually start the language server.
-      { "<leader>cl", "<cmd>LspStart<cr>", desc = "Start LSP" },
+      {
+        "<leader>cl",
+        function()
+          local clients = vim.lsp.get_clients({ bufnr = 0 })
+          if #clients > 0 then
+            vim.cmd("LspStop")
+          else
+            vim.cmd("LspStart")
+          end
+        end,
+        desc = "Toggle LSP",
+      },
       { "<leader>ce", vim.diagnostic.open_float, desc = "Open diagnostics/errors" },
       { "]d", vim.diagnostic.goto_next, desc = "Next diagnostic/error" },
       { "[d", vim.diagnostic.goto_prev, desc = "Prev diagnostic/error" },
