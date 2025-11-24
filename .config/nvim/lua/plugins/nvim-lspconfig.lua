@@ -9,8 +9,8 @@ if post_v011 then
     "neovim/nvim-lspconfig",
     version = "v2.5",
     config = function()
-      --
-      -- -- Python language server
+
+      -- Python language server
       vim.lsp.config.pyright = {
         cmd = { "pyright-langserver", "--stdio" },
         filetypes = { "python" },
@@ -25,8 +25,8 @@ if post_v011 then
         },
       }
 
+      -- ruff for Python as well
       vim.lsp.config("ruff", {
-        -- init_options = { settings = {}},
         init_options = {
           settings = {
             lint = {
@@ -109,21 +109,21 @@ else
     init = function()
       local lspconfig = require("lspconfig")
 
-      -- below, autostart = false means that you need to explicity call :lspstart (<leader>cl)
+      -- Below, autostart = false means that you need to explicity call :LspStart (<leader>cl)
       --
       -- ----------------------------------------------------------------------
-      -- configure additional language servers here
+      -- CONFIGURE ADDITIONAL LANGUAGE SERVERS HERE
       --
-      -- pyright is the language server for python
+      -- pyright is the language server for Python
       lspconfig.pyright.setup({ autostart = false })
 
       lspconfig.bashls.setup({ autostart = false })
 
-      -- language server for r
+      -- language server for R
       lspconfig.r_language_server.setup({ autostart = false })
 
-      -- language server for lua. these are the recommended options
-      -- when mainly using lua for neovim
+      -- Language server for Lua. These are the recommended options
+      -- when mainly using Lua for Neovim
       lspconfig.lua_ls.setup({
         settings = {
           Lua = {
@@ -137,13 +137,13 @@ else
         },
       })
 
-      -- use lspattach autocommand to only map the following keys after
+      -- Use LspAttach autocommand to only map the following keys after
       -- the language server attaches to the current buffer
-      vim.api.nvim_create_autocmd("lspattach", {
-        group = vim.api.nvim_create_augroup("userlspconfig", {}),
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
           vim.keymap.set("n", "<leader>cgd", vim.lsp.buf.definition, { buffer = ev.buf, desc = "Goto Definition" })
-          vim.keymap.set("n", "<leader>ck", vim.lsp.buf.hover, { buffer = ev.buf, desc = "Hover help" })
+          vim.keymap.set("n", "<leader>cK", vim.lsp.buf.hover, { buffer = ev.buf, desc = "Hover help" })
           vim.keymap.set("n", "<leader>crn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Rename" })
           vim.keymap.set("n", "<leader>cgr", vim.lsp.buf.references, { buffer = ev.buf, desc = "Goto References" })
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "Code Action" })
