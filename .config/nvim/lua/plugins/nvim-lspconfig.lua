@@ -9,7 +9,8 @@ if post_v011 then
     "neovim/nvim-lspconfig",
     version = "v2.5",
     config = function()
-      -- Python language server
+      --
+      -- -- Python language server
       vim.lsp.config.pyright = {
         cmd = { "pyright-langserver", "--stdio" },
         filetypes = { "python" },
@@ -23,6 +24,17 @@ if post_v011 then
           ".git",
         },
       }
+
+      vim.lsp.config("ruff", {
+        -- init_options = { settings = {}},
+        init_options = {
+          settings = {
+            lint = {
+              preview = true,
+            },
+          },
+        },
+      })
 
       -- Bash language server
       vim.lsp.config.bashls = {
