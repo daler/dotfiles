@@ -6,8 +6,15 @@ Changelog
 
 **vim**
 
-- Update installed nvim to v0.11.5, and update LSP configs accordingly. This
-  LSP config is backwards-compatible with the previously-used version, v0.10.
+- Bump installed nvim to v0.11.5, and update LSP configs accordingly
+
+nvim 0.11 added built-in LSP client support and some additional built-in
+keymaps. The LSP config here is backwards-compatible with the previously-used
+version v0.10.
+
+However if you re-install (i.e. ``setup.sh --install-neovim``) you'll get nvim
+0.11.5, which behaves a little differently with LSPs but is also now supported
+here. See :ref:`nvimlspconfig_ref` for details on these keymaps.
 
 2025-10-27
 ----------
