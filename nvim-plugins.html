@@ -233,7 +233,7 @@ message</p></td>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -273,7 +273,7 @@ multiple files per commit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -342,7 +342,7 @@ E.g., select a hunk with <kbd class="kbd docutils literal notranslate">vih</kbd>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -410,7 +410,7 @@ view and browse git history.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -466,7 +466,7 @@ to be able to reproduce default behaviors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -541,7 +541,11 @@ nvim’s Language Server Protocol (LSP).</p>
 </div>
 </div>
 <p>These keymaps start with <kbd class="kbd docutils literal notranslate">c</kbd> (mnemonic: “code”). You need to start the
-language server with <kbd class="kbd docutils literal notranslate">cl</kbd> to have access to any of the other keymaps.</p>
+language server with <kbd class="kbd docutils literal notranslate">cl</kbd> to have access to any of these keymaps.</p>
+<p>In nvim 0.11+, there are <a class="reference external" href="https://neovim.io/doc/user/lsp.html#gra">default keymaps</a> for LSP commands. These use the
+<kbd class="kbd docutils literal notranslate">gr</kbd> prefix (presumably g for “global”, but not sure what the mnemonic is
+for “r”). Otherwise, I’m using <kbd class="kbd docutils literal notranslate">&lt;leader&gt;c</kbd> as the prefix for custom
+commands; mnemonic is “code”.</p>
 <table class="docutils align-left">
 <thead>
 <tr class="row-odd"><th class="head"><p>command</p></th>
@@ -553,27 +557,30 @@ language server with <kbd class="kbd docutils literal notranslate">cl</kbd> to h
 <td><p>Start the LSP server for this buffer</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ce</kbd></p></td>
-<td><p>Open diagnostic details</p></td>
+<td><p>Show details for the diagnostic</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">[d</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cv</kbd></p></td>
+<td><p>Toggle virtual text diagnostics in buffer</p></td>
+</tr>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">[d</kbd></p></td>
 <td><p>Prev diagnostic</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">]d</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">]d</kbd></p></td>
 <td><p>Next diagnostic</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cgd</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">grt</kbd></p></td>
 <td><p>Goto definition (e.g., when cursor is over a function)</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cK</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">K</kbd></p></td>
 <td><p>Hover help</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;crn</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">grn</kbd></p></td>
 <td><p>Rename all instances of this symbol</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cr</kbd></p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">grr</kbd></p></td>
 <td><p>Goto references</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ca</kbd></p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">gra</kbd></p></td>
 <td><p>Code action (opens a menu if implemented)</p></td>
 </tr>
 </tbody>
@@ -582,16 +589,119 @@ language server with <kbd class="kbd docutils literal notranslate">cl</kbd> to h
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
 <details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/nvim-lspconfig.lua</span></code>:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- nvim-lspconfig allows convenient configuration of LSP clients</span>
-<span class="kr">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="p">{</span>
+
+<span class="c1">-- nvim 0.11 changed the way lspconfig works, so we split the config based on</span>
+<span class="c1">-- version (hence the duplication)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">post_v011</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="nf">version</span><span class="p">().</span><span class="nv">minor</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">11</span>
+
+<span class="kr">if</span><span class="w"> </span><span class="nv">post_v011</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">  </span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="s2">&quot;neovim/nvim-lspconfig&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;LspStart&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;v2.5&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+
+<span class="w">      </span><span class="c1">-- Python language server</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">pyright</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;pyright-langserver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;setup.cfg&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;requirements.txt&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;Pipfile&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;pyrightconfig.json&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;.git&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="c1">-- ruff for Python as well</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="nf">config</span><span class="p">(</span><span class="s2">&quot;ruff&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">init_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nv">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">lint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nv">preview</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">})</span>
+
+<span class="w">      </span><span class="c1">-- Bash language server</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">bashls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;bash-language-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;sh&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;.git&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="c1">-- R language server</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">r_language_server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;R&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--slave&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;languageserver::run()&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rmd&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;DESCRIPTION&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="c1">-- Lua language server</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">lua_ls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;lua-language-server&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;lua&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;.luarc.json&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;.luarc.jsonc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;.git&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nv">Lua</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">runtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;LuaJIT&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nv">workspace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nv">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">env</span><span class="p">.</span><span class="py">VIMRUNTIME</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="c1">-- By default show the virtual text.</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="nf">config</span><span class="p">({</span><span class="w"> </span><span class="nv">virtual_text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">})</span>
+
+<span class="w">      </span><span class="c1">-- LSP keymaps</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_autocmd</span><span class="p">(</span><span class="s2">&quot;LspAttach&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_augroup</span><span class="p">(</span><span class="s2">&quot;UserLspConfig&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{}),</span>
+<span class="w">        </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">ev</span><span class="p">)</span>
+<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cv&quot;</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="kd">local</span><span class="w"> </span><span class="nv">current_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="nf">config</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="nf">config</span><span class="p">({</span>
+<span class="w">              </span><span class="nv">virtual_text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">current_config</span><span class="p">.</span><span class="py">virtual_text</span><span class="p">,</span>
+<span class="w">            </span><span class="p">})</span>
+<span class="w">          </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Toggle diagnostic virtual text&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span>
+<span class="w">            </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;&lt;leader&gt;ce&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="py">open_float</span><span class="p">,</span>
+<span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Open diagnostics/errors&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">          </span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;&lt;leader&gt;cl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">clients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="nf">get_clients</span><span class="p">({</span><span class="w"> </span><span class="nv">bufnr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="o">#</span><span class="nv">clients</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;LspStop&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">else</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;LspStart&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">end</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Toggle LSP&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="kr">else</span>
+<span class="w">  </span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;neovim/nvim-lspconfig&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;v2.5&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
 <span class="w">      </span><span class="kd">local</span><span class="w"> </span><span class="nv">lspconfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;lspconfig&quot;</span><span class="p">)</span>
 
@@ -611,25 +721,16 @@ language server with <kbd class="kbd docutils literal notranslate">cl</kbd> to h
 <span class="w">      </span><span class="c1">-- Language server for Lua. These are the recommended options</span>
 <span class="w">      </span><span class="c1">-- when mainly using Lua for Neovim</span>
 <span class="w">      </span><span class="nv">lspconfig</span><span class="p">.</span><span class="py">lua_ls</span><span class="p">.</span><span class="nf">setup</span><span class="p">({</span>
-<span class="w">        </span><span class="nv">autostart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">        </span><span class="nv">on_init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">client</span><span class="p">)</span>
-<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">client</span><span class="p">.</span><span class="py">workspace_folders</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nv">name</span>
-<span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">loop</span><span class="p">.</span><span class="nf">fs_stat</span><span class="p">(</span><span class="nv">path</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s2">&quot;/.luarc.json&quot;</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">loop</span><span class="p">.</span><span class="nf">fs_stat</span><span class="p">(</span><span class="nv">path</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s2">&quot;/.luarc.jsonc&quot;</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span>
-<span class="w">            </span><span class="nv">client</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="nf">tbl_deep_extend</span><span class="p">(</span><span class="s2">&quot;force&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">client</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">settings</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">              </span><span class="nv">Lua</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nv">runtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;LuaJIT&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">                </span><span class="nv">workspace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                  </span><span class="nv">checkThirdParty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">                  </span><span class="nv">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nv">vim</span><span class="p">.</span><span class="py">env</span><span class="p">.</span><span class="py">VIMRUNTIME</span><span class="p">,</span>
-<span class="w">                  </span><span class="p">},</span>
-<span class="w">                </span><span class="p">},</span>
-<span class="w">              </span><span class="p">},</span>
-<span class="w">            </span><span class="p">})</span>
-
-<span class="w">            </span><span class="nv">client</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="s2">&quot;workspace/didChangeConfiguration&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">client</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">settings</span><span class="w"> </span><span class="p">})</span>
-<span class="w">          </span><span class="kr">end</span>
-<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nv">Lua</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">runtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;LuaJIT&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nv">workspace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nv">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">env</span><span class="p">.</span><span class="py">VIMRUNTIME</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">        </span><span class="p">},</span>
 <span class="w">      </span><span class="p">})</span>
 
 <span class="w">      </span><span class="c1">-- Use LspAttach autocommand to only map the following keys after</span>
@@ -637,23 +738,34 @@ language server with <kbd class="kbd docutils literal notranslate">cl</kbd> to h
 <span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_autocmd</span><span class="p">(</span><span class="s2">&quot;LspAttach&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_augroup</span><span class="p">(</span><span class="s2">&quot;UserLspConfig&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{}),</span>
 <span class="w">        </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">ev</span><span class="p">)</span>
-<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cgd&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">definition</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Goto definition&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cgd&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">definition</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Goto Definition&quot;</span><span class="w"> </span><span class="p">})</span>
 <span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cK&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">hover</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hover help&quot;</span><span class="w"> </span><span class="p">})</span>
 <span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;crn&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">rename</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Rename&quot;</span><span class="w"> </span><span class="p">})</span>
-<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cgr&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">references</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Goto references&quot;</span><span class="w"> </span><span class="p">})</span>
-<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;ca&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">code_action</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Code action&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cgr&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">references</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Goto References&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;ca&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">buf</span><span class="p">.</span><span class="py">code_action</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ev</span><span class="p">.</span><span class="py">buf</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Code Action&quot;</span><span class="w"> </span><span class="p">})</span>
 <span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">      </span><span class="p">})</span>
 <span class="w">    </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">-- Because autostart=false above, need to manually start the language server.</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;cl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;cmd&gt;LspStart&lt;CR&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Start LSP&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="c1">-- because autostart=false above, need to manually start the language server.</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;&lt;leader&gt;cl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">clients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="nf">get_clients</span><span class="p">({</span><span class="w"> </span><span class="nv">bufnr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="o">#</span><span class="nv">clients</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;LspStop&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">else</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;LspStart&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">end</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Toggle LSP&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;ce&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="py">open_float</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Open diagnostics/errors&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;]d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="py">goto_next</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Next diagnostic/error&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;[d&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">diagnostic</span><span class="p">.</span><span class="py">goto_prev</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Prev diagnostic/error&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 </div></details></div>
@@ -698,7 +810,7 @@ have that many features yet, either.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -740,7 +852,7 @@ plugin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -784,7 +896,7 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -808,7 +920,7 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <span class="w">    </span><span class="nv">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nv">formatters_by_ft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nv">lua</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;stylua&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="nv">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;isort&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;ruff&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">bash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;shfmt&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">sh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;shfmt&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="p">},</span>
@@ -841,7 +953,7 @@ know when it’s running.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -915,7 +1027,7 @@ are interesting to browse through.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -976,7 +1088,7 @@ windows left and right respectively; see <a class="reference internal" href="#to
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1061,7 +1173,7 @@ still be shown.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1110,7 +1222,7 @@ mapped, which you can read about in the <a class="reference external" href="http
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1159,7 +1271,7 @@ tabs along the top.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1226,7 +1338,7 @@ marker to show where the cursor is.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1268,7 +1380,7 @@ can add to it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1309,7 +1421,7 @@ may want to play around with the symbol used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1379,7 +1491,7 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1447,7 +1559,7 @@ colors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1476,7 +1588,7 @@ so supports it well).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1538,7 +1650,7 @@ toggle comments on lines or blocks of code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1574,7 +1686,7 @@ how to tweak.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1634,7 +1746,7 @@ up all the time. There are a lot of ways you can customize this yourself though
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1764,7 +1876,7 @@ treesitter-enabled syntax highlighting though.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1892,7 +2004,7 @@ IPython in the terminal buffer.</p></td>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2007,7 +2119,7 @@ diffs are not looking right, try changing the algorithm with this plugin:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2060,7 +2172,7 @@ as they’re edited</p></td>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2111,7 +2223,7 @@ level of code that you want to select.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2180,7 +2292,7 @@ surrounding characters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2217,7 +2329,7 @@ just the visual block selection, for example when editing TSV files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2241,7 +2353,7 @@ instance of nvim is supposed to be interpreting your keystrokes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2299,7 +2411,7 @@ general, in combination with the <a class="reference internal" href="#rendermark
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2424,7 +2536,7 @@ GitHub/GitLab instances. See the config file
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2493,7 +2605,7 @@ run <code class="docutils literal notranslate"><span class="pre">:IndentOMatic</
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2540,7 +2652,7 @@ explain. It converts back and forth between this:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2587,7 +2699,7 @@ default, at least not yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c097fb2">c097fb2</a>  <em>Merge pull request #62 from daler/2025-10-updates</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
 </ul>
 </dd>
 </dl>

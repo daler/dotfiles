@@ -373,7 +373,14 @@ nvim's Language Server Protocol (LSP).
      ./setup.sh --install-npm  # install nodejs into conda env
 
 These keymaps start with :kbd:`c` (mnemonic: "code"). You need to start the
-language server with :kbd:`cl` to have access to any of the other keymaps.
+language server with :kbd:`cl` to have access to any of these keymaps.
+
+In nvim 0.11+, there are `default keymaps
+<https://neovim.io/doc/user/lsp.html#gra>`__ for LSP commands. These use the
+:kbd:`gr` prefix (presumably g for "global", but not sure what the mnemonic is
+for "r"). Otherwise, I'm using :kbd:`<leader>c` as the prefix for custom
+commands; mnemonic is "code".
+
 
 .. list-table::
     :header-rows: 1
@@ -384,20 +391,22 @@ language server with :kbd:`cl` to have access to any of the other keymaps.
     * - :kbd:`<leader>cl`
       - Start the LSP server for this buffer
     * - :kbd:`<leader>ce`
-      - Open diagnostic details
+      - Show details for the diagnostic
+    * - :kbd:`<leader>cv`
+      - Toggle virtual text diagnostics in buffer
     * - :kbd:`[d`
       - Prev diagnostic
     * - :kbd:`]d`
       - Next diagnostic
-    * - :kbd:`<leader>cgd`
+    * - :kbd:`grt`
       - Goto definition (e.g., when cursor is over a function)
-    * - :kbd:`<leader>cK`
+    * - :kbd:`K`
       - Hover help
-    * - :kbd:`<leader>crn`
+    * - :kbd:`grn`
       - Rename all instances of this symbol
-    * - :kbd:`<leader>cr`
+    * - :kbd:`grr`
       - Goto references
-    * - :kbd:`<leader>ca`
+    * - :kbd:`gra`
       - Code action (opens a menu if implemented)
 
 .. plugin-metadata::
