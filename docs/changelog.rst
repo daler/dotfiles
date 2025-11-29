@@ -16,6 +16,13 @@ However if you re-install (i.e. ``setup.sh --install-neovim``) you'll get nvim
 0.11.5, which behaves a little differently with LSPs but is also now supported
 here. See :ref:`nvimlspconfig_ref` for details on these keymaps.
 
+**bash**
+
+Update ``.bash_prompt`` to only change prompts in an interactive session, which
+prevents the message ``tput: No value for $TERM and no -T specified`` when
+using non-interactive prompts like rsync or cron jobs. Also include some info
+on the colors and how to customize further.
+
 2025-10-27
 ----------
 

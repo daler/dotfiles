@@ -2,9 +2,19 @@
 
 export PS1="\u@\h:\w\\$ "
 
-if [[ $HOSTNAME == "biowulf.nih.gov" ]] ; then
-    export PS1="\u@\[$(tput sgr0)\]\[\033[38;5;214m\]\h\[$(tput sgr0)\]:\w\\$ "
-fi
-if [[ $HOSTNAME == "helix.nih.gov" ]]; then
-    export PS1="\u@\[$(tput sgr0)\]\[\033[38;5;174m\]\h\[$(tput sgr0)\]:\w\\$ "
+# Only change prompt if running interactively
+if tty -s; then
+
+    # For colors, use colors.sh in the daler/dotfiles repo to easily show the
+    # color codes. E.g., in \033[38;5;214m\]\h, the 214 indicates an
+    # orange-yellow hostname.
+    #
+    # Or try https://bash-prompt-generator.org/ for more customization.
+    if [[ $HOSTNAME == "biowulf.nih.gov" ]] ; then
+
+        export PS1="\u@\[$(tput sgr0)\]\[\033[38;5;214m\]\h\[$(tput sgr0)\]:\w\\$ "
+    fi
+    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
+        export PS1="\u@\[$(tput sgr0)\]\[\033[38;5;174m\]\h\[$(tput sgr0)\]:\w\\$ "
+    fi
 fi
