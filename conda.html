@@ -53,7 +53,7 @@
 <h1>conda<a class="headerlink" href="#conda" title="Link to this heading">¶</a></h1>
 <section id="installing-conda">
 <h2>Installing conda<a class="headerlink" href="#installing-conda" title="Link to this heading">¶</a></h2>
-<p>To install conda, we use <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>. Mambaforge is a way of installing
+<p>To install conda, we use <a class="reference external" href="https://github.com/conda-forge/miniforge">Miniforge</a>. Miniforge is a way of installing
 conda that sets conda-forge as the default (and only) channel, and it includes
 <code class="docutils literal notranslate"><span class="pre">mamba</span></code>, a drop-in replacement for conda that is faster and more
 feature-complete.</p>
@@ -88,6 +88,9 @@ environment you want.</p>
 </section>
 <section id="the-solution">
 <h2>The solution<a class="headerlink" href="#the-solution" title="Link to this heading">¶</a></h2>
+<p>These dotfiles provide <code class="docutils literal notranslate"><span class="pre">ca</span></code> (short for “conda activate”) which activates
+conda on demand only when you need it, rather than automatically activating
+upon starting every shell. This avoids I/O slowdown and tmux issues.</p>
 <ol class="arabic">
 <li><p><strong>To activate an environment, use</strong> <code class="docutils literal notranslate"><span class="pre">ca</span></code> at the time you want to use it.
 Use <code class="docutils literal notranslate"><span class="pre">ca</span></code> by itself to activate the base environment. Use <code class="docutils literal notranslate"><span class="pre">ca</span> <span class="pre">&lt;envname&gt;</span></code> to

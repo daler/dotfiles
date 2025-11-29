@@ -200,32 +200,35 @@ command line: <code class="docutils literal notranslate"><span class="pre">gsv</
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:Git</span></code></p></td>
-<td><p>Opens the main screen for fugitive (hint: use <cite>vim -c “:Git”</cite> from the
-command line to jump right into it)</p></td>
+<td><p>Opens git status interface in a split window showing modified files,
+staged changes, and recent commits. Navigate with j/k (hint: use <cite>vim -c
+“:Git”</cite> from command line to jump right into it)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:tab</span> <span class="pre">Git</span></code></p></td>
-<td><p>Opens the main screen for fugitive in a new tab, for fullscreen usage;
-<kbd class="kbd docutils literal notranslate">:q</kbd> to get back to what you were editing on before running it.</p></td>
+<td><p>Opens git status interface in a new tab for fullscreen usage. Press
+<kbd class="kbd docutils literal notranslate">:q</kbd> to return to previous editing session</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">=</kbd></p></td>
-<td><p>Toggle visibility of changes</p></td>
+<td><p>Toggles visibility of changes (diff) for the file under cursor. Shows
+what changed in chunks</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (when over a filename)</p></td>
-<td><p>Stage or unstage the file</p></td>
+<td><p>Stages the file if unstaged, unstages if already staged</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (when in a chunk after using <code class="docutils literal notranslate"><span class="pre">=</span></code>)</p></td>
-<td><p>Stage or unstage the chunk</p></td>
+<td><p>Stages the chunk if unstaged, unstages if already staged</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (in visual select mode (<code class="docutils literal notranslate"><span class="pre">V</span></code>))</p></td>
-<td><p>Stage or unstage <strong>just the selected lines</strong>. Perfect for making
-incremental commits.</p></td>
+<td><p>Stages or unstages <strong>just the selected lines</strong>. Perfect for making
+incremental commits</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">cc</kbd></p></td>
-<td><p>Commit, opening up a separate buffer in which to write the commit
-message</p></td>
+<td><p>Opens commit interface in a new buffer. Write your commit message, save
+and close (:wq) to complete the commit</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">dd</kbd> (when over a file)</p></td>
-<td><p>Open the file in diff mode (to better see intraline diffs)</p></td>
+<td><p>Opens the file in split diff mode showing line-by-line and character-by-
+character changes</p></td>
 </tr>
 </tbody>
 </table>
@@ -233,7 +236,7 @@ message</p></td>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -273,7 +276,7 @@ multiple files per commit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -305,34 +308,39 @@ is “hunk” (the term for a block of changes).</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">[h</kbd></p></td>
-<td><p>Previous change</p></td>
+<td><p>Jump to previous change (hunk) in the file</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">]h</kbd></p></td>
-<td><p>Next change</p></td>
+<td><p>Jump to next change (hunk) in the file</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hp</kbd></p></td>
-<td><p>Preview hunk (shows floating window of the change, only works in a change)</p></td>
+<td><p>Preview hunk: opens floating window showing the diff for the current
+change. Move away (j/k) to close.</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hs</kbd></p></td>
-<td><p>Stage hunk (or stage lines in visual mode)</p></td>
+<td><p>Stage hunk: marks the current change to be included in next commit. In
+visual mode, stages only selected lines</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hr</kbd></p></td>
-<td><p>Reset hunk (or reset lines in visual mode)</p></td>
+<td><p>Reset hunk: discards the current change, reverting to what’s in git. In
+visual mode, resets only selected lines</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hu</kbd></p></td>
-<td><p>Undo stage hunk</p></td>
+<td><p>Undo stage hunk: unstages a previously staged hunk</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hS</kbd></p></td>
-<td><p>Stage buffer</p></td>
+<td><p>Stage entire buffer: marks all changes in the current file for commit</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hR</kbd></p></td>
-<td><p>Reset buffer</p></td>
+<td><p>Reset entire buffer: discards all changes in the current file</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hb</kbd></p></td>
-<td><p>Blame line in floating window</p></td>
+<td><p>Shows git blame info for current line in a floating window (who changed
+it, when, commit message)</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">hd</kbd></p></td>
-<td><p>Diff this file (opens diff mode)</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;hd</kbd></p></td>
+<td><p>Opens diff mode showing side-by-side comparison of current file vs git
+version</p></td>
 </tr>
 </tbody>
 </table>
@@ -342,7 +350,7 @@ E.g., select a hunk with <kbd class="kbd docutils literal notranslate">vih</kbd>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -410,7 +418,7 @@ view and browse git history.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -466,7 +474,7 @@ to be able to reproduce default behaviors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -508,15 +516,11 @@ code. You may find you need to add type annotations in some cases.</p>
 <p>Because the experience can be hit-or-miss depending on the language you’re
 using, and the language servers need to be installed, LSP is disabled by
 default; start it with <kbd class="kbd docutils literal notranslate">cl</kbd>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>nvim 0.11 changed the way LSPs are handled, making them more natively
-integrated. However, this breaks the existing plugin configuration.</p>
-<p>These dotfiles <strong>currently only support nvim &lt;0.11</strong>.</p>
-<p>I experimented with supporting both versions simultaneously. But the files
-got complex, and it was a pain to keep switching versions to test everything
-on both. So I’m opting to require nvim 0.10 for now. After a little while,
-I’ll move everything to 0.11+ and require nvim 0.11+.</p>
+integrated. These dotfiles now support nvim 0.11+ and are backwards
+compatible with 0.10.</p>
 </div>
 <nav class="contents local" id="id6">
 <ul class="simple">
@@ -554,34 +558,42 @@ commands; mnemonic is “code”.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cl</kbd></p></td>
-<td><p>Start the LSP server for this buffer</p></td>
+<td><p>Starts the Language Server Protocol (LSP) for this buffer, enabling
+code completion, diagnostics, and navigation. Mnemonic: [c]ode [l]SP</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ce</kbd></p></td>
-<td><p>Show details for the diagnostic</p></td>
+<td><p>Opens floating window with detailed explanation of the diagnostic
+(error/warning) under cursor. Mnemonic: [c]ode [e]rror</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cv</kbd></p></td>
-<td><p>Toggle virtual text diagnostics in buffer</p></td>
+<td><p>Toggles inline virtual text showing diagnostic messages at end of lines.
+When off, diagnostics only appear in gutter. Mnemonic: [c]ode [v]irtual</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">[d</kbd></p></td>
-<td><p>Prev diagnostic</p></td>
+<td><p>Jumps to previous diagnostic (error/warning/hint) in the buffer</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">]d</kbd></p></td>
-<td><p>Next diagnostic</p></td>
+<td><p>Jumps to next diagnostic (error/warning/hint) in the buffer</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">grt</kbd></p></td>
-<td><p>Goto definition (e.g., when cursor is over a function)</p></td>
+<td><p>Jumps to where the symbol under cursor is defined (e.g., function
+definition, class declaration). Mnemonic: [g]o to [r]eference [t]ype</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">K</kbd></p></td>
-<td><p>Hover help</p></td>
+<td><p>Shows hover documentation for the symbol under cursor in a floating
+window (function signature, docstring, type info)</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">grn</kbd></p></td>
-<td><p>Rename all instances of this symbol</p></td>
+<td><p>Renames all instances of the symbol under cursor throughout the project.
+Opens prompt for new name. Mnemonic: [g]o to [r]eference [n]ame</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">grr</kbd></p></td>
-<td><p>Goto references</p></td>
+<td><p>Opens list of all places where the symbol under cursor is referenced.
+Select one to jump to it. Mnemonic: [g]o to [r]eferences [r]eferences</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">gra</kbd></p></td>
-<td><p>Code action (opens a menu if implemented)</p></td>
+<td><p>Opens menu of available code actions for current context (quick fixes,
+refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction</p></td>
 </tr>
 </tbody>
 </table>
@@ -589,7 +601,7 @@ commands; mnemonic is “code”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -799,10 +811,12 @@ have that many features yet, either.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:Mason</span></code></p></td>
-<td><p>Open the mason interface</p></td>
+<td><p>Opens floating window with Mason interface showing available language
+servers and tools. Navigate with j/k, press i to install, X to uninstall,
+U to update</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">i</kbd> on an item</p></td>
-<td><p>Install</p></td>
+<td><p>Install the selected language server or tool</p></td>
 </tr>
 </tbody>
 </table>
@@ -810,7 +824,7 @@ have that many features yet, either.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -844,7 +858,9 @@ plugin.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ct</kbd></p></td>
-<td><p>Toggle trouble.nvim window</p></td>
+<td><p>Toggles trouble.nvim diagnostic window at bottom of screen, showing all
+LSP errors/warnings in your project. Navigate with j/k, Enter to jump to
+issue, q to close (or <cite>&lt;leader&gt;ct</cite> again).</p></td>
 </tr>
 </tbody>
 </table>
@@ -852,7 +868,7 @@ plugin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -896,7 +912,7 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -953,7 +969,7 @@ know when it’s running.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -997,17 +1013,22 @@ selected file in a new buffer). Hit Esc twice to exit.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;ff</kbd></p></td>
-<td><p>Find files under this directory. Handy alternative to <code class="docutils literal notranslate"><span class="pre">:e</span></code></p></td>
+<td><p>Opens floating window for fuzzy file search under current directory. Type
+to filter filenames, press Enter to open selected file, Esc to cancel.
+Handy alternative to <code class="docutils literal notranslate"><span class="pre">:e</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fg</kbd></p></td>
 <td><p>Search directory for string. This is like using ripgrep, but in vim.
 Selecting entry takes you right to the line.</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;/</kbd></p></td>
-<td><p>Fuzzy find within buffer</p></td>
+<td><p>Opens floating window for fuzzy search within current buffer. Type to
+filter matching lines, Enter to jump to selected line, Esc to cancel</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fc</kbd></p></td>
-<td><p>Find code object</p></td>
+<td><p>Opens floating window to search for code symbols (functions, classes,
+variables) in the current buffer using Treesitter. Type to filter, Enter
+to jump to symbol, Esc to cancel</p></td>
 </tr>
 </tbody>
 </table>
@@ -1027,7 +1048,7 @@ are interesting to browse through.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1072,13 +1093,15 @@ are interesting to browse through.</p></li>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;fb</kbd></p></td>
-<td><p>Toggle file browser</p></td>
+<td><p>Toggles file browser sidebar showing directory tree. Navigate with j/k,
+Enter to open files/folders, q to close</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">-</kbd> (within browser)</p></td>
-<td><p>Go up a directory.</p></td>
+<td><p>Navigate up one directory level</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">Enter</kbd> (within browser)</p></td>
-<td><p>Open file or directory, or close directory</p></td>
+<td><p>Opens file in editor, expands directory to show contents, or collapses
+open directory</p></td>
 </tr>
 </tbody>
 </table>
@@ -1088,7 +1111,7 @@ windows left and right respectively; see <a class="reference internal" href="#to
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1173,7 +1196,7 @@ still be shown.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1209,10 +1232,13 @@ contents.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;a</kbd></p></td>
-<td><p>Toggle aerial sidebar</p></td>
+<td><p>Toggles aerial navigation sidebar showing code structure outline
+(functions, classes, methods). Navigate with j/k, Enter to jump to item,
+q to close</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">{</kbd> and <kbd class="kbd docutils literal notranslate">}</kbd></p></td>
-<td><p>Jump to prev or next item (function, snakemake rule, markdown section)</p></td>
+<td><p>Jump to previous (<cite>{</cite>) or next (<cite>}</cite>) code item in the buffer (function,
+class, snakemake rule, markdown section)</p></td>
 </tr>
 </tbody>
 </table>
@@ -1222,7 +1248,7 @@ mapped, which you can read about in the <a class="reference external" href="http
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1263,7 +1289,8 @@ tabs along the top.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;b</kbd>, then type highlighted letter in tab</p></td>
-<td><p>Switch to buffer</p></td>
+<td><p>Enters buffer-pick mode: each open buffer tab shows a letter. Type that
+letter to switch to the corresponding buffer</p></td>
 </tr>
 </tbody>
 </table>
@@ -1271,7 +1298,7 @@ tabs along the top.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1338,7 +1365,7 @@ marker to show where the cursor is.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1380,7 +1407,7 @@ can add to it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1421,7 +1448,7 @@ may want to play around with the symbol used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1483,7 +1510,9 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;rm</kbd></p></td>
-<td><p>Toggle [r]ender[m]arkdown on an [r][m]arkdown file</p></td>
+<td><p>Toggles render-markdown on/off for the current markdown file. When on,
+shows enhanced formatting (bullets, tables, code blocks). When off, shows
+raw markdown. Mnemonic: [r]ender [m]arkdown</p></td>
 </tr>
 </tbody>
 </table>
@@ -1491,7 +1520,7 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1559,7 +1588,7 @@ colors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1588,7 +1617,7 @@ so supports it well).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1650,7 +1679,7 @@ toggle comments on lines or blocks of code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1686,7 +1715,7 @@ how to tweak.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1746,7 +1775,7 @@ up all the time. There are a lot of ways you can customize this yourself though
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1876,7 +1905,7 @@ treesitter-enabled syntax highlighting though.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1971,32 +2000,37 @@ mode.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;t</kbd></p></td>
-<td><p>Open terminal to the right.</p></td>
+<td><p>Opens a terminal in a vertical split on the right side. Terminal starts
+in insert mode ready for commands</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;w</kbd></p></td>
-<td><p>Move to the right window (assumes it’s terminal), and enter insert mode</p></td>
+<td><p>Switches focus to the right window (typically the terminal) and enters
+insert mode automatically</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;q</kbd></p></td>
-<td><p>Move to the text buffer to the left, and enter normal mode</p></td>
+<td><p>Switches focus back to the left window (typically the text buffer) and
+enters normal mode for editing</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;cd</kbd></p></td>
-<td><p>Send the current RMarkdown code chunk to the terminal, and jump to the
-next chunk</p></td>
+<td><p>Sends the current RMarkdown code chunk to terminal for execution, then
+automatically jumps cursor to the next chunk. Great for interactive data
+analysis</p></td>
 </tr>
 <tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">gxx</kbd></p></td>
-<td><p>Send the current <em>line</em> to the terminal buffer</p></td>
+<td><p>Sends the current line under cursor to the terminal and executes it.
+Useful for running single commands</p></td>
 </tr>
 <tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">gx</kbd></p></td>
-<td><p>Send the current <em>selection</em> to the terminal buffer</p></td>
+<td><p>Sends the currently selected text (visual mode) to the terminal and
+executes it. Useful for running multiple lines</p></td>
 </tr>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;k</kbd></p></td>
-<td><p>Render the current RMarkdown file to HTML using <cite>knitr::render()</cite>.
-Assumes you have knitr installed and you’re running R in the terminal
-buffer.</p></td>
+<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;k</kbd> (in RMarkdown file)</p></td>
+<td><p>Renders the current RMarkdown file to HTML using <cite>knitr::render()</cite>.
+Requires knitr installed and R running in terminal</p></td>
 </tr>
-<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;k</kbd></p></td>
-<td><p>Run the current Python script in IPython. Assumes you’re running
-IPython in the terminal buffer.</p></td>
+<tr class="row-odd"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;k</kbd> (in Python file)</p></td>
+<td><p>Runs the current Python script in IPython using <cite>%run</cite> magic command.
+Requires IPython running in terminal</p></td>
 </tr>
 </tbody>
 </table>
@@ -2004,7 +2038,7 @@ IPython in the terminal buffer.</p></td>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2119,7 +2153,7 @@ diffs are not looking right, try changing the algorithm with this plugin:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2172,7 +2206,7 @@ as they’re edited</p></td>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2223,7 +2257,7 @@ level of code that you want to select.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2292,7 +2326,7 @@ surrounding characters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2329,7 +2363,7 @@ just the visual block selection, for example when editing TSV files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2353,7 +2387,7 @@ instance of nvim is supposed to be interpreting your keystrokes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2411,7 +2445,7 @@ general, in combination with the <a class="reference internal" href="#rendermark
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2536,7 +2570,7 @@ GitHub/GitLab instances. See the config file
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2605,7 +2639,7 @@ run <code class="docutils literal notranslate"><span class="pre">:IndentOMatic</
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2652,7 +2686,7 @@ explain. It converts back and forth between this:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2699,7 +2733,7 @@ default, at least not yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1de8e41">1de8e41</a>  <em>Merge pull request #63 from daler/nvim-0.11.5</em></p></li>
+<li><p>2025-11-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a09668">4a09668</a>  <em>Merge pull request #64 from daler/docs-update</em></p></li>
 </ul>
 </dd>
 </dl>

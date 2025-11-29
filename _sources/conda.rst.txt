@@ -4,8 +4,8 @@ conda
 Installing conda
 ----------------
 
-To install conda, we use `Mambaforge
-<https://github.com/conda-forge/miniforge>`_. Mambaforge is a way of installing
+To install conda, we use `Miniforge
+<https://github.com/conda-forge/miniforge>`_. Miniforge is a way of installing
 conda that sets conda-forge as the default (and only) channel, and it includes
 ``mamba``, a drop-in replacement for conda that is faster and more
 feature-complete.
@@ -45,6 +45,10 @@ environment you want.
 
 The solution
 ------------
+
+These dotfiles provide ``ca`` (short for "conda activate") which activates
+conda on demand only when you need it, rather than automatically activating
+upon starting every shell. This avoids I/O slowdown and tmux issues.
 
 1. **To activate an environment, use** ``ca`` at the time you want to use it.
    Use ``ca`` by itself to activate the base environment. Use ``ca <envname>`` to

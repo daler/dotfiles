@@ -181,13 +181,16 @@ For example, on many machines it’s at <code class="file docutils literal notra
 changed. Please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details
 on migrating to this new config method.</p>
 </div>
-<p>Plugins are managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a>
-manager. Simply opening neovim should be sufficient to trigger <code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> to
-bootstrap itself and then download, install, and configure plugins
-automatically.</p>
-<p>Or you can run this command to have it quit automatically when it’s done:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># this will open nvim, install plugins, and quit when done</span>
-nvim<span class="w"> </span>+<span class="s2">&quot;lua require(&#39;lazy&#39;).restore({wait=true})&quot;</span><span class="w"> </span>+q
+<p>After closing and reopening your terminal from step 2b, now open neovim to
+trigger automatic plugin installation. Plugins are managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a> manager, which will bootstrap itself and
+then download, install, and configure all plugins automatically.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvim
+<span class="c1"># Wait for plugins to download and install (you&#39;ll see progress messages)</span>
+<span class="c1"># When everything is finished, quit with :q</span>
+</pre></div>
+</div>
+<p>Or run this command to install plugins and quit automatically when done:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvim<span class="w"> </span>+<span class="s2">&quot;lua require(&#39;lazy&#39;).restore({wait=true})&quot;</span><span class="w"> </span>+q
 </pre></div>
 </div>
 <details><summary>Details</summary><div class="details"><p><code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> will show progress downloading plugins. Treesitter will also
@@ -218,14 +221,14 @@ details on how to activate environments.</p>
 packages from Bioconda because packages are not built yet for the Apple
 Silicon architecture.</p>
 </div>
-<details><summary>Details</summary><div class="details"><p>First, this downloads the latest version of <a class="reference external" href="https://github.com/conda-forge/miniforge">Mambaforge</a>, and installs conda and mamba
-into <code class="file docutils literal notranslate"><span class="pre">~/mambaforge/condabin</span></code>.</p>
-<p>Then it adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/mambaforge/condabin&quot;</span></code> to the
+<details><summary>Details</summary><div class="details"><p>First, this downloads the latest version of <a class="reference external" href="https://github.com/conda-forge/miniforge">Miniforge</a>, and installs conda and mamba
+into <code class="file docutils literal notranslate"><span class="pre">~/miniforge/condabin</span></code>.</p>
+<p>Then it adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/miniforge/condabin&quot;</span></code> to the
 <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code> (which you can read more about at <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>).</p>
 <p>If you happen to be on NIH’s Biowulf cluster where the home directory is too small to
 support the installation, this will auto-detect that and install instead to
-<code class="file docutils literal notranslate"><span class="pre">/data/$USER/mambaforge/condabin</span></code> and add the line <code class="docutils literal notranslate"><span class="pre">export</span>
-<span class="pre">PATH=&quot;$PATH:~/data/$USER/mambaforge/condabin</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code></p>
+<code class="file docutils literal notranslate"><span class="pre">/data/$USER/miniforge/condabin</span></code> and add the line <code class="docutils literal notranslate"><span class="pre">export</span>
+<span class="pre">PATH=&quot;$PATH:~/data/$USER/miniforge/condabin</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code></p>
 <p>Finally, <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--set-up-bioconda</span></code> sets up the bioconda and
 conda-forge channels in the right way as documented by <a class="reference external" href="https://bioconda.github.io">Bioconda</a>.</p>
 </div></details></section>

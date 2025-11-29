@@ -55,6 +55,10 @@
 <span id="id1"></span><h2><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code><a class="headerlink" href="#bashrc" title="Link to this heading">¶</a></h2>
 <p>At the top of <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, the following files are sourced if they’re present.
 This keeps things a little more organized and modular:</p>
+<p>This modular structure makes it easier to edit specific parts of the
+configuration without digging through a single large file. For example if you
+want to add your own aliases, edit <code class="file docutils literal notranslate"><span class="pre">.aliases</span></code>; for PATH changes edit
+<code class="file docutils literal notranslate"><span class="pre">.path</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>~/.<span class="o">{</span>path,exports,bash_prompt,functions,aliases,extra<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="o">[</span><span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="k">done</span><span class="p">;</span>
@@ -63,7 +67,7 @@ This keeps things a little more organized and modular:</p>
 </div>
 <p>These files are described in the sections below, but a quick summary:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#path"><span class="std std-ref">.path</span></a>: all <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=...</span></code> can go here.</p></li>
+<li><p><span class="xref std std-ref">.path</span>: all <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=...</span></code> can go here.</p></li>
 <li><p><a class="reference internal" href="#aliases"><span class="std std-ref">.aliases</span></a>: store your aliases here.</p></li>
 <li><p><a class="reference internal" href="#functions"><span class="std std-ref">.functions</span></a>: store your bash functions here.</p></li>
 <li><p><a class="reference internal" href="#bash-prompt"><span class="std std-ref">.bash_prompt</span></a>: edit your bash prompt here.</p></li>
@@ -95,12 +99,12 @@ bash shell (see <a class="reference internal" href="conda.html#conda"><span clas
 <span id="id2"></span><h2><code class="docutils literal notranslate"><span class="pre">.path</span></code><a class="headerlink" href="#path" title="Link to this heading">¶</a></h2>
 <p>This file ends up being lots of <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:/some/other/path&quot;</span></code>
 lines. It is initially populated to put <code class="docutils literal notranslate"><span class="pre">~/opt/bin</span></code> and
-<code class="docutils literal notranslate"><span class="pre">~/mambaforge/condabin</span></code> on the path. As you install more software in other
+<code class="docutils literal notranslate"><span class="pre">~/miniforge/condabin</span></code> on the path. As you install more software in other
 locations, this is a tidy place to put the various exports.</p>
 </section>
 <section id="aliases">
 <span id="id3"></span><h2><code class="docutils literal notranslate"><span class="pre">.aliases</span></code><a class="headerlink" href="#aliases" title="Link to this heading">¶</a></h2>
-<p>This file keeps aliase separate for easier maintenance. See <code class="file docutils literal notranslate"><span class="pre">.aliases</span></code>
+<p>This file keeps aliases separate for easier maintenance. See <code class="file docutils literal notranslate"><span class="pre">.aliases</span></code>
 for the commands set for each alias.</p>
 </section>
 <section id="functions">
