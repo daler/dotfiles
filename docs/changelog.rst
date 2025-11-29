@@ -1,6 +1,28 @@
 Changelog
 =========
 
+2025-11-21
+----------
+
+**vim**
+
+- Bump installed nvim to v0.11.5, and update LSP configs accordingly
+
+nvim 0.11 added built-in LSP client support and some additional built-in
+keymaps. The LSP config here is backwards-compatible with the previously-used
+version v0.10.
+
+However if you re-install (i.e. ``setup.sh --install-neovim``) you'll get nvim
+0.11.5, which behaves a little differently with LSPs but is also now supported
+here. See :ref:`nvimlspconfig_ref` for details on these keymaps.
+
+**bash**
+
+Update ``.bash_prompt`` to only change prompts in an interactive session, which
+prevents the message ``tput: No value for $TERM and no -T specified`` when
+using non-interactive prompts like rsync or cron jobs. Also include some info
+on the colors and how to customize further.
+
 2025-10-27
 ----------
 
