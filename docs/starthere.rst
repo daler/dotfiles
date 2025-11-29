@@ -183,16 +183,21 @@ more help on deciding.
   changed. Please see :ref:`nvim-lua` for more context, rationale, and details
   on migrating to this new config method.
 
-Plugins are managed via the `lazy.nvim <https://github.com/folke/lazy.nvim>`_
-manager. Simply opening neovim should be sufficient to trigger ``lazy.nvim`` to
-bootstrap itself and then download, install, and configure plugins
-automatically.
-
-Or you can run this command to have it quit automatically when it's done:
+After closing and reopening your terminal from step 2b, now open neovim to
+trigger automatic plugin installation. Plugins are managed via the `lazy.nvim
+<https://github.com/folke/lazy.nvim>`_ manager, which will bootstrap itself and
+then download, install, and configure all plugins automatically.
 
 .. code-block:: bash
 
-  # this will open nvim, install plugins, and quit when done
+  nvim
+  # Wait for plugins to download and install (you'll see progress messages)
+  # When everything is finished, quit with :q
+
+Or run this command to install plugins and quit automatically when done:
+
+.. code-block:: bash
+
   nvim +"lua require('lazy').restore({wait=true})" +q
 
 .. details:: Details
@@ -235,17 +240,17 @@ details on how to activate environments.
 
 .. details:: Details
 
-    First, this downloads the latest version of `Mambaforge
+    First, this downloads the latest version of `Miniforge
     <https://github.com/conda-forge/miniforge>`_, and installs conda and mamba
-    into :file:`~/mambaforge/condabin`.
+    into :file:`~/miniforge/condabin`.
 
-    Then it adds the line ``export PATH="$PATH:~/mambaforge/condabin"`` to the
+    Then it adds the line ``export PATH="$PATH:~/miniforge/condabin"`` to the
     :file:`~/.path` (which you can read more about at :ref:`bash`).
 
     If you happen to be on NIH's Biowulf cluster where the home directory is too small to
     support the installation, this will auto-detect that and install instead to
-    :file:`/data/$USER/mambaforge/condabin` and add the line ``export
-    PATH="$PATH:~/data/$USER/mambaforge/condabin`` to the :file:`~/.path`
+    :file:`/data/$USER/miniforge/condabin` and add the line ``export
+    PATH="$PATH:~/data/$USER/miniforge/condabin`` to the :file:`~/.path`
 
     Finally, ``./setup.sh --set-up-bioconda`` sets up the bioconda and
     conda-forge channels in the right way as documented by `Bioconda
