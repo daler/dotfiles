@@ -117,32 +117,35 @@ command line: ``gsv`` (mnemonic: git status viewer).
       - description
 
     * - ``:Git``
-      - Opens the main screen for fugitive (hint: use `vim -c ":Git"` from the
-        command line to jump right into it)
+      - Opens git status interface in a split window showing modified files,
+        staged changes, and recent commits. Navigate with j/k (hint: use `vim -c
+        ":Git"` from command line to jump right into it)
 
     * - ``:tab Git``
-      - Opens the main screen for fugitive in a new tab, for fullscreen usage;
-        :kbd:`:q` to get back to what you were editing on before running it.
+      - Opens git status interface in a new tab for fullscreen usage. Press
+        :kbd:`:q` to return to previous editing session
 
     * - :kbd:`=`
-      - Toggle visibility of changes
+      - Toggles visibility of changes (diff) for the file under cursor. Shows
+        what changed in chunks
 
     * - :kbd:`-` (when over a filename)
-      - Stage or unstage the file
+      - Stages the file if unstaged, unstages if already staged
 
     * - :kbd:`-` (when in a chunk after using ``=``)
-      - Stage or unstage the chunk
+      - Stages the chunk if unstaged, unstages if already staged
 
     * - :kbd:`-` (in visual select mode (``V``))
-      - Stage or unstage **just the selected lines**. Perfect for making
-        incremental commits.
+      - Stages or unstages **just the selected lines**. Perfect for making
+        incremental commits
 
     * - :kbd:`cc`
-      - Commit, opening up a separate buffer in which to write the commit
-        message
+      - Opens commit interface in a new buffer. Write your commit message, save
+        and close (:wq) to complete the commit
 
     * - :kbd:`dd` (when over a file)
-      - Open the file in diff mode (to better see intraline diffs)
+      - Opens the file in split diff mode showing line-by-line and character-by-
+        character changes
 
 .. plugin-metadata::
    :name: vim-fugitive
@@ -203,34 +206,39 @@ is "hunk" (the term for a block of changes).
       - description
 
     * - :kbd:`[h`
-      - Previous change
+      - Jump to previous change (hunk) in the file
 
     * - :kbd:`]h`
-      - Next change
+      - Jump to next change (hunk) in the file
 
     * - :kbd:`<leader>hp`
-      - Preview hunk (shows floating window of the change, only works in a change)
+      - Preview hunk: opens floating window showing the diff for the current
+        change. Move away (j/k) to close.
 
     * - :kbd:`<leader>hs`
-      - Stage hunk (or stage lines in visual mode)
+      - Stage hunk: marks the current change to be included in next commit. In
+        visual mode, stages only selected lines
 
     * - :kbd:`<leader>hr`
-      - Reset hunk (or reset lines in visual mode)
+      - Reset hunk: discards the current change, reverting to what's in git. In
+        visual mode, resets only selected lines
 
     * - :kbd:`<leader>hu`
-      - Undo stage hunk
+      - Undo stage hunk: unstages a previously staged hunk
 
     * - :kbd:`<leader>hS`
-      - Stage buffer
+      - Stage entire buffer: marks all changes in the current file for commit
 
     * - :kbd:`<leader>hR`
-      - Reset buffer
+      - Reset entire buffer: discards all changes in the current file
 
     * - :kbd:`<leader>hb`
-      - Blame line in floating window
+      - Shows git blame info for current line in a floating window (who changed
+        it, when, commit message)
 
-    * - :kbd:`hd`
-      - Diff this file (opens diff mode)
+    * - :kbd:`<leader>hd`
+      - Opens diff mode showing side-by-side comparison of current file vs git
+        version
 
 
 Additionally, this supports hunks as text objects using ``ih`` (inside hunk).
@@ -341,17 +349,11 @@ Because the experience can be hit-or-miss depending on the language you're
 using, and the language servers need to be installed, LSP is disabled by
 default; start it with :kbd:`cl`.
 
-.. warning::
+.. note::
 
    nvim 0.11 changed the way LSPs are handled, making them more natively
-   integrated. However, this breaks the existing plugin configuration.
-
-   These dotfiles **currently only support nvim <0.11**. 
-
-   I experimented with supporting both versions simultaneously. But the files
-   got complex, and it was a pain to keep switching versions to test everything
-   on both. So I'm opting to require nvim 0.10 for now. After a little while,
-   I'll move everything to 0.11+ and require nvim 0.11+.
+   integrated. These dotfiles now support nvim 0.11+ and are backwards
+   compatible with 0.10. 
 
 .. contents::
    :local:
@@ -389,25 +391,33 @@ commands; mnemonic is "code".
     * - command
       - description
     * - :kbd:`<leader>cl`
-      - Start the LSP server for this buffer
+      - Starts the Language Server Protocol (LSP) for this buffer, enabling
+        code completion, diagnostics, and navigation. Mnemonic: [c]ode [l]SP
     * - :kbd:`<leader>ce`
-      - Show details for the diagnostic
+      - Opens floating window with detailed explanation of the diagnostic
+        (error/warning) under cursor. Mnemonic: [c]ode [e]rror
     * - :kbd:`<leader>cv`
-      - Toggle virtual text diagnostics in buffer
+      - Toggles inline virtual text showing diagnostic messages at end of lines.
+        When off, diagnostics only appear in gutter. Mnemonic: [c]ode [v]irtual
     * - :kbd:`[d`
-      - Prev diagnostic
+      - Jumps to previous diagnostic (error/warning/hint) in the buffer
     * - :kbd:`]d`
-      - Next diagnostic
+      - Jumps to next diagnostic (error/warning/hint) in the buffer
     * - :kbd:`grt`
-      - Goto definition (e.g., when cursor is over a function)
+      - Jumps to where the symbol under cursor is defined (e.g., function
+        definition, class declaration). Mnemonic: [g]o to [r]eference [t]ype
     * - :kbd:`K`
-      - Hover help
+      - Shows hover documentation for the symbol under cursor in a floating
+        window (function signature, docstring, type info)
     * - :kbd:`grn`
-      - Rename all instances of this symbol
+      - Renames all instances of the symbol under cursor throughout the project.
+        Opens prompt for new name. Mnemonic: [g]o to [r]eference [n]ame
     * - :kbd:`grr`
-      - Goto references
+      - Opens list of all places where the symbol under cursor is referenced.
+        Select one to jump to it. Mnemonic: [g]o to [r]eferences [r]eferences
     * - :kbd:`gra`
-      - Code action (opens a menu if implemented)
+      - Opens menu of available code actions for current context (quick fixes,
+        refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction
 
 .. plugin-metadata::
    :name: nvim-lspconfig
@@ -448,10 +458,12 @@ have that many features yet, either.
     * - command
       - description
     * - ``:Mason``
-      - Open the mason interface
+      - Opens floating window with Mason interface showing available language
+        servers and tools. Navigate with j/k, press i to install, X to uninstall,
+        U to update
 
     * - :kbd:`i` on an item
-      - Install
+      - Install the selected language server or tool
 
 
 .. plugin-metadata::
@@ -479,7 +491,9 @@ plugin.
     * - command
       - description
     * - :kbd:`<leader>ct`
-      - Toggle trouble.nvim window
+      - Toggles trouble.nvim diagnostic window at bottom of screen, showing all
+        LSP errors/warnings in your project. Navigate with j/k, Enter to jump to
+        issue, q to close (or `<leader>ct` again).
 
 .. plugin-metadata::
    :name: trouble
@@ -559,17 +573,22 @@ selected file in a new buffer). Hit Esc twice to exit.
       - description
 
     * - :kbd:`<leader>ff`
-      - Find files under this directory. Handy alternative to ``:e``
+      - Opens floating window for fuzzy file search under current directory. Type
+        to filter filenames, press Enter to open selected file, Esc to cancel.
+        Handy alternative to ``:e``
 
     * - :kbd:`<leader>fg`
       - Search directory for string. This is like using ripgrep, but in vim.
         Selecting entry takes you right to the line.
 
     * - :kbd:`<leader>/`
-      - Fuzzy find within buffer
+      - Opens floating window for fuzzy search within current buffer. Type to
+        filter matching lines, Enter to jump to selected line, Esc to cancel
 
     * - :kbd:`<leader>fc`
-      - Find code object
+      - Opens floating window to search for code symbols (functions, classes,
+        variables) in the current buffer using Treesitter. Type to filter, Enter
+        to jump to symbol, Esc to cancel
 
 
 Other useful things you can do with Telescope:
@@ -604,13 +623,15 @@ Other useful things you can do with Telescope:
       - description
 
     * - :kbd:`<leader>fb`
-      - Toggle file browser
+      - Toggles file browser sidebar showing directory tree. Navigate with j/k,
+        Enter to open files/folders, q to close
 
     * - :kbd:`-` (within browser)
-      - Go up a directory.
+      - Navigate up one directory level
 
     * - :kbd:`Enter` (within browser)
-      - Open file or directory, or close directory
+      - Opens file in editor, expands directory to show contents, or collapses
+        open directory
 
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
 windows left and right respectively; see :ref:`toggleterm_ref`) also work.
@@ -706,10 +727,13 @@ contents.
       - description
 
     * - :kbd:`<leader>a`
-      - Toggle aerial sidebar
+      - Toggles aerial navigation sidebar showing code structure outline
+        (functions, classes, methods). Navigate with j/k, Enter to jump to item,
+        q to close
 
     * - :kbd:`{` and :kbd:`}`
-      - Jump to prev or next item (function, snakemake rule, markdown section)
+      - Jump to previous (`{`) or next (`}`) code item in the buffer (function,
+        class, snakemake rule, markdown section)
 
 For navigating complex codebases, there are other keys that are automatically
 mapped, which you can read about in the `README for aerial
@@ -738,7 +762,8 @@ tabs along the top.
     * - command
       - description
     * - :kbd:`<leader>b`, then type highlighted letter in tab
-      - Switch to buffer
+      - Enters buffer-pick mode: each open buffer tab shows a letter. Type that
+        letter to switch to the corresponding buffer
 
 .. plugin-metadata::
    :name: bufferline
@@ -834,7 +859,9 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.
       - description
 
     * - :kbd:`<leader>rm`
-      - Toggle [r]ender[m]arkdown on an [r][m]arkdown file
+      - Toggles render-markdown on/off for the current markdown file. When on,
+        shows enhanced formatting (bullets, tables, code blocks). When off, shows
+        raw markdown. Mnemonic: [r]ender [m]arkdown
 
 .. plugin-metadata::
    :name: render-markdown
@@ -1058,32 +1085,37 @@ the terminal use.
       - description
 
     * - :kbd:`<leader>t`
-      - Open terminal to the right.
+      - Opens a terminal in a vertical split on the right side. Terminal starts
+        in insert mode ready for commands
 
     * - :kbd:`<leader>w`
-      - Move to the right window (assumes it's terminal), and enter insert mode
+      - Switches focus to the right window (typically the terminal) and enters
+        insert mode automatically
 
     * - :kbd:`<leader>q`
-      - Move to the text buffer to the left, and enter normal mode
+      - Switches focus back to the left window (typically the text buffer) and
+        enters normal mode for editing
 
     * - :kbd:`<leader>cd`
-      - Send the current RMarkdown code chunk to the terminal, and jump to the
-        next chunk
+      - Sends the current RMarkdown code chunk to terminal for execution, then
+        automatically jumps cursor to the next chunk. Great for interactive data
+        analysis
 
     * - :kbd:`gxx`
-      - Send the current *line* to the terminal buffer
+      - Sends the current line under cursor to the terminal and executes it.
+        Useful for running single commands
 
     * - :kbd:`gx`
-      - Send the current *selection* to the terminal buffer
+      - Sends the currently selected text (visual mode) to the terminal and
+        executes it. Useful for running multiple lines
 
-    * - :kbd:`<leader>k`
-      - Render the current RMarkdown file to HTML using `knitr::render()`.
-        Assumes you have knitr installed and you're running R in the terminal
-        buffer.
+    * - :kbd:`<leader>k` (in RMarkdown file)
+      - Renders the current RMarkdown file to HTML using `knitr::render()`.
+        Requires knitr installed and R running in terminal
 
-    * - :kbd:`<leader>k`
-      - Run the current Python script in IPython. Assumes you're running
-        IPython in the terminal buffer.
+    * - :kbd:`<leader>k` (in Python file)
+      - Runs the current Python script in IPython using `%run` magic command.
+        Requires IPython running in terminal
 
 .. plugin-metadata::
    :name: toggleterm

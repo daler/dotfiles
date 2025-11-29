@@ -11,6 +11,11 @@ Bash dotfiles
 At the top of ``.bashrc``, the following files are sourced if they’re present.
 This keeps things a little more organized and modular:
 
+This modular structure makes it easier to edit specific parts of the
+configuration without digging through a single large file. For example if you
+want to add your own aliases, edit :file:`.aliases`; for PATH changes edit
+:file:`.path`.
+
 .. code-block:: bash
 
   for file in ~/.{path,exports,bash_prompt,functions,aliases,extra}; do
@@ -50,14 +55,14 @@ Other notable parts of the :file:`.bashrc`:
 
 ``.bash_profile`` does only one thing: it sources ``.bashrc``.
 
-.. _.path:
+.. _path:
 
 ``.path``
 ---------
 
 This file ends up being lots of ``export PATH="$PATH:/some/other/path"``
 lines. It is initially populated to put ``~/opt/bin`` and
-``~/mambaforge/condabin`` on the path. As you install more software in other
+``~/miniforge/condabin`` on the path. As you install more software in other
 locations, this is a tidy place to put the various exports.
 
 .. _.aliases:
@@ -65,7 +70,7 @@ locations, this is a tidy place to put the various exports.
 ``.aliases``
 ------------
 
-This file keeps aliase separate for easier maintenance. See :file:`.aliases`
+This file keeps aliases separate for easier maintenance. See :file:`.aliases`
 for the commands set for each alias.
 
 .. list-table::
@@ -108,9 +113,9 @@ for the commands set for each alias.
       - Runs the start_agent function (see :file:`.functions` below)
 
     * - ``st``
-    - If you connect to a host with SSH key fowarding, start a tmux session,
+    - If you connect to a host with SSH key forwarding, start a tmux session,
       and then disconnect and reconnect to the remote tmux session, the
-      ``SSH_AUTH_SOCKET`` path used by tmux is stale, preventing key fowarding.
+      ``SSH_AUTH_SOCKET`` path used by tmux is stale, preventing key forwarding.
       This refreshes the path so that key forwarding works.
 
     * - ``git-clean-branches-master``
