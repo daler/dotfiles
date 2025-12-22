@@ -17,6 +17,7 @@ return {
 
         -- Disable the filetype icons in tabs
         show_buffer_icons = false,
+        separator_style = "slant",
 
         -- When using aerial or file tree, shift the tab so it's over the
         -- actual file.
