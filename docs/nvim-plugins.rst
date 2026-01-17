@@ -50,9 +50,10 @@ load plugins when they're needed. See :ref:`nvim-lua` for my rationale on that.
 Because of how frequently nvim changes, each plugin section below has
 a changelog. Since I have reorganized files over the years, the changelogs show
 the *mention* of a plugin in a commit message, in a filename, or as part of the
-changeset of a commit in an attempt to catch all of the changes. This may be
-a little overzealous (for example the ``trouble`` plugin picks up commits
-related to troubleshooting) but I've opted to err on the side of completeness.
+changeset of a commit. Checking all of these things is an attempt to catch all
+of the changes. This may be a little overzealous (for example the ``trouble``
+plugin picks up commits related to troubleshooting) but I've opted to err on
+the side of completeness.
 
 Plugin list
 -----------
@@ -632,6 +633,13 @@ Other useful things you can do with Telescope:
     * - :kbd:`Enter` (within browser)
       - Opens file in editor, expands directory to show contents, or collapses
         open directory
+
+    * - :kbd:`ga` (within browser)
+      - Add file to git. Useful when you have fugitive also open, and want to
+        add a file from an as-yet-untracked directory
+
+    * - :kbd:`gu` (within browser)
+      - Unstage file to git. Useful when you have fugitive also open
 
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
 windows left and right respectively; see :ref:`toggleterm_ref`) also work.
