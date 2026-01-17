@@ -1,6 +1,18 @@
 Changelog
 =========
 
+2026-01-17
+----------
+
+**vim**
+
+- Add snakemake formatter
+- Add snakemake filetype plugin
+- Add markdown linter
+- Use updated accelerated-jk repo
+- Support adding files to git from within nvim-tree (:kbd:`ga`) or unstaging (:kbd:`gu`)
+
+
 2025-11-21
 ----------
 

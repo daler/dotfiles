@@ -1,7 +1,7 @@
 -- speeds up vertical navigation with j and k
 return {
   {
-    "rhysd/accelerated-jk",
+    "rainbowhxch/accelerated-jk.nvim",
     keys = {
       { "j", "<Plug>(accelerated_jk_gj)" },
       { "k", "<Plug>(accelerated_jk_gk)" },
