@@ -9,7 +9,6 @@ if post_v011 then
     "neovim/nvim-lspconfig",
     version = "v2.5",
     config = function()
-
       -- Python language server
       vim.lsp.config.pyright = {
         cmd = { "pyright-langserver", "--stdio" },
@@ -48,6 +47,11 @@ if post_v011 then
         cmd = { "R", "--slave", "-e", "languageserver::run()" },
         filetypes = { "r", "rmd" },
         root_markers = { ".git", "DESCRIPTION" },
+      }
+
+      vim.lsp.config.ansible = {
+        cmd = { "ansible-language-server", "--stdio" },
+        filetypes = { "yaml.ansible" },
       }
 
       -- Lua language server

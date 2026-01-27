@@ -32,6 +32,7 @@ FD_VERSION=8.5.3
 BLACK_VERSION=22.6.0
 PYP_VERSION=1.1.0
 FZF_VERSION=0.48.1
+TMUX_VERSION=3.5
 
 function showHelp() {
 
@@ -625,7 +626,7 @@ elif [ $task == "--install-fd" ]; then
 
 elif [ $task == "--install-tmux" ]; then
     ok "Install tmux into a new conda env and symlink to ~/opt/bin/tmux"
-    install_env_and_symlink tmux tmux tmux
+    install_env_and_symlink tmux tmux=${TMUX_VERSION} tmux
     printf "${YELLOW}Installed to ~/opt/bin/tmux${UNSET}\n"
     check_opt_bin_in_path
 
