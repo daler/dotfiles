@@ -20,6 +20,8 @@ return {
         python = { "ruff", "black" },
         bash = { "shfmt" },
         sh = { "shfmt" },
+        ["yaml.ansible"] = { "ansible-lint" },
+        snakemake = { "snakemfmt" },
       },
       formatters = {
         shfmt = {
