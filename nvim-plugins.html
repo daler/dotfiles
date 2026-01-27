@@ -645,6 +645,7 @@ refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction</p></td>
 <li><p>2025-11-24 <a class="reference external" href="https://github.com/daler/dotfiles/commit/934afea">934afea</a> <em>&lt;leader&gt;cv to toggle virtual text</em></p></li>
 <li><p>2025-11-24 <a class="reference external" href="https://github.com/daler/dotfiles/commit/9c36c40">9c36c40</a> <em>add ruff for python formatting</em></p></li>
 <li><p>2025-11-24 <a class="reference external" href="https://github.com/daler/dotfiles/commit/b573b20">b573b20</a> <em>fix capitalization</em></p></li>
+<li><p>2026-01-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/d7c7a7e">d7c7a7e</a> <em>add lsp config for ansible</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -660,7 +661,6 @@ refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction</p></td>
 <span class="w">    </span><span class="s2">&quot;neovim/nvim-lspconfig&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;v2.5&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
-
 <span class="w">      </span><span class="c1">-- Python language server</span>
 <span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">pyright</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;pyright-langserver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="w"> </span><span class="p">},</span>
@@ -699,6 +699,11 @@ refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction</p></td>
 <span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;R&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--slave&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;languageserver::run()&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rmd&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;DESCRIPTION&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="py">config</span><span class="p">.</span><span class="py">ansible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;ansible-language-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;yaml.ansible&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="c1">-- Lua language server</span>
@@ -984,6 +989,8 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <li><p>2025-11-24 <a class="reference external" href="https://github.com/daler/dotfiles/commit/87fa5fa">87fa5fa</a> <em>conform updates</em></p></li>
 <li><p>2025-11-24 <a class="reference external" href="https://github.com/daler/dotfiles/commit/9c36c40">9c36c40</a> <em>add ruff for python formatting</em></p></li>
 <li><p>2026-01-16 <a class="reference external" href="https://github.com/daler/dotfiles/commit/c705b4d">c705b4d</a> <em>add snakemake formatter and markdown linter</em></p></li>
+<li><p>2026-01-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/6f959b3">6f959b3</a> <em>Merge branch ‘master’ into 2026-01-27</em></p></li>
+<li><p>2026-01-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/92c0879">92c0879</a> <em>add snakemake and ansible linters</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1010,7 +1017,8 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <span class="w">        </span><span class="nv">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;ruff&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">bash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;shfmt&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">sh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;shfmt&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="nv">snakemake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;snakefmt&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;yaml.ansible&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;ansible-lint&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">snakemake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;snakemfmt&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">markdown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;markdownlint&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="nv">formatters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
