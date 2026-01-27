@@ -22,6 +22,7 @@ return {
         sh = { "shfmt" },
         ["yaml.ansible"] = { "ansible-lint" },
         snakemake = { "snakemfmt" },
+        markdown = { "markdownlint" },
       },
       formatters = {
         shfmt = {
