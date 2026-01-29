@@ -106,6 +106,60 @@ locations, this is a tidy place to put the various exports.</p>
 <span id="id3"></span><h2><code class="docutils literal notranslate"><span class="pre">.aliases</span></code><a class="headerlink" href="#aliases" title="Link to this heading">¶</a></h2>
 <p>This file keeps aliases separate for easier maintenance. See <code class="file docutils literal notranslate"><span class="pre">.aliases</span></code>
 for the commands set for each alias.</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>alias</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vim</span></code></p></td>
+<td><p>always use neovim (this is added only if nvim is found on the path)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">D</span></code></p></td>
+<td><p>sometimes when using tmux the display is not set, causing GUI programs
+launched from the terminal to complain. This sets the display variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ll</span></code></p></td>
+<td><p>useful <cite>ls</cite> arguments (long format, human-readable sizes, sorted by
+time (latest at bottom), use color). MacOS has different options, so
+this alias tries to handle that correctly.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">la</span></code></p></td>
+<td><p>same as above, but also show hidden files</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">v</span></code></p></td>
+<td><p>Live, searchable, syntax-highlighted preview of files in a directory.
+Needs <a class="reference internal" href="tools.html#fzf-ref"><span class="std std-ref">fzf</span></a> and <a class="reference internal" href="tools.html#bat-ref"><span class="std std-ref">bat</span></a> installed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">..</span></code></p></td>
+<td><p>faster way of moving up a directory</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gsv</span></code></p></td>
+<td><p>Opens vim and runs vim-fugitive. See <a class="reference internal" href="nvim-plugins.html#vimfugitive-ref"><span class="std std-ref">vim-fugitive</span></a> for details.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">glv</span></code></p></td>
+<td><p>Opens vim and runs diffview for browsing git history. See <a class="reference internal" href="nvim-plugins.html#diffview-ref"><span class="std std-ref">diffview.nvim</span></a>
+for details.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p>Runs the start_agent function (see <code class="file docutils literal notranslate"><span class="pre">.functions</span></code> below)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">st</span></code></p></td>
+<td><p>If you connect to a host with SSH key forwarding, start a tmux session,
+and then disconnect and reconnect to the remote tmux session, the
+<code class="docutils literal notranslate"><span class="pre">SSH_AUTH_SOCKET</span></code> path used by tmux is stale, preventing key forwarding.
+This refreshes the path so that key forwarding works.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">git-clean-branches-master</span></code></p></td>
+<td><p>Deletes any git branches that have been merged into the master branch</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">git-clean-branches-main</span></code></p></td>
+<td><p>Similar to above, but used for repos where <code class="docutils literal notranslate"><span class="pre">main</span></code> is the default
+branch instead of <code class="docutils literal notranslate"><span class="pre">master</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="functions">
 <span id="id4"></span><h2><code class="docutils literal notranslate"><span class="pre">.functions</span></code><a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>

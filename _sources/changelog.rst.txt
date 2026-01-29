@@ -1,6 +1,26 @@
 Changelog
 =========
 
+2026-01-28
+----------
+
+**vim**
+
+- Add the `img-clip.nvim <https://github.com/HakonHarnes/img-clip.nvim>`__
+  plugin to paste images from the clipboard into a file and add a link to the
+  markdown/latex/restructuredtext file you're editing
+
+2026-01-27
+----------
+
+**setup**
+
+- Pin tmux to 3.5. The current :file:`.tmux.conf` is not updated yet to work with 3.6.
+
+**vim**
+
+- Add linter and LSP config for Ansible yaml files
+
 2026-01-17
 ----------
 

@@ -120,7 +120,7 @@ Opening multiple files
      - Search for file in directory to open in new buffer (Telescope)
 
    * - :kbd:`<leader>fb`
-     - Toggle file browser, hit Enter on file (see :ref:`neotree` for more)
+     - Toggle file browser, hit Enter on file
 
 
 Switching between open files
@@ -152,8 +152,8 @@ Switching between open files
 
 .. details:: Don't like this?
 
-   See the config for the :ref:`bufferline` plugin to change; the bufferline is
-   additionally styled using the :ref:`zenburn` plugin/colorscheme.
+   See the config for the :ref:`bufferline_ref` plugin to change; the
+   bufferline is additionally styled using the colorscheme.
 
 .. details:: Screencast of switching buffers
 
@@ -173,7 +173,7 @@ You can browse around to see if there's anything you think might be useful, but
 there's no need for you to know all these! I happen to use them, and since I've
 included them in this config you get them for free.
 
-The :ref:`whichkey` plugin will pop up a window showing what keys you can
+The :ref:`whichkey_ref` plugin will pop up a window showing what keys you can
 press, so you can use that for exploration as well.
 
 
