@@ -103,20 +103,20 @@ for the commands set for each alias.
       - faster way of moving up a directory
 
     * - ``gsv``
-      - Opens vim and runs vim-fugitive. See :ref:`vimfugitive` for details.
+      - Opens vim and runs vim-fugitive. See :ref:`vimfugitive_ref` for details.
 
     * - ``glv``
-      - Opens vim and runs diffview for browsing git history. See :ref:`diffview`
+      - Opens vim and runs diffview for browsing git history. See :ref:`diffview_ref`
         for details.
 
     * - ``s``
       - Runs the start_agent function (see :file:`.functions` below)
 
     * - ``st``
-    - If you connect to a host with SSH key forwarding, start a tmux session,
-      and then disconnect and reconnect to the remote tmux session, the
-      ``SSH_AUTH_SOCKET`` path used by tmux is stale, preventing key forwarding.
-      This refreshes the path so that key forwarding works.
+      - If you connect to a host with SSH key forwarding, start a tmux session,
+        and then disconnect and reconnect to the remote tmux session, the
+        ``SSH_AUTH_SOCKET`` path used by tmux is stale, preventing key forwarding.
+        This refreshes the path so that key forwarding works.
 
     * - ``git-clean-branches-master``
       - Deletes any git branches that have been merged into the master branch
