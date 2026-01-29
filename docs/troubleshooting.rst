@@ -6,7 +6,7 @@ Updating nvim plugins
 
 In nvim, run ``:Lazy``. In the interface, use :kbd:`U` to update plugins. Use
 :kbd:`X` to clean up any other plugins. Run ``:Mason`` to select language
-server protocols (more info at :ref:`mason`).
+server protocols (more info at :ref:`mason_ref`).
 
 You can optionally remove your :file:`~/.local/share/nvim` directory, which
 will completely clean out any old plugins; you'll need to let lazy.nvim
@@ -86,5 +86,5 @@ You may get an error like this when opening nvim:
    ....
 
 This happens because nvim is trying to install the treesitter parsers, but that
-needs a compiler to be available. See :ref:`treesitter` for details on how to
+needs a compiler to be available. See :ref:`treesitter_ref` for details on how to
 address this.

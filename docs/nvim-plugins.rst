@@ -1480,6 +1480,36 @@ and this:
 .. plugin-metadata::
    :name: treesj
 
+.. _imgclip_ref:
+
+``img-clip.nvim``
+~~~~~~~~~~~~~~~~~
+
+`img-clip.nvim <https://github.com/HakonHarnes/img-clip.nvim>`__ lets you paste
+an image on your clipboard into a Markdown, Latex, or ReST file.
+
+It detects what sort of image is on the clipboard, pastes it into a file in the
+current directory (that you name at the prompt), and inserts it as an image
+link into the document.
+
+On Mac, it needs `pngpaste <https://github.com/jcsalterego/pngpaste>`__ to be
+installed and on your PATH.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`<leader>P`
+      - Paste image on clipboard
+
+.. plugin-metadata::
+   :name: img-clip
+
+.. colorschemes_ref:
+
 Colorschemes
 ------------
 

@@ -1,7 +1,7 @@
 -- treesj splits and joins nodes
 return {
   'Wansmer/treesj',
-  lazy = false,
+  keys = {'<leader>j'},
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
     require('treesj').setup({

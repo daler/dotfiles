@@ -3,6 +3,8 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    lazy = true,
+    ft = "markdown",
     opts = {
       heading = {
 
@@ -11,11 +13,14 @@ return {
 
         -- don't replace ### with icons
         icons = {},
+        foreground = "none",
+        backgrounds = { "none", "none", "none", "none", "none", "none" },
       },
       code = {
 
         -- don't add a sign column indicator
         sign = false,
+        border = "thick",
       },
       bullet = {
 
@@ -31,8 +36,8 @@ return {
         },
       },
       checkbox = {
-        checked = { icon = "✓" }
-      }
+        checked = { icon = "✓" },
+      },
     },
   },
 }
