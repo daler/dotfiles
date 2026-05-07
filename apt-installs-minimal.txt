@@ -4,7 +4,7 @@ automake             # for compiling tools requiring automake
 build-essential      # gcc and make are in here
 cmake                # for compiling tools requiring cmake
 liblzma-dev          # dev lib for compiling tools needing lzma
-libpcre3-dev         # for Perl-compatible regexes
+libpcre2-dev         # for Perl-compatible regexes
 pkg-config           # for using the right compiler options
 zlib1g-dev           # dep lib for compiling tools needing zlib
 ncurses-dev          # for TUI programs
