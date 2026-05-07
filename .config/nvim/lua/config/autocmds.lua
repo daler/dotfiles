@@ -151,3 +151,44 @@ vim.api.nvim_create_autocmd("QuitPre", {
     end
   end,
 })
+
+-- In toggleterm terminal buffers, show a red "cursorline" bar when the
+-- terminal is in normal mode. Useful visual reminder so you don't start typing
+-- and then wonder why text is not showing up.
+
+-- Custom highlight group we'll use in a moment
+vim.api.nvim_set_hl(0, "TermCursorLine", { bg = "#5f0000" })
+
+-- winhighlight lets us render CursorLin higlights with TermCursorLine's
+-- attributes, but just local to that window (here, the terminal)
+local function apply_term_winhl()
+  if vim.bo.buftype == "terminal" then
+    vim.wo.winhighlight = "CursorLine:TermCursorLine"
+  end
+end
+
+local group = vim.api.nvim_create_augroup("ToggleTermCursorLine", { clear = true })
+
+-- Catch new terminals and existing ones
+vim.api.nvim_create_autocmd({ "TermOpen", "WinEnter", "BufWinEnter" }, {
+  group = group,
+  callback = apply_term_winhl,
+})
+
+-- Toggle cursorline only inside terminal windows
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = group,
+
+  -- match "old_mode:new_mode" strings. E.g., t:nt means we just left
+  -- terminal-insert to go into terminal-normal.
+  pattern = { "t:nt", "nt:t" },
+  callback = function()
+    -- do nothing if we're not in a terminal buffer
+    if vim.bo.buftype ~= "terminal" then
+      return
+    end
+    -- set the window-specific (.wo) cursorline to true if we're in
+    -- terminal-normal mode
+    vim.wo.cursorline = vim.api.nvim_get_mode().mode == "nt"
+  end,
+})
