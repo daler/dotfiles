@@ -1,5 +1,12 @@
 Changelog
 =========
+2026-05-07
+----------
+
+**vim**
+
+Color the cursorline in toggleterm terminal when it's not in insert mode. Gives
+a visual reminder of when typing won't do what you expect.
 
 2026-01-28
 ----------
