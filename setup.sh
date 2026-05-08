@@ -962,11 +962,19 @@ elif [ $task == "--restore-nvim-plugins" ]; then
     ok "Restore nvim plugins using the lazy-lock.json file in this repo? This will not change any other config."
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_LOCKFILE_BACKUP="$HOME/.config/nvim/lazy-lock_${timestamp}.json"
-    [ -e $HOME/.config/nvim/lazy-lock.json ] && cp $HOME/.config/nvim/lazy-lock.json "$NVIM_LOCKFILE_BACKUP"
-    cp .config/nvim/lazy-lock.json $HOME/.config/nvim/lazy-lock.json
+    if [ -e "$HOME/.config/nvim/lazy-lock.json" ]; then
+        cp "$HOME/.config/nvim/lazy-lock.json" "$NVIM_LOCKFILE_BACKUP"
+    else
+        NVIM_LOCKFILE_BACKUP=
+    fi
+    cp .config/nvim/lazy-lock.json "$HOME/.config/nvim/lazy-lock.json"
     nvim --headless "+Lazy! restore" +qa
-    printf "${YELLOW}Here is the diff of what changed (new compared to old):\n${UNSET}"
-    diff -u $NVIM_LOCKFILE_BACKUP ~/.config/nvim/lazy-lock.json
+    if [ -n "$NVIM_LOCKFILE_BACKUP" ]; then
+        printf "${YELLOW}Here is the diff of what changed (new compared to old):\n${UNSET}"
+        diff -u "$NVIM_LOCKFILE_BACKUP" "$HOME/.config/nvim/lazy-lock.json" || true
+    else
+        printf "${YELLOW}No existing ~/.config/nvim/lazy-lock.json was found, so no diff is available.\n${UNSET}"
+    fi
     printf "${YELLOW}Restored plugins using ~/.config/nvim/lazy-lock.json.\n"
     printf "Any original file was renamed to $NVIM_LOCKFILE_BACKUP if you "
     printf "need the previous version, otherwise you can delete it.\n${UNSET}"
