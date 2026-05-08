@@ -8,6 +8,13 @@ Changelog
 Color the cursorline in toggleterm terminal when it's not in insert mode. Gives
 a visual reminder of when typing won't do what you expect.
 
+**setup**
+
+- bumped versions of installed tools
+- pip explicitly added to built conda envs
+- download() properly exits 1 upon failure
+- diff on nvim lockfile only runs if it exists
+
 2026-01-28
 ----------
 
