@@ -634,6 +634,7 @@ elif [ $task == "--install-tmux" ]; then
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
     install_env_and_symlink visidata visidata="${VISIDATA_VERSION}" vd
+    conda install -y setuptools -n visidata
     printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
 
