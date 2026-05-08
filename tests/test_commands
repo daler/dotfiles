@@ -1,7 +1,7 @@
 pyp 1+8	9
 which mamba	/root/dockeruser/miniforge/condabin/mamba
 black --version | head -n1	black, 22.6.0 (compiled: no)
-vd --version	saul.pw/VisiData v2.11
-rg --version | grep ripgrep	ripgrep 13.0.0 (rev af6b6c543b)
-fd --version	fd 8.5.3
-fzf --version	0.48.1 (d579e33)
+vd --version	saul.pw/VisiData 3.3
+rg --version | grep ripgrep	ripgrep 5.1.0 (rev af60c2de9d)
+fd --version	fd 10.4.2
+fzf --version	0.72.0 (6fefe025)
