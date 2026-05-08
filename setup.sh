@@ -304,7 +304,8 @@ download() {
     echo "Downloading $1 to $2"
     [[ -e $(dirname $2) ]] || mkdir -p $(dirname $2)
     if ! (try_curl $1 $2 || try_wget $1 $2); then
-        echo "Could not download $1"
+        printf "${RED}Could not download %s${UNSET}\n" "$1" >&2
+        return 1
     fi
 }
 
