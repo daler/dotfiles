@@ -20,19 +20,19 @@ fi
 set -eo pipefail
 
 # Change tool versions here
-VISIDATA_VERSION=2.11
+VISIDATA_VERSION=3.3
 HUB_VERSION=2.14.2
 NVIM_VERSION=0.11.5
-RG_VERSION=13.0.0
-BAT_VERSION=0.19.0
-JQ_VERSION=1.6
+RG_VERSION=15.1.0
+BAT_VERSION=0.26.1
+JQ_VERSION=1.8.1
 ICDIFF_VERSION=2.0.4
 BFG_VERSION=1.14.0
-FD_VERSION=8.5.3
+FD_VERSION=10.4.2
 BLACK_VERSION=22.6.0
 PYP_VERSION=1.1.0
-FZF_VERSION=0.48.1
-TMUX_VERSION=3.5
+FZF_VERSION=0.72.0
+TMUX_VERSION=3.6a
 
 function showHelp() {
 
@@ -304,7 +304,8 @@ download() {
     echo "Downloading $1 to $2"
     [[ -e $(dirname $2) ]] || mkdir -p $(dirname $2)
     if ! (try_curl $1 $2 || try_wget $1 $2); then
-        echo "Could not download $1"
+        printf "${RED}Could not download %s${UNSET}\n" "$1" >&2
+        return 1
     fi
 }
 
@@ -573,22 +574,16 @@ elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
     mkdir -p /tmp/fzf
     if [[ $OSTYPE == darwin* ]]; then
-        URL=https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION}-darwin_arm64.zip
-        download $URL /tmp/fzf/fzf.zip
-        (
-            cd /tmp/fzf
-            unzip fzf.zip
-            cp fzf ~/opt/bin
-        )
+        URL=https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-darwin_arm64.tar.gz
     else
-        URL=https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
-        download $URL /tmp/fzf/fzf.tar.gz
-        (
-            cd /tmp/fzf
-            tar -xf fzf.tar.gz
-            cp fzf ~/opt/bin
-        )
+        URL=https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
     fi
+    download $URL /tmp/fzf/fzf.tar.gz
+    (
+        cd /tmp/fzf
+        tar -xf fzf.tar.gz
+        cp fzf ~/opt/bin
+    )
     rm -r /tmp/fzf
 
     if [ ! $(grep -q "(fzf --bash)" ~/.bashrc) ]; then
@@ -634,6 +629,7 @@ elif [ $task == "--install-tmux" ]; then
 elif [ $task == "--install-vd" ]; then
     ok "Install visidata (https://visidata.org/) into a new conda env and symlink to ~/opt/bin/vd"
     install_env_and_symlink visidata visidata="${VISIDATA_VERSION}" vd
+    conda install -y setuptools -n visidata
     printf "${YELLOW}Installed to ~/opt/bin/vd${UNSET}\n"
     check_opt_bin_in_path
 
@@ -674,7 +670,7 @@ elif [ $task == "--install-radian" ]; then
     set +u
     # Note: radian needs R installed to compile the rchitect dependency. It
     # is unclear whether radian is dependent on a particular R version.
-    conda create -y -n radian python r
+    conda create -y -n radian python r pip
     conda activate radian
     pip install radian
     ln -sf $CONDA_LOCATION/envs/radian/bin/radian $HOME/opt/bin/radian
@@ -779,7 +775,7 @@ elif [ $task == "--install-pyp" ]; then
     ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
     set +u
     can_make_conda_env "pyp"
-    conda create -y -n pyp python
+    conda create -y -n pyp python pip
     conda activate pyp
     pip install pypyp==${PYP_VERSION}
     ln -sf $(which pyp) $HOME/opt/bin/pyp
@@ -966,11 +962,19 @@ elif [ $task == "--restore-nvim-plugins" ]; then
     ok "Restore nvim plugins using the lazy-lock.json file in this repo? This will not change any other config."
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_LOCKFILE_BACKUP="$HOME/.config/nvim/lazy-lock_${timestamp}.json"
-    [ -e $HOME/.config/nvim/lazy-lock.json ] && cp $HOME/.config/nvim/lazy-lock.json "$NVIM_LOCKFILE_BACKUP"
-    cp .config/nvim/lazy-lock.json $HOME/.config/nvim/lazy-lock.json
+    if [ -e "$HOME/.config/nvim/lazy-lock.json" ]; then
+        cp "$HOME/.config/nvim/lazy-lock.json" "$NVIM_LOCKFILE_BACKUP"
+    else
+        NVIM_LOCKFILE_BACKUP=
+    fi
+    cp .config/nvim/lazy-lock.json "$HOME/.config/nvim/lazy-lock.json"
     nvim --headless "+Lazy! restore" +qa
-    printf "${YELLOW}Here is the diff of what changed (new compared to old):\n${UNSET}"
-    diff -u $NVIM_LOCKFILE_BACKUP ~/.config/nvim/lazy-lock.json
+    if [ -n "$NVIM_LOCKFILE_BACKUP" ]; then
+        printf "${YELLOW}Here is the diff of what changed (new compared to old):\n${UNSET}"
+        diff -u "$NVIM_LOCKFILE_BACKUP" "$HOME/.config/nvim/lazy-lock.json" || true
+    else
+        printf "${YELLOW}No existing ~/.config/nvim/lazy-lock.json was found, so no diff is available.\n${UNSET}"
+    fi
     printf "${YELLOW}Restored plugins using ~/.config/nvim/lazy-lock.json.\n"
     printf "Any original file was renamed to $NVIM_LOCKFILE_BACKUP if you "
     printf "need the previous version, otherwise you can delete it.\n${UNSET}"
