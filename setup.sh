@@ -574,22 +574,16 @@ elif [ $task == "--install-fzf" ]; then
     ok "Installs fzf (https://github.com/junegunn/fzf)"
     mkdir -p /tmp/fzf
     if [[ $OSTYPE == darwin* ]]; then
-        URL=https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION}-darwin_arm64.zip
-        download $URL /tmp/fzf/fzf.zip
-        (
-            cd /tmp/fzf
-            unzip fzf.zip
-            cp fzf ~/opt/bin
-        )
+        URL=https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-darwin_arm64.tar.gz
     else
-        URL=https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
-        download $URL /tmp/fzf/fzf.tar.gz
-        (
-            cd /tmp/fzf
-            tar -xf fzf.tar.gz
-            cp fzf ~/opt/bin
-        )
+        URL=https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
     fi
+    download $URL /tmp/fzf/fzf.tar.gz
+    (
+        cd /tmp/fzf
+        tar -xf fzf.tar.gz
+        cp fzf ~/opt/bin
+    )
     rm -r /tmp/fzf
 
     if [ ! $(grep -q "(fzf --bash)" ~/.bashrc) ]; then
