@@ -344,6 +344,47 @@ certain events.</p>
 <span class="w">    </span><span class="kr">end</span>
 <span class="w">  </span><span class="kr">end</span><span class="p">,</span>
 <span class="p">})</span>
+
+<span class="c1">-- In toggleterm terminal buffers, show a red &quot;cursorline&quot; bar when the</span>
+<span class="c1">-- terminal is in normal mode. Useful visual reminder so you don&#39;t start typing</span>
+<span class="c1">-- and then wonder why text is not showing up.</span>
+
+<span class="c1">-- Custom highlight group we&#39;ll use in a moment</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_set_hl</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TermCursorLine&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">bg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;#5f0000&quot;</span><span class="w"> </span><span class="p">})</span>
+
+<span class="c1">-- winhighlight lets us render CursorLin higlights with TermCursorLine&#39;s</span>
+<span class="c1">-- attributes, but just local to that window (here, the terminal)</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">apply_term_winhl</span><span class="p">()</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">buftype</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;terminal&quot;</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">wo</span><span class="p">.</span><span class="py">winhighlight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CursorLine:TermCursorLine&quot;</span>
+<span class="w">  </span><span class="kr">end</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_augroup</span><span class="p">(</span><span class="s2">&quot;ToggleTermCursorLine&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">clear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">})</span>
+
+<span class="c1">-- Catch new terminals and existing ones</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_autocmd</span><span class="p">({</span><span class="w"> </span><span class="s2">&quot;TermOpen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;WinEnter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;BufWinEnter&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">group</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">apply_term_winhl</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1">-- Toggle cursorline only inside terminal windows</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_autocmd</span><span class="p">(</span><span class="s2">&quot;ModeChanged&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">group</span><span class="p">,</span>
+
+<span class="w">  </span><span class="c1">-- match &quot;old_mode:new_mode&quot; strings. E.g., t:nt means we just left</span>
+<span class="w">  </span><span class="c1">-- terminal-insert to go into terminal-normal.</span>
+<span class="w">  </span><span class="nv">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;t:nt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;nt:t&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="c1">-- do nothing if we&#39;re not in a terminal buffer</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">buftype</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="s2">&quot;terminal&quot;</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">      </span><span class="kr">return</span>
+<span class="w">    </span><span class="kr">end</span>
+<span class="w">    </span><span class="c1">-- set the window-specific (.wo) cursorline to true if we&#39;re in</span>
+<span class="w">    </span><span class="c1">-- terminal-normal mode</span>
+<span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">wo</span><span class="p">.</span><span class="py">cursorline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_get_mode</span><span class="p">().</span><span class="nv">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;nt&quot;</span>
+<span class="w">  </span><span class="kr">end</span><span class="p">,</span>
+<span class="p">})</span>
 </pre></div>
 </div>
 </div></details><details><summary>lua/config/keymaps.lua</summary><div class="details"><p><code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/config/keymaps.lua</span></code> configures keymappings that are
