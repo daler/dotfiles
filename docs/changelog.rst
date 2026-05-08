@@ -1,12 +1,16 @@
 Changelog
 =========
+
 2026-05-07
 ----------
 
 **vim**
 
-Color the cursorline in toggleterm terminal when it's not in insert mode. Gives
-a visual reminder of when typing won't do what you expect.
+- Color the cursorline in toggleterm terminal when it's not in insert mode.
+  Gives a visual reminder of when typing won't do what you expect.
+- Configure OSC 52 globally in nvim so that yanked text goes to the system
+  clipboard, even on remote systems.
+
 
 **setup**
 
