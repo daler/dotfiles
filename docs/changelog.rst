@@ -1,5 +1,13 @@
 Changelog
 =========
+
+2026-05-28
+----------
+
+**vim**
+
+- Add [pasteimg](https://github.com/daler/pasteimg.nvim) plugin
+
 2026-05-07
 ----------
 

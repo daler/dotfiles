@@ -1,0 +1,3 @@
+return {
+  "daler/pasteimg.nvim",
+}

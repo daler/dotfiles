@@ -1085,6 +1085,10 @@ the terminal use.
     terminal, or use :kbd:`a` or :kbd:`i` in the terminal to get back to insert
     mode.
 
+    Starting from 2026-05-07, when the terminal is not in insert mode, the
+    terminal-specific cursorline will be a different color to help indicate the
+    status.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -1479,6 +1483,28 @@ and this:
 
 .. plugin-metadata::
    :name: treesj
+
+.. _pasteimg_ref:
+
+``pasteimg.nvim``
+~~~~~~~~~~~~~~~~~
+
+`pasteimg.nvim <https://github.com/daler/pasteimg.nvim>`__ supports pasting
+images to a remote system over SSH by locally converting the image to base64
+text on the clipboard.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - ``:PasteImgFromPayload`` on a line
+      - Converts the base64 text on the line to an image, saves it, and inserts a link to it.
+
+.. plugin-metadata::
+   :name: pasteimg
 
 .. _imgclip_ref:
 
