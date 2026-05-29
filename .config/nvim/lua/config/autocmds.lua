@@ -156,15 +156,26 @@ vim.api.nvim_create_autocmd("QuitPre", {
 -- terminal is in normal mode. Useful visual reminder so you don't start typing
 -- and then wonder why text is not showing up.
 
--- Custom highlight group we'll use in a moment
-vim.api.nvim_set_hl(0, "TermCursorLine", { bg = "#5f0000" })
+-- Custom highlight group we'll use in a moment. It uses the current
+-- colorscheme's Comment color
+local comment_fg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg
+vim.api.nvim_set_hl(0, "TermCursorLine", { bg = comment_fg })
 
 -- winhighlight lets us render CursorLin higlights with TermCursorLine's
 -- attributes, but just local to that window (here, the terminal)
 local function apply_term_winhl()
-  if vim.bo.buftype == "terminal" then
-    vim.wo.winhighlight = "CursorLine:TermCursorLine"
+  if vim.bo.buftype ~= "terminal" then
+    return
   end
+  -- toggleterm sets its own winhighlight (Normal:ToggleTermNNormal, etc.) to
+  -- give terminals a distinct background. Append our mapping instead of
+  -- overwriting so we don't clobber it.
+  local existing = vim.wo.winhighlight
+  if existing:find("CursorLine:TermCursorLine", 1, true) then
+    return
+  end
+  vim.wo.winhighlight = (existing == "" and "" or existing .. ",")
+    .. "CursorLine:TermCursorLine"
 end
 
 local group = vim.api.nvim_create_augroup("ToggleTermCursorLine", { clear = true })
@@ -172,7 +183,11 @@ local group = vim.api.nvim_create_augroup("ToggleTermCursorLine", { clear = true
 -- Catch new terminals and existing ones
 vim.api.nvim_create_autocmd({ "TermOpen", "WinEnter", "BufWinEnter" }, {
   group = group,
-  callback = apply_term_winhl,
+  callback = function()
+    -- defer applying the window-specific highlighting so toggleterm's own
+    -- winhighlight setup runs first on TermOpen
+    vim.schedule(apply_term_winhl)
+  end,
 })
 
 -- Toggle cursorline only inside terminal windows
