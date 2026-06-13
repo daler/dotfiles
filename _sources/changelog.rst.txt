@@ -1,6 +1,24 @@
 Changelog
 =========
 
+2026-05-28
+----------
+
+**vim**
+
+- Add [pasteimg](https://github.com/daler/pasteimg.nvim) plugin
+- Improve toggleterm "non-insert mode" cursorline:
+  - use the Comment color of the initially-loaded colorscheme instead of a hard-coded red
+  - don't clobber the custom background that toggleterm sets
+
+2026-05-07
+----------
+
+**vim**
+
+Color the cursorline in toggleterm terminal when it's not in insert mode. Gives
+a visual reminder of when typing won't do what you expect.
+
 2026-05-07
 ----------
 

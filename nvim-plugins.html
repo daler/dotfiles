@@ -147,7 +147,7 @@ the side of completeness.</p>
 <li><p><a class="reference internal" href="#browsher-nvim" id="id64"><code class="docutils literal notranslate"><span class="pre">browsher.nvim</span></code></a></p></li>
 <li><p><a class="reference internal" href="#indent-o-matic" id="id65"><code class="docutils literal notranslate"><span class="pre">indent-o-matic</span></code></a></p></li>
 <li><p><a class="reference internal" href="#treesj" id="id66"><code class="docutils literal notranslate"><span class="pre">TreeSJ</span></code></a></p></li>
-<li><p><a class="reference internal" href="#img-clip-nvim" id="id67"><code class="docutils literal notranslate"><span class="pre">img-clip.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#pasteimg-nvim" id="id67"><code class="docutils literal notranslate"><span class="pre">pasteimg.nvim</span></code></a></p></li>
 </ul>
 </li>
 </ul>
@@ -1844,7 +1844,7 @@ super helpful though!</p>
 <li><p><a class="reference internal" href="#browsher-nvim" id="id94"><code class="docutils literal notranslate"><span class="pre">browsher.nvim</span></code></a></p></li>
 <li><p><a class="reference internal" href="#indent-o-matic" id="id95"><code class="docutils literal notranslate"><span class="pre">indent-o-matic</span></code></a></p></li>
 <li><p><a class="reference internal" href="#treesj" id="id96"><code class="docutils literal notranslate"><span class="pre">TreeSJ</span></code></a></p></li>
-<li><p><a class="reference internal" href="#img-clip-nvim" id="id97"><code class="docutils literal notranslate"><span class="pre">img-clip.nvim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#pasteimg-nvim" id="id97"><code class="docutils literal notranslate"><span class="pre">pasteimg.nvim</span></code></a></p></li>
 </ul>
 </nav>
 <section id="vim-commentary">
@@ -2207,6 +2207,9 @@ you’re not expecting it.</p>
 <p>You can either click to the text buffer and immediately back in the
 terminal, or use <kbd class="kbd docutils literal notranslate">a</kbd> or <kbd class="kbd docutils literal notranslate">i</kbd> in the terminal to get back to insert
 mode.</p>
+<p>Starting from 2026-05-07, when the terminal is not in insert mode, the
+terminal-specific cursorline will be a different color to help indicate the
+status.</p>
 </div>
 <table class="docutils align-left">
 <thead>
@@ -2269,6 +2272,7 @@ Requires IPython running in terminal</p></td>
 <li><p>2024-09-03 <a class="reference external" href="https://github.com/daler/dotfiles/commit/bfa6779">bfa6779</a> <em>split plugins into individual files</em></p></li>
 <li><p>2024-11-18 <a class="reference external" href="https://github.com/daler/dotfiles/commit/ebb389c">ebb389c</a> <em>much better behavior for sending Python code to IPython</em></p></li>
 <li><p>2024-12-15 <a class="reference external" href="https://github.com/daler/dotfiles/commit/631b35e">631b35e</a> <em>add browsher plugin and bracketed paste for pasting code (#53)</em></p></li>
+<li><p>2026-06-13 <a class="reference external" href="https://github.com/daler/dotfiles/commit/6b846f4">6b846f4</a> <em>add pasteimg (#71)</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2990,15 +2994,12 @@ explain. It converts back and forth between this:</p>
 </div>
 </div></details></div>
 </section>
-<section id="img-clip-nvim">
-<span id="imgclip-ref"></span><h4><a class="toc-backref" href="#id97" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">img-clip.nvim</span></code></a><a class="headerlink" href="#img-clip-nvim" title="Link to this heading">¶</a></h4>
-<p><a class="reference external" href="https://github.com/HakonHarnes/img-clip.nvim">img-clip.nvim</a> lets you paste
-an image on your clipboard into a Markdown, Latex, or ReST file.</p>
-<p>It detects what sort of image is on the clipboard, pastes it into a file in the
-current directory (that you name at the prompt), and inserts it as an image
-link into the document.</p>
-<p>On Mac, it needs <a class="reference external" href="https://github.com/jcsalterego/pngpaste">pngpaste</a> to be
-installed and on your PATH.</p>
+<section id="pasteimg-nvim">
+<span id="pasteimg-ref"></span><h4><a class="toc-backref" href="#id97" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">pasteimg.nvim</span></code></a><a class="headerlink" href="#pasteimg-nvim" title="Link to this heading">¶</a></h4>
+<p><a class="reference external" href="https://github.com/daler/pasteimg.nvim">pasteimg.nvim</a> supports pasting
+images to a remote system over SSH by locally converting the image to base64
+text on the clipboard.</p>
+<p>See the docs for the plugin on how to set it up, including a macOS Shortcut.</p>
 <table class="docutils align-left">
 <thead>
 <tr class="row-odd"><th class="head"><p>command</p></th>
@@ -3006,8 +3007,8 @@ installed and on your PATH.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><kbd class="kbd docutils literal notranslate">&lt;leader&gt;P</kbd></p></td>
-<td><p>Paste image on clipboard</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:PasteImgFromPayload</span></code> on a line</p></td>
+<td><p>Converts the base64 text on the line to an image, saves it, and inserts a link to it.</p></td>
 </tr>
 </tbody>
 </table>
@@ -3015,32 +3016,18 @@ installed and on your PATH.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Added<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p>2026-01-28 <a class="reference external" href="https://github.com/daler/dotfiles/commit/9e5d327">9e5d327</a>  <em>Merge pull request #68 from daler/img-clip</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Changes<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p>2026-01-28 <a class="reference external" href="https://github.com/daler/dotfiles/commit/bfe3c61">bfe3c61</a> <em>add img-clip plugin</em></p></li>
+<li><p>2026-06-13 <a class="reference external" href="https://github.com/daler/dotfiles/commit/6b846f4">6b846f4</a>  <em>add pasteimg (#71)</em></p></li>
 </ul>
 </dd>
 </dl>
-<details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/img-clip.lua</span></code>:</p>
+<details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/pasteimg.lua</span></code>:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="s2">&quot;HakonHarnes/img-clip.nvim&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nv">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;VeryLazy&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nv">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">-- add options here</span>
-<span class="w">    </span><span class="c1">-- or leave it empty to use the default settings</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">-- suggested keymap</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;P&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;cmd&gt;PasteImage&lt;cr&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Paste image from system clipboard&quot;</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="s2">&quot;daler/pasteimg.nvim&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div></details></div>
-</section>
+<span class="target" id="imgclip-ref"></span></section>
 </section>
 </section>
 <section id="colorschemes">
@@ -3156,6 +3143,7 @@ default, at least not yet.</p>
 <li><p>2024-01-21 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1478695">1478695</a> <em>use github colorscheme for bat</em></p></li>
 <li><p>2025-08-14 <a class="reference external" href="https://github.com/daler/dotfiles/commit/73d43e9">73d43e9</a> <em>consolidate colorschemes and add zenfade</em></p></li>
 <li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/e26d05c">e26d05c</a> <em>move to zenfade colorscheme</em></p></li>
+<li><p>2026-06-13 <a class="reference external" href="https://github.com/daler/dotfiles/commit/6b846f4">6b846f4</a> <em>add pasteimg (#71)</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -3317,6 +3305,26 @@ the documentation here in case you’re using an old version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">DEPRECATED<span class="colon">:</span></dt>
 <dd class="field-odd"><p>vim-sleuth would often get things wrong. indent-o-matic’s simpler algorithm seems to work better.</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</section>
+<section id="img-clip-nvim">
+<h4><code class="docutils literal notranslate"><span class="pre">img-clip.nvim</span></code><a class="headerlink" href="#img-clip-nvim" title="Link to this heading">¶</a></h4>
+<div class="plugin-metadata docutils container">
+<dl class="field-list">
+<dt class="field-odd">Added<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>2026-01-28 <a class="reference external" href="https://github.com/daler/dotfiles/commit/9e5d327">9e5d327</a>  <em>Merge pull request #68 from daler/img-clip</em></p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<dl class="field-list simple">
+<dt class="field-odd">DEPRECATED<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This was only included for a short time; it didn’t work on remote systems so I wrote <a class="reference internal" href="#pasteimg-ref"><span class="std std-ref">pasteimg.nvim</span></a> and used that instead.</p>
 </dd>
 </dl>
 </div>

@@ -353,15 +353,26 @@ certain events.</p>
 <span class="c1">-- terminal is in normal mode. Useful visual reminder so you don&#39;t start typing</span>
 <span class="c1">-- and then wonder why text is not showing up.</span>
 
-<span class="c1">-- Custom highlight group we&#39;ll use in a moment</span>
-<span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_set_hl</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TermCursorLine&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">bg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;#5f0000&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="c1">-- Custom highlight group we&#39;ll use in a moment. It uses the current</span>
+<span class="c1">-- colorscheme&#39;s Comment color</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">comment_fg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_get_hl</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Comment&quot;</span><span class="w"> </span><span class="p">}).</span><span class="nv">fg</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_set_hl</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TermCursorLine&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">bg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">comment_fg</span><span class="w"> </span><span class="p">})</span>
 
 <span class="c1">-- winhighlight lets us render CursorLin higlights with TermCursorLine&#39;s</span>
 <span class="c1">-- attributes, but just local to that window (here, the terminal)</span>
 <span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">apply_term_winhl</span><span class="p">()</span>
-<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">buftype</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;terminal&quot;</span><span class="w"> </span><span class="kr">then</span>
-<span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">wo</span><span class="p">.</span><span class="py">winhighlight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;CursorLine:TermCursorLine&quot;</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">buftype</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="s2">&quot;terminal&quot;</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="kr">return</span>
 <span class="w">  </span><span class="kr">end</span>
+<span class="w">  </span><span class="c1">-- toggleterm sets its own winhighlight (Normal:ToggleTermNNormal, etc.) to</span>
+<span class="w">  </span><span class="c1">-- give terminals a distinct background. Append our mapping instead of</span>
+<span class="w">  </span><span class="c1">-- overwriting so we don&#39;t clobber it.</span>
+<span class="w">  </span><span class="kd">local</span><span class="w"> </span><span class="nv">existing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">wo</span><span class="p">.</span><span class="py">winhighlight</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">existing</span><span class="p">:</span><span class="nf">find</span><span class="p">(</span><span class="s2">&quot;CursorLine:TermCursorLine&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="kr">return</span>
+<span class="w">  </span><span class="kr">end</span>
+<span class="w">  </span><span class="nv">vim</span><span class="p">.</span><span class="py">wo</span><span class="p">.</span><span class="py">winhighlight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nv">existing</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="nv">existing</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="o">..</span><span class="w"> </span><span class="s2">&quot;CursorLine:TermCursorLine&quot;</span>
 <span class="kr">end</span>
 
 <span class="kd">local</span><span class="w"> </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_augroup</span><span class="p">(</span><span class="s2">&quot;ToggleTermCursorLine&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">clear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">})</span>
@@ -369,7 +380,11 @@ certain events.</p>
 <span class="c1">-- Catch new terminals and existing ones</span>
 <span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_autocmd</span><span class="p">({</span><span class="w"> </span><span class="s2">&quot;TermOpen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;WinEnter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;BufWinEnter&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nv">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">group</span><span class="p">,</span>
-<span class="w">  </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">apply_term_winhl</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="c1">-- defer applying the window-specific highlighting so toggleterm&#39;s own</span>
+<span class="w">    </span><span class="c1">-- winhighlight setup runs first on TermOpen</span>
+<span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="nf">schedule</span><span class="p">(</span><span class="nv">apply_term_winhl</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">end</span><span class="p">,</span>
 <span class="p">})</span>
 
 <span class="c1">-- Toggle cursorline only inside terminal windows</span>
