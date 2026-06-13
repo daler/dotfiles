@@ -1493,6 +1493,8 @@ and this:
 images to a remote system over SSH by locally converting the image to base64
 text on the clipboard.
 
+See the docs for the plugin on how to set it up, including a macOS Shortcut.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -1508,31 +1510,6 @@ text on the clipboard.
 
 .. _imgclip_ref:
 
-``img-clip.nvim``
-~~~~~~~~~~~~~~~~~
-
-`img-clip.nvim <https://github.com/HakonHarnes/img-clip.nvim>`__ lets you paste
-an image on your clipboard into a Markdown, Latex, or ReST file.
-
-It detects what sort of image is on the clipboard, pastes it into a file in the
-current directory (that you name at the prompt), and inserts it as an image
-link into the document.
-
-On Mac, it needs `pngpaste <https://github.com/jcsalterego/pngpaste>`__ to be
-installed and on your PATH.
-
-.. list-table::
-    :header-rows: 1
-    :align: left
-
-    * - command
-      - description
-
-    * - :kbd:`<leader>P`
-      - Paste image on clipboard
-
-.. plugin-metadata::
-   :name: img-clip
 
 .. colorschemes_ref:
 
@@ -1636,6 +1613,14 @@ Deprecated plugins
 .. plugin-metadata::
    :name: vim-sleuth
    :deprecation: vim-sleuth would often get things wrong. indent-o-matic's simpler algorithm seems to work better.
+
+``img-clip.nvim``
+~~~~~~~~~~~~~~~~~
+
+.. plugin-metadata::
+   :name: img-clip.nvim
+   :deprecation: This was only included for a short time; it didn't work on remote systems so I wrote :ref:`pasteimg_ref` and used that instead.
+
 
 Notes on tried plugins
 ----------------------
