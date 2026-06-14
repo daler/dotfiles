@@ -1590,6 +1590,9 @@ To use this additional functionality, you need to do the following two steps:
    Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
    ``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
    take advantage of existing muscle memory.
+=======
+
+See the docs for the plugin on how to set it up, including a macOS Shortcut.
 
 .. list-table::
     :header-rows: 1
