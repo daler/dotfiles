@@ -121,3 +121,90 @@ function git-clean-branches () {
 
     echo "Use 'git-clean-branches | xargs git branch -d' to actually delete these." >&2
 }
+
+
+
+# nvimcom is the R package that the Neovim plugin R.nvim uses to talk to
+# a running R session. It's a compiled package, so it must be built against the
+# exact R version in use.
+#
+# To support multiple R versions side by side, we install it into a per-version
+# "sidecar" library under ~/R/nvimcom/<version> rather than into R's default
+# user library. The correct nvimcom package is added to R_LIBS_USER with the
+# Ropen function.
+#
+# In this way, we can use R.nvim with any version of R without installing it
+# into the respective R's environment.
+
+# Echo the X.Y.Z version of the R currently on PATH (empty + nonzero on failure).
+_r_version() {
+    command -v R &>/dev/null || return 1
+    R --version 2>/dev/null | grep -Eom1 '[0-9]+\.[0-9]+\.[0-9]+'
+}
+
+install-nvimcom() {
+    local nvimcom_src bundled_version r_version sidecar_lib installed_desc install_log min_r
+
+    # nvimcom's source ships inside the R.nvim plugin (installed via lazy.nvim).
+    nvimcom_src="$HOME/.local/share/nvim/lazy/R.nvim/nvimcom"
+    [[ -d "$nvimcom_src" ]] || {
+        echo "ERROR: nvimcom source not found at $nvimcom_src."
+        return 1
+    }
+
+    r_version=$(_r_version) || {
+        echo "ERROR: No R on PATH."
+        return 1
+    }
+    bundled_version=$(awk '/^Version:/{print $2}' "$nvimcom_src/DESCRIPTION")
+    sidecar_lib="$HOME/R/nvimcom/$r_version"
+    installed_desc="$sidecar_lib/nvimcom/DESCRIPTION"
+
+    # Refuse to build against an R that's too old. nvimcom is compiled C code;
+    # a too-old R compiles fine (C only warns on implicit declarations) but
+    # fails at load with a cryptic "undefined symbol" error. Catch it here
+    # instead by honoring the minimum R version from nvimcom's DESCRIPTION.
+    min_r=$(grep -oE 'R \(>= [0-9]+\.[0-9]+(\.[0-9]+)?\)' "$nvimcom_src/DESCRIPTION" \
+        | grep -oE '[0-9]+\.[0-9]+(\.[0-9]+)?')
+    if [[ -n "$min_r" ]] &&
+        [[ "$(printf '%s\n%s\n' "$min_r" "$r_version" | sort -V | head -1)" != "$min_r" ]]; then
+        echo "ERROR: nvimcom $bundled_version requires R >= $min_r, but R $r_version is on PATH."
+        echo "       Put a newer R on PATH, or pin an older R.nvim/nvimcom."
+        return 1
+    fi
+
+    # Skip the build if the sidecar already has the matching version installed.
+    if [[ -f "$installed_desc" ]] &&
+        [[ "$(awk '/^Version:/{print $2}' "$installed_desc")" == "$bundled_version" ]]; then
+        return 0
+    fi
+
+    # Build into the sidecar. R_LIBS_USER is set so build-time dependency
+    # lookups also resolve against the sidecar.
+    echo "Installing nvimcom $bundled_version for R $r_version ..."
+    mkdir -p "$sidecar_lib"
+    install_log="/tmp/nvimcom-install-$r_version.log"
+    if R_LIBS_USER="$sidecar_lib" R CMD INSTALL --library="$sidecar_lib" "$nvimcom_src" >"$install_log" 2>&1; then
+        echo "✓ nvimcom $bundled_version installed for R $r_version."
+    else
+        echo "✗ Failed — see $install_log"
+        return 1
+    fi
+}
+
+Ropen() {
+    # Opens $EDITOR (Neovim) for an R session, making sure the version-matched
+    # nvimcom sidecar library exists and is on R_LIBS_USER so R.nvim can use it.
+    local r_version sidecar_lib
+    r_version=$(_r_version) || {
+        echo "No R found on PATH."
+        return 1
+    }
+
+    install-nvimcom || return 1
+
+    # Prepend the sidecar to R_LIBS_USER (keeping the normal user library too).
+    sidecar_lib="$HOME/R/nvimcom/$r_version"
+    R_LIBS_USER="$sidecar_lib:${R_LIBS_USER:-$HOME/R/library}" $EDITOR "$@"
+}
+

@@ -1,12 +1,23 @@
 Changelog
 =========
 
+2026-06-14
+----------
+
+**vim**
+
+Add experimental R.nvim plugin support, including additional functions
+``Ropen`` and ``install-nvimcom`` in :file:`.functions`.
+
+Currently not fully functional due to tab completion database resource usage.
+
 2026-05-28
 ----------
 
 **vim**
 
 - Add [pasteimg](https://github.com/daler/pasteimg.nvim) plugin
+- Remove ``img-clip`` plugin (which didn't work on remote systems)
 - Improve toggleterm "non-insert mode" cursorline:
   - use the Comment color of the initially-loaded colorscheme instead of a hard-coded red
   - don't clobber the custom background that toggleterm sets

@@ -1508,10 +1508,131 @@ See the docs for the plugin on how to set it up, including a macOS Shortcut.
 .. plugin-metadata::
    :name: pasteimg
 
-.. _imgclip_ref:
+.. _rnvim_ref:
+
+``r.nvim``
+~~~~~~~~~~
+
+`R.nvim <https://github.com/R-nvim/R.nvim/>`__ provides tight integration with R running in an nvim terminal.
+
+.. warning::
+
+   **This is experimental.**
+
+   Currently the biggest issue is the creation of the tab-completion database.
+   ``nvimcom`` does this at startup, and with no apparent working way of
+   disabling it on the nvim side. It does this for *each installed R library*.
+   If you use this on an all-in-one installation, like the one for Biowulf's
+   ``module load R``, it will consume all resources on the node.
+
+   For something like a project-specific R environment, it does take a couple
+   minutes the first time on a big node, but using the same env after that is
+   instant.
+
+   Another issue is support for old R versions. Currently, R.nvim v0.99.4
+   cleanly supports old R versions but 0.99.5 does not (despite release notes
+   to the contrary). This will likely change since the plugin is under active
+   development.
 
 
-.. colorschemes_ref:
+This provides more features than simply running R in an nvim terminal (like
+with :ref:`toggleterm_ref`).
+
+- R object browser (like the panel in RStudio)
+- quickly view a dataframe in Visidata (like``View()`` in RStudio)
+- tab-completion of functions and arguments
+- syntax highlighting in the R interpreter
+- R documentation within text buffer
+- An R language server that doesn't itself require R (specifically, it doesn't
+  require being installed into the same environment as R)
+- More flexibility in controlling what is sent to the terminal
+- Insert commented version of output into the text buffer (great for
+  ``head(df)`` so your comments reflect what's in the data.frame)
+- Send ``str`` with the name of the object under the cursor for quick inspection in R
+- Jump through an RMarkdown file by chunk
+- Lots more...
+
+In order for this to work, the ``nvimcom`` package needs to be installed into
+the environment with R. However, it didn't seem right to "contaminate" an
+otherwise reproducible R environment with a package just for personal editing
+preferences.
+
+To use this additional functionality, you need to do the following two steps:
+
+- Activate the environment you want to use, on the host you want to use. If
+  you're running R on an interactive node, you need to be *running nvim on the
+  interactive node*.
+- Use ``Ropen <filename>`` to start nvim with the right env vars set. This
+  function is now included in the updated :file:`.functions` file of these
+  dotfiles. It also uses the ``install-nvimcom`` function from that file.
+
+
+.. details:: What these functions do
+
+   ``nvimcom`` is compiled. The source code lives in this nvim plugin, but it
+   needs to be compiled on the R version you're using. The trick here is that
+   we're compiling it the first time you use it for an R version, but storing it
+   in a "sidecar" library.
+
+   ``Ropen`` checks the
+   version of R on the path, pulls the source from the nvim plugin directory,
+   compiles nvimcom if it needs to using that R and stores it in
+   :file:`~/R/nvimcom/<X.Y.Z>` (that's the sidecar library), sets the
+   ``R_LIBS_USER`` env var to point to that sidecar library, and launches R.
+
+.. note::
+
+   R.nvim uses ``<localleader>`` instead of ``<leader>``. This essentially
+   allows another whole namespace to put shortcuts.
+
+   By default ``<localleader>`` is ``\\`` (backslash).
+
+   Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
+   ``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
+   take advantage of existing muscle memory.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - ``<localleader>rf``
+      - Starts an R session that communicates with nvimcom
+
+    * - ``gxx`` on a line
+      - Send line to R (like :ref:`toggleterm_ref`)
+
+    * - ``gx`` on a selection
+      - Send selection to R (like :ref:`toggleterm_ref`)
+
+    * - ``<leader>cd``
+      - Send chunk to R (like :ref:`toggleterm_ref`)
+
+    * - ``<leader>k``
+      - Render RMarkdown to HTML (like :ref:`toggleterm_ref`)
+
+    * - ``<localleader>o``
+      - Open R object browser
+
+    * - ``<localleader>rv`` with the cursor on a dataframe variable
+      - Open a new nvim terminal to view the data frame in visidata. ``q``
+        quits visidata and the terminal.
+
+    * - ``<localleader>ro``
+      - Run the line under the cursor in R, capture the output, and paste it
+        under the cursor -- but commented out. Useful for documenting data
+        structures.
+
+    * - ``:RMapsDesc``
+      - List all the other commands possible
+
+
+.. plugin-metadata::
+   :name: r-nvim
+
+.. _colorschemes_ref:
 
 Colorschemes
 ------------
