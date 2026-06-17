@@ -121,3 +121,18 @@ function git-clean-branches () {
 
     echo "Use 'git-clean-branches | xargs git branch -d' to actually delete these." >&2
 }
+
+# TMUX: Create a new tmux session that shares windows with an existing session, but whose
+#   active window(s) remain independent of the existing session's (i.e. they don't mirror each other)
+#
+# USAGE: `tc 2 1` => `tmux new-session -s2 -t1`
+# EXPL: This creates a new session named "2" that shares all the same windows with the session named "1"
+#
+# NOTE: This command will attempt to attach to a session named "0" (which is the default name) if
+#   a second argument isn't given:
+# USAGE: `tc 2` => `tmux new-session -s2 -t0`
+# EXPL: This creates a new session named "2" that shares all the same windows with the session named "0"
+
+function tc() {
+    tmux new-session -s"${1}" -t"${2:-0}"
+}
