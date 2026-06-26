@@ -1,12 +1,45 @@
 Changelog
 =========
 
+2026-06-26
+----------
+
+**vim**
+
+``R.nvim`` no longer experimental. With new versions of ``R.nvim`` (>0.9.96),
+the tab-completion database resource usage has been addressed. Make sure to
+include the :file:`~/.Rprofile` addition documented at :ref:`rnvim_ref`.
+
+For the ``blink`` nvim plugin, only enable the dictionary if the expected path
+(:file:`/usr/share/dict/words`) exists
+
+Sometimes on an interactive node the expected dictionary file
+:file:`/usr/share/dict/words` does not exist, causing repeated errors when
+editing ReST, text, or markdown files. This completion source is now disabled
+if that path doesn't exist, avoiding those errors.
+
+**Python**
+
+Add the new ``attach-ipython`` bash function, see :ref:`.functions`.
+
+2026-06-14
+----------
+
+**vim**
+
+Add experimental R.nvim plugin support, including additional functions
+``Ropen`` and ``install-nvimcom`` in :file:`.functions`.
+
+Currently not fully functional due to tab completion database resource usage.
+
+
 2026-05-28
 ----------
 
 **vim**
 
 - Add [pasteimg](https://github.com/daler/pasteimg.nvim) plugin
+- Remove ``img-clip`` plugin (which didn't work on remote systems)
 - Improve toggleterm "non-insert mode" cursorline:
   - use the Comment color of the initially-loaded colorscheme instead of a hard-coded red
   - don't clobber the custom background that toggleterm sets

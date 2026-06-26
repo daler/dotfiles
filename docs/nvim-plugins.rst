@@ -1508,10 +1508,156 @@ See the docs for the plugin on how to set it up, including a macOS Shortcut.
 .. plugin-metadata::
    :name: pasteimg
 
-.. _imgclip_ref:
+.. _rnvim_ref:
+
+``r.nvim``
+~~~~~~~~~~
+
+`R.nvim <https://github.com/R-nvim/R.nvim/>`__ provides tight integration with R running in an nvim terminal.
+
+.. note::
+
+   The existing method of using :ref:`toggleterm_ref` for R (or any other
+   terminal) remains the same. This is a new optional method that is specific
+   to R, with key mappings deliberately set to be similar to the toggleterm
+   method.
 
 
-.. colorschemes_ref:
+R.nvim provides more features than simply running R in an nvim terminal (like
+with :ref:`toggleterm_ref`).
+
+- R object browser (like using the object panel in RStudio); hit Enter on
+  an object to view
+- View a dataframe in Visidata (like using ``View()`` in RStudio)
+- Help opens in a new nvim split (rather than in the R terminal)
+- Tab-completion of functions and arguments within the text buffer
+- Large amounts of text sent to R interpreter are bundled, only reporting
+  a single line confirmation. This avoids cluttering the interpreter.
+- Syntax highlighting in the R interpreter
+- An R language server that doesn't itself require R
+- More flexibility in controlling what is sent to the terminal
+- Insert a commented version of output into the text buffer. This is great for
+  ``head(df)`` so your comments show contents of the data.frame.
+- Send ``str`` with the name of the object under the cursor for quick inspection in R
+- Jump through an RMarkdown file by chunk
+- ``eval=FALSE`` chunks are highlighted as commented text for a visual reminder.
+- Lots more...
+
+**This additional functionality requires the following two steps:**
+
+1. Nvim and R must be running on the same host.
+   - E.g., activate the environment *before starting nvim* that you want to
+     use, on the host you want to use.
+   - If you're running R on an interactive node, you need to be running nvim on
+     the interactive node as well. This is different from using toggleterm,
+     where you can start nvim on the login node, start a terminal, and log into
+     the interactive node from there.
+2. Use ``Ropen <filename>``.
+   - Don't use ``nvim <filename>``
+   - ``Ropen`` starts nvim with with the right env vars set. This ``Ropen``
+     function is now included in the updated :file:`.functions` file of these
+     dotfiles, so make sure you have that. It also uses the ``install-nvimcom``
+     function, also from :file:`.functions`.
+
+.. details:: What these functions do
+
+   In order for all of this to work, the ``nvimcom`` package needs to be
+   installed into the environment with R.
+
+   However, it didn't seem right to "contaminate" an otherwise reproducible
+   R environment with a package used only for personal editing preferences.
+
+
+   In addition, ``nvimcom`` is compiled. The source code lives in this nvim
+   plugin, but it needs to be compiled with the exact R version you're using.
+
+   The trick here is that we're compiling it the first time you use it for an
+   R version, but storing it in a "sidecar" library outside the main
+   R environment. Then we're telling R about that sidecar library only when we
+   want to use R.nvim.
+
+   The ``Ropen`` function, now available in :file:`.functions` does the following:
+
+   - checks the version of R on the path (i.e. from an activated environment)
+   - check to see if we already have a compiled sidecar library for this version
+   - if not, compiles it with the function ``install-nvimcom``, which:
+     - pulls the ``nvimcom`` source from the nvim plugin directory
+     - compiles it against the R version on the path
+     - stores it in :file:`~/R/nvimcom/<X.Y.Z>` (that's the sidecar library)
+   - sets the ``R_LIBS_USER`` env var to point to the sidecar library for this
+     version of R containing the compiled ``nvimcom``
+   - With all that set up, then runs ``nvim <filename>`` to open the file.
+
+
+When using an HPC system (like Biowulf), **you must put the following** in your
+:file:`~/.Rprofile`:
+
+.. code-block:: r
+
+    # This restricts the number of CPUs that can be used by the R.nvim plugin.
+    # Needs R.nvim >=0.9.96
+    options(nvimcom.max_cpu_cores = max(2, as.numeric(Sys.getenv("SLURM_CPUS_PER_TASK")), na.rm=TRUE))
+
+.. warning::
+
+   By default, R.nvim will try to grab **all CPUs on the hardware** in order to
+   build the tab-completion database. This will crash an interactive node on an
+   HPC system. You **must** edit your :file:`.Rprofile` as shown above to avoid
+   this.
+
+This plugin is **only activated when an R or Rmd file is opened**.
+
+R.nvim uses ``<localleader>`` instead of ``<leader>``. This essentially
+allows another whole namespace in which to put shortcuts.
+
+By default ``<localleader>`` is ``\\`` (backslash).
+
+Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
+``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
+take advantage of existing muscle memory.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - ``<localleader>rf``
+      - Starts an R session that communicates with nvimcom
+
+    * - ``gxx`` on a line
+      - Send line to R (like :ref:`toggleterm_ref`)
+
+    * - ``gx`` on a selection
+      - Send selection to R (like :ref:`toggleterm_ref`)
+
+    * - ``<leader>cd``
+      - Send chunk to R (like :ref:`toggleterm_ref`)
+
+    * - ``<leader>k``
+      - Render RMarkdown to HTML (like :ref:`toggleterm_ref`)
+
+    * - ``<localleader>o``
+      - Open R object browser
+
+    * - ``<localleader>rv`` with the cursor on a dataframe variable
+      - Open a new nvim terminal to view the data frame in visidata. ``q``
+        quits visidata and the terminal.
+
+    * - ``<localleader>ro``
+      - Run the line under the cursor in R, capture the output, and paste it
+        under the cursor -- but commented out. Useful for documenting data
+        structures.
+
+    * - ``:RMapsDesc``
+      - List all the other commands possible. There are a lot.
+
+
+.. plugin-metadata::
+   :name: r-nvim
+
+.. _colorschemes_ref:
 
 Colorschemes
 ------------

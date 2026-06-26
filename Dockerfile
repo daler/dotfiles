@@ -56,6 +56,7 @@ ADD \
 .path \
 .tmux.conf \
 .vimrc \
+.Rprofile \
 apt-installs.txt \
 include.file \
 requirements-mac.txt \

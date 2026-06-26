@@ -12,3 +12,4 @@
 .path
 .tmux.conf
 .vimrc
+.Rprofile

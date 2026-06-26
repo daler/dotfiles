@@ -207,3 +207,16 @@ vim.api.nvim_create_autocmd("ModeChanged", {
     vim.wo.cursorline = vim.api.nvim_get_mode().mode == "nt"
   end,
 })
+
+
+-- Always use insert mode when entering a terminal buffer, even with mouse click.
+-- NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+  pattern = "*",
+  callback = function()
+    if vim.bo.buftype == "terminal" then
+      vim.cmd("startinsert")
+    end
+  end,
+})
+
