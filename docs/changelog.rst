@@ -32,6 +32,7 @@ Add experimental R.nvim plugin support, including additional functions
 
 Currently not fully functional due to tab completion database resource usage.
 
+
 2026-05-28
 ----------
 
