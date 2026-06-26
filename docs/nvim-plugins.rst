@@ -1515,81 +1515,106 @@ See the docs for the plugin on how to set it up, including a macOS Shortcut.
 
 `R.nvim <https://github.com/R-nvim/R.nvim/>`__ provides tight integration with R running in an nvim terminal.
 
-.. warning::
+.. note::
 
-   **This is experimental.**
-
-   Currently the biggest issue is the creation of the tab-completion database.
-   ``nvimcom`` does this at startup, and with no apparent working way of
-   disabling it on the nvim side. It does this for *each installed R library*.
-   If you use this on an all-in-one installation, like the one for Biowulf's
-   ``module load R``, it will consume all resources on the node.
-
-   For something like a project-specific R environment, it does take a couple
-   minutes the first time on a big node, but using the same env after that is
-   instant.
-
-   Another issue is support for old R versions. Currently, R.nvim v0.99.4
-   cleanly supports old R versions but 0.99.5 does not (despite release notes
-   to the contrary). This will likely change since the plugin is under active
-   development.
+   The existing method of using :ref:`toggleterm_ref` for R (or any other
+   terminal) remains the same. This is a new optional method that is specific
+   to R, with key mappings deliberately set to be similar to the toggleterm
+   method.
 
 
-This provides more features than simply running R in an nvim terminal (like
+R.nvim provides more features than simply running R in an nvim terminal (like
 with :ref:`toggleterm_ref`).
 
-- R object browser (like the panel in RStudio)
-- quickly view a dataframe in Visidata (like``View()`` in RStudio)
-- tab-completion of functions and arguments
-- syntax highlighting in the R interpreter
-- R documentation within text buffer
-- An R language server that doesn't itself require R (specifically, it doesn't
-  require being installed into the same environment as R)
+- R object browser (like using the object panel in RStudio); hit Enter on
+  an object to view
+- View a dataframe in Visidata (like using ``View()`` in RStudio)
+- Help opens in a new nvim split (rather than in the R terminal)
+- Tab-completion of functions and arguments within the text buffer
+- Large amounts of text sent to R interpreter are bundled, only reporting
+  a single line confirmation. This avoids cluttering the interpreter.
+- Syntax highlighting in the R interpreter
+- An R language server that doesn't itself require R
 - More flexibility in controlling what is sent to the terminal
-- Insert commented version of output into the text buffer (great for
-  ``head(df)`` so your comments reflect what's in the data.frame)
+- Insert a commented version of output into the text buffer. This is great for
+  ``head(df)`` so your comments show contents of the data.frame.
 - Send ``str`` with the name of the object under the cursor for quick inspection in R
 - Jump through an RMarkdown file by chunk
+- ``eval=FALSE`` chunks are highlighted as commented text for a visual reminder.
 - Lots more...
 
-In order for this to work, the ``nvimcom`` package needs to be installed into
-the environment with R. However, it didn't seem right to "contaminate" an
-otherwise reproducible R environment with a package just for personal editing
-preferences.
+**This additional functionality requires the following two steps:**
 
-To use this additional functionality, you need to do the following two steps:
-
-- Activate the environment you want to use, on the host you want to use. If
-  you're running R on an interactive node, you need to be *running nvim on the
-  interactive node*.
-- Use ``Ropen <filename>`` to start nvim with the right env vars set. This
-  function is now included in the updated :file:`.functions` file of these
-  dotfiles. It also uses the ``install-nvimcom`` function from that file.
-
+1. Nvim and R must be running on the same host.
+   - E.g., activate the environment *before starting nvim* that you want to
+     use, on the host you want to use.
+   - If you're running R on an interactive node, you need to be running nvim on
+     the interactive node as well. This is different from using toggleterm,
+     where you can start nvim on the login node, start a terminal, and log into
+     the interactive node from there.
+2. Use ``Ropen <filename>``.
+   - Don't use ``nvim <filename>``
+   - ``Ropen`` starts nvim with with the right env vars set. This ``Ropen``
+     function is now included in the updated :file:`.functions` file of these
+     dotfiles, so make sure you have that. It also uses the ``install-nvimcom``
+     function, also from :file:`.functions`.
 
 .. details:: What these functions do
 
-   ``nvimcom`` is compiled. The source code lives in this nvim plugin, but it
-   needs to be compiled on the R version you're using. The trick here is that
-   we're compiling it the first time you use it for an R version, but storing it
-   in a "sidecar" library.
+   In order for all of this to work, the ``nvimcom`` package needs to be
+   installed into the environment with R.
 
-   ``Ropen`` checks the
-   version of R on the path, pulls the source from the nvim plugin directory,
-   compiles nvimcom if it needs to using that R and stores it in
-   :file:`~/R/nvimcom/<X.Y.Z>` (that's the sidecar library), sets the
-   ``R_LIBS_USER`` env var to point to that sidecar library, and launches R.
+   However, it didn't seem right to "contaminate" an otherwise reproducible
+   R environment with a package used only for personal editing preferences.
 
-.. note::
 
-   R.nvim uses ``<localleader>`` instead of ``<leader>``. This essentially
-   allows another whole namespace to put shortcuts.
+   In addition, ``nvimcom`` is compiled. The source code lives in this nvim
+   plugin, but it needs to be compiled with the exact R version you're using.
 
-   By default ``<localleader>`` is ``\\`` (backslash).
+   The trick here is that we're compiling it the first time you use it for an
+   R version, but storing it in a "sidecar" library outside the main
+   R environment. Then we're telling R about that sidecar library only when we
+   want to use R.nvim.
 
-   Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
-   ``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
-   take advantage of existing muscle memory.
+   The ``Ropen`` function, now available in :file:`.functions` does the following:
+
+   - checks the version of R on the path (i.e. from an activated environment)
+   - check to see if we already have a compiled sidecar library for this version
+   - if not, compiles it with the function ``install-nvimcom``, which:
+     - pulls the ``nvimcom`` source from the nvim plugin directory
+     - compiles it against the R version on the path
+     - stores it in :file:`~/R/nvimcom/<X.Y.Z>` (that's the sidecar library)
+   - sets the ``R_LIBS_USER`` env var to point to the sidecar library for this
+     version of R containing the compiled ``nvimcom``
+   - With all that set up, then runs ``nvim <filename>`` to open the file.
+
+
+When using an HPC system (like Biowulf), **you must put the following** in your
+:file:`~/.Rprofile`:
+
+.. code-block:: r
+
+    # This restricts the number of CPUs that can be used by the R.nvim plugin.
+    # Needs R.nvim >=0.9.96
+    options(nvimcom.max_cpu_cores = max(2, as.numeric(Sys.getenv("SLURM_CPUS_PER_TASK")), na.rm=TRUE))
+
+.. warning::
+
+   By default, R.nvim will try to grab **all CPUs on the hardware** in order to
+   build the tab-completion database. This will crash an interactive node on an
+   HPC system. You **must** edit your :file:`.Rprofile` as shown above to avoid
+   this.
+
+This plugin is **only activated when an R or Rmd file is opened**.
+
+R.nvim uses ``<localleader>`` instead of ``<leader>``. This essentially
+allows another whole namespace in which to put shortcuts.
+
+By default ``<localleader>`` is ``\\`` (backslash).
+
+Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
+``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
+take advantage of existing muscle memory.
 
 .. list-table::
     :header-rows: 1
@@ -1626,7 +1651,7 @@ To use this additional functionality, you need to do the following two steps:
         structures.
 
     * - ``:RMapsDesc``
-      - List all the other commands possible
+      - List all the other commands possible. There are a lot.
 
 
 .. plugin-metadata::

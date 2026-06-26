@@ -2,9 +2,6 @@
 return {
   "R-nvim/R.nvim",
 
-  -- Current latest version (0.99.5) doesn't fully support old R versions.
-  version="0.99.4",
-
   -- Only load the plugin if we can find an executable for R.
   cond = function()
     return vim.fn.executable("R") == 1
@@ -16,6 +13,7 @@ return {
     Rout_follow_colorscheme=true,
     -- config_tmux=false,
     rconsole_width=80,
+
 
     -- by default, :RDSendLine will send the entire block (entire for-loop or entire function, for example). Disabling this sends just one line at a time.
     parenblock=false,

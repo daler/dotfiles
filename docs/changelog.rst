@@ -1,6 +1,15 @@
 Changelog
 =========
 
+2026-06-26
+----------
+
+**vim**
+
+``R.nvim`` no longer experimental. With new versions of ``R.nvim`` (>0.9.96),
+the tab-completion database resource usage has been addressed. Make sure to
+include the :file:`~/.Rprofile` addition documented at :ref:`rnvim_ref`.
+
 2026-06-14
 ----------
 
