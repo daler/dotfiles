@@ -404,6 +404,18 @@ certain events.</p>
 <span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">wo</span><span class="p">.</span><span class="py">cursorline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_get_mode</span><span class="p">().</span><span class="nv">mode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;nt&quot;</span>
 <span class="w">  </span><span class="kr">end</span><span class="p">,</span>
 <span class="p">})</span>
+
+
+<span class="c1">-- Always use insert mode when entering a terminal buffer, even with mouse click.</span>
+<span class="c1">-- NOTE: Clicking with a mouse a second time enters visual select mode, just like in a text buffer.</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_autocmd</span><span class="p">({</span><span class="w"> </span><span class="s2">&quot;BufEnter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;WinEnter&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nv">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">buftype</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;terminal&quot;</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;startinsert&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
+<span class="w">  </span><span class="kr">end</span><span class="p">,</span>
+<span class="p">})</span>
 </pre></div>
 </div>
 </div></details><details><summary>lua/config/keymaps.lua</summary><div class="details"><p><code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/config/keymaps.lua</span></code> configures keymappings that are
