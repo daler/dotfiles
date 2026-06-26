@@ -208,3 +208,69 @@ Ropen() {
     R_LIBS_USER="$sidecar_lib:${R_LIBS_USER:-$HOME/R/library}" $EDITOR "$@"
 }
 
+# ---------------------------------------------------------------------------
+# Attach "sidecar" IPython to debug another environment
+# ---------------------------------------------------------------------------
+#
+# Sometimes you need to debug a conda environment, which IPython is great for,
+# but you may not want to install IPython into the env itself (since that would
+# be injecting a debugging tool preference into the reproducible environment).
+#
+# So given an env you want to work on, this function will create (if it doesn't
+# exist) a Python-matched named env env (of the form "ipython_X.Y") containing
+# just IPython, and then attach the target env's Python packages to it. The
+# result is that everything works as if you *had* installed IPython into the
+# target env.
+function attach-ipython(){
+
+    if [ $# -lt 1 ]; then
+        echo "Usage: attach-ipython <conda-env-path>" >&2
+        return 1
+    fi
+
+    # Resolve the target env path and see if it has python
+    local ENV_PATH
+    ENV_PATH="$(cd "$1" 2>/dev/null && pwd)" || { echo "Not a directory: $1" >&2; return 1; }
+    if [ ! -x "$ENV_PATH/bin/python" ]; then
+        echo "No python found at $ENV_PATH/bin/python" >&2
+        return 1
+    fi
+
+    # Detect Python version from the target env
+    local PY_VERSION DEBUG_ENV SITE_PKGS
+    PY_VERSION="$("$ENV_PATH/bin/python" -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+    DEBUG_ENV="ipython_${PY_VERSION}"
+
+    # Create the debug env if it doesn't exist. Match on the exact env name
+    # (first whitespace-separated field) so the active-env '*' marker and
+    # column alignment don't throw off the check.
+    if ! conda env list | awk '{print $1}' | grep -qx "$DEBUG_ENV"; then
+        echo "Creating debug env '${DEBUG_ENV}' with Python ${PY_VERSION}..."
+        conda create -y -n "$DEBUG_ENV" "python=${PY_VERSION}" ipython
+    else
+        echo "Debug env '${DEBUG_ENV}' already exists."
+    fi
+
+    # Find site-packages in the target env (join all entries in case there is
+    # more than one).
+    SITE_PKGS="$("$ENV_PATH/bin/python" -c 'import site, os; print(os.pathsep.join(site.getsitepackages()))')"
+
+    # Run everything in a subshell to avoid the parent shell having an
+    # activated debug env and a modified PYTHONPATH.
+    #
+    # Note: the target env's site-packages is prepended, so its package
+    # versions take precedence over the debug env's. This is intentional (we
+    # want to debug the target's packages), but if the target ships
+    # incompatible versions of IPython's own dependencies (traitlets,
+    # prompt_toolkit, jedi, ...) IPython may fail to start.
+    (
+        eval "$(conda shell.bash hook)"
+        conda activate "$DEBUG_ENV"
+
+        export PYTHONPATH="${SITE_PKGS}${PYTHONPATH:+:$PYTHONPATH}"
+        echo "PYTHONPATH=${PYTHONPATH}"
+        echo "Attached to: ${ENV_PATH} (Python ${PY_VERSION})"
+
+        ipython "${@:2}"
+    )
+}

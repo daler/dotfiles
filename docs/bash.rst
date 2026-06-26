@@ -164,6 +164,12 @@ are set up. Some notable functions defined here:
         :file:`.ssh/config` file. Useful for when you're trying to remember how
         to log in to an infrequently-accessed host.
 
+    * - ``attach-ipython``
+      - Given a target conda env path, start IPython (creating a named env if
+        needed) and add the target conda env's Python libraries to PYTHONPATH
+        such that IPython can be used with the target env without needing to
+        install it *into* the env.
+
 
 .. _.bash_prompt:
 

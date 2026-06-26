@@ -18,6 +18,10 @@ Sometimes on an interactive node the expected dictionary file
 editing ReST, text, or markdown files. This completion source is now disabled
 if that path doesn't exist, avoiding those errors.
 
+**Python**
+
+Add the new ``attach-ipython`` bash function, see :ref:`.functions`.
+
 2026-06-14
 ----------
 
