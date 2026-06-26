@@ -10,6 +10,14 @@ Changelog
 the tab-completion database resource usage has been addressed. Make sure to
 include the :file:`~/.Rprofile` addition documented at :ref:`rnvim_ref`.
 
+For the ``blink`` nvim plugin, only enable the dictionary if the expected path
+(:file:`/usr/share/dict/words`) exists
+
+Sometimes on an interactive node the expected dictionary file
+:file:`/usr/share/dict/words` does not exist, causing repeated errors when
+editing ReST, text, or markdown files. This completion source is now disabled
+if that path doesn't exist, avoiding those errors.
+
 2026-06-14
 ----------
 

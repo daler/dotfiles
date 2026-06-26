@@ -9,6 +9,9 @@ local has_words_before = function()
   local line = vim.api.nvim_get_current_line()
   return line:sub(col, col):match("%s") == nil
 end
+
+-- Only enable dictionary completion if a system word list is available
+local has_dictionary = vim.uv.fs_stat('/usr/share/dict/words') ~= nil
 return {
   "saghen/blink.cmp",
   dependencies = {
@@ -49,22 +52,22 @@ return {
         local result = { 'lsp', 'path', 'snippets', 'buffer' }
 
         -- turn on dictionary completion in non-code files
-        if vim.tbl_contains({ 'markdown', 'text', 'rst' }, vim.bo.filetype) then
+        if has_dictionary and vim.tbl_contains({ 'markdown', 'text', 'rst' }, vim.bo.filetype) then
           table.insert(result, 'dictionary')
         end
         return result
       end,
-      providers = {
+      providers = has_dictionary and {
         dictionary = {
           module = 'blink-cmp-dictionary',
           name = 'Dict',
           min_keyword_length = 3,
           opts = {
             -- This is the location of the word list on macOS and many Linux distributions
-            dictionary_files = { '/usr/share/dict/words' }
-          }
-        }
-      },
+            dictionary_files = { '/usr/share/dict/words' },
+          },
+        },
+      } or {},
     },
     fuzzy = { implementation = "prefer_rust_with_warning" },
     completion = {
