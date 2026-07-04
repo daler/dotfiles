@@ -1,6 +1,16 @@
 Changelog
 =========
 
+2026-07-04
+----------
+**vim**
+
+Pin the Aerial plugin to ``nvim-0.11`` branch. This is because nvim 0.12
+changed how treesitter behaves, and recent versions of Aerial have moved to
+support that.
+
+This will be unpinned once everything here migrates to nvim 0.12.
+
 2026-06-26
 ----------
 
