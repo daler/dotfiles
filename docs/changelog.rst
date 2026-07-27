@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2026-07-27
+----------
+
+**tmux**
+
+Add ``set-clipboard on`` and ``allow-passthrough on`` in :file:`~/.tmux.conf`
+to support OSC52 clipboard behavior within apps (like nvim) inside tmux.
+
 2026-06-26
 ----------
 
