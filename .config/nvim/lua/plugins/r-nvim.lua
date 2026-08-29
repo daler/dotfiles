@@ -44,7 +44,7 @@ return {
            local path = vim.api.nvim_buf_get_name(0)
            require("r.send").cmd('rmarkdown::render("' .. path .. '")')
           end,
-          { buffer = true, desc = "Render Rmarkdown" })
+          { buf = true, desc = "Render Rmarkdown" })
 
         -- In 0.99.4 which is used here for compatibility with older
         -- R versions, the RDSendLine command sends the entire treesitter block
@@ -55,7 +55,7 @@ return {
           local line = vim.api.nvim_get_current_line()
           require("r.send").cmd(line)
           vim.cmd("normal! j")
-        end, { buffer = true })
+        end, { buf = true })
       end,
     },
   },

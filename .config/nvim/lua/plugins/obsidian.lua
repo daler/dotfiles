@@ -23,7 +23,7 @@ return {
               return "<cmd>ObsidianFollowLink<CR>"
             end
           end,
-          opts = { buffer = true, expr = true },
+          opts = { buf = true, expr = true },
         },
       },
 
