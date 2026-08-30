@@ -2753,6 +2753,7 @@ general, in combination with the <a class="reference internal" href="#rendermark
 <li><p>2024-11-18 <a class="reference external" href="https://github.com/daler/dotfiles/commit/9f24f97">9f24f97</a> <em>ensure obsidian daily notes don’t show up for non-vault directories</em></p></li>
 <li><p>2026-01-28 <a class="reference external" href="https://github.com/daler/dotfiles/commit/d5569c3">d5569c3</a> <em>render-markdown only loads on markdown;</em></p></li>
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/5ca103e">5ca103e</a> <em>Nvim 0.12.5 (#75)</em></p></li>
+<li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/8799c48">8799c48</a> <em>fix buf, needs integer</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2782,7 +2783,7 @@ general, in combination with the <a class="reference internal" href="#rendermark
 <span class="w">              </span><span class="kr">return</span><span class="w"> </span><span class="s2">"&lt;cmd&gt;ObsidianFollowLink&lt;CR&gt;"</span>
 <span class="w">            </span><span class="kr">end</span>
 <span class="w">          </span><span class="kr">end</span><span class="p">,</span>
-<span class="w">          </span><span class="nv">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nv">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="nv">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">      </span><span class="p">},</span>
 
