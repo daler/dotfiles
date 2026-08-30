@@ -58,7 +58,16 @@ return {
             return
           end
 
-          vim.treesitter.start()
+          local parser_available, parser_error = vim.treesitter.language.add(language)
+          if not parser_available then
+            vim.notify_once(
+              string.format("Treesitter parser unavailable for %s: %s", language, parser_error or "unknown error"),
+              vim.log.levels.WARN
+            )
+            return
+          end
+
+          vim.treesitter.start(0, language)
 
           -- Markdown indentation interferes with wrapping bulleted lists.
           if language ~= "markdown" then
