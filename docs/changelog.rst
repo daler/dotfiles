@@ -35,6 +35,11 @@ If you already have nvim 0.12.5+ installed somewhere:
    nvim-related dotfiles, copy over the latest from this repo, and do the Mason
    and treesitter installation.
 
+Other updates:
+
+- added the punchlist.nvim plugin
+- updated tool versions in setup.sh
+- make insert and replace cursors more obvious
 
 2026-07-27
 ----------
