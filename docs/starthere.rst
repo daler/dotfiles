@@ -161,10 +161,11 @@ more help on deciding.
 
 .. details:: Details
 
-     This installs Neovim to :file:`~/opt/bin`, and then creates an ``alias
-     vim=nvim`` in the :file:`~/.aliases` file (which is sourced by
-     :file:`~/.bashrc`). This way, whenever you call ``vim``, the alias will
-     redirect it to ``nvim``.
+     This installs Neovim to :file:`~/opt/bin`, restores the configured plugins,
+     installs ``tree-sitter-cli``, and installs all configured Treesitter
+     parsers. It then creates an ``alias vim=nvim`` in the :file:`~/.aliases`
+     file (which is sourced by :file:`~/.bashrc`). This way, whenever you call
+     ``vim``, the alias will redirect it to ``nvim``.
 
      However it's important to close and reopen your terminal, because this
      alias is conditional on finding nvim, and the alias is only created upon
@@ -183,34 +184,22 @@ more help on deciding.
   changed. Please see :ref:`nvim-lua` for more context, rationale, and details
   on migrating to this new config method.
 
-After closing and reopening your terminal from step 2b, now open neovim to
-trigger automatic plugin installation. Plugins are managed via the `lazy.nvim
-<https://github.com/folke/lazy.nvim>`_ manager, which will bootstrap itself and
-then download, install, and configure all plugins automatically.
+The ``--install-neovim`` step restores plugins with `lazy.nvim
+<https://github.com/folke/lazy.nvim>`_, installs ``tree-sitter-cli`` with Mason,
+and installs all Treesitter parsers listed in the config. No separate plugin
+setup step is needed.
 
-.. code-block:: bash
-
-  nvim
-  # Wait for plugins to download and install (you'll see progress messages)
-  # When everything is finished, quit with :q
-
-Or run this command to install plugins and quit automatically when done:
-
-.. code-block:: bash
-
-  nvim +"lua require('lazy').restore({wait=true})" +q
+This automatic setup requires the nvim config to already be at
+:file:`~/.config/nvim`, which is why ``--dotfiles`` comes first in the
+recommended order. It also requires a C compiler for the Treesitter parsers.
+See :ref:`treesitter_ref` for platform-specific prerequisites.
 
 .. details:: Details
 
-  ``lazy.nvim`` will show progress downloading plugins. Treesitter will also
-  automatically install parsers, so you should watch the log on the bottom and
-  wait until everything settles down. Then you can quit as normal with
-  ``<Esc>:q``.
-
-  If running ``nvim`` didn't work, check that it's on your path. Close and then
-  reopen your terminal just to make sure. If you installed with ``./.setup.sh
-  --install-neovim``, it put it in ``~/opt/bin/nvim``. Make sure that directory
-  is on your PATH by checking:
+  If running ``nvim`` after installation does not work, check that it is on
+  your path. Close and then reopen your terminal just to make sure. The setup
+  command puts it in ``~/opt/bin/nvim``. Make sure that directory is on your
+  PATH by checking:
 
   .. code-block:: bash
 

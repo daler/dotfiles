@@ -27,8 +27,8 @@ return {
             api.tree.reload()
           end
         end
-        vim.keymap.set("n", "ga", git_add, { buffer = bufnr, desc = "Git Add" })
-        vim.keymap.set("n", "gu", git_unstage, { buffer = bufnr, desc = "Git Unstage" })
+        vim.keymap.set("n", "ga", git_add, { buf = bufnr, desc = "Git Add" })
+        vim.keymap.set("n", "gu", git_unstage, { buf = bufnr, desc = "Git Unstage" })
         end,
         })
     end,

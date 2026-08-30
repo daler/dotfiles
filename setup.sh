@@ -22,17 +22,17 @@ set -eo pipefail
 # Change tool versions here
 VISIDATA_VERSION=3.3
 HUB_VERSION=2.14.2
-NVIM_VERSION=0.11.5
-RG_VERSION=15.1.0
+NVIM_VERSION=0.12.5
+RG_VERSION=15.2.0
 BAT_VERSION=0.26.1
-JQ_VERSION=1.8.1
+JQ_VERSION=1.8.2
 ICDIFF_VERSION=2.0.4
-BFG_VERSION=1.14.0
-FD_VERSION=10.4.2
-BLACK_VERSION=22.6.0
-PYP_VERSION=1.1.0
-FZF_VERSION=0.72.0
-TMUX_VERSION=3.6a
+BFG_VERSION=1.15.0
+FD_VERSION=10.5.0
+BLACK_VERSION=26.5.1
+PYP_VERSION=1.3.0
+FZF_VERSION=0.74.3
+TMUX_VERSION=3.7
 
 function showHelp() {
 
@@ -100,12 +100,11 @@ function showHelp() {
     echo "    3)  ./setup.sh --install-conda"
     echo "    4)  ./setup.sh --set-up-bioconda"
     echo "    5) CLOSE TERMINAL, OPEN A NEW ONE"
-    echo "    6) Open vim (which should now be aliased to nvim) and allow plugins to install, then quit"
-    echo "    7)  ./setup.sh --install-fzf"
-    echo "    8)  ./setup.sh --install-ripgrep"
-    echo "    9)  ./setup.sh --install-vd"
-    echo "    10) ./setup.sh --install-pyp"
-    echo "    11) ./setup.sh --install-fd"
+    echo "    6)  ./setup.sh --install-fzf"
+    echo "    7)  ./setup.sh --install-ripgrep"
+    echo "    8)  ./setup.sh --install-vd"
+    echo "    9)  ./setup.sh --install-pyp"
+    echo "    10) ./setup.sh --install-fd"
     echo
     echo "  On Mac:"
     echo "       ./setup.sh --mac-stuff"
@@ -135,7 +134,7 @@ function showHelp() {
         "packages. See apt-installs-minimal.txt for list, and edit if needed"
 
     cmd "--install-neovim" \
-        "neovim is a drop-in replacement for vim, with additional features" \
+        "Install neovim, configured plugins, tree-sitter-cli, and Treesitter parsers" \
         "Homepage: https://neovim.io/"
 
     cmd "--compile-neovim" \
@@ -262,8 +261,8 @@ function showHelp() {
         "Installs gh, the github CLI"
 
     cmd "--nvim-test-drive" \
-        "Move nvim binary, plugins, and config to backup directories so you can " \
-        "try new updates from these dotfiles. Does not delete anything."
+        "Move nvim plugins, parsers, Mason packages, and config to backup " \
+        "directories, then reinstall them for a clean test. Does not delete anything."
 
     cmd "--restore-nvim-plugins" \
         "Copy over the nvim plugin lockfile from the repo to your " \
@@ -384,6 +383,50 @@ remind_alias () {
 check_opt_bin_in_path () {
     if ! echo $PATH | grep -q "$HOME/opt/bin"; then
         printf "${YELLOW}Please add${UNSET} $HOME/opt/bin ${YELLOW} to your \$PATH${UNSET}\n"
+    fi
+}
+
+# Install every Treesitter parser listed in the nvim config and wait for the
+# asynchronous installs to finish. The caller is responsible for installing
+# nvim-treesitter and tree-sitter-cli first.
+install_treesitter_parsers () {
+    local nvim_bin=$1
+    local ts_install_dir
+    local ts_install_lua
+    local ts_failed=
+
+    printf "${YELLOW}Installing configured Treesitter parsers...${UNSET}\n"
+    ts_install_dir=$(mktemp -d)
+    ts_install_lua="$ts_install_dir/ts-install.lua"
+    cat > "$ts_install_lua" <<'EOF'
+local ok, err = pcall(function()
+  local parsers = require("plugins.treesitter")[1].opts.parsers
+  assert(type(parsers) == "table" and #parsers > 0, "no parsers configured in plugins/treesitter.lua")
+  print(("Installing %d parsers: %s"):format(#parsers, table.concat(parsers, " ")))
+
+  assert(vim.fn.executable("tree-sitter") == 1, "the tree-sitter CLI is not on Nvim's PATH")
+  require("nvim-treesitter").install(parsers, { force = true, summary = true }):wait(900000)
+
+  local parser_dir = require("nvim-treesitter.config").get_install_dir("parser")
+  local missing = vim.tbl_filter(function(lang)
+    return vim.fn.filereadable(vim.fs.joinpath(parser_dir, lang .. ".so")) == 0
+  end, parsers)
+  assert(#missing == 0, "parsers missing from " .. parser_dir .. ": " .. table.concat(missing, " "))
+end)
+
+if not ok then
+  vim.api.nvim_echo({ { "Treesitter parser installation failed: " .. tostring(err), "ErrorMsg" } }, true, {})
+  vim.cmd("cquit")
+end
+print("All configured Treesitter parsers installed")
+EOF
+
+    "$nvim_bin" --headless "+luafile $ts_install_lua" +qa </dev/null || ts_failed=1
+    rm -rf "$ts_install_dir"
+
+    if [ -n "$ts_failed" ]; then
+        printf "${RED}Treesitter parsers failed to install; see the error above.${UNSET}\n"
+        return 1
     fi
 }
 
@@ -530,6 +573,25 @@ elif [ $task == "--install-neovim" ]; then
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
+
+    if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
+        printf "${YELLOW}Skipping plugin and Treesitter setup because ~/.config/nvim/init.lua was not found.\n"
+        printf "Run ./setup.sh --dotfiles before --install-neovim to set them up automatically.${UNSET}\n"
+    else
+        printf "${YELLOW}Restoring nvim plugins with Lazy...${UNSET}\n"
+        if ! "$HOME/opt/neovim/bin/nvim" --headless "+Lazy! restore" +qa </dev/null; then
+            printf "${RED}'Lazy! restore' failed; Neovim was installed, but its plugins and Treesitter parsers were not.${UNSET}\n"
+            exit 1
+        fi
+
+        printf "${YELLOW}Installing tree-sitter-cli with Mason...${UNSET}\n"
+        if ! "$HOME/opt/neovim/bin/nvim" --headless "+MasonInstall tree-sitter-cli" +qa </dev/null; then
+            printf "${RED}Mason could not install tree-sitter-cli; Neovim was installed, but its Treesitter parsers were not.${UNSET}\n"
+            exit 1
+        fi
+
+        install_treesitter_parsers "$HOME/opt/neovim/bin/nvim"
+    fi
 
 
 elif [ $task == "--compile-neovim" ]; then
@@ -914,19 +976,44 @@ elif [ $task == "--fix-tmux-terminfo" ]; then
     printf "${YELLOW}Added ~/.terminfo. You can now use 'set -g default-terminal \"tmux-256color\" in your .tmux.conf.${UNSET}\n"
 
 elif [ $task == "--nvim-test-drive" ]; then
+    # We have set -e set at this point; this sets up a trap to report where
+    # a failure occurs
+    trap 'status=$?; printf "\n${RED}--nvim-test-drive aborted at setup.sh line $LINENO (exit $status)${UNSET}\n\n"' ERR
     printf "\n${RED}NOTE:${UNSET} currently-open nvim windows will detect changes to config. "
     printf "You might want to close other running nvim instances before running this.\n\n${UNSET}"
 
     if [ "$(nvim --version | head -n1 )" != "NVIM v$NVIM_VERSION" ]; then
-        printf "\n${RED}nvim v0.10.1 not found -- please update before running this command.\n\n"
+        printf "\n${RED}nvim v$NVIM_VERSION not found -- please update before running this command.\n\n"
         exit 1
     fi
-
-    ok "Move nvim plugins and config to different directories for trying a new version of these dotfiles?"
+    ok "Back up nvim config and installed tools, then reinstall everything for a clean test?"
 
     timestamp=$(date +"%Y%m%d%H%M")
     NVIM_CONFIG_BACKUP="~/.config/nvim-$timestamp"
     NVIM_PLUGIN_BACKUP="~/.local/share/nvim/lazy-$timestamp"
+    NVIM_MASON_BACKUP="~/.local/share/nvim/mason-$timestamp"
+    NVIM_SITE_BACKUP="~/.local/share/nvim/site-$timestamp"
+
+    # Save the installed package names before moving Mason so the clean
+    # installation contains the same LSP servers and other Mason tools.
+    #
+    # We'll need tree-sitter-cli regardless, so add it at the end if it wasn't
+    # otherwise found.
+    MASON_PACKAGES=()
+    HAS_TREE_SITTER_CLI=false
+    for package_dir in "$HOME"/.local/share/nvim/mason/packages/*; do
+        if [ -d "$package_dir" ]; then
+            package_name=$(basename "$package_dir")
+            MASON_PACKAGES+=("$package_name")
+            if [ "$package_name" == "tree-sitter-cli" ]; then
+                HAS_TREE_SITTER_CLI=true
+            fi
+        fi
+    done
+    if [ "$HAS_TREE_SITTER_CLI" == "false" ]; then
+        MASON_PACKAGES+=("tree-sitter-cli")
+    fi
+
     if [ -e ~/.config/nvim ]; then
         mv ~/.config/nvim ~/.config/nvim-$timestamp
         printf "${YELLOW}Moved ~/.config/nvim to $NVIM_CONFIG_BACKUP\n${UNSET}"
@@ -935,28 +1022,58 @@ elif [ $task == "--nvim-test-drive" ]; then
         mv ~/.local/share/nvim/lazy ~/.local/share/nvim/lazy-$timestamp
         printf "${YELLOW}Moved ~/.local/share/nvim/lazy to $NVIM_PLUGIN_BACKUP\n${UNSET}"
     fi
+    if [ -e ~/.local/share/nvim/mason ]; then
+        mv ~/.local/share/nvim/mason ~/.local/share/nvim/mason-$timestamp
+        printf "${YELLOW}Moved ~/.local/share/nvim/mason to $NVIM_MASON_BACKUP\n${UNSET}"
+    fi
+
+    if [ -e ~/.local/share/nvim/site ]; then
+        mv ~/.local/share/nvim/site ~/.local/share/nvim/site-$timestamp
+        printf "${YELLOW}Moved ~/.local/share/nvim/site to $NVIM_SITE_BACKUP\n${UNSET}"
+    fi
+
     rsync --no-perms -rvh .config/nvim ~/.config
-    nvim --headless -E \
-        "+Lazy! restore" \
-        -c 'echo "\n\nWaiting for 9 sec for parsers to finish installing...\n"' \
-        -c 'sleep 3' \
-        -c 'echo "\n\nWaiting for 7 sec for parsers to finish installing..\n"' \
-        -c 'sleep 3' \
-        -c 'echo "\n\nWaiting for 3 sec for parsers to finish installing..\n"' \
-        -c 'sleep 3' \
-        -c 'echo "\n"' \
-        +qa
-    printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim.\n"
+
+    # These run with explicit status checks instead of relying on `set -e`
+    printf "${YELLOW}Restoring plugins with Lazy...${UNSET}\n"
+    if ! nvim --headless "+Lazy! restore" +qa </dev/null; then
+        printf "${RED}'Lazy! restore' exited nonzero (see above). Aborting before parser installation.${UNSET}\n"
+        exit 1
+    fi
+
+    printf "${YELLOW}Installing Mason packages: ${MASON_PACKAGES[*]}${UNSET}\n"
+    if ! nvim --headless "+MasonInstall ${MASON_PACKAGES[*]}" +qa </dev/null; then
+        printf "${RED}'MasonInstall' exited nonzero (see above). Aborting before parser installation.${UNSET}\n"
+        exit 1
+    fi
+
+    # Recent Treesitter releases no longer have `ensure_installed`, so this is
+    # installs parsers, after Mason has installed tree-sitter-cli
+    TS_FAILED=""
+    install_treesitter_parsers nvim || TS_FAILED=1
+
+    printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim and reinstalled plugins, parsers, and Mason packages.\n"
     printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
     printf "${RED}To roll back these changes${YELLOW}, run the following commands:\n\n"
     printf "  rm -r ~/.config/nvim\n"
     printf "  rm -rf ~/.local/share/nvim/lazy\n"
+    printf "  rm -rf ~/.local/share/nvim/mason\n"
+    printf "  rm -rf ~/.local/share/nvim/site\n"
     printf "  mv $NVIM_CONFIG_BACKUP ~/.config/nvim\n"
-    printf "  mv $NVIM_PLUGIN_BACKUP ~/.local/share/nvim/lazy\n\n"
+    printf "  mv $NVIM_PLUGIN_BACKUP ~/.local/share/nvim/lazy\n"
+    printf "  mv $NVIM_MASON_BACKUP ~/.local/share/nvim/mason\n"
+    printf "  mv $NVIM_SITE_BACKUP ~/.local/share/nvim/site\n\n"
     printf "${GREEN}To keep these changes${YELLOW} then remove the backups:\n\n"
     printf "  rm -r $NVIM_CONFIG_BACKUP\n"
     printf "  rm -rf $NVIM_PLUGIN_BACKUP\n"
+    printf "  rm -rf $NVIM_MASON_BACKUP\n"
+    printf "  rm -rf $NVIM_SITE_BACKUP\n"
     printf "${UNSET}"
+
+    if [ -n "$TS_FAILED" ]; then
+        printf "\n${RED}Treesitter parsers FAILED to install -- see the error above.${UNSET}\n\n"
+        exit 1
+    fi
 
 elif [ $task == "--restore-nvim-plugins" ]; then
     ok "Restore nvim plugins using the lazy-lock.json file in this repo? This will not change any other config."

@@ -1,6 +1,46 @@
 Changelog
 =========
 
+2026-08-29
+----------
+
+**setup, nvim**
+
+nvim 0.12.5 is now installed by default. **nvim plugins now only support 0.12.5+**.
+
+.. note::
+
+  Use the ``nvim-0.11`` branch of this repo if you want to stick to an earlier
+  nvim version.
+
+The reason for this is that multiple plugins have been moving toward this
+cutoff of 0.12, and maintaining backwards compatibility here was increasing
+complexity.
+
+Now upon installation, ``tree-sitter-cli`` is installed with Mason and then all
+configured treesitter parsers are installed.
+
+If you are migrating from an earlier nvim:
+
+1. Update your dotfiles with the changes in this commit. Make any backups you
+   want.
+2. Run ``setup.sh --install-neovim``. It will tell you the dir you need to
+   delete before installing, and after doing so you can re-run the command to
+   install.
+
+If you already have nvim 0.12.5+ installed somewhere:
+
+1. Adjust your path, or update your alias, so that nvim 0.12.5 is used.
+2. Run ``setup.sh --nvim-test-drive``. This will make a backup of your
+   nvim-related dotfiles, copy over the latest from this repo, and do the Mason
+   and treesitter installation.
+
+Other updates:
+
+- added the punchlist.nvim plugin
+- updated tool versions in setup.sh
+- make insert and replace cursors more obvious
+
 2026-07-27
 ----------
 
