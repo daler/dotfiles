@@ -2129,6 +2129,7 @@ have treesitter-enabled syntax highlighting.</p>
 <li><p>2024-11-19 <a class="reference external" href="https://github.com/daler/dotfiles/commit/974a72c">974a72c</a> <em>add restructuredtext parser (which is now working)</em></p></li>
 <li><p>2024-12-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/1fcb8ff">1fcb8ff</a> <em>Minor updates (#54)</em></p></li>
 <li><p>2025-10-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/f7561cb">f7561cb</a> <em>add terraform to treesitter</em></p></li>
+<li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/59be3ab">59be3ab</a> <em>graceful error handling if no parser installed</em></p></li>
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/5ca103e">5ca103e</a> <em>Nvim 0.12.5 (#75)</em></p></li>
 </ul>
 </dd>
@@ -2194,7 +2195,16 @@ have treesitter-enabled syntax highlighting.</p>
 <span class="w">            </span><span class="kr">return</span>
 <span class="w">          </span><span class="kr">end</span>
 
-<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">treesitter</span><span class="p">.</span><span class="nf">start</span><span class="p">()</span>
+<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">parser_available</span><span class="p">,</span><span class="w"> </span><span class="nv">parser_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">treesitter</span><span class="p">.</span><span class="py">language</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nv">language</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">parser_available</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="nf">notify_once</span><span class="p">(</span>
+<span class="w">              </span><span class="nb">string.format</span><span class="p">(</span><span class="s2">"Treesitter parser unavailable for %s: %s"</span><span class="p">,</span><span class="w"> </span><span class="nv">language</span><span class="p">,</span><span class="w"> </span><span class="nv">parser_error</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s2">"unknown error"</span><span class="p">),</span>
+<span class="w">              </span><span class="nv">vim</span><span class="p">.</span><span class="py">log</span><span class="p">.</span><span class="py">levels</span><span class="p">.</span><span class="py">WARN</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">            </span><span class="kr">return</span>
+<span class="w">          </span><span class="kr">end</span>
+
+<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="py">treesitter</span><span class="p">.</span><span class="nf">start</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">language</span><span class="p">)</span>
 
 <span class="w">          </span><span class="c1">-- Markdown indentation interferes with wrapping bulleted lists.</span>
 <span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="nv">language</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="s2">"markdown"</span><span class="w"> </span><span class="kr">then</span>
@@ -3209,6 +3219,7 @@ structures.</p></td>
 </dd>
 <dt class="field-even">Changes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
+<li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a8113e">4a8113e</a> <em>fix buf for r-nvim</em></p></li>
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/5ca103e">5ca103e</a> <em>Nvim 0.12.5 (#75)</em></p></li>
 </ul>
 </dd>
@@ -3260,7 +3271,7 @@ structures.</p></td>
 <span class="w">           </span><span class="kd">local</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_get_name</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="w">           </span><span class="nb">require</span><span class="p">(</span><span class="s2">"r.send"</span><span class="p">).</span><span class="nf">cmd</span><span class="p">(</span><span class="s1">'rmarkdown::render("'</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s1">'")'</span><span class="p">)</span>
 <span class="w">          </span><span class="kr">end</span><span class="p">,</span>
-<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Render Rmarkdown"</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Render Rmarkdown"</span><span class="w"> </span><span class="p">})</span>
 
 <span class="w">        </span><span class="c1">-- In 0.99.4 which is used here for compatibility with older</span>
 <span class="w">        </span><span class="c1">-- R versions, the RDSendLine command sends the entire treesitter block</span>
@@ -3271,7 +3282,7 @@ structures.</p></td>
 <span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_get_current_line</span><span class="p">()</span>
 <span class="w">          </span><span class="nb">require</span><span class="p">(</span><span class="s2">"r.send"</span><span class="p">).</span><span class="nf">cmd</span><span class="p">(</span><span class="nv">line</span><span class="p">)</span>
 <span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">"normal! j"</span><span class="p">)</span>
-<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">})</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">})</span>
 <span class="w">      </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">  </span><span class="p">},</span>
