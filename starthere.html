@@ -163,10 +163,11 @@ more help on deciding.</p>
 <span class="c1"># then close and reopen your terminal</span>
 </pre></div>
 </div>
-<details><summary>Details</summary><div class="details"><p>This installs Neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, and then creates an <code class="docutils literal notranslate"><span class="pre">alias</span>
-<span class="pre">vim=nvim</span></code> in the <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code> file (which is sourced by
-<code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code>). This way, whenever you call <code class="docutils literal notranslate"><span class="pre">vim</span></code>, the alias will
-redirect it to <code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
+<details><summary>Details</summary><div class="details"><p>This installs Neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, restores the configured plugins,
+installs <code class="docutils literal notranslate"><span class="pre">tree-sitter-cli</span></code>, and installs all configured Treesitter
+parsers. It then creates an <code class="docutils literal notranslate"><span class="pre">alias</span> <span class="pre">vim=nvim</span></code> in the <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code>
+file (which is sourced by <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code>). This way, whenever you call
+<code class="docutils literal notranslate"><span class="pre">vim</span></code>, the alias will redirect it to <code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
 <p>However it’s important to close and reopen your terminal, because this
 alias is conditional on finding nvim, and the alias is only created upon
 first starting bash.</p>
@@ -181,26 +182,17 @@ For example, on many machines it’s at <code class="file docutils literal notra
 changed. Please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details
 on migrating to this new config method.</p>
 </div>
-<p>After closing and reopening your terminal from step 2b, now open neovim to
-trigger automatic plugin installation. Plugins are managed via the <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a> manager, which will bootstrap itself and
-then download, install, and configure all plugins automatically.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvim
-<span class="c1"># Wait for plugins to download and install (you&#39;ll see progress messages)</span>
-<span class="c1"># When everything is finished, quit with :q</span>
-</pre></div>
-</div>
-<p>Or run this command to install plugins and quit automatically when done:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvim<span class="w"> </span>+<span class="s2">&quot;lua require(&#39;lazy&#39;).restore({wait=true})&quot;</span><span class="w"> </span>+q
-</pre></div>
-</div>
-<details><summary>Details</summary><div class="details"><p><code class="docutils literal notranslate"><span class="pre">lazy.nvim</span></code> will show progress downloading plugins. Treesitter will also
-automatically install parsers, so you should watch the log on the bottom and
-wait until everything settles down. Then you can quit as normal with
-<code class="docutils literal notranslate"><span class="pre">&lt;Esc&gt;:q</span></code>.</p>
-<p>If running <code class="docutils literal notranslate"><span class="pre">nvim</span></code> didn’t work, check that it’s on your path. Close and then
-reopen your terminal just to make sure. If you installed with <code class="docutils literal notranslate"><span class="pre">./.setup.sh</span>
-<span class="pre">--install-neovim</span></code>, it put it in <code class="docutils literal notranslate"><span class="pre">~/opt/bin/nvim</span></code>. Make sure that directory
-is on your PATH by checking:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--install-neovim</span></code> step restores plugins with <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a>, installs <code class="docutils literal notranslate"><span class="pre">tree-sitter-cli</span></code> with Mason,
+and installs all Treesitter parsers listed in the config. No separate plugin
+setup step is needed.</p>
+<p>This automatic setup requires the nvim config to already be at
+<code class="file docutils literal notranslate"><span class="pre">~/.config/nvim</span></code>, which is why <code class="docutils literal notranslate"><span class="pre">--dotfiles</span></code> comes first in the
+recommended order. It also requires a C compiler for the Treesitter parsers.
+See <a class="reference internal" href="nvim-plugins.html#treesitter-ref"><span class="std std-ref">treesitter</span></a> for platform-specific prerequisites.</p>
+<details><summary>Details</summary><div class="details"><p>If running <code class="docutils literal notranslate"><span class="pre">nvim</span></code> after installation does not work, check that it is on
+your path. Close and then reopen your terminal just to make sure. The setup
+command puts it in <code class="docutils literal notranslate"><span class="pre">~/opt/bin/nvim</span></code>. Make sure that directory is on your
+PATH by checking:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span>
 </pre></div>
 </div>

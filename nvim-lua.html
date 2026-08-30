@@ -114,7 +114,7 @@ info.</p></li>
 associative array, sort of like like a Python dict, or an R named list, or
 a Perl hash.</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- a table</span>
-<span class="p">{</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;asdf&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"asdf"</span><span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
 </li>
@@ -130,8 +130,8 @@ identifier below).</p>
 <li><p>Functions can be called in different ways. Parentheses are optional if the
 function has a single argument. Here are some examples from the <a class="reference external" href="https://www.lua.org/pil/5.html">Lua docs on
 functions</a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="s2">&quot;Hello World&quot;</span>     <span class="o">&lt;--&gt;</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
-<span class="n">dofile</span> <span class="s1">&#39;a.lua&#39;</span>          <span class="o">&lt;--&gt;</span>     <span class="n">dofile</span> <span class="p">(</span><span class="s1">&#39;a.lua&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="s2">"Hello World"</span>     <span class="o">&lt;--&gt;</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">"Hello World"</span><span class="p">)</span>
+<span class="n">dofile</span> <span class="s1">'a.lua'</span>          <span class="o">&lt;--&gt;</span>     <span class="n">dofile</span> <span class="p">(</span><span class="s1">'a.lua'</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">[[</span><span class="n">a</span> <span class="n">multi</span><span class="o">-</span><span class="n">line</span>    <span class="o">&lt;--&gt;</span>     <span class="nb">print</span><span class="p">([[</span><span class="n">a</span> <span class="n">multi</span><span class="o">-</span><span class="n">line</span>
  <span class="n">message</span><span class="p">]]</span>                        <span class="n">message</span><span class="p">]])</span>
 <span class="n">f</span><span class="p">{</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">}</span>           <span class="o">&lt;--&gt;</span>     <span class="n">f</span><span class="p">({</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">})</span>
@@ -166,16 +166,16 @@ these dotfiles.</p>
 <p>For Lua, see the <a class="reference external" href="https://neovim.io/doc/user/lua-guide.html#lua-guide-mappings">nvim docs on creating mappings with Lua</a> for more
 details. This is for mappings created within <code class="file docutils literal notranslate"><span class="pre">init.lua</span></code>, for example.</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- directly in Lua</span>
-<span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;:bfirst&lt;CR&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;First buffer&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;leader&gt;1"</span><span class="p">,</span><span class="w"> </span><span class="s2">":bfirst&lt;CR&gt;"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"First buffer"</span><span class="w"> </span><span class="p">})</span>
 </pre></div>
 </div>
 <p>For plugins managed by lazy.nvim, they are instead specified in the <code class="docutils literal notranslate"><span class="pre">keys</span></code>
 property of the plugin’s table:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- in a plugin</span>
 <span class="p">{</span>
-<span class="w">  </span><span class="s2">&quot;plugin/name&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">"plugin/name"</span><span class="p">,</span>
 <span class="w">  </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;&lt;leader&gt;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;:bfirst&lt;CR&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;First buffer&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s2">"&lt;leader&gt;1"</span><span class="p">,</span><span class="w"> </span><span class="s2">":bfirst&lt;CR&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"First buffer"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="c1">-- possibly other stuff for plugin...</span>
 <span class="p">}</span>
@@ -192,7 +192,7 @@ plugin, create a new file in <code class="file docutils literal notranslate"><sp
 follow the plugin author’s instructions. Typically the new file will look
 something like this:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="s2">&quot;username/reponame&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">"username/reponame"</span><span class="p">,</span>
 <span class="w">  </span><span class="nv">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
 <span class="w">    </span><span class="c1">-- stuff here for setup. Might include keybindings or more complicated</span>
 <span class="w">    </span><span class="c1">-- things.</span>

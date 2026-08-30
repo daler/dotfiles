@@ -352,9 +352,8 @@ default; start it with :kbd:`cl`.
 
 .. note::
 
-   nvim 0.11 changed the way LSPs are handled, making them more natively
-   integrated. These dotfiles now support nvim 0.11+ and are backwards
-   compatible with 0.10. 
+   These dotfiles use the native LSP configuration API and require nvim 0.12
+   or newer.
 
 .. contents::
    :local:
@@ -750,6 +749,56 @@ mapped, which you can read about in the `README for aerial
 .. plugin-metadata::
    :name: aerial
 
+.. _punchlist_ref:
+
+``punchlist.nvim``
+~~~~~~~~~~~~~~~~~~
+
+`punchlist <https://github.com/daler/punchlist.nvim>`__ is a plugin to make
+annotations on files, like using comments in Google Docs or Microsoft Word. The
+annotations are stored in a hidden directory in the repo, but are visually
+attached to text in a buffer.
+
+Annotations move with the text that you edit, and can be cut-and-paste if
+editing is too disruptive to track position automatically.
+
+A summary can be shown that can be pasted into LLM agents to direct them right
+to the files and lines of interest.
+
+The keymaps use the ``<localleader>``, by default :kbd:`\`.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`<localleader>pd`
+      - Add a DISCUSS annotation
+
+    * - :kbd:`<localleader>pf`
+      - Add a FIX annotation
+
+    * - :kbd:`<localleader>ps`
+      - Show the list of all annotations, ready to copy
+
+    * - :kbd:`<localleader>px`
+      - Cut an annotation
+
+    * - :kbd:`<localleader>pv`
+      - Paste an annotation on current line/selection
+
+    * - :kbd:`<localleader>pr`
+      - Re-anchor an annotation
+
+    * - :kbd:`<localleader>pc`
+      - Clear all annotations in repo (asks for confirmation)
+
+.. plugin-metadata::
+   :name: punchlist
+
+
 Visuals
 +++++++
 
@@ -1025,11 +1074,28 @@ to do something with that. For example, colorschemes can use that information,
 or you can select text based on its semantic meaning within the programming
 language (like easily select an entire function, or the body of a for-loop).
 
-Treesitter is configured to ensure the parsers listed in the config are
-installed. These will be attempted to be installed automatically, but they do
-require a C compiler to be available.
+Things have been changing recently in the treesitter-related world. This config
+now uses the ``main`` branch, which requires nvim 0.12+, ``tree-sitter-cli``
+0.26.1+, and a C compiler.
 
-- On a Mac, this may need XCode Command Line Tools to be installed.
+Both ``--install-neovim`` and ``--nvim-test-drive`` install the CLI and all
+parsers listed in the config. The normal installation runs this setup
+headlessly after restoring the configured plugins. This requires running
+``--dotfiles`` first so that :file:`~/.config/nvim` exists.
+
+To set them up manually instead, first open nvim and install the CLI with Mason::
+
+    :MasonInstall tree-sitter-cli
+
+Then install all parsers listed in the config::
+
+    :lua require("nvim-treesitter").install(require("plugins.treesitter")[1].opts.parsers)
+
+Installation runs asynchronously. Parsers are stored in nvim-treesitter's
+default :file:`~/.local/share/nvim/site/parser` directory. Use
+``:checkhealth nvim-treesitter`` to check the installed parsers.
+
+- On a Mac, the compiler may need XCode Command Line Tools to be installed.
 - A fresh Ubuntu installation will need ``sudo apt install build-essential``
 - RHEL/Fedora will need ``sudo dnf install 'Development Tools'`` (and may need
   the `EPEL repo <https://docs.fedoraproject.org/en-US/epel/>`__ enabled).
@@ -1037,9 +1103,9 @@ require a C compiler to be available.
   packages via conda
   <https://docs.conda.io/projects/conda-build/en/stable/resources/compiler-tools.html>`_,
 
-Alternatively, comment out the entire ``ensure_installed`` block in
-:file:`~/.config/nvim/lua/plugins/treesitter.lua`; this means you will not have
-treesitter-enabled syntax highlighting though.
+Alternatively, remove parsers from the ``parsers`` table in
+:file:`~/.config/nvim/lua/plugins/treesitter.lua`; removed languages will not
+have treesitter-enabled syntax highlighting.
 
 .. list-table::
     :header-rows: 1

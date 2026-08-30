@@ -68,7 +68,7 @@ colorscheme) will not work.</p>
 <p>Run this command to see if your terminal supports true color. If it shows up in
 red, then it supports true color. If it just looks like regular black text,
 your terminal does NOT support true color.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">"\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"</span>
 </pre></div>
 </div>
 <p>If you are unable to use a terminal emulator like iTerm2, alacritty, kitty,
@@ -78,11 +78,11 @@ etc, that supports 24-bit colors, then you can use a different color scheme.</p>
 <code class="file docutils literal notranslate"><span class="pre">./config/nvim/init.lua</span></code> file. This will turn off termguicolors (the
 setting in vim that supports true color) and set the colorscheme to onedark,
 which supports 256- and 16-color-only terminals:</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- vim.cmd(&quot;colorscheme zenburn&quot;)</span>
-<span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;colorscheme onedark&quot;</span><span class="p">)</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- vim.cmd("colorscheme zenburn")</span>
+<span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">"colorscheme onedark"</span><span class="p">)</span>
 
-<span class="c1">-- vim.cmd(&quot;set termguicolors&quot;)</span>
-<span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">&quot;set notermguicolors&quot;</span><span class="p">)</span>
+<span class="c1">-- vim.cmd("set termguicolors")</span>
+<span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">"set notermguicolors"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -107,9 +107,9 @@ those packages.</p>
 <section id="errors-about-not-finding-cc-or-gcc-when-opening-vim">
 <h2>Errors about not finding CC or GCC when opening vim<a class="headerlink" href="#errors-about-not-finding-cc-or-gcc-when-opening-vim" title="Link to this heading">¶</a></h2>
 <p>You may get an error like this when opening nvim:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Error detected while processing BufReadPost Autocommands for &quot;*&quot;:
-No C compiler found! &quot;cc&quot;, &quot;gcc&quot;, &quot;clang&quot;, &quot;cl&quot;, &quot;zig&quot; are not executable.
-No C compiler found! &quot;cc&quot;, &quot;gcc&quot;, &quot;clang&quot;, &quot;cl&quot;, &quot;zig&quot; are not executable.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Error detected while processing BufReadPost Autocommands for "*":
+No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
+No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
 ....
 </pre></div>
 </div>
