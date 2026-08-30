@@ -749,6 +749,56 @@ mapped, which you can read about in the `README for aerial
 .. plugin-metadata::
    :name: aerial
 
+.. _punchlist_ref:
+
+``punchlist.nvim``
+~~~~~~~~~~~~~~~~~~
+
+`punchlist <https://github.com/daler/punchlist.nvim>`__ is a plugin to make
+annotations on files, like using comments in Google Docs or Microsoft Word. The
+annotations are stored in a hidden directory in the repo, but are visually
+attached to text in a buffer.
+
+Annotations move with the text that you edit, and can be cut-and-paste if
+editing is too disruptive to track position automatically.
+
+A summary can be shown that can be pasted into LLM agents to direct them right
+to the files and lines of interest.
+
+The keymaps use the ``<localleader>``, by default :kbd:`\`.
+
+.. list-table::
+    :header-rows: 1
+    :align: left
+
+    * - command
+      - description
+
+    * - :kbd:`<localleader>pd`
+      - Add a DISCUSS annotation
+
+    * - :kbd:`<localleader>pf`
+      - Add a FIX annotation
+
+    * - :kbd:`<localleader>ps`
+      - Show the list of all annotations, ready to copy
+
+    * - :kbd:`<localleader>px`
+      - Cut an annotation
+
+    * - :kbd:`<localleader>pv`
+      - Paste an annotation on current line/selection
+
+    * - :kbd:`<localleader>pr`
+      - Re-anchor an annotation
+
+    * - :kbd:`<localleader>pc`
+      - Clear all annotations in repo (asks for confirmation)
+
+.. plugin-metadata::
+   :name: punchlist
+
+
 Visuals
 +++++++
 
