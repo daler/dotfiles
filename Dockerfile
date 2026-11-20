@@ -4,6 +4,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     curl \
     git \
     locales \
+    python3-venv \
     rsync \
     sudo \
     unzip \
