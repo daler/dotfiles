@@ -1,14 +1,11 @@
--- treesitter provides sophisticated syntax highlighting and code inspection
+-- Treesitter provides sophisticated syntax highlighting and code inspection.
 
+-- Recent versions of nvim-treesitter do not install parsers automatically.
+-- Add or remove languages in the list below, then run:
+--
+--   :TSInstallConfigured
 
--- List the parsers here that you want to have installed.
---
--- Recent versions of treesitter do not install by default. These can be
--- installed with:
---
---   :lua require("nvim-treesitter").install(require("plugins.treesitter")[1].opts.parsers)
---
-
+-- Parsers to install
 local parsers = {
   "bash",
   "css",
@@ -22,6 +19,7 @@ local parsers = {
   "python",
   "vim",
   "vimdoc",
+  "perl",
   "yaml",
   "r",
   "rst",
@@ -33,6 +31,67 @@ for _, parser in ipairs(parsers) do
   configured_parsers[parser] = true
 end
 
+-- Check only parsers installed in nvim-treesitter's managed directory.
+local function warn_unconfigured(installed)
+  local extra = {}
+  for _, lang in ipairs(installed) do
+    if not configured_parsers[lang] then
+      extra[#extra + 1] = lang
+    end
+  end
+  if #extra > 0 then
+    table.sort(extra)
+    vim.notify(
+      "Treesitter parsers installed but not listed in plugins/treesitter.lua:\n"
+        .. table.concat(extra, "\n")
+        .. "\nAdd these parsers to the parsers table in plugins/treesitter.lua,"
+        .. " or remove them with :TSUninstall if no longer needed.",
+      vim.log.levels.WARN
+    )
+  end
+end
+
+-- Install missing parsers, update outdated ones, and check that they all are
+-- present.
+local function install_parsers()
+  return pcall(function()
+    local ts = require("nvim-treesitter")
+    warn_unconfigured(ts.get_installed("parsers"))
+    print(("Installing %d parsers: %s"):format(#parsers, table.concat(parsers, " ")))
+
+    local exe = vim.fn.exepath("tree-sitter")
+    assert(exe ~= "", "the tree-sitter CLI is not on Nvim's PATH")
+    local check = vim.system({ exe, "--version" }, { text = true }):wait()
+    assert(check.code == 0, "the tree-sitter CLI at " .. exe .. " does not run: " .. (check.stderr or ""))
+    print("Using " .. vim.trim(check.stdout) .. " at " .. exe)
+
+    ts.install(parsers, { summary = true }):wait(900000)
+    ts.update(parsers, { summary = true }):wait(900000)
+
+    local installed = {}
+    for _, lang in ipairs(ts.get_installed("parsers")) do
+      installed[lang] = true
+    end
+    local missing = vim.tbl_filter(function(lang)
+      return not installed[lang]
+    end, parsers)
+    assert(#missing == 0, "Configured parsers missing: " .. table.concat(missing, " "))
+    print("All configured Treesitter parsers installed")
+  end)
+end
+
+vim.api.nvim_create_user_command("TSInstallConfigured", function()
+  local ok, err = install_parsers()
+  if not ok then
+    vim.notify("Treesitter parser installation failed: " .. tostring(err), vim.log.levels.ERROR)
+
+    -- detect if running headless; exit the headless process nonzero if errors
+    if #vim.api.nvim_list_uis() == 0 then
+      vim.cmd("cquit 1")
+    end
+  end
+end, { desc = "Install/update the Treesitter parsers listed in plugins/treesitter.lua" })
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -40,7 +99,6 @@ return {
     lazy = false,
     build = ":TSUpdate",
     dependencies = { "williamboman/mason.nvim" },
-    opts = { parsers = parsers },
     config = function()
       require("nvim-treesitter").setup()
 

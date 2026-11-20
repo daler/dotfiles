@@ -34,6 +34,9 @@ PYP_VERSION=1.3.0
 FZF_VERSION=0.74.3
 TMUX_VERSION=3.7
 
+# Minimum tree-sitter CLI version required by the nvim-treesitter main branch
+TREE_SITTER_MIN_VERSION=0.26.1
+
 function showHelp() {
 
     function header() {
@@ -390,6 +393,11 @@ check_opt_bin_in_path () {
 # asynchronous installs to finish. The caller is responsible for installing
 # nvim-treesitter and tree-sitter-cli first.
 install_treesitter_parsers () {
+# Returns success if version $1 >= version $2
+version_ge () {
+    [ -n "$1" ] && [ "$(printf '%s\n%s\n' "$2" "$1" | sort -V | head -n1)" == "$2" ]
+}
+
     local nvim_bin=$1
     local ts_install_dir
     local ts_install_lua
@@ -428,6 +436,27 @@ EOF
         printf "${RED}Treesitter parsers failed to install; see the error above.${UNSET}\n"
         return 1
     fi
+# Look for a sufficiently recent tree-sitter CLI *outside* of the Mason bin
+# dir. This catches a pre-compiled version when on a system with old glibc,
+# like an HPC.
+find_system_tree_sitter () {
+    local search_path
+    local ts
+    local ts_version
+
+    # Exclude Mason's bin dir
+    local mason_bin="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin"
+    search_path=$(printf '%s\n' "$PATH" | tr ':' '\n' | grep -vxF "$mason_bin" | paste -sd: -)
+    ts=$(PATH="$search_path" command -v tree-sitter) || return 1
+    ts_version=$("$ts" --version 2>/dev/null | awk '{print $2}') || return 1
+    if version_ge "$ts_version" "$TREE_SITTER_MIN_VERSION"; then
+        printf "${YELLOW}Using tree-sitter $ts_version from $ts${UNSET}\n"
+        return 0
+    fi
+    printf "${YELLOW}Ignoring $ts (version '$ts_version' does not run or is older than $TREE_SITTER_MIN_VERSION)${UNSET}\n"
+    return 1
+}
+
 }
 
 # For simple cases where you just want to have a separate conda env and symlink
