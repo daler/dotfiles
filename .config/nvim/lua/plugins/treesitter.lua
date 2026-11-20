@@ -129,14 +129,14 @@ return {
 
           -- Markdown indentation interferes with wrapping bulleted lists.
           if language ~= "markdown" then
+          -- window-local config
+          vim.wo.foldmethod = "expr"
+          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+          vim.wo.foldenable = false
             vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
           end
         end,
       })
-
-      vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-      vim.opt.foldenable = false
 
       -- Preserve the previous incremental-selection mappings using Nvim 0.12's
       -- built-in Treesitter selection API.
