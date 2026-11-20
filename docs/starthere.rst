@@ -112,8 +112,15 @@ The remainder of this documentation will assume you're starting fresh.
 
 2: Setup vim & conda
 --------------------
+
 2a: Set a patched terminal font
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   If you don't do this, your terminal will display missing glyphs as open
+   boxes or question marks, making things look strange.
+
 
 * Manually download and install your favorite font from `nerdfonts.com
   <https://www.nerdfonts.com/>`_. This needs to be done **on your local
@@ -150,10 +157,28 @@ The remainder of this documentation will assume you're starting fresh.
 2b: neovim
 ~~~~~~~~~~
 
+
+.. note::
+
+  If you are doing this on a system like NIH's Biowulf that has an old version of
+  glibc, then you should make sure you have the ``OLD_GLIBC`` environment
+  variable set to 1. 
+
+  If you've already copied over your dotfiles, a good place to do this is in :file:`~/.extra`:
+
+  .. code-block:: bash
+
+     # in ~/.extra
+     export OLD_GLIBC=1
+
+  And then make sure you source the updated file with ``source ~/.extra`` and
+  ensure it shows up with ``echo $OLD_GLIBC`` before proceeding.
+
+
 Do this if you want to use `neovim <https://neovim.io/>`_. See :ref:`why` for
 more help on deciding.
 
-.. code-block::
+.. code-block:: bash
 
     ./setup.sh --install-neovim
 
@@ -221,6 +246,23 @@ See :ref:`treesitter_ref` for platform-specific prerequisites.
 2d: conda
 ~~~~~~~~~
 
+.. note::
+
+   If you are setting this up on NIH's Biowulf HPC, then you need to export
+   ``CONDA_INSTALLATION_DIR`` to point to a directory with enough space.
+   Conda's default of your home directory will break after a little while of
+   usage. This is because the home directory quota is fixed on Biowulf and is
+   too small to support many conda environments. Your data directory is
+   a better option.
+
+   .. code-block:: bash
+
+     # in ~/.extra
+     export CONDA_INSTALLATION_DIR=/data/$USER/miniconda
+
+   Then be sure to source this updated file with ``source ~/.extra`` and ensure
+   it shows up with ``echo $CONDA_INSTALLATION_DIR`` before proceeding.
+
 `conda <https://docs.conda.io/en/latest/>`_ is a cross-platform,
 language-agnostic package manager. It's by far the best way to get set up with
 Python, but it also works for many other languages. See :ref:`conda` for some
@@ -247,9 +289,8 @@ details on how to activate environments.
     :file:`~/.path` (which you can read more about at :ref:`bash`).
 
     If you happen to be on NIH's Biowulf cluster where the home directory is too small to
-    support the installation, this will auto-detect that and install instead to
-    :file:`/data/$USER/miniforge/condabin` and add the line ``export
-    PATH="$PATH:~/data/$USER/miniforge/condabin`` to the :file:`~/.path`
+    support the installation, then set CONDA_INSTALLATION_DIR to a directory
+    with enough space. The installation will auto-detect that and adjust accordingly.
 
     Finally, ``./setup.sh --set-up-bioconda`` sets up the bioconda and
     conda-forge channels in the right way as documented by `Bioconda
@@ -270,4 +311,3 @@ take, like setting up SSH keys, macOS-specific tweaks, git config, and more.
 The :file:`setup.sh` script has many commands for installing various tools
 I find useful. These warrant their own section, so **continue to** :ref:`tools` for
 descriptions of tools and the commands to install them.
-
