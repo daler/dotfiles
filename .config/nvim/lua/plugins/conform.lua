@@ -15,14 +15,21 @@ return {
       },
     },
     opts = {
+      -- If you make changes here, you'll probably want to update the lists in
+      -- `mason.lua` as well so they get installed. Otherwise, run :Mason and
+      -- use the interface to install manually.
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "ruff", "black" },
         bash = { "shfmt" },
         sh = { "shfmt" },
         ["yaml.ansible"] = { "ansible-lint" },
-        snakemake = { "snakemfmt" },
+        snakemake = { "snakefmt" },
         markdown = { "markdownlint" },
+        rmd = { "prettier", "injected" },
+        r = { "air" },
+        rst = {"rstfmt"},
+        yaml = { "yamlfmt" },
       },
       formatters = {
         shfmt = {
@@ -31,11 +38,8 @@ return {
         stylua = {
           prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
         },
+        prettier = { prepend_args = { "--parser", "markdown" } },
       },
-      init = function()
-        -- If you want the formatexpr, here is the place to set it
-        vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-      end,
     },
   },
 }
