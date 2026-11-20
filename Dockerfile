@@ -89,6 +89,8 @@ RUN ./setup.sh --install-icdiff
 RUN ./setup.sh --install-jq
 RUN ./setup.sh --install-npm
 
+RUN ./setup.sh --nvim-mason-tools
+RUN ./setup.sh --nvim-treesitter-parsers
 
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian
@@ -121,7 +123,7 @@ RUN wget -O - https://github.com/asciinema/agg/releases/download/v1.4.3/agg-x86_
 # make it easier to run by using a patched font
 RUN echo "alias AGG=\"agg --font-family='FantasqueSansM Nerd Font'\"" >> ~/.aliases
 
-RUN source ~/.bashrc && ~/opt/bin/nvim --headless "+Lazy! sync" +qa
+# RUN source ~/.bashrc && ~/opt/bin/nvim --headless "+Lazy! sync" +qa
 
 # Allow lazy.nvim to update. Comment this out if you want to capture.
 # RUN nvim +"lua require('lazy').restore({wait=true})" +q

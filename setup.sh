@@ -137,7 +137,7 @@ function showHelp() {
         "packages. See apt-installs-minimal.txt for list, and edit if needed"
 
     cmd "--install-neovim" \
-        "Install neovim, configured plugins, tree-sitter-cli, Mason tools, and Treesitter parsers." \
+        "Install neovim and restore configured plugins. Install Mason tools and Treesitter parsers separately." \
         "If OLD_GLIBC is set (like on an HPC system),  refuses to install and instead recommends using a system-provided nvim." \
         "Homepage: https://neovim.io/"
 
@@ -270,12 +270,11 @@ function showHelp() {
 
     cmd "--nvim-treesitter-parsers" \
         "Install the Treesitter parsers listed in .config/nvim/lua/plugins/treesitter.lua." \
-        "Expects the tree-sitter CLI to already be available. This is done as " \
-        "part of --install-neovim, but you can run it separately here."
+        "Run after --nvim-mason-tools, or provide a compatible tree-sitter CLI on PATH."
 
     cmd "--nvim-mason-tools" \
         "Install/update the tools listed in .config/nvim/lua/plugins/mason.lua." \
-        "This is done as part of --install-neovim, but you can run it separately here."
+        "Run after --install-neovim, with node and npm available on PATH (see --install-npm)."
 
     cmd "--restore-nvim-plugins" \
         "Copy over the nvim plugin lockfile from the repo to your " \
@@ -458,7 +457,8 @@ find_system_tree_sitter () {
     return 1
 }
 
-# Single place to set up nvim plugins and external tools (treesitter parsers, mason packages).
+# Full clean-test setup for --nvim-test-drive (including external tools).
+# --install-neovim only restores plugins; tools and parsers have separate commands.
 #
 #   1. Restore plugins from lazy-lock.json
 #   2. Use a working tree-sitter CLI from PATH if there is one. If OLD_GLIBC
@@ -652,14 +652,20 @@ elif [ $task == "--install-neovim" ]; then
         check_opt_bin_in_path
 
     if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
-        printf "${YELLOW}Skipping plugin and Treesitter setup because ~/.config/nvim/init.lua was not found.\n"
+        printf "${YELLOW}Skipping plugin setup because ~/.config/nvim/init.lua was not found.\n"
         printf "Run ./setup.sh --dotfiles before --install-neovim to set them up automatically.${UNSET}\n"
     else
-        if ! setup_nvim_plugins "$HOME/opt/neovim/bin/nvim"; then
+        printf "${YELLOW}Restoring nvim plugins with Lazy...${UNSET}\n"
+        if ! run_nvim_command "$HOME/opt/neovim/bin/nvim" "Lazy! restore"; then
             printf "${RED}Neovim was installed, but plugin setup failed; see the error above.${UNSET}\n"
             exit 1
         fi
     fi
+    printf "${YELLOW}Install external tools and parsers separately:\n"
+    printf "  Ensure node and npm are on PATH (see ./setup.sh --install-npm; then source ~/.path).\n"
+    printf "  ./setup.sh --nvim-mason-tools\n"
+    printf "  ./setup.sh --nvim-treesitter-parsers\n"
+    printf "With OLD_GLIBC set, provide a system-compatible tree-sitter >= $TREE_SITTER_MIN_VERSION on PATH.${UNSET}\n"
 
 
 elif [ $task == "--nvim-treesitter-parsers" ]; then

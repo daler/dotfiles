@@ -186,15 +186,16 @@ more help on deciding.
 
 .. details:: Details
 
-     This installs Neovim to :file:`~/opt/bin`, restores the configured plugins,
-     sets up ``tree-sitter-cli``, installs the configured Mason tools, and
-     installs all configured Treesitter parsers.
+     This installs Neovim to :file:`~/opt/bin` and restores the configured
+     plugins. Mason tools and Treesitter parsers are installed separately after
+     Node/npm are available (step 2e below).
 
      On systems whose glibc is too old for the prebuilt Neovim (e.g., some HPC
      clusters), set ``export OLD_GLIBC=1`` (e.g., in :file:`~/.extra`). Then
      ``--install-neovim`` will refuse to install and instead recommend using
-     a system-provided nvim (and tree-sitter), after which you can run ``./setup.sh
-     --nvim-test-drive`` to set up plugins.
+     a system-provided nvim (and tree-sitter). After making nvim available on
+     your ``PATH``, run ``./setup.sh --restore-nvim-plugins`` to restore plugins.
+     Install tools and parsers separately as described in step 2e below.
 
      It then creates an ``alias vim=nvim`` in the :file:`~/.aliases` file
      (which is sourced by :file:`~/.bashrc`). This way, whenever you call ``vim``,
@@ -217,17 +218,14 @@ more help on deciding.
   changed. Please see :ref:`nvim-lua` for more context, rationale, and details
   on migrating to this new config method.
 
-The ``--install-neovim`` step restores plugins with `lazy.nvim
-<https://github.com/folke/lazy.nvim>`_, uses a working ``tree-sitter`` from
-your ``PATH`` or else installs ``tree-sitter-cli`` with Mason, installs the
-Mason tools listed in the config, and installs all Treesitter parsers listed in
-the config. No separate plugin
-setup step is needed.
+The ``--install-neovim`` step restores the configured plugin versions with
+`lazy.nvim <https://github.com/folke/lazy.nvim>`_. No separate plugin setup step
+is needed. It does not install external tools or Treesitter parsers; those are
+handled in step 2e after setting up conda and Node/npm.
 
-This automatic setup requires the nvim config to already be at
+Plugin restoration requires the nvim config to already be at
 :file:`~/.config/nvim`, which is why ``--dotfiles`` comes first in the
-recommended order. It also requires a C compiler for the Treesitter parsers.
-See :ref:`treesitter_ref` for platform-specific prerequisites.
+recommended order.
 
 .. details:: Details
 
@@ -295,6 +293,35 @@ details on how to activate environments.
     Finally, ``./setup.sh --set-up-bioconda`` sets up the bioconda and
     conda-forge channels in the right way as documented by `Bioconda
     <https://bioconda.github.io>`_.
+
+
+2e: neovim tools and Treesitter parsers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Mason tools require Node.js and npm. If these are not already available
+on your ``PATH``, install them using conda first:
+
+.. code-block:: bash
+
+    ./setup.sh --install-npm
+    source ~/.path
+
+Then install the configured language servers, formatters, and linters with
+Mason, followed by the Treesitter parsers:
+
+.. code-block:: bash
+
+    ./setup.sh --nvim-mason-tools
+    ./setup.sh --nvim-treesitter-parsers
+
+The Mason step also installs ``tree-sitter-cli``. If ``OLD_GLIBC`` is set,
+Mason skips that CLI; put a system-compatible ``tree-sitter`` version 0.26.1+
+on your ``PATH`` before installing parsers (for example, via ``module load``).
+Treesitter parsers also require a C compiler. See :ref:`treesitter_ref` for
+platform-specific prerequisites.
+
+These commands can be rerun independently to install/update tools or parsers
+without reinstalling Neovim.
 
 
 3: Post-installation

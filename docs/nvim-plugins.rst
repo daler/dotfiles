@@ -1091,13 +1091,22 @@ Things have been changing recently in the treesitter-related world. This config
 now uses the ``main`` branch, which requires nvim 0.12+, ``tree-sitter-cli``
 0.26.1+, and a C compiler.
 
-Both ``setup.sh --install-neovim`` and ``setup.sh --nvim-test-drive`` restore
-plugins, set up the CLI, install the Mason tools listed in
-:file:`plugins/mason.lua`, and install all parsers listed in the config. This
-requires running ``--dotfiles`` first so that :file:`~/.config/nvim` exists.
+``setup.sh --install-neovim`` installs Neovim and restores plugins only.
+Run ``--dotfiles`` first so that :file:`~/.config/nvim` exists. Then, with
+``node`` and ``npm`` on your ``PATH`` (see ``--install-npm``; source
+:file:`~/.path` afterward), run ``setup.sh --nvim-mason-tools`` to install the
+tools listed in :file:`plugins/mason.lua`, including the tree-sitter CLI, and
+``setup.sh --nvim-treesitter-parsers`` to install the configured parsers.
+With ``OLD_GLIBC`` set, Mason skips the CLI; provide a system-compatible
+``tree-sitter`` 0.26.1+ on ``PATH`` before installing parsers.
+
+``setup.sh --nvim-test-drive`` still performs the full clean-test setup:
+restoring plugins, setting up the CLI, installing Mason tools, and installing
+parsers. It also requires Node/npm to be available.
 
 We have to be a little careful when using this on a system with old glibc, like
-many HPC systems. So the treesitter CLI to use is chosen like this:
+many HPC systems. During ``--nvim-test-drive``, the treesitter CLI is chosen
+like this:
 
 - If a ``tree-sitter`` on your ``PATH`` (ignoring Mason's bin dir) runs and
   is 0.26.1+, it is used as-is.
