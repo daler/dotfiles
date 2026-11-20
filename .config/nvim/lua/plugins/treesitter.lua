@@ -127,12 +127,13 @@ return {
 
           vim.treesitter.start(0, language)
 
-          -- Markdown indentation interferes with wrapping bulleted lists.
-          if language ~= "markdown" then
           -- window-local config
           vim.wo.foldmethod = "expr"
           vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
           vim.wo.foldenable = false
+
+          -- Markdown and ReST indentation interferes with wrapping bulleted lists.
+          if language ~= "markdown" and language ~= "rst" then
             vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
           end
         end,
