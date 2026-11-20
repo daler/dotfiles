@@ -34,6 +34,9 @@ PYP_VERSION=1.3.0
 FZF_VERSION=0.74.3
 TMUX_VERSION=3.7
 
+# Minimum tree-sitter CLI version required by the nvim-treesitter main branch
+TREE_SITTER_MIN_VERSION=0.26.1
+
 function showHelp() {
 
     function header() {
@@ -134,7 +137,8 @@ function showHelp() {
         "packages. See apt-installs-minimal.txt for list, and edit if needed"
 
     cmd "--install-neovim" \
-        "Install neovim, configured plugins, tree-sitter-cli, and Treesitter parsers" \
+        "Install neovim and restore configured plugins. Install Mason tools and Treesitter parsers separately." \
+        "If OLD_GLIBC is set (like on an HPC system),  refuses to install and instead recommends using a system-provided nvim." \
         "Homepage: https://neovim.io/"
 
     cmd "--compile-neovim" \
@@ -264,6 +268,14 @@ function showHelp() {
         "Move nvim plugins, parsers, Mason packages, and config to backup " \
         "directories, then reinstall them for a clean test. Does not delete anything."
 
+    cmd "--nvim-treesitter-parsers" \
+        "Install the Treesitter parsers listed in .config/nvim/lua/plugins/treesitter.lua." \
+        "Run after --nvim-mason-tools, or provide a compatible tree-sitter CLI on PATH."
+
+    cmd "--nvim-mason-tools" \
+        "Install/update the tools listed in .config/nvim/lua/plugins/mason.lua." \
+        "Run after --install-neovim, with node and npm available on PATH (see --install-npm)."
+
     cmd "--restore-nvim-plugins" \
         "Copy over the nvim plugin lockfile from the repo to your " \
         "~/.config/nvim/lazy-lock.json, and run an nvim command to restore " \
@@ -386,48 +398,113 @@ check_opt_bin_in_path () {
     fi
 }
 
-# Install every Treesitter parser listed in the nvim config and wait for the
-# asynchronous installs to finish. The caller is responsible for installing
-# nvim-treesitter and tree-sitter-cli first.
-install_treesitter_parsers () {
+# Returns success if version $1 >= version $2
+version_ge () {
+    [ -n "$1" ] && [ "$(printf '%s\n%s\n' "$2" "$1" | sort -V | head -n1)" == "$2" ]
+}
+
+# Print the tail of Mason's log (stdpath("log")/mason.log) to help debug
+# failed installs.
+print_mason_log () {
+    local log="${XDG_STATE_HOME:-$HOME/.local/state}/nvim/mason.log"
+    if [ -f "$log" ]; then
+        printf "${YELLOW}Last 50 lines of $log:${UNSET}\n"
+        tail -n 50 "$log"
+    else
+        printf "${YELLOW}No Mason log found at $log${UNSET}\n"
+    fi
+}
+
+# Run a Neovim command ($2) headlessly using the executable in $1.
+# For Mason commands, stream its log until Neovim exits. Use a subshell so the
+# cleanup trap doesn't affect the rest of setup.sh.
+run_nvim_command () (
     local nvim_bin=$1
-    local ts_install_dir
-    local ts_install_lua
-    local ts_failed=
+    local command=$2
 
-    printf "${YELLOW}Installing configured Treesitter parsers...${UNSET}\n"
-    ts_install_dir=$(mktemp -d)
-    ts_install_lua="$ts_install_dir/ts-install.lua"
-    cat > "$ts_install_lua" <<'EOF'
-local ok, err = pcall(function()
-  local parsers = require("plugins.treesitter")[1].opts.parsers
-  assert(type(parsers) == "table" and #parsers > 0, "no parsers configured in plugins/treesitter.lua")
-  print(("Installing %d parsers: %s"):format(#parsers, table.concat(parsers, " ")))
+    if [[ "$command" == Mason* ]]; then
+        local log="${XDG_STATE_HOME:-$HOME/.local/state}/nvim/mason.log"
+        printf "${YELLOW}Following Mason log: $log${UNSET}\n"
+        tail -n 0 -F "$log" &
+        local log_pid=$!
+        trap 'kill "$log_pid" 2>/dev/null; wait "$log_pid" 2>/dev/null || true' EXIT
+    fi
 
-  assert(vim.fn.executable("tree-sitter") == 1, "the tree-sitter CLI is not on Nvim's PATH")
-  require("nvim-treesitter").install(parsers, { force = true, summary = true }):wait(900000)
-
-  local parser_dir = require("nvim-treesitter.config").get_install_dir("parser")
-  local missing = vim.tbl_filter(function(lang)
-    return vim.fn.filereadable(vim.fs.joinpath(parser_dir, lang .. ".so")) == 0
-  end, parsers)
-  assert(#missing == 0, "parsers missing from " .. parser_dir .. ": " .. table.concat(missing, " "))
-end)
-
-if not ok then
-  vim.api.nvim_echo({ { "Treesitter parser installation failed: " .. tostring(err), "ErrorMsg" } }, true, {})
-  vim.cmd("cquit")
-end
-print("All configured Treesitter parsers installed")
-EOF
-
-    "$nvim_bin" --headless "+luafile $ts_install_lua" +qa </dev/null || ts_failed=1
-    rm -rf "$ts_install_dir"
-
-    if [ -n "$ts_failed" ]; then
-        printf "${RED}Treesitter parsers failed to install; see the error above.${UNSET}\n"
+    if ! "$nvim_bin" --headless "+$command" '+qa' </dev/null; then
+        printf "${RED}'$command' failed; see above.${UNSET}\n"
         return 1
     fi
+)
+
+# Look for a sufficiently recent tree-sitter CLI *outside* of the Mason bin
+# dir. This catches a pre-compiled version when on a system with old glibc,
+# like an HPC.
+find_system_tree_sitter () {
+    local search_path
+    local ts
+    local ts_version
+
+    # Exclude Mason's bin dir
+    local mason_bin="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin"
+    search_path=$(printf '%s\n' "$PATH" | tr ':' '\n' | grep -vxF "$mason_bin" | paste -sd: -)
+    ts=$(PATH="$search_path" command -v tree-sitter) || return 1
+    ts_version=$("$ts" --version 2>/dev/null | awk '{print $2}') || return 1
+    if version_ge "$ts_version" "$TREE_SITTER_MIN_VERSION"; then
+        printf "${YELLOW}Using tree-sitter $ts_version from $ts${UNSET}\n"
+        return 0
+    fi
+    printf "${YELLOW}Ignoring $ts (version '$ts_version' does not run or is older than $TREE_SITTER_MIN_VERSION)${UNSET}\n"
+    return 1
+}
+
+# Full clean-test setup for --nvim-test-drive (including external tools).
+# --install-neovim only restores plugins; tools and parsers have separate commands.
+#
+#   1. Restore plugins from lazy-lock.json
+#   2. Use a working tree-sitter CLI from PATH if there is one. If OLD_GLIBC
+#      not set, install tree-sitter with Mason. If OLD_GLIBC set and still no
+#      existing tree-sitter, fail with a hint.
+#   3. Install the Mason tools listed in plugins/mason.lua
+#   4. Install the Treesitter parsers listed in plugins/treesitter.lua
+#
+# $1 is the nvim executable to use.
+setup_nvim_plugins () {
+    local nvim_bin=$1
+
+    printf "${YELLOW}Restoring nvim plugins with Lazy...${UNSET}\n"
+    run_nvim_command "$nvim_bin" "Lazy! restore" || return 1
+
+    if ! find_system_tree_sitter; then
+        if [ -n "$OLD_GLIBC" ]; then
+            printf "${RED}OLD_GLIBC is set but no working tree-sitter >= $TREE_SITTER_MIN_VERSION was found on PATH. "
+            printf "Add one compiled for this system to your PATH (e.g., via 'module load') and re-run.${UNSET}\n"
+            return 1
+        fi
+        printf "${YELLOW}Installing tree-sitter-cli with Mason...${UNSET}\n"
+        if ! run_nvim_command "$nvim_bin" "MasonInstall tree-sitter-cli"; then
+            print_mason_log
+            return 1
+        fi
+        # Mason might report installation treesitter CLI failures without
+        # a nonzero exit. So check it, and make sure it's recent enough.
+        local mason_cli="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/tree-sitter"
+        local cli_version
+        if ! cli_version=$("$mason_cli" --version 2>/dev/null) ||
+            ! version_ge "${cli_version##* }" "$TREE_SITTER_MIN_VERSION"; then
+            printf "${RED}Mason's tree-sitter CLI at $mason_cli is missing, cannot run, or is older than $TREE_SITTER_MIN_VERSION.${UNSET}\n"
+            print_mason_log
+            return 1
+        fi
+    fi
+
+    printf "${YELLOW}Installing Mason tools from plugins/mason.lua...${UNSET}\n"
+    if ! run_nvim_command "$nvim_bin" MasonInstallConfigured; then
+        print_mason_log
+        return 1
+    fi
+
+    printf "${YELLOW}Installing configured Treesitter parsers...${UNSET}\n"
+    run_nvim_command "$nvim_bin" TSInstallConfigured
 }
 
 # For simple cases where you just want to have a separate conda env and symlink
@@ -540,11 +617,11 @@ elif [ $task == "--conda-env" ]; then
 elif [ $task == "--install-neovim" ]; then
 
     # Too-old of a GLIBC on the system will not work with later nvim versions
-    if [[ $HOSTNAME == "helix.nih.gov" || $HOSTNAME == "biowulf.nih.gov" ]]; then
-        printf "\n${RED}Looks like you're on helix/biowulf. You should use the nvim installed on Biowulf "
-        printf "for compatibility with the system's glibc.\n\nTwo ways to do this: either add 'module load neovim/$NVIM_VERSION' "
-        printf "to your .extra file or .bashrc, or directly add the path shown from "
-        printf "'module show neovim/$NVIM_VERSION' to your PATH.${UNSET}\n\n"
+    if [ -n "$OLD_GLIBC" ]; then
+        printf "\n${RED}OLD_GLIBC is set, so the prebuilt nvim from GitHub likely won't run here. "
+        printf "Use an nvim built for this system instead (e.g., 'module load neovim/$NVIM_VERSION' "
+        printf "in your .extra file or .bashrc, or add the path from 'module show neovim/$NVIM_VERSION' "
+        printf "to your PATH), then run ./setup.sh --nvim-test-drive to set up plugins.${UNSET}\n\n"
         exit 1
     fi
 
@@ -575,23 +652,35 @@ elif [ $task == "--install-neovim" ]; then
         check_opt_bin_in_path
 
     if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
-        printf "${YELLOW}Skipping plugin and Treesitter setup because ~/.config/nvim/init.lua was not found.\n"
+        printf "${YELLOW}Skipping plugin setup because ~/.config/nvim/init.lua was not found.\n"
         printf "Run ./setup.sh --dotfiles before --install-neovim to set them up automatically.${UNSET}\n"
     else
         printf "${YELLOW}Restoring nvim plugins with Lazy...${UNSET}\n"
-        if ! "$HOME/opt/neovim/bin/nvim" --headless "+Lazy! restore" +qa </dev/null; then
-            printf "${RED}'Lazy! restore' failed; Neovim was installed, but its plugins and Treesitter parsers were not.${UNSET}\n"
+        if ! run_nvim_command "$HOME/opt/neovim/bin/nvim" "Lazy! restore"; then
+            printf "${RED}Neovim was installed, but plugin setup failed; see the error above.${UNSET}\n"
             exit 1
         fi
-
-        printf "${YELLOW}Installing tree-sitter-cli with Mason...${UNSET}\n"
-        if ! "$HOME/opt/neovim/bin/nvim" --headless "+MasonInstall tree-sitter-cli" +qa </dev/null; then
-            printf "${RED}Mason could not install tree-sitter-cli; Neovim was installed, but its Treesitter parsers were not.${UNSET}\n"
-            exit 1
-        fi
-
-        install_treesitter_parsers "$HOME/opt/neovim/bin/nvim"
     fi
+    printf "${YELLOW}Install external tools and parsers separately:\n"
+    printf "  Ensure node and npm are on PATH (see ./setup.sh --install-npm; then source ~/.path).\n"
+    printf "  ./setup.sh --nvim-mason-tools\n"
+    printf "  ./setup.sh --nvim-treesitter-parsers\n"
+    printf "With OLD_GLIBC set, provide a system-compatible tree-sitter >= $TREE_SITTER_MIN_VERSION on PATH.${UNSET}\n"
+
+
+elif [ $task == "--nvim-treesitter-parsers" ]; then
+    ok "Installs treesitter parsers for Neovim. Expects the tree-sitter CLI to be already available."
+    run_nvim_command nvim TSInstallConfigured || exit 1
+
+
+elif [ $task == "--nvim-mason-tools" ]; then
+    ok "Installs various tools like formatters and language servers, as defined in .config/nvim/lua/plugins/mason.lua"
+    printf "${YELLOW}Installing/updating Mason tools; streaming the log below...${UNSET}\n"
+    if ! run_nvim_command nvim MasonUpdateConfigured; then
+        print_mason_log
+        exit 1
+    fi
+    printf "${YELLOW}Done.${UNSET}\n"
 
 
 elif [ $task == "--compile-neovim" ]; then
@@ -994,26 +1083,6 @@ elif [ $task == "--nvim-test-drive" ]; then
     NVIM_MASON_BACKUP="~/.local/share/nvim/mason-$timestamp"
     NVIM_SITE_BACKUP="~/.local/share/nvim/site-$timestamp"
 
-    # Save the installed package names before moving Mason so the clean
-    # installation contains the same LSP servers and other Mason tools.
-    #
-    # We'll need tree-sitter-cli regardless, so add it at the end if it wasn't
-    # otherwise found.
-    MASON_PACKAGES=()
-    HAS_TREE_SITTER_CLI=false
-    for package_dir in "$HOME"/.local/share/nvim/mason/packages/*; do
-        if [ -d "$package_dir" ]; then
-            package_name=$(basename "$package_dir")
-            MASON_PACKAGES+=("$package_name")
-            if [ "$package_name" == "tree-sitter-cli" ]; then
-                HAS_TREE_SITTER_CLI=true
-            fi
-        fi
-    done
-    if [ "$HAS_TREE_SITTER_CLI" == "false" ]; then
-        MASON_PACKAGES+=("tree-sitter-cli")
-    fi
-
     if [ -e ~/.config/nvim ]; then
         mv ~/.config/nvim ~/.config/nvim-$timestamp
         printf "${YELLOW}Moved ~/.config/nvim to $NVIM_CONFIG_BACKUP\n${UNSET}"
@@ -1034,23 +1103,8 @@ elif [ $task == "--nvim-test-drive" ]; then
 
     rsync --no-perms -rvh .config/nvim ~/.config
 
-    # These run with explicit status checks instead of relying on `set -e`
-    printf "${YELLOW}Restoring plugins with Lazy...${UNSET}\n"
-    if ! nvim --headless "+Lazy! restore" +qa </dev/null; then
-        printf "${RED}'Lazy! restore' exited nonzero (see above). Aborting before parser installation.${UNSET}\n"
-        exit 1
-    fi
-
-    printf "${YELLOW}Installing Mason packages: ${MASON_PACKAGES[*]}${UNSET}\n"
-    if ! nvim --headless "+MasonInstall ${MASON_PACKAGES[*]}" +qa </dev/null; then
-        printf "${RED}'MasonInstall' exited nonzero (see above). Aborting before parser installation.${UNSET}\n"
-        exit 1
-    fi
-
-    # Recent Treesitter releases no longer have `ensure_installed`, so this is
-    # installs parsers, after Mason has installed tree-sitter-cli
     TS_FAILED=""
-    install_treesitter_parsers nvim || TS_FAILED=1
+    setup_nvim_plugins nvim || TS_FAILED=1
 
     printf "\n\n${YELLOW}Copied dotfiles from this repo to ~/.config/nvim and reinstalled plugins, parsers, and Mason packages.\n"
     printf "You can consult your previous config at $NVIM_CONFIG_BACKUP if you want to change anything.\n\n"
@@ -1071,7 +1125,7 @@ elif [ $task == "--nvim-test-drive" ]; then
     printf "${UNSET}"
 
     if [ -n "$TS_FAILED" ]; then
-        printf "\n${RED}Treesitter parsers FAILED to install -- see the error above.${UNSET}\n\n"
+        printf "\n${RED}nvim plugin setup FAILED -- see the error above.${UNSET}\n\n"
         exit 1
     fi
 

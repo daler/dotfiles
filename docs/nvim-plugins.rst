@@ -432,6 +432,19 @@ Language Server Protocols, debuggers, linters, and formatters. Use ``:Mason``
 to open the interface, and hit :kbd:`i` on what you want to install, or
 :kbd:`g?` for more help.
 
+The tool list lives in :file:`~/.config/nvim/lua/plugins/mason.lua`.
+Use ``:MasonInstallConfigured`` to install missing tools or
+``:MasonUpdateConfigured`` to install and update them. Both commands block until
+finished and check for missing packages. They can also run headlessly::
+
+    nvim --headless '+MasonInstallConfigured' '+qa'
+    nvim --headless '+MasonUpdateConfigured' '+qa'
+
+If you want to browse other options, use ``:Mason`` which gives an interactive
+menu (see keymaps below). If you decide to keep something, consider adding it
+to your :file:`~/.config/nvim/lua/plugins/mason.lua` so it will be installed
+the next time you set up dotfiles.
+
 .. note::
 
   Many language servers use the npm (javascript package manager) to install.
@@ -1078,20 +1091,54 @@ Things have been changing recently in the treesitter-related world. This config
 now uses the ``main`` branch, which requires nvim 0.12+, ``tree-sitter-cli``
 0.26.1+, and a C compiler.
 
-Both ``--install-neovim`` and ``--nvim-test-drive`` install the CLI and all
-parsers listed in the config. The normal installation runs this setup
-headlessly after restoring the configured plugins. This requires running
-``--dotfiles`` first so that :file:`~/.config/nvim` exists.
+``setup.sh --install-neovim`` installs Neovim and restores plugins only.
+Run ``--dotfiles`` first so that :file:`~/.config/nvim` exists. Then, with
+``node`` and ``npm`` on your ``PATH`` (see ``--install-npm``; source
+:file:`~/.path` afterward), run ``setup.sh --nvim-mason-tools`` to install the
+tools listed in :file:`plugins/mason.lua`, including the tree-sitter CLI, and
+``setup.sh --nvim-treesitter-parsers`` to install the configured parsers.
+With ``OLD_GLIBC`` set, Mason skips the CLI; provide a system-compatible
+``tree-sitter`` 0.26.1+ on ``PATH`` before installing parsers.
 
-To set them up manually instead, first open nvim and install the CLI with Mason::
+``setup.sh --nvim-test-drive`` still performs the full clean-test setup:
+restoring plugins, setting up the CLI, installing Mason tools, and installing
+parsers. It also requires Node/npm to be available.
+
+We have to be a little careful when using this on a system with old glibc, like
+many HPC systems. During ``--nvim-test-drive``, the treesitter CLI is chosen
+like this:
+
+- If a ``tree-sitter`` on your ``PATH`` (ignoring Mason's bin dir) runs and
+  is 0.26.1+, it is used as-is.
+- Otherwise it is installed with Mason...
+- ...except if the ``OLD_GLIBC`` environment variable is set and no working CLI
+  is on the ``PATH``. Then setup stops with an error rather than installing
+  a Mason binary that likely won't run. Put a system-compatible ``tree-sitter``
+  on your ``PATH`` (e.g., with ``module load``) and re-run.
+
+Mason appends (rather than prepends) its bin dir to nvim's ``PATH``, so tools
+already on the system ``PATH`` take precedence over Mason-installed ones.
+
+To install just the parsers (e.g., after adding one to the config), run
+``./setup.sh --nvim-treesitter-parsers`` or ``nvim --headless
+'+TSInstallConfigured' '+qa'`` (the former calls the latter).
+
+To set up treesitter parsers manually instead, first open nvim and install the
+CLI with Mason::
 
     :MasonInstall tree-sitter-cli
 
 Then install all parsers listed in the config::
 
-    :lua require("nvim-treesitter").install(require("plugins.treesitter")[1].opts.parsers)
+    :TSInstallConfigured
 
-Installation runs asynchronously. Parsers are stored in nvim-treesitter's
+This installs any missing parsers and updates any outdated ones, blocking the
+UI until it finishes. Running it again when everything is current does nothing.
+It can also run headlessly, exiting nonzero on installation failure::
+
+    nvim --headless '+TSInstallConfigured' '+qa'
+
+Parsers are stored in nvim-treesitter's
 default :file:`~/.local/share/nvim/site/parser` directory. Use
 ``:checkhealth nvim-treesitter`` to check the installed parsers.
 
@@ -1105,7 +1152,9 @@ default :file:`~/.local/share/nvim/site/parser` directory. Use
 
 Alternatively, remove parsers from the ``parsers`` table in
 :file:`~/.config/nvim/lua/plugins/treesitter.lua`; removed languages will not
-have treesitter-enabled syntax highlighting.
+have treesitter-enabled syntax highlighting. ``:TSInstallConfigured`` warns about
+installed parsers absent from this table, including their paths; it does not
+delete them.
 
 .. list-table::
     :header-rows: 1
