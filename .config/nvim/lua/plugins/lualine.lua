@@ -5,6 +5,7 @@ return {
     dependencies = {
       "linrongbin16/lsp-progress.nvim",
     },
+    event = "VeryLazy",
     opts = {
       options = { theme = "zenburn" },
       sections = {

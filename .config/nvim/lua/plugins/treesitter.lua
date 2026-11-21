@@ -98,7 +98,6 @@ return {
     branch = "main",
     lazy = false,
     build = ":TSUpdate",
-    dependencies = { "williamboman/mason.nvim" },
     config = function()
       require("nvim-treesitter").setup()
 

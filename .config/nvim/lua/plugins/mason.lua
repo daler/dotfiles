@@ -137,7 +137,8 @@ return {
     -- mason-tool-installer.nvim provides list-based installation/update
     -- commands
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    lazy = false,
+    lazy = true,
+    cmd = { "MasonInstallConfigured", "MasonUpdateConfigured", "MasonReportUnconfigured" },
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       -- Install/update only when explicitly requested.
