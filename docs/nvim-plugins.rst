@@ -1091,52 +1091,16 @@ Things have been changing recently in the treesitter-related world. This config
 now uses the ``main`` branch, which requires nvim 0.12+, ``tree-sitter-cli``
 0.26.1+, and a C compiler.
 
-``setup.sh --install-neovim`` installs Neovim and restores plugins only.
-Run ``--dotfiles`` first so that :file:`~/.config/nvim` exists. Then, with
-``node`` and ``npm`` on your ``PATH`` (see ``--install-npm``; source
-:file:`~/.path` afterward), run ``setup.sh --nvim-mason-tools`` to install the
-tools listed in :file:`plugins/mason.lua`, including the tree-sitter CLI, and
-``setup.sh --nvim-treesitter-parsers`` to install the configured parsers.
-With ``OLD_GLIBC`` set, Mason skips the CLI; provide a system-compatible
-``tree-sitter`` 0.26.1+ on ``PATH`` before installing parsers.
-
-``setup.sh --nvim-test-drive`` still performs the full clean-test setup:
-restoring plugins, setting up the CLI, installing Mason tools, and installing
-parsers. It also requires Node/npm to be available.
-
 We have to be a little careful when using this on a system with old glibc, like
-many HPC systems. During ``--nvim-test-drive``, the treesitter CLI is chosen
-like this:
-
-- If a ``tree-sitter`` on your ``PATH`` (ignoring Mason's bin dir) runs and
-  is 0.26.1+, it is used as-is.
-- Otherwise it is installed with Mason...
-- ...except if the ``OLD_GLIBC`` environment variable is set and no working CLI
-  is on the ``PATH``. Then setup stops with an error rather than installing
-  a Mason binary that likely won't run. Put a system-compatible ``tree-sitter``
-  on your ``PATH`` (e.g., with ``module load``) and re-run.
-
-Mason appends (rather than prepends) its bin dir to nvim's ``PATH``, so tools
-already on the system ``PATH`` take precedence over Mason-installed ones.
-
-To install just the parsers (e.g., after adding one to the config), run
-``./setup.sh --nvim-treesitter-parsers`` or ``nvim --headless
-'+TSInstallConfigured' '+qa'`` (the former calls the latter).
-
-To set up treesitter parsers manually instead, first open nvim and install the
-CLI with Mason::
+many HPC systems. In such cases, you need to manually compile
+``tree-sitter-cli`` and put it on your path first. If you are running on newer
+Linux or macOS, you can use::
 
     :MasonInstall tree-sitter-cli
 
-Then install all parsers listed in the config::
-
-    :TSInstallConfigured
-
-This installs any missing parsers and updates any outdated ones, blocking the
-UI until it finishes. Running it again when everything is current does nothing.
-It can also run headlessly, exiting nonzero on installation failure::
-
-    nvim --headless '+TSInstallConfigured' '+qa'
+To install the configured parsers, run ``./setup.sh --nvim-treesitter-parsers``
+or ``nvim --headless '+TSInstallConfigured' '+qa'`` (the former calls the
+latter).
 
 Parsers are stored in nvim-treesitter's
 default :file:`~/.local/share/nvim/site/parser` directory. Use

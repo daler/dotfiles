@@ -186,16 +186,20 @@ more help on deciding.
 
 .. details:: Details
 
-     This installs Neovim to :file:`~/opt/bin` and restores the configured
-     plugins. Mason tools and Treesitter parsers are installed separately after
-     Node/npm are available (step 2e below).
+     This reuses a working release of Neovim on ``PATH`` if its version is at
+     least the version pinned in :file:`setup.sh`; otherwise it installs Neovim
+     to :file:`~/opt/neovim` with a symlink in :file:`~/opt/bin`. In either case,
+     it restores the configured plugins using that executable. Mason tools and
+     Treesitter parsers are installed separately after Node/npm are available
+     (step 2e below).
 
      On systems whose glibc is too old for the prebuilt Neovim (e.g., some HPC
      clusters), set ``export OLD_GLIBC=1`` (e.g., in :file:`~/.extra`). Then
-     ``--install-neovim`` will refuse to install and instead recommend using
-     a system-provided nvim (and tree-sitter). After making nvim available on
-     your ``PATH``, run ``./setup.sh --restore-nvim-plugins`` to restore plugins.
-     Install tools and parsers separately as described in step 2e below.
+     ``--install-neovim`` will reuse a suitable system-provided nvim, but will
+     refuse to download one if none is available. Load your Neovim module (or
+     add its directory to ``PATH``), then run ``./setup.sh --install-neovim``.
+     Provide a system-compatible tree-sitter CLI 0.26.1+ on ``PATH`` and install
+     tools and parsers separately as described in step 2e below.
 
      It then creates an ``alias vim=nvim`` in the :file:`~/.aliases` file
      (which is sourced by :file:`~/.bashrc`). This way, whenever you call ``vim``,
