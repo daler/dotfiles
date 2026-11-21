@@ -32,8 +32,9 @@ local tools = {
 }
 
 -- Mason creates Python venvs with --system-site-packages and provides no
--- setting to disable it. Prevent unrelated Conda/system packages from leaking
--- into tools, both for existing installs and after each install/update.
+-- setting to disable it. That can cause problems when everything on the system
+-- is managed via conda envs. So this edits the venv's config file to NOT use
+-- system site packages.
 local function isolate_python_venv(package)
   local config = package:get_install_path() .. "/venv/pyvenv.cfg"
   if vim.fn.filereadable(config) ~= 1 then
@@ -66,7 +67,7 @@ for _, tool in ipairs(tools) do
   end
 end
 
--- Report only; never uninstall tools automatically.
+-- Report anything installed but not configured in the list above.
 local function report_unconfigured()
   local configured = {}
   for _, name in ipairs(ensure_installed) do
@@ -91,8 +92,8 @@ local function report_unconfigured()
   print("\n")
 end
 
--- Function to install the packages above with `command`, and then check if any
--- are still missing so we can report errors.
+-- Function to install the packages in the list above with `command`, and then
+-- check if any are still missing so we can report errors.
 local function run_configured(command)
   local ok, err = pcall(function()
     print(("Running %s for %d tools:\n  %s"):format(command, #ensure_installed, table.concat(ensure_installed, "\n  ")))
@@ -127,15 +128,22 @@ return {
     config = function(_, opts)
       require("mason").setup(opts)
       local registry = require("mason-registry")
+
+      -- See isolate_python_venv() above; this is triggered after installation.
       registry:on("package:install:success", vim.schedule_wrap(isolate_python_venv))
-      for _, package in ipairs(registry.get_installed_packages()) do
-        isolate_python_venv(package)
-      end
+
+      -- And provide a command to run it manually
+      vim.api.nvim_create_user_command("MasonIsolatePythonVenvs", function()
+        for _, package in ipairs(registry.get_installed_packages()) do
+          isolate_python_venv(package)
+        end
+      end, { desc = "Isolate existing Mason Python venvs from system site-packages" })
     end,
   },
+
+  -- mason-tool-installer.nvim plugin provides list-based installation/update
+  -- commands
   {
-    -- mason-tool-installer.nvim provides list-based installation/update
-    -- commands
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     lazy = true,
     cmd = { "MasonInstallConfigured", "MasonUpdateConfigured", "MasonReportUnconfigured" },
@@ -148,7 +156,7 @@ return {
       ensure_installed = ensure_installed,
     },
 
-    -- Add commands for installing from our list.
+    -- Add commands for installing from our list at the top
     config = function(_, opts)
       require("mason-tool-installer").setup(opts)
       vim.api.nvim_create_user_command("MasonReportUnconfigured", report_unconfigured, {
