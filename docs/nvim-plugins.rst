@@ -1592,7 +1592,8 @@ See the docs for the plugin on how to set it up, including a macOS Shortcut.
 ``r.nvim``
 ~~~~~~~~~~
 
-`R.nvim <https://github.com/R-nvim/R.nvim/>`__ provides tight integration with R running in an nvim terminal.
+`R.nvim <https://github.com/R-nvim/R.nvim/>`__ provides tight integration with
+R running in an nvim terminal.
 
 .. note::
 
@@ -1601,42 +1602,93 @@ See the docs for the plugin on how to set it up, including a macOS Shortcut.
    to R, with key mappings deliberately set to be similar to the toggleterm
    method.
 
+   It does need a little more setup though.
+
 
 R.nvim provides more features than simply running R in an nvim terminal (like
-with :ref:`toggleterm_ref`).
+with :ref:`toggleterm_ref`). For example:
 
-- R object browser (like using the object panel in RStudio); hit Enter on
-  an object to view
-- View a dataframe in Visidata (like using ``View()`` in RStudio)
-- Help opens in a new nvim split (rather than in the R terminal)
-- Tab-completion of functions and arguments within the text buffer
-- Large amounts of text sent to R interpreter are bundled, only reporting
-  a single line confirmation. This avoids cluttering the interpreter.
+- An R object browser. This is like using the object panel in RStudio; you hit
+  Enter on an object to view its contents. Very useful for exploring complex
+  objects, and way better than ``str()``.
+- View a dataframe in Visidata. This is like using ``View()`` in RStudio.
+- Help entries open up in a new nvim split, rather than in the R terminal. So
+  the terminal remains usable while you're reading the help so you can
+  experiment as you read.
+- Insert a commented version of output into the text buffer. This is great for
+  ``head(df)``: the contents of the data.frame are shown as a comment for nicer
+  documentation.
+- Tab-completion of functions and arguments within the text buffer, based on
+  the running R instance.
+- When sending large amounts of text sent to the R interpreter, lines are
+  bundled, only reporting a single line confirmation. This avoids cluttering
+  the interpreter.
 - Syntax highlighting in the R interpreter
 - An R language server that doesn't itself require R
-- More flexibility in controlling what is sent to the terminal
-- Insert a commented version of output into the text buffer. This is great for
-  ``head(df)`` so your comments show contents of the data.frame.
+- More flexibility in controlling what is sent to the terminal -- send
+  functions, chunks, lines, statements that run across multiple lines, etc.
 - Send ``str`` with the name of the object under the cursor for quick inspection in R
-- Jump through an RMarkdown file by chunk
+- Navigate through an RMarkdown file by chunk
 - ``eval=FALSE`` chunks are highlighted as commented text for a visual reminder.
-- Lots more...
+- **Lots** more...
 
-**This additional functionality requires the following two steps:**
+**Initial setup:**
+
+.. warning::
+
+    By default, R.nvim will try to grab **all CPUs on the hardware** in order
+    to build the tab-completion database. This will crash an interactive node
+    on an HPC system. 
+
+    When using an HPC system (like Biowulf), **you must put the following** in your
+    :file:`~/.Rprofile`.
+
+    .. code-block:: r
+
+        # This restricts the number of CPUs that can be used by the R.nvim plugin.
+        # Needs R.nvim >=0.9.96
+        options(nvimcom.max_cpu_cores = max(2, as.numeric(Sys.getenv("SLURM_CPUS_PER_TASK")), na.rm=TRUE))
+
+
+1. When running on an HPC, add the line above to your :file:`~/.Rprofile`.
+2. Open an R or Rmd file in nvim. The R.nvim plugin is only enabled for
+   R files. This will trigger its installation with LazyVim. Wait for it to
+   finish installing, then quit.
+3. Follow the instructions below. Note that when first running ``Ropen`` for
+   a version of R, you will see notices at the bottom about installing nvimcom
+   and setting up tab completions. This process times out after a set number of
+   completions, but picks up where it left off the next time. Depending on the
+   size of your R environment, it may take opening an R file a few times before
+   all completions are installed. You just won't have tab completions for *all*
+   installed packages  until that process finishes.
+
+**Routine usage:**
+
+There are three major differences compared to using toggleterm.
 
 1. Nvim and R must be running on the same host.
+
    - E.g., activate the environment *before starting nvim* that you want to
      use, on the host you want to use.
-   - If you're running R on an interactive node, you need to be running nvim on
-     the interactive node as well. This is different from using toggleterm,
+
+   - If you're running R on an interactive node, you need to  **run nvim on
+     the interactive node** as well. This is different from using toggleterm,
      where you can start nvim on the login node, start a terminal, and log into
      the interactive node from there.
-2. Use ``Ropen <filename>``.
-   - Don't use ``nvim <filename>``
+
+2. Use ``Ropen`` to open files.
+
+   - Don't use ``nvim`` directly to open files.
+
    - ``Ropen`` starts nvim with with the right env vars set. This ``Ropen``
      function is now included in the updated :file:`.functions` file of these
      dotfiles, so make sure you have that. It also uses the ``install-nvimcom``
      function, also from :file:`.functions`.
+
+3. Use ``\rf`` to start R
+
+   - Don't use ``,t``, that's just a plain terminal. We want the plugin to
+     start R so it can talk to it.
 
 .. details:: What these functions do
 
@@ -1645,7 +1697,6 @@ with :ref:`toggleterm_ref`).
 
    However, it didn't seem right to "contaminate" an otherwise reproducible
    R environment with a package used only for personal editing preferences.
-
 
    In addition, ``nvimcom`` is compiled. The source code lives in this nvim
    plugin, but it needs to be compiled with the exact R version you're using.
@@ -1668,28 +1719,12 @@ with :ref:`toggleterm_ref`).
    - With all that set up, then runs ``nvim <filename>`` to open the file.
 
 
-When using an HPC system (like Biowulf), **you must put the following** in your
-:file:`~/.Rprofile`:
-
-.. code-block:: r
-
-    # This restricts the number of CPUs that can be used by the R.nvim plugin.
-    # Needs R.nvim >=0.9.96
-    options(nvimcom.max_cpu_cores = max(2, as.numeric(Sys.getenv("SLURM_CPUS_PER_TASK")), na.rm=TRUE))
-
-.. warning::
-
-   By default, R.nvim will try to grab **all CPUs on the hardware** in order to
-   build the tab-completion database. This will crash an interactive node on an
-   HPC system. You **must** edit your :file:`.Rprofile` as shown above to avoid
-   this.
-
 This plugin is **only activated when an R or Rmd file is opened**.
 
 R.nvim uses ``<localleader>`` instead of ``<leader>``. This essentially
 allows another whole namespace in which to put shortcuts.
 
-By default ``<localleader>`` is ``\\`` (backslash).
+By default ``<localleader>`` is ``\`` (backslash).
 
 Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
 ``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
@@ -1717,14 +1752,14 @@ take advantage of existing muscle memory.
     * - ``<leader>k``
       - Render RMarkdown to HTML (like :ref:`toggleterm_ref`)
 
-    * - ``<localleader>o``
-      - Open R object browser
+    * - ``<localleader>ro``
+      - Open R object browser.
 
     * - ``<localleader>rv`` with the cursor on a dataframe variable
       - Open a new nvim terminal to view the data frame in visidata. ``q``
         quits visidata and the terminal.
 
-    * - ``<localleader>ro``
+    * - ``<localleader>o``
       - Run the line under the cursor in R, capture the output, and paste it
         under the cursor -- but commented out. Useful for documenting data
         structures.
