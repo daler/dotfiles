@@ -16,9 +16,10 @@ return {
   "saghen/blink.cmp",
   dependencies = {
     "rafamadriz/friendly-snippets",
-    'Kaiser-Yang/blink-cmp-dictionary',
-    dependencies = { 'nvim-lua/plenary.nvim' }
+    { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" } },
   },
+
+  event = { "InsertEnter" },
 
   -- using a release tag downloads pre-built binaries
   version = "v1.*",
