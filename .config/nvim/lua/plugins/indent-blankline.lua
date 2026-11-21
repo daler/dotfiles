@@ -2,7 +2,7 @@
 return {
   {
     "lukas-reineke/indent-blankline.nvim",
-    lazy = false,
+    event = { "BufReadPost", "BufNewFile" },
     main = "ibl",
     opts = {
       -- make the character a little less dense

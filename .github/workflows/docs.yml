@@ -16,6 +16,8 @@ jobs:
       with:
         fetch-depth: 0
 
+    - uses: conda-incubator/setup-miniconda@v4
+
     - name: build env
       run: |
         eval "$(conda shell.bash hook)"

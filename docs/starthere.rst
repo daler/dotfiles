@@ -112,8 +112,15 @@ The remainder of this documentation will assume you're starting fresh.
 
 2: Setup vim & conda
 --------------------
+
 2a: Set a patched terminal font
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   If you don't do this, your terminal will display missing glyphs as open
+   boxes or question marks, making things look strange.
+
 
 * Manually download and install your favorite font from `nerdfonts.com
   <https://www.nerdfonts.com/>`_. This needs to be done **on your local
@@ -150,10 +157,28 @@ The remainder of this documentation will assume you're starting fresh.
 2b: neovim
 ~~~~~~~~~~
 
+
+.. note::
+
+  If you are doing this on a system like NIH's Biowulf that has an old version of
+  glibc, then you should make sure you have the ``OLD_GLIBC`` environment
+  variable set to 1. 
+
+  If you've already copied over your dotfiles, a good place to do this is in :file:`~/.extra`:
+
+  .. code-block:: bash
+
+     # in ~/.extra
+     export OLD_GLIBC=1
+
+  And then make sure you source the updated file with ``source ~/.extra`` and
+  ensure it shows up with ``echo $OLD_GLIBC`` before proceeding.
+
+
 Do this if you want to use `neovim <https://neovim.io/>`_. See :ref:`why` for
 more help on deciding.
 
-.. code-block::
+.. code-block:: bash
 
     ./setup.sh --install-neovim
 
@@ -161,13 +186,26 @@ more help on deciding.
 
 .. details:: Details
 
-     This installs Neovim to :file:`~/opt/bin`, restores the configured plugins,
-     installs ``tree-sitter-cli``, and installs all configured Treesitter
-     parsers. It then creates an ``alias vim=nvim`` in the :file:`~/.aliases`
-     file (which is sourced by :file:`~/.bashrc`). This way, whenever you call
-     ``vim``, the alias will redirect it to ``nvim``.
+     This reuses a working release of Neovim on ``PATH`` if its version is at
+     least the version pinned in :file:`setup.sh`; otherwise it installs Neovim
+     to :file:`~/opt/neovim` with a symlink in :file:`~/opt/bin`. In either case,
+     it restores the configured plugins using that executable. Mason tools and
+     Treesitter parsers are installed separately after Node/npm are available
+     (step 2e below).
 
-     However it's important to close and reopen your terminal, because this
+     On systems whose glibc is too old for the prebuilt Neovim (e.g., some HPC
+     clusters), set ``export OLD_GLIBC=1`` (e.g., in :file:`~/.extra`). Then
+     ``--install-neovim`` will reuse a suitable system-provided nvim, but will
+     refuse to download one if none is available. Load your Neovim module (or
+     add its directory to ``PATH``), then run ``./setup.sh --install-neovim``.
+     Provide a system-compatible tree-sitter CLI 0.26.1+ on ``PATH`` and install
+     tools and parsers separately as described in step 2e below.
+
+     It then creates an ``alias vim=nvim`` in the :file:`~/.aliases` file
+     (which is sourced by :file:`~/.bashrc`). This way, whenever you call ``vim``,
+     the alias will redirect it to ``nvim``.
+
+     It's important to close and reopen your terminal, because this
      alias is conditional on finding nvim, and the alias is only created upon
      first starting bash.
 
@@ -184,15 +222,14 @@ more help on deciding.
   changed. Please see :ref:`nvim-lua` for more context, rationale, and details
   on migrating to this new config method.
 
-The ``--install-neovim`` step restores plugins with `lazy.nvim
-<https://github.com/folke/lazy.nvim>`_, installs ``tree-sitter-cli`` with Mason,
-and installs all Treesitter parsers listed in the config. No separate plugin
-setup step is needed.
+The ``--install-neovim`` step restores the configured plugin versions with
+`lazy.nvim <https://github.com/folke/lazy.nvim>`_. No separate plugin setup step
+is needed. It does not install external tools or Treesitter parsers; those are
+handled in step 2e after setting up conda and Node/npm.
 
-This automatic setup requires the nvim config to already be at
+Plugin restoration requires the nvim config to already be at
 :file:`~/.config/nvim`, which is why ``--dotfiles`` comes first in the
-recommended order. It also requires a C compiler for the Treesitter parsers.
-See :ref:`treesitter_ref` for platform-specific prerequisites.
+recommended order.
 
 .. details:: Details
 
@@ -210,6 +247,23 @@ See :ref:`treesitter_ref` for platform-specific prerequisites.
 
 2d: conda
 ~~~~~~~~~
+
+.. note::
+
+   If you are setting this up on NIH's Biowulf HPC, then you need to export
+   ``CONDA_INSTALLATION_DIR`` to point to a directory with enough space.
+   Conda's default of your home directory will break after a little while of
+   usage. This is because the home directory quota is fixed on Biowulf and is
+   too small to support many conda environments. Your data directory is
+   a better option.
+
+   .. code-block:: bash
+
+     # in ~/.extra
+     export CONDA_INSTALLATION_DIR=/data/$USER/miniconda
+
+   Then be sure to source this updated file with ``source ~/.extra`` and ensure
+   it shows up with ``echo $CONDA_INSTALLATION_DIR`` before proceeding.
 
 `conda <https://docs.conda.io/en/latest/>`_ is a cross-platform,
 language-agnostic package manager. It's by far the best way to get set up with
@@ -237,13 +291,41 @@ details on how to activate environments.
     :file:`~/.path` (which you can read more about at :ref:`bash`).
 
     If you happen to be on NIH's Biowulf cluster where the home directory is too small to
-    support the installation, this will auto-detect that and install instead to
-    :file:`/data/$USER/miniforge/condabin` and add the line ``export
-    PATH="$PATH:~/data/$USER/miniforge/condabin`` to the :file:`~/.path`
+    support the installation, then set CONDA_INSTALLATION_DIR to a directory
+    with enough space. The installation will auto-detect that and adjust accordingly.
 
     Finally, ``./setup.sh --set-up-bioconda`` sets up the bioconda and
     conda-forge channels in the right way as documented by `Bioconda
     <https://bioconda.github.io>`_.
+
+
+2e: neovim tools and Treesitter parsers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Mason tools require Node.js and npm. If these are not already available
+on your ``PATH``, install them using conda first:
+
+.. code-block:: bash
+
+    ./setup.sh --install-npm
+    source ~/.path
+
+Then install the configured language servers, formatters, and linters with
+Mason, followed by the Treesitter parsers:
+
+.. code-block:: bash
+
+    ./setup.sh --nvim-mason-tools
+    ./setup.sh --nvim-treesitter-parsers
+
+The Mason step also installs ``tree-sitter-cli``. If ``OLD_GLIBC`` is set,
+Mason skips that CLI; put a system-compatible ``tree-sitter`` version 0.26.1+
+on your ``PATH`` before installing parsers (for example, via ``module load``).
+Treesitter parsers also require a C compiler. See :ref:`treesitter_ref` for
+platform-specific prerequisites.
+
+These commands can be rerun independently to install/update tools or parsers
+without reinstalling Neovim.
 
 
 3: Post-installation
@@ -260,4 +342,3 @@ take, like setting up SSH keys, macOS-specific tweaks, git config, and more.
 The :file:`setup.sh` script has many commands for installing various tools
 I find useful. These warrant their own section, so **continue to** :ref:`tools` for
 descriptions of tools and the commands to install them.
-

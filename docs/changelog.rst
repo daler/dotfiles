@@ -1,6 +1,62 @@
 Changelog
 =========
 
+2026-11-20
+----------
+
+**setup, HPC support**
+
+- On HPC systems (like NIH's Biowulf) that run on older Linux, the system glibc
+  version may be too old to use/compile new tools. So this update adds an env
+  var, ``OLD_GLIBC``, that is detected. If it's set to 1, ``--install-neovim``
+  refuses to install the prebuilt binary and recommends a system-compatible
+  nvim, followed by ``./setup.sh --nvim-test-drive`` to set up plugins.
+  Treesitter CLI and tools installed by Mason also pay attention to this.
+
+- Prefer a working ``tree-sitter`` CLI version 0.26.1+ from the system
+  ``PATH``; otherwise install it with Mason. But if ``OLD_GLIBC`` is set,
+  require a system-compatible CLI and skip Mason installation of
+  ``tree-sitter-cli``.
+
+- Both ``--install-neovim`` and ``--nvim-test-drive`` now install tools from
+  the configured Mason list, rather than carrying over previously installed
+  Mason packages during a test drive.
+
+- Add ``./setup.sh --nvim-mason-tools`` to install/update configured tools
+  and ``./setup.sh --nvim-treesitter-parsers`` to install/update parsers
+  separately.
+
+**nvim**
+
+In order to get things working cleanly on HPC, the config for nvim plugins
+using external tools (treesitter, mason, nvim-lsp) needed to be updated:
+
+- Centralize external tools in :file:`~/.config/nvim/lua/plugins/mason.lua`.
+  Add ``:MasonInstallConfigured``, ``:MasonUpdateConfigured``, and
+  ``:MasonReportUnconfigured`` commands, which indicate if things are
+  configured but not installed, installed but not configured, or up to date.
+
+- Mason improvements: append Mason's bin directory to ``PATH`` so system tools
+  take precedence, and isolate Mason-managed Python environments from
+  Conda/system packages.
+
+- Add ``:TSInstallConfigured`` to install missing and update outdated
+  configured Treesitter parsers, validate the CLI, and report missing or
+  unconfigured parsers. Both this command and the configured Mason
+  install/update commands support headless use and exit nonzero on failure.
+
+- Add the Perl parser, configure Treesitter folding when a parser is available,
+  and disable Treesitter indentation for ReST as well as Markdown so it does
+  not interfere with wrapping bulleted lists.
+
+- Explicitly enable configured LSP servers; make :kbd:`<leader>cl` toggle
+  clients for the current buffer rather than stopping shared clients; 
+  enable YAML syntax validation without automatic schema selection, and
+  disable the R language server configuration.
+- Fix the Snakemake formatter name to ``snakefmt``. Add formatter
+  configurations for R (``air``), R Markdown (``prettier`` and injected
+  languages), ReST (``rstfmt``), and YAML (``yamlfmt``).
+
 2026-08-29
 ----------
 

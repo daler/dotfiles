@@ -5,6 +5,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
