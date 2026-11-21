@@ -132,6 +132,11 @@ will load all the new configuration.</p>
 <span id="setupsection"></span><h2>2: Setup vim &amp; conda<a class="headerlink" href="#setup-vim-conda" title="Link to this heading">¶</a></h2>
 <section id="a-set-a-patched-terminal-font">
 <h3>2a: Set a patched terminal font<a class="headerlink" href="#a-set-a-patched-terminal-font" title="Link to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you don’t do this, your terminal will display missing glyphs as open
+boxes or question marks, making things look strange.</p>
+</div>
 <ul class="simple">
 <li><p>Manually download and install your favorite font from <a class="reference external" href="https://www.nerdfonts.com/">nerdfonts.com</a>. This needs to be done <strong>on your local
 machine</strong>.</p></li>
@@ -156,19 +161,43 @@ font.</p>
 </div></details></section>
 <section id="b-neovim">
 <h3>2b: neovim<a class="headerlink" href="#b-neovim" title="Link to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are doing this on a system like NIH’s Biowulf that has an old version of
+glibc, then you should make sure you have the <code class="docutils literal notranslate"><span class="pre">OLD_GLIBC</span></code> environment
+variable set to 1.</p>
+<p>If you’ve already copied over your dotfiles, a good place to do this is in <code class="file docutils literal notranslate"><span class="pre">~/.extra</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in ~/.extra</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OLD_GLIBC</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>And then make sure you source the updated file with <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.extra</span></code> and
+ensure it shows up with <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$OLD_GLIBC</span></code> before proceeding.</p>
+</div>
 <p>Do this if you want to use <a class="reference external" href="https://neovim.io/">neovim</a>. See <a class="reference internal" href="why.html#why"><span class="std std-ref">Why?</span></a> for
 more help on deciding.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">install</span><span class="o">-</span><span class="n">neovim</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-neovim
 
 <span class="c1"># then close and reopen your terminal</span>
 </pre></div>
 </div>
-<details><summary>Details</summary><div class="details"><p>This installs Neovim to <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code>, restores the configured plugins,
-installs <code class="docutils literal notranslate"><span class="pre">tree-sitter-cli</span></code>, and installs all configured Treesitter
-parsers. It then creates an <code class="docutils literal notranslate"><span class="pre">alias</span> <span class="pre">vim=nvim</span></code> in the <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code>
-file (which is sourced by <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code>). This way, whenever you call
-<code class="docutils literal notranslate"><span class="pre">vim</span></code>, the alias will redirect it to <code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
-<p>However it’s important to close and reopen your terminal, because this
+<details><summary>Details</summary><div class="details"><p>This reuses a working release of Neovim on <code class="docutils literal notranslate"><span class="pre">PATH</span></code> if its version is at
+least the version pinned in <code class="file docutils literal notranslate"><span class="pre">setup.sh</span></code>; otherwise it installs Neovim
+to <code class="file docutils literal notranslate"><span class="pre">~/opt/neovim</span></code> with a symlink in <code class="file docutils literal notranslate"><span class="pre">~/opt/bin</span></code>. In either case,
+it restores the configured plugins using that executable. Mason tools and
+Treesitter parsers are installed separately after Node/npm are available
+(step 2e below).</p>
+<p>On systems whose glibc is too old for the prebuilt Neovim (e.g., some HPC
+clusters), set <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">OLD_GLIBC=1</span></code> (e.g., in <code class="file docutils literal notranslate"><span class="pre">~/.extra</span></code>). Then
+<code class="docutils literal notranslate"><span class="pre">--install-neovim</span></code> will reuse a suitable system-provided nvim, but will
+refuse to download one if none is available. Load your Neovim module (or
+add its directory to <code class="docutils literal notranslate"><span class="pre">PATH</span></code>), then run <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--install-neovim</span></code>.
+Provide a system-compatible tree-sitter CLI 0.26.1+ on <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and install
+tools and parsers separately as described in step 2e below.</p>
+<p>It then creates an <code class="docutils literal notranslate"><span class="pre">alias</span> <span class="pre">vim=nvim</span></code> in the <code class="file docutils literal notranslate"><span class="pre">~/.aliases</span></code> file
+(which is sourced by <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code>). This way, whenever you call <code class="docutils literal notranslate"><span class="pre">vim</span></code>,
+the alias will redirect it to <code class="docutils literal notranslate"><span class="pre">nvim</span></code>.</p>
+<p>It’s important to close and reopen your terminal, because this
 alias is conditional on finding nvim, and the alias is only created upon
 first starting bash.</p>
 <p>If you want to use actual <code class="docutils literal notranslate"><span class="pre">vim</span></code>, provide the full path when calling it.
@@ -182,13 +211,13 @@ For example, on many machines it’s at <code class="file docutils literal notra
 changed. Please see <a class="reference internal" href="nvim-lua.html#nvim-lua"><span class="std std-ref">Migrating to Neovim Lua config</span></a> for more context, rationale, and details
 on migrating to this new config method.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">--install-neovim</span></code> step restores plugins with <a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a>, installs <code class="docutils literal notranslate"><span class="pre">tree-sitter-cli</span></code> with Mason,
-and installs all Treesitter parsers listed in the config. No separate plugin
-setup step is needed.</p>
-<p>This automatic setup requires the nvim config to already be at
+<p>The <code class="docutils literal notranslate"><span class="pre">--install-neovim</span></code> step restores the configured plugin versions with
+<a class="reference external" href="https://github.com/folke/lazy.nvim">lazy.nvim</a>. No separate plugin setup step
+is needed. It does not install external tools or Treesitter parsers; those are
+handled in step 2e after setting up conda and Node/npm.</p>
+<p>Plugin restoration requires the nvim config to already be at
 <code class="file docutils literal notranslate"><span class="pre">~/.config/nvim</span></code>, which is why <code class="docutils literal notranslate"><span class="pre">--dotfiles</span></code> comes first in the
-recommended order. It also requires a C compiler for the Treesitter parsers.
-See <a class="reference internal" href="nvim-plugins.html#treesitter-ref"><span class="std std-ref">treesitter</span></a> for platform-specific prerequisites.</p>
+recommended order.</p>
 <details><summary>Details</summary><div class="details"><p>If running <code class="docutils literal notranslate"><span class="pre">nvim</span></code> after installation does not work, check that it is on
 your path. Close and then reopen your terminal just to make sure. The setup
 command puts it in <code class="docutils literal notranslate"><span class="pre">~/opt/bin/nvim</span></code>. Make sure that directory is on your
@@ -199,6 +228,21 @@ PATH by checking:</p>
 </div></details></section>
 <section id="d-conda">
 <span id="setupconda"></span><h3>2d: conda<a class="headerlink" href="#d-conda" title="Link to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are setting this up on NIH’s Biowulf HPC, then you need to export
+<code class="docutils literal notranslate"><span class="pre">CONDA_INSTALLATION_DIR</span></code> to point to a directory with enough space.
+Conda’s default of your home directory will break after a little while of
+usage. This is because the home directory quota is fixed on Biowulf and is
+too small to support many conda environments. Your data directory is
+a better option.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in ~/.extra</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CONDA_INSTALLATION_DIR</span><span class="o">=</span>/data/<span class="nv">$USER</span>/miniconda
+</pre></div>
+</div>
+<p>Then be sure to source this updated file with <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.extra</span></code> and ensure
+it shows up with <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$CONDA_INSTALLATION_DIR</span></code> before proceeding.</p>
+</div>
 <p><a class="reference external" href="https://docs.conda.io/en/latest/">conda</a> is a cross-platform,
 language-agnostic package manager. It’s by far the best way to get set up with
 Python, but it also works for many other languages. See <a class="reference internal" href="conda.html#conda"><span class="std std-ref">conda</span></a> for some
@@ -218,12 +262,33 @@ into <code class="file docutils literal notranslate"><span class="pre">~/minifor
 <p>Then it adds the line <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;$PATH:~/miniforge/condabin&quot;</span></code> to the
 <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code> (which you can read more about at <a class="reference internal" href="bash.html#bash"><span class="std std-ref">Bash dotfiles</span></a>).</p>
 <p>If you happen to be on NIH’s Biowulf cluster where the home directory is too small to
-support the installation, this will auto-detect that and install instead to
-<code class="file docutils literal notranslate"><span class="pre">/data/$USER/miniforge/condabin</span></code> and add the line <code class="docutils literal notranslate"><span class="pre">export</span>
-<span class="pre">PATH=&quot;$PATH:~/data/$USER/miniforge/condabin</span></code> to the <code class="file docutils literal notranslate"><span class="pre">~/.path</span></code></p>
+support the installation, then set CONDA_INSTALLATION_DIR to a directory
+with enough space. The installation will auto-detect that and adjust accordingly.</p>
 <p>Finally, <code class="docutils literal notranslate"><span class="pre">./setup.sh</span> <span class="pre">--set-up-bioconda</span></code> sets up the bioconda and
 conda-forge channels in the right way as documented by <a class="reference external" href="https://bioconda.github.io">Bioconda</a>.</p>
 </div></details></section>
+<section id="e-neovim-tools-and-treesitter-parsers">
+<h3>2e: neovim tools and Treesitter parsers<a class="headerlink" href="#e-neovim-tools-and-treesitter-parsers" title="Link to this heading">¶</a></h3>
+<p>Some Mason tools require Node.js and npm. If these are not already available
+on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, install them using conda first:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--install-npm
+<span class="nb">source</span><span class="w"> </span>~/.path
+</pre></div>
+</div>
+<p>Then install the configured language servers, formatters, and linters with
+Mason, followed by the Treesitter parsers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh<span class="w"> </span>--nvim-mason-tools
+./setup.sh<span class="w"> </span>--nvim-treesitter-parsers
+</pre></div>
+</div>
+<p>The Mason step also installs <code class="docutils literal notranslate"><span class="pre">tree-sitter-cli</span></code>. If <code class="docutils literal notranslate"><span class="pre">OLD_GLIBC</span></code> is set,
+Mason skips that CLI; put a system-compatible <code class="docutils literal notranslate"><span class="pre">tree-sitter</span></code> version 0.26.1+
+on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> before installing parsers (for example, via <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">load</span></code>).
+Treesitter parsers also require a C compiler. See <a class="reference internal" href="nvim-plugins.html#treesitter-ref"><span class="std std-ref">treesitter</span></a> for
+platform-specific prerequisites.</p>
+<p>These commands can be rerun independently to install/update tools or parsers
+without reinstalling Neovim.</p>
+</section>
 </section>
 <section id="post-installation">
 <h2>3: Post-installation<a class="headerlink" href="#post-installation" title="Link to this heading">¶</a></h2>
@@ -288,6 +353,7 @@ descriptions of tools and the commands to install them.</p>
 <li class="toctree-l3"><a class="reference internal" href="#b-neovim">2b: neovim</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#c-neovim-plugin-setup">2c: neovim plugin setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#d-conda">2d: conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#e-neovim-tools-and-treesitter-parsers">2e: neovim tools and Treesitter parsers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#post-installation">3: Post-installation</a></li>
