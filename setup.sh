@@ -616,48 +616,76 @@ elif [ $task == "--conda-env" ]; then
 
 elif [ $task == "--install-neovim" ]; then
 
-    # Too-old of a GLIBC on the system will not work with later nvim versions
-    if [ -n "$OLD_GLIBC" ]; then
-        printf "\n${RED}OLD_GLIBC is set, so the prebuilt nvim from GitHub likely won't run here. "
-        printf "Use an nvim built for this system instead (e.g., 'module load neovim/$NVIM_VERSION' "
-        printf "in your .extra file or .bashrc, or add the path from 'module show neovim/$NVIM_VERSION' "
-        printf "to your PATH), then run ./setup.sh --nvim-test-drive to set up plugins.${UNSET}\n\n"
-        exit 1
+    nvim_bin=$(command -v nvim || true)
+    nvim_version=
+    if [ -n "$nvim_bin" ]; then
+        # Require a runnable release build; prereleases do not satisfy the pin.
+        if nvim_version_output=$("$nvim_bin" --version 2>/dev/null); then
+            nvim_version_line=${nvim_version_output%%$'\n'*}
+            if [[ "$nvim_version_line" =~ ^NVIM\ v([0-9]+\.[0-9]+\.[0-9]+)(\+.*)?$ ]]; then
+                nvim_version=${BASH_REMATCH[1]}
+            fi
+        fi
     fi
 
-    if [ -d ~/opt/neovim ]; then
-        printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
-        exit 1
-    fi
-    ok "Downloads neovim tarball from https://github.com/neovim/neovim, install into $HOME/opt/bin/neovim"
-    if [[ $OSTYPE == darwin* ]]; then
-        if [ "$(arch)" == "arm64" ]; then 
-            download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-arm64.tar.gz nvim-macos.tar.gz
-        else
-            download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-x86_64.tar.gz nvim-macos.tar.gz
-        fi
-        xattr -c ./nvim-macos.tar.gz
-        tar -xzf nvim-macos.tar.gz
-        mkdir -p "$HOME/opt/bin"
-        mv nvim-macos-*64 "$HOME/opt/neovim"
+    if version_ge "$nvim_version" "$NVIM_VERSION"; then
+        ok "Reuse nvim $nvim_version at $nvim_bin and restore configured plugins?"
+        printf "${YELLOW}Using existing nvim $nvim_version at $nvim_bin${UNSET}\n"
     else
-        download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux-x86_64.tar.gz
-        tar -xzf nvim-linux-x86_64.tar.gz
-        mv nvim-linux-x86_64 "$HOME/opt/neovim"
-        rm nvim-linux-x86_64.tar.gz
-    fi
+        if [ -n "$nvim_bin" ]; then
+            printf "${YELLOW}nvim at $nvim_bin is not a working release >= $NVIM_VERSION; checking installation options.${UNSET}\n"
+        fi
+
+        # Too-old of a GLIBC on the system will not work with later nvim versions
+        if [ -n "$OLD_GLIBC" ]; then
+            printf "\n${RED}OLD_GLIBC is set, so the prebuilt nvim from GitHub likely won't run here. "
+            printf "Use an nvim built for this system instead (e.g., 'module load neovim/$NVIM_VERSION' "
+            printf "in your .extra file or .bashrc, or add the path from 'module show neovim/$NVIM_VERSION' "
+            printf "to your PATH), then re-run ./setup.sh --install-neovim to restore plugins. "
+            printf "Install tools and parsers afterward with --nvim-mason-tools and --nvim-treesitter-parsers.${UNSET}\n\n"
+            exit 1
+        fi
+
+        if [ -d ~/opt/neovim ]; then
+            printf "${RED}nvim already appears to be installed at ~/opt/neovim. Please remove that dir first.${UNSET}\n"
+            exit 1
+        fi
+        ok "Downloads neovim tarball from https://github.com/neovim/neovim, installs into $HOME/opt/neovim"
+        if [[ $OSTYPE == darwin* ]]; then
+            if [ "$(arch)" == "arm64" ]; then
+                download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-arm64.tar.gz nvim-macos.tar.gz
+            else
+                download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-macos-x86_64.tar.gz nvim-macos.tar.gz
+            fi
+            xattr -c ./nvim-macos.tar.gz
+            tar -xzf nvim-macos.tar.gz
+            mkdir -p "$HOME/opt/bin"
+            mv nvim-macos-*64 "$HOME/opt/neovim"
+        else
+            download https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz nvim-linux-x86_64.tar.gz
+            tar -xzf nvim-linux-x86_64.tar.gz
+            mv nvim-linux-x86_64 "$HOME/opt/neovim"
+            rm nvim-linux-x86_64.tar.gz
+        fi
         ln -sf ~/opt/neovim/bin/nvim ~/opt/bin/nvim
         printf "${YELLOW}- installed neovim to $HOME/opt/neovim${UNSET}\n"
         printf "${YELLOW}- created symlink $HOME/opt/bin/nvim${UNSET}\n"
         check_opt_bin_in_path
+        nvim_bin="$HOME/opt/neovim/bin/nvim"
+        path_nvim=$(command -v nvim || true)
+        if [ -n "$path_nvim" ] && [ "$path_nvim" != "$HOME/opt/bin/nvim" ] && [ "$path_nvim" != "$nvim_bin" ]; then
+            printf "${YELLOW}Warning: nvim on PATH still resolves to $path_nvim.\n"
+            printf "Put $HOME/opt/bin first on PATH before running the Mason/parser commands.${UNSET}\n"
+        fi
+    fi
 
     if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
         printf "${YELLOW}Skipping plugin setup because ~/.config/nvim/init.lua was not found.\n"
         printf "Run ./setup.sh --dotfiles before --install-neovim to set them up automatically.${UNSET}\n"
     else
         printf "${YELLOW}Restoring nvim plugins with Lazy...${UNSET}\n"
-        if ! run_nvim_command "$HOME/opt/neovim/bin/nvim" "Lazy! restore"; then
-            printf "${RED}Neovim was installed, but plugin setup failed; see the error above.${UNSET}\n"
+        if ! run_nvim_command "$nvim_bin" "Lazy! restore"; then
+            printf "${RED}Neovim is available, but plugin setup failed; see the error above.${UNSET}\n"
             exit 1
         fi
     fi
