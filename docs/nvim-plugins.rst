@@ -45,7 +45,10 @@ load plugins when they're needed. See :ref:`nvim-lua` for my rationale on that.
 
 .. details:: screencast of lazy.nvim setting up plugins
 
-  .. image:: gifs/lazy_annotated.gif
+  .. figure:: gifs/lazy_annotated.gif
+
+     **Set up plugins with lazy.nvim.** Follow the annotated plugin setup
+     recording to see lazy.nvim managing the Neovim plugin installation.
 
 Because of how frequently nvim changes, each plugin section below has
 a changelog. Since I have reorganized files over the years, the changelogs show
@@ -109,6 +112,28 @@ Desktop.
 I use it so much that I have a bash alias for starting this directly from the
 command line: ``gsv`` (mnemonic: git status viewer).
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-fugitive.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to open and navigate git status with vim-fugitive.
+        :caption: **Git status and inline diffs.** Open the status window with ``:Git``, navigate its untracked, unstaged, and staged sections, and expand inline diffs with :kbd:`=`.
+
+    .. asciinema:: screencasts/casts/vim-fugitive2.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to stage individual lines and whole files with vim-fugitive.
+        :caption: **Build an incremental commit.** Select lines in an inline diff and stage just that selection with :kbd:`-`, then stage a whole file and toggle staged changes back out of the index.
+
+    .. asciinema:: screencasts/casts/vim-fugitive3.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to review and commit staged changes with vim-fugitive.
+        :caption: **Review and commit.** Continue from the staging demo: inspect the staged diff with :kbd:`=`, open a commit message with :kbd:`cc`, then save and close it to create the commit.
+
+    .. asciinema:: screencasts/casts/vim-fugitive4.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to open a side-by-side diff of one file with vim-fugitive.
+        :caption: **Compare a whole file.** Open a side-by-side diff from the status window with :kbd:`dd` and use :kbd:`do` and :kbd:`dp` to pull or push individual changes between versions.
 
 .. list-table::
     :header-rows: 1
@@ -164,6 +189,19 @@ multiple files per commit.
 I have a bash alias for starting this directly from the command line: ``glv``
 (mnemonic: git log viewer).
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/diffview.cast
+        :preload:
+        :poster: data:text/plain,Press play to compare working-tree changes and revision ranges with diffview.nvim.
+        :caption: **Compare changes across files.** Use ``:DiffviewOpen`` to compare the working tree with HEAD, move between file diffs with Tab and Shift-Tab, then compare a range covering the last two commits.
+
+    .. asciinema:: screencasts/casts/diffview2.cast
+        :preload:
+        :poster: data:text/plain,Press play to browse file and repository history with diffview.nvim.
+        :caption: **Browse historical changes.** Use ``:DiffviewFileHistory`` with a path to list one file's commits, open a commit's diff, then omit the path to explore repository-wide history.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -198,6 +236,24 @@ still editing a file.
 
 Most commands require being in a hunk. Keymappings start with ``h``, mnemonic
 is "hunk" (the term for a block of changes).
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/gitsigns.cast
+        :preload:
+        :poster: data:text/plain,Press play to navigate, preview, and select changes with gitsigns.
+        :caption: **Inspect changes in place.** Follow gutter signs with :kbd:`]h` and :kbd:`[h`, preview the current hunk without leaving the file, and select a hunk using the ``ih`` text object.
+
+    .. asciinema:: screencasts/casts/gitsigns2.cast
+        :preload:
+        :poster: data:text/plain,Press play to stage and undo changes without leaving the buffer.
+        :caption: **Stage from the editing buffer.** Stage a hunk, undo that staging operation, then stage only selected lines. Finish by staging the remaining changes in the buffer.
+
+    .. asciinema:: screencasts/casts/gitsigns3.cast
+        :preload:
+        :poster: data:text/plain,Press play to inspect git blame and open a side-by-side diff.
+        :caption: **Blame and compare.** Show the current line's commit, author, date, and message in a blame popup, then compare the buffer with its Git version and navigate differences with :kbd:`]c` and :kbd:`[c`.
 
 .. list-table::
     :header-rows: 1
@@ -258,6 +314,14 @@ view and browse git history.
 
 It's simpler than :ref:`diffview_ref` which can be helpful sometimes.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/gv.cast
+        :preload:
+        :poster: data:text/plain,Press play to browse repository and selected-line history with gv.
+        :caption: **Explore the commit graph.** Open ``:GV`` to browse branches and merge commits, inspect a commit's patch with Enter, then run it on a visual selection to narrow history to a particular block.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -287,6 +351,14 @@ manually edited.
 This makes it MUCH easier to work with 3-way diffs (like what happens in merge
 conflicts), while at the same time allowing enough flexibility in configuration
 to be able to reproduce default behaviors.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-mergetool.cast
+        :preload:
+        :poster: data:text/plain,Press play to resolve a merge conflict with vim-mergetool.
+        :caption: **Resolve conflicts one hunk at a time.** Start the focused merge view, navigate unresolved hunks, accept an incoming change with ``:diffget`` while keeping another local, then save and stop the merge tool.
 
 .. note::
 
@@ -384,6 +456,19 @@ for "r"). Otherwise, I'm using :kbd:`<leader>c` as the prefix for custom
 commands; mnemonic is "code".
 
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/nvim-lspconfig.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to start the LSP and read its diagnostics.
+        :caption: **Start the LSP and read diagnostics.** Attach pyright and ruff to a Python buffer, jump between problems, expand a diagnostic message, toggle inline diagnostic text, and inspect hover documentation.
+
+    .. asciinema:: screencasts/casts/nvim-lspconfig2.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to jump to definitions, find references, and rename across files.
+        :caption: **Navigate and rename across files.** Jump to a function's definition with :kbd:`Ctrl-]`, list its references with :kbd:`grr`, rename it with :kbd:`grn`, and check both edited files before saving.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -403,9 +488,13 @@ commands; mnemonic is "code".
       - Jumps to previous diagnostic (error/warning/hint) in the buffer
     * - :kbd:`]d`
       - Jumps to next diagnostic (error/warning/hint) in the buffer
-    * - :kbd:`grt`
+    * - :kbd:`Ctrl-]`
       - Jumps to where the symbol under cursor is defined (e.g., function
-        definition, class declaration). Mnemonic: [g]o to [r]eference [t]ype
+        definition, class declaration), even in another file. :kbd:`Ctrl-o`
+        jumps back
+    * - :kbd:`grt`
+      - Jumps to the definition of the *type* of the symbol under cursor (e.g.,
+        the class of a variable). Mnemonic: [g]o to [r]eference [t]ype
     * - :kbd:`K`
       - Shows hover documentation for the symbol under cursor in a floating
         window (function signature, docstring, type info)
@@ -497,6 +586,14 @@ The alternative is using :kbd:`[d` and :kbd:`]d` to move between diagnostics
 (see :ref:`nvimlspconfig_ref`) but it's nice to get an overview with this
 plugin.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/trouble.cast
+        :preload:
+        :poster: data:text/plain,Press play to see all LSP diagnostics in one list with trouble.nvim.
+        :caption: **Survey project diagnostics.** Open trouble's bottom panel with :kbd:`<leader>ct`, see problems grouped by file, move through entries, and press Enter to jump to the corresponding source line.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -522,6 +619,14 @@ the current buffer.
 For example, if ``black`` is avaiable it will run that on the code, but in
 a way that the changes can be undone (in contrast to running ``black``
 manually on the file, which overwrites it).
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/conform.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to format a buffer with conform, and undo it.
+        :caption: **Format Python without leaving the editor.** Run the configured ruff and black formatters with :kbd:`<leader>cf`, then undo and redo the formatting as ordinary buffer edits without writing the file.
 
 .. list-table::
     :header-rows: 1
@@ -578,6 +683,24 @@ Searching and selecting what, you ask? Pretty much anything you hook it up to.
 Type in the text box to filter the list. Hit enter to select (and open the
 selected file in a new buffer). Hit Esc twice to exit.
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/telescope.cast
+        :preload:
+        :poster: data:text/plain,Press play to find files by name with <leader>ff.
+        :caption: **Find a file by name.** Open Telescope with :kbd:`<leader>ff`, narrow the current directory's file list by typing ``setup``, move between matches, and press Enter to open a result.
+
+    .. asciinema:: screencasts/casts/telescope2.cast
+        :preload:
+        :poster: data:text/plain,Press play to search for text across files with <leader>fg.
+        :caption: **Search text across files.** Launch live grep with :kbd:`<leader>fg`, search for ``python``, browse matching lines with the arrow keys, and open a hit at its source location.
+
+    .. asciinema:: screencasts/casts/telescope3.cast
+        :preload:
+        :poster: data:text/plain,Press play to search within the current buffer with <leader>/.
+        :caption: **Search the current buffer.** Use :kbd:`<leader>/` to find ``conda``, move through matches while the preview shows their surrounding context, then press Enter to jump to the selected line.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -628,6 +751,14 @@ Other useful things you can do with Telescope:
 ~~~~~~~~~~~~~
 
 `nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`__ provides a filesystem tree for browsing.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/nvim-tree.cast
+        :preload:
+        :poster: data:text/plain,Press play to browse files and stage or unstage them with nvim-tree.
+        :caption: **Browse files and manage staging.** Open the tree with :kbd:`<leader>fb`, expand directories and open files, switch focus between browser and editor, then stage and unstage a file with :kbd:`ga` and :kbd:`gu`.
 
 .. list-table::
     :header-rows: 1
@@ -690,6 +821,14 @@ additional parameter ``desc = "description of mapping"`` is included. This
 allows which-key to show a description. Mappings with no descriptions will
 still be shown.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/which-key.cast
+        :preload:
+        :poster: data:text/plain,Press play to discover and navigate key-mapping prefixes with which-key.
+        :caption: **Discover a mapping interactively.** Press the leader key and pause to see named command groups, follow a prefix into its submenu, use Backspace to return, and dismiss the menu with Escape.
+
 .. code-block:: lua
 
    -- example mapping using vim.keymap.set, with description
@@ -739,6 +878,15 @@ sidebar for quickly moving around code (for example, jumping to functions or
 classes or methods). For markdown or ReStructured Text, it acts like a table of
 contents.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/aerial.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to use an aerial view of the file
+        :caption: **Navigate a file by structure.** Open aerial's outline of Python classes, methods, and functions, press Enter to jump to a symbol, then use :kbd:`{` and :kbd:`}` to move between symbols from the main buffer.
+
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -779,6 +927,14 @@ A summary can be shown that can be pasted into LLM agents to direct them right
 to the files and lines of interest.
 
 The keymaps use the ``<localleader>``, by default :kbd:`\`.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/punchlist.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to add, move, and compile review notes with punchlist.
+        :caption: **Collect review notes without changing the code.** Attach DISCUSS and FIX notes to lines or selections, watch them follow edits, move a note with cut and paste, then compile the notes into a prompt with file and line references.
 
 .. list-table::
     :header-rows: 1
@@ -920,6 +1076,14 @@ This plugin is **specifically disabled for RMarkdown files**, which are
 typically heavy on the source code, and the background of code chunks can get
 distracting when entering and exiting insert mode. However, this plugin can be
 useful when reviewing a long RMarkdown file to focus on the narrative text.
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/render-markdown.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how render-markdown shows markdown files
+        :caption: **Switch between reading and editing Markdown.** See rendered headings, links, checkboxes, tables, and code blocks; move onto a line or enter insert mode to reveal the source, and toggle rendering with :kbd:`<leader>rm`.
 
 .. list-table::
     :header-rows: 1
@@ -1148,10 +1312,21 @@ delete them.
 interact with a terminal within vim.
 
 The greatest benefit of this is that you can send text from a text buffer
-(Python script, RMarkdown file, etc) over to a terminal. This lets you
-reproduce an IDE-like environment purely from the terminal. The following
-commands are custom mappings set in :file:`.config/nvim/init.vim` that affect
-the terminal use.
+(Python script, RMarkdown file, etc) over to a terminal. Because these mappings
+send text to an ordinary terminal rather than managing a particular REPL, the
+workflow is language-agnostic: the same editor commands can drive R, IPython,
+or another interactive program. This lets you reproduce an IDE-like
+environment purely from the terminal. The following commands are custom
+mappings set in :file:`.config/nvim/lua/plugins/toggleterm.lua` that affect the
+terminal use.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/toggleterm.cast
+        :preload:
+        :poster: data:text/plain,Press play to send bash, Python, and R code to the same embedded terminal.
+        :caption: **Drive several languages from one terminal split.** Send individual lines and visual selections to Bash, IPython, and R, preserving multiline indentation. In RMarkdown, send a whole chunk and advance to the next with :kbd:`<leader>cd`.
 
 .. note::
 
@@ -1187,18 +1362,22 @@ the terminal use.
       - Switches focus back to the left window (typically the text buffer) and
         enters normal mode for editing
 
-    * - :kbd:`<leader>cd`
-      - Sends the current RMarkdown code chunk to terminal for execution, then
-        automatically jumps cursor to the next chunk. Great for interactive data
-        analysis
-
     * - :kbd:`gxx`
       - Sends the current line under cursor to the terminal and executes it.
         Useful for running single commands
 
     * - :kbd:`gx`
       - Sends the currently selected text (visual mode) to the terminal and
-        executes it. Useful for running multiple lines
+        executes it. Useful for running multiple lines. The selection is sent as
+        a single `bracketed paste
+        <https://en.wikipedia.org/wiki/Bracketed-paste>`_, so blank lines and
+        indentation inside a block (a Python function, say) survive the trip
+        rather than being interpreted as end-of-block by the REPL
+
+    * - :kbd:`<leader>cd`
+      - Sends the current RMarkdown code chunk to terminal for execution, then
+        automatically jumps cursor to the next chunk. Great for interactive data
+        analysis
 
     * - :kbd:`<leader>k` (in RMarkdown file)
       - Renders the current RMarkdown file to HTML using `knitr::render()`.
@@ -1276,6 +1455,14 @@ needed.
 * On subsequent rows, delimit fields by :kbd:`|` (including a leading and trailing :kbd:`|`)
 * Complete the table with :kbd:`||` on a new line.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-table-mode.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to type, convert, and realign Markdown tables.
+        :caption: **Create and repair Markdown tables.** Type pipe-separated rows that align as you go, turn selected CSV into a table with ``:Tableize``, add a header separator, and repair ragged edits with ``:TableModeRealign``.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -1320,6 +1507,19 @@ a for-loop (including the `for`), an entire function, entire Rmd code chunk,
 etc. In this mode, which is just for selection, you don't type the two
 characters you're looking for. Instead you just type the letter coresponding to
 level of code that you want to select.
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/flash.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to jump around quickly with flash.
+        :caption: **Jump to a visible destination.** Press :kbd:`s`, type the start of the target text, then choose a one-letter match label to reach a method without counting lines or repeating searches.
+
+    .. asciinema:: screencasts/casts/flash2.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how to select entire treesitter nodes, and how flash enhances the f motion.
+        :caption: **Select syntax nodes and repeat character jumps.** Use :kbd:`S` to label enclosing Treesitter nodes and select an entire class, then use flash-enhanced :kbd:`f` motions to jump between highlighted character matches.
 
 .. list-table::
     :header-rows: 1
@@ -1549,6 +1749,13 @@ and this:
     ):
         pass
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/treesj.cast
+        :preload:
+        :poster: data:text/plain,Press play to see how treesj works
+        :caption: **Expand and collapse code structures.** Toggle a function call, list, and dictionary between single-line and multiline layouts with :kbd:`<leader>j`, keeping arguments and key-value pairs together without changing what the code does.
 
 .. list-table::
     :header-rows: 1

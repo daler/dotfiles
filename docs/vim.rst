@@ -160,7 +160,11 @@ Switching between open files
   This example uses an older version of the bufferline plugin and so the
   styling is a little different, but the shortcuts demonstrated are the same. 
 
-  .. image:: gifs/buffers_annotated.gif
+  .. figure:: gifs/buffers_annotated.gif
+
+     **Switch between open buffers.** Follow the annotated bufferline demo
+     to see keyboard shortcuts move between files while the tab-like buffer
+     labels show which file is active.
 
 
 Shortcuts
