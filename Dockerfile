@@ -117,17 +117,29 @@ RUN wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Fantas
     && fc-cache \
     && rm /dotfiles/FantasqueSansMono.zip
 
+RUN wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/JetBrainsMono.zip \
+    && rm -rf ~/.local/share/fonts \
+    && mkdir -p ~/.local/share/fonts \
+    && ( cd ~/.local/share/fonts \
+        && unzip /dotfiles/JetBrainsMono.zip ) \
+    && fc-cache \
+    && rm /dotfiles/JetBrainsMono.zip
+
 # asciinema/agg for cast -> gif
-RUN wget -O - https://github.com/asciinema/agg/releases/download/v1.4.3/agg-x86_64-unknown-linux-gnu > ~/opt/bin/agg \
+RUN curl -fsSL https://github.com/asciinema/agg/releases/download/v1.9.0/agg-x86_64-unknown-linux-gnu > ~/opt/bin/agg \
     && chmod +x ~/opt/bin/agg
 
-# make it easier to run by using a patched font
-RUN echo "alias AGG=\"agg --font-family='FantasqueSansM Nerd Font'\"" >> ~/.aliases
+# make it easier to run by using a patched font, and make borders show up
+# correctly by using a slower but more complete renderer
+RUN echo "alias AGG=\"agg --renderer=resvg --font-family='JetBrainsMono Nerd Font Mono'\"" >> ~/.aliases
 
 # RUN source ~/.bashrc && ~/opt/bin/nvim --headless "+Lazy! sync" +qa
 
-# Allow lazy.nvim to update. Comment this out if you want to capture.
-# RUN nvim +"lua require('lazy').restore({wait=true})" +q
+# Allow lazy.nvim to update. Comment this out if you want to capture that process
+# RUN source ~/.bashrc && nvim +"lua require('lazy').restore({wait=true})" +q
+
+# For demos with toggleterm and r-nvim, install R and IPython
+RUN source ~/.bashrc && conda install -y r-base ipython -n base
 
 # SCREENCAST WORKFLOW:
 #
