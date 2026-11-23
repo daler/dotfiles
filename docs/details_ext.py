@@ -44,6 +44,8 @@ Then you can link back to it with `see here <#label-here>`_.
 """
 
 
+from html import escape
+
 from docutils import nodes
 from docutils.parsers import rst
 
@@ -73,6 +75,7 @@ class DetailsDirective(rst.Directive):
         # Pass along the first argument of the directive to the node
         details_node["heading"] = self.arguments[0]
         details_node["anchor"] = self.options.get("anchor", None)
+        details_node["classes"] = self.options.get("class", [])
         self.state.nested_parse(self.content, self.content_offset, details_node)
         return [details_node]
 
@@ -80,16 +83,18 @@ class DetailsDirective(rst.Directive):
 def visit_details(self, node):
     heading = node["heading"]
     anchor = node["anchor"]
+    classes = " ".join(escape(value, quote=True) for value in node["classes"])
+    details_tag = f'<details class="{classes}">' if classes else "<details>"
     if anchor:
         self.body.append(
-            f"<details><summary>{heading}</summary>"
+            f"{details_tag}<summary>{heading}</summary>"
             f'<div id={anchor} class="details">'
             f"<p><i>{heading}</i>"
             f'<a class="headerlink" title="Permalink" href="#{anchor}">¶</a></p>'
         )
     else:
         self.body.append(
-            f"<details><summary>{heading}</summary>"
+            f"{details_tag}<summary>{heading}</summary>"
             f'<div class="details">'
         )
 

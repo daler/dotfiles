@@ -19,7 +19,7 @@ div.highlight {
     border: 2px black solid;
 }
 
-div.details pre {
+div.details pre:not(.ap-terminal) {
     background: #fcfcfc;
 }
 
@@ -29,6 +29,50 @@ div.details div.highlight {
 
 summary {
     font-weight: bold;
+}
+
+details.screencasts {
+    margin: 1.2em 0;
+    border: 1px solid #b8bed1;
+    border-left: 4px solid #5e6682;
+    border-radius: 5px;
+    background: #e2ebff;
+}
+
+details.screencasts > summary {
+    cursor: pointer;
+    padding: 0.7em 0.85em;
+    color: #3f4868;
+    font-size: 1.1em;
+}
+
+details.screencasts > summary::marker {
+    color: #5e6682;
+}
+
+details.screencasts > summary::after {
+    content: "watch ▶";
+    display: inline-block;
+    margin-left: 0.75em;
+    color: #687293;
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+details.screencasts > summary:hover {
+    background: #edf0f8;
+}
+
+details.screencasts[open] > summary {
+    border-bottom: 1px solid #d7dae5;
+}
+
+details.screencasts[open] > summary::after {
+    content: "hide ▲";
+}
+
+details.screencasts > div.details {
+    padding: 0.2em 0.85em 0.6em;
 }
 
 div.note {
@@ -81,4 +125,93 @@ kbd.compound {
 
 div.document {
     width: unset;
+}
+
+/* asciinema-player embeds (see docs/asciinema_ext.py). The player sizes itself
+ * from the geometry in the cast header (see CAST_COLS/CAST_ROWS in
+ * docs/screencasts/recorder.sh); this just lets it use the full width of the
+ * content column instead of being squeezed by alabaster's paragraph margins. */
+.asciinema-embed {
+    margin: 1em 0 1.5em 0;
+    max-width: 100%;
+}
+
+figure.screencast-figure {
+    margin: 1.5em 0 2.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+figure.screencast-figure .asciinema-embed {
+    margin: 0;
+}
+
+figure.screencast-figure > figcaption {
+    background: #f7f9ff;
+    color: #30384c;
+    padding: 0.75em 1em;
+    border-top: 1px solid #ccc;
+    text-align: left;
+    font-style: normal;
+}
+
+div.details figure.screencast-figure > figcaption p {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-size: 0.95em;
+    font-style: normal;
+}
+
+div.details figure.screencast-figure > figcaption a {
+    color: #344b80;
+}
+
+div.details figure.screencast-figure > figcaption code {
+    color: inherit;
+}
+
+.asciinema-embed .ap-player {
+    /* Player computes its own font size from the terminal geometry; this just
+     * keeps a sane floor/ceiling on small screens. */
+    line-height: 1.2;
+}
+
+/* The recordings contain Nerd Font glyphs (Powerline separators, Codicons,
+ * plane-15 Material Design icons). asciinema-player renders the cast as HTML
+ * text, so those glyphs come from a *browser* font, not from the terminal font
+ * that made the recording -- and the player's default stack (Consolas, Menlo,
+ * monospace) has no private-use coverage at all, which shows up as tofu or as
+ * random per-glyph fallback. So ship the font.
+ *
+ * These woff2 files are subset to just the codepoints used by the committed
+ * casts; regenerate with docs/regenerate-docs-font.sh after re-recording. */
+@font-face {
+    font-family: 'JetBrainsMonoNFM';
+    src: url('fonts/JetBrainsMonoNFM-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    /* Deliberately not `swap`: the player measures a reference character to
+     * derive its cell size, and doing that against a fallback font leaves the
+     * whole grid mis-sized once the real font arrives. */
+    font-display: block;
+}
+
+@font-face {
+    font-family: 'JetBrainsMonoNFM';
+    src: url('fonts/JetBrainsMonoNFM-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+}
+
+.asciinema-embed .ap-terminal {
+    /* !important: the player ships this on .ap-terminal itself, and its
+     * stylesheet may load after ours depending on Sphinx's asset order. */
+    font-family: 'JetBrainsMonoNFM', Menlo, Consolas, monospace !important;
+    /* JetBrains Mono ligates ->, != etc. into a single glyph, which would
+     * collapse two terminal cells into one and shift the line. */
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "calt" 0;
 }
