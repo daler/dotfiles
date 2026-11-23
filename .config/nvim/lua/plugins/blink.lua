@@ -19,7 +19,7 @@ return {
     { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" } },
   },
 
-  event = { "InsertEnter" },
+  event = { "InsertEnter", "CmdlineEnter" },
 
   -- using a release tag downloads pre-built binaries
   version = "v1.*",
@@ -35,13 +35,13 @@ return {
       --   * Tab scrolls thru suggestions (or Shift-Tab to go back)
       --
       ['<Tab>'] = {
+        'select_next',
         function(cmp)
           if has_words_before() then
             return cmp.show_and_insert()
           end
         end,
         'snippet_forward',
-        'select_next',
         'fallback',
       },
       -- Navigate to the previous suggestion or cancel completion if currently on the first one.
@@ -71,8 +71,10 @@ return {
       } or {},
     },
     fuzzy = { implementation = "prefer_rust_with_warning" },
+    cmdline = { completion = { menu = { auto_show = false }, list = { selection = { preselect = false, auto_insert = true}}}},
     completion = {
       menu = { auto_show = false },
+      list = { selection = { preselect = false, auto_insert = true}},
       trigger = { show_in_snippet = false },
     },
   },
