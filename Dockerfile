@@ -17,9 +17,9 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
 RUN locale-gen en_US.UTF-8
 
-# From now on, use login shell so that bashrc gets sourced
+# Use Bash for RUN instructions; source ~/.bashrc explicitly where needed.
 SHELL [ "/bin/bash", "-c" ]
-ENV SHELL /bin/bash
+ENV SHELL=/bin/bash
 
 # Get this installed up front out of the way without prompting for a region
 # (which otherwise hangs the build)
@@ -34,7 +34,7 @@ RUN mkdir -p $TMPDIR
 # Don't prompt for user input when using setup.sh
 ENV DOTFILES_FORCE=true
 
-WORKDIR dotfiles
+WORKDIR /dotfiles
 
 # These apt installs typically take the longest time, so run early before
 # adding other files, which may otherwise invalidate the cache even though they
@@ -140,4 +140,5 @@ RUN echo "alias AGG=\"agg --font-family='FantasqueSansM Nerd Font'\"" >> ~/.alia
 # - EDIT: e.g. with Preview or ezgif
 # - 
 # - IMAGES:  mkdir imgs && convert -coalesce demo.gif imgs/%03d.gif
-ENTRYPOINT [ "/bin/bash", "-c" ]
+# Let docker run arguments replace the default shell without an extra bash -c.
+CMD [ "/bin/bash", "-l" ]

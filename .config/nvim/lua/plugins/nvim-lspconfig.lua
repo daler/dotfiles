@@ -28,7 +28,7 @@ return {
 
     vim.lsp.config("bashls", {
       cmd = { "bash-language-server", "start" },
-      filetypes = { "sh", "bash" },
+      filetypes = { "sh", "bash", "zsh" },
       root_markers = { ".git" },
     })
     -- vim.lsp.config("r_language_server", {
