@@ -23,6 +23,7 @@ return {
         python = { "ruff", "black" },
         bash = { "shfmt" },
         sh = { "shfmt" },
+        zsh = { "shfmt" },
         ["yaml.ansible"] = { "ansible-lint" },
         snakemake = { "snakefmt" },
         markdown = { "markdownlint" },
