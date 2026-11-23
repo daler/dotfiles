@@ -653,6 +653,7 @@ refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction</p></td>
 <li><p>2026-01-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/d7c7a7e">d7c7a7e</a> <em>add lsp config for ansible</em></p></li>
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/5ca103e">5ca103e</a> <em>Nvim 0.12.5 (#75)</em></p></li>
 <li><p>2026-11-20 <a class="reference external" href="https://github.com/daler/dotfiles/commit/2a4e8f7">2a4e8f7</a> <em>improve how lsp servers are managed/configured</em></p></li>
+<li><p>2026-11-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/0877d12">0877d12</a> <em>add zsh to conform &amp; lsp</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -687,7 +688,7 @@ refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction</p></td>
 
 <span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="nf">config</span><span class="p">(</span><span class="s2">"bashls"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"bash-language-server"</span><span class="p">,</span><span class="w"> </span><span class="s2">"start"</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"sh"</span><span class="p">,</span><span class="w"> </span><span class="s2">"bash"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"sh"</span><span class="p">,</span><span class="w"> </span><span class="s2">"bash"</span><span class="p">,</span><span class="w"> </span><span class="s2">"zsh"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">".git"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">    </span><span class="p">})</span>
 <span class="w">    </span><span class="c1">-- vim.lsp.config("r_language_server", {</span>
@@ -1114,6 +1115,7 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <li><p>2026-01-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/6f959b3">6f959b3</a> <em>Merge branch ‘master’ into 2026-01-27</em></p></li>
 <li><p>2026-01-27 <a class="reference external" href="https://github.com/daler/dotfiles/commit/92c0879">92c0879</a> <em>add snakemake and ansible linters</em></p></li>
 <li><p>2026-11-20 <a class="reference external" href="https://github.com/daler/dotfiles/commit/511f8a1">511f8a1</a> <em>updates to linters/formatters and conform plugin config</em></p></li>
+<li><p>2026-11-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/0877d12">0877d12</a> <em>add zsh to conform &amp; lsp</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1143,6 +1145,7 @@ bash, <code class="docutils literal notranslate"><span class="pre">shfmt</span><
 <span class="w">        </span><span class="nv">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"ruff"</span><span class="p">,</span><span class="w"> </span><span class="s2">"black"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">bash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"shfmt"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">sh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"shfmt"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">zsh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"shfmt"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="p">[</span><span class="s2">"yaml.ansible"</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"ansible-lint"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">snakemake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"snakefmt"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">        </span><span class="nv">markdown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"markdownlint"</span><span class="w"> </span><span class="p">},</span>
@@ -2171,6 +2174,7 @@ up all the time. There are a lot of ways you can customize this yourself though
 <dd class="field-even"><ul class="simple">
 <li><p>2026-06-26 <a class="reference external" href="https://github.com/daler/dotfiles/commit/cd10801">cd10801</a> <em>R.nvim, take 2 (#72)</em></p></li>
 <li><p>2026-11-21 <a class="reference external" href="https://github.com/daler/dotfiles/commit/ed75867">ed75867</a> <em>update blink.cmp dependency; lazy load</em></p></li>
+<li><p>2026-11-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/8183b55">8183b55</a> <em>improve the behavior of blink.cmp (esp for command line)</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2196,7 +2200,7 @@ up all the time. There are a lot of ways you can customize this yourself though
 <span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s2">"Kaiser-Yang/blink-cmp-dictionary"</span><span class="p">,</span><span class="w"> </span><span class="nv">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"nvim-lua/plenary.nvim"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
 <span class="w">  </span><span class="p">},</span>
 
-<span class="w">  </span><span class="nv">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"InsertEnter"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nv">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"InsertEnter"</span><span class="p">,</span><span class="w"> </span><span class="s2">"CmdlineEnter"</span><span class="w"> </span><span class="p">},</span>
 
 <span class="w">  </span><span class="c1">-- using a release tag downloads pre-built binaries</span>
 <span class="w">  </span><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"v1.*"</span><span class="p">,</span>
@@ -2212,13 +2216,13 @@ up all the time. There are a lot of ways you can customize this yourself though
 <span class="w">      </span><span class="c1">--   * Tab scrolls thru suggestions (or Shift-Tab to go back)</span>
 <span class="w">      </span><span class="c1">--</span>
 <span class="w">      </span><span class="p">[</span><span class="s1">'&lt;Tab&gt;'</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">'select_next'</span><span class="p">,</span>
 <span class="w">        </span><span class="kr">function</span><span class="p">(</span><span class="nv">cmp</span><span class="p">)</span>
 <span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="nf">has_words_before</span><span class="p">()</span><span class="w"> </span><span class="kr">then</span>
 <span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="nv">cmp</span><span class="p">.</span><span class="nf">show_and_insert</span><span class="p">()</span>
 <span class="w">          </span><span class="kr">end</span>
 <span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">        </span><span class="s1">'snippet_forward'</span><span class="p">,</span>
-<span class="w">        </span><span class="s1">'select_next'</span><span class="p">,</span>
 <span class="w">        </span><span class="s1">'fallback'</span><span class="p">,</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="c1">-- Navigate to the previous suggestion or cancel completion if currently on the first one.</span>
@@ -2248,8 +2252,10 @@ up all the time. There are a lot of ways you can customize this yourself though
 <span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="p">{},</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nv">fuzzy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">implementation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"prefer_rust_with_warning"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nv">cmdline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">completion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">menu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">auto_show</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">selection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">preselect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nv">auto_insert</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">}}}},</span>
 <span class="w">    </span><span class="nv">completion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nv">menu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">auto_show</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">selection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">preselect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nv">auto_insert</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">}},</span>
 <span class="w">      </span><span class="nv">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">show_in_snippet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">  </span><span class="p">},</span>
@@ -2594,6 +2600,8 @@ Requires IPython running in terminal</p></td>
 <li><p>2024-12-15 <a class="reference external" href="https://github.com/daler/dotfiles/commit/631b35e">631b35e</a> <em>add browsher plugin and bracketed paste for pasting code (#53)</em></p></li>
 <li><p>2026-06-13 <a class="reference external" href="https://github.com/daler/dotfiles/commit/6b846f4">6b846f4</a> <em>add pasteimg (#71)</em></p></li>
 <li><p>2026-06-26 <a class="reference external" href="https://github.com/daler/dotfiles/commit/cd10801">cd10801</a> <em>R.nvim, take 2 (#72)</em></p></li>
+<li><p>2026-11-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4127338">4127338</a> <em>improve toggleterm and r.nvim, esp their interaction</em></p></li>
+<li><p>2026-11-23 <a class="reference external" href="https://github.com/daler/dotfiles/commit/93884a0">93884a0</a> <em>Merge pull request #77 from daler/toggleterm-rnvim</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -2602,9 +2610,6 @@ Requires IPython running in terminal</p></td>
 <span class="kr">return</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="p">{</span>
 <span class="w">    </span><span class="s2">"akinsho/toggleterm.nvim"</span><span class="p">,</span>
-
-<span class="w">    </span><span class="c1">-- later versions break sending visual selection with gxx</span>
-<span class="w">    </span><span class="nv">commit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"c80844fd52ba76f48fabf83e2b9f9b93273f418d"</span><span class="p">,</span>
 
 <span class="w">    </span><span class="nv">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
 <span class="w">      </span><span class="c1">-- tweak the sizes of the new terminal</span>
@@ -2616,6 +2621,12 @@ Requires IPython running in terminal</p></td>
 <span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">o</span><span class="p">.</span><span class="py">columns</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.5</span>
 <span class="w">          </span><span class="kr">end</span>
 <span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">-- Always enter insert mode when switching (or clicking) into the</span>
+<span class="w">        </span><span class="c1">-- terminal. With persist_mode = true (the default), toggleterm instead</span>
+<span class="w">        </span><span class="c1">-- restores whatever mode the terminal was last in, which is usually</span>
+<span class="w">        </span><span class="c1">-- normal mode after leaving it with &lt;C-\&gt;&lt;C-n&gt; or a mouse click.</span>
+<span class="w">        </span><span class="nv">start_in_insert</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">persist_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">      </span><span class="p">})</span>
 
 <span class="w">      </span><span class="c1">-- Patch toggleterm to use bracketed paste (special escape codes before</span>
@@ -2631,16 +2642,55 @@ Requires IPython running in terminal</p></td>
 <span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nv">range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nv">nargs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"?"</span><span class="w"> </span><span class="p">}</span>
 <span class="w">      </span><span class="p">)</span>
+
+<span class="w">      </span><span class="c1">-- Send the current line with its indentation intact. IPython</span>
+<span class="w">      </span><span class="c1">-- auto-indents after a block opener, so toggleterm's trimmed send can't</span>
+<span class="w">      </span><span class="c1">-- dedent (e.g. a `return` after a loop body). Instead, Ctrl-U (the \x15</span>
+<span class="w">      </span><span class="c1">-- part) first clears whatever indentation IPython inserted, then the</span>
+<span class="w">      </span><span class="c1">-- line's own indentation is used.</span>
+<span class="w">      </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_create_user_command</span><span class="p">(</span>
+<span class="w">        </span><span class="s2">"ToggleTermSendCurrentLineIndented"</span><span class="p">,</span>
+<span class="w">        </span><span class="kr">function</span><span class="p">(</span><span class="nv">args</span><span class="p">)</span>
+<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">tonumber</span><span class="p">(</span><span class="nv">args</span><span class="p">.</span><span class="py">args</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">          </span><span class="nb">require</span><span class="p">(</span><span class="s2">"toggleterm"</span><span class="p">).</span><span class="nf">exec</span><span class="p">(</span><span class="s2">"</span><span class="se">\x15</span><span class="s2">"</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_get_current_line</span><span class="p">(),</span><span class="w"> </span><span class="nv">id</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nv">nargs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"?"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="p">)</span>
 <span class="w">    </span><span class="kr">end</span><span class="p">,</span>
 
 <span class="w">    </span><span class="nv">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="s2">"gxx"</span><span class="p">,</span><span class="w"> </span><span class="s2">":ToggleTermSendCurrentLine&lt;CR&gt;&lt;CR&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send current line to terminal"</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="s2">"gx"</span><span class="p">,</span><span class="w"> </span><span class="s2">":ToggleTermSendBracketedPaste&lt;CR&gt;&lt;CR&gt;"</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send selection to terminal"</span><span class="p">,</span><span class="w"> </span><span class="nv">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"x"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">"gxx"</span><span class="p">,</span>
+<span class="w">        </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">filetype</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"python"</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="s2">":ToggleTermSendCurrentLineIndented&lt;CR&gt;&lt;CR&gt;"</span>
+<span class="w">          </span><span class="kr">end</span>
+<span class="w">          </span><span class="kr">return</span><span class="w"> </span><span class="s2">":ToggleTermSendCurrentLine&lt;CR&gt;&lt;CR&gt;"</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send current line to terminal"</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">"gx"</span><span class="p">,</span>
+<span class="w">        </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="c1">-- Bracketed paste keeps indented Python blocks intact in IPython,</span>
+<span class="w">          </span><span class="c1">-- but other shells (macOS's bash 3.2, plain R in a terminal) don't</span>
+<span class="w">          </span><span class="c1">-- always support it. So everywhere else use toggleterm's plain</span>
+<span class="w">          </span><span class="c1">-- line-by-line send (which trims whitespace).</span>
+<span class="w">          </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">bo</span><span class="p">.</span><span class="py">filetype</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"python"</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="s2">":ToggleTermSendBracketedPaste&lt;CR&gt;&lt;CR&gt;"</span>
+<span class="w">          </span><span class="kr">end</span>
+<span class="w">          </span><span class="kr">return</span><span class="w"> </span><span class="s2">":ToggleTermSendVisualSelection&lt;CR&gt;&lt;CR&gt;"</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send selection to terminal"</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"x"</span><span class="p">,</span>
+<span class="w">      </span><span class="p">},</span>
 
 <span class="w">      </span><span class="p">{</span>
 <span class="w">        </span><span class="s2">"&lt;leader&gt;cd"</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">"/```{r&lt;CR&gt;NjV/```&lt;CR&gt;k&lt;Esc&gt;:ToggleTermSendBracketedPaste&lt;CR&gt;/```{r&lt;CR&gt;"</span><span class="p">,</span>
-<span class="w">        </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send RMarkdown chunk to R"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"/```{r&lt;CR&gt;NjV/```&lt;CR&gt;k&lt;Esc&gt;:ToggleTermSendVisualLines&lt;CR&gt;/```{r&lt;CR&gt;"</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send RMarkdown chunk to terminal"</span><span class="p">,</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="c1">-- Immiedately after creating the terminal, disable the cursorline.</span>
 <span class="w">      </span><span class="c1">-- This otherwise looks confusing with a single, differently-colored line at</span>
@@ -3522,11 +3572,26 @@ structures.</p></td>
 <dd class="field-even"><ul class="simple">
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4a8113e">4a8113e</a> <em>fix buf for r-nvim</em></p></li>
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/5ca103e">5ca103e</a> <em>Nvim 0.12.5 (#75)</em></p></li>
+<li><p>2026-11-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/4127338">4127338</a> <em>improve toggleterm and r.nvim, esp their interaction</em></p></li>
 </ul>
 </dd>
 </dl>
 <details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/r-nvim.lua</span></code>:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Integration with a running R interpreter</span>
+
+<span class="c1">-- Figure out if R.nvim's R session is ready to send lines to, otherwise send</span>
+<span class="c1">-- to toggleterm instead</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">r_or_toggleterm</span><span class="p">(</span><span class="nv">r_fn</span><span class="p">,</span><span class="w"> </span><span class="nv">toggleterm_keys</span><span class="p">)</span>
+<span class="w">  </span><span class="c1">-- R.nvim sets R_Nvim_status to 7 once its session is ready, and resets it</span>
+<span class="w">  </span><span class="c1">-- when the session exits.</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">g</span><span class="p">.</span><span class="py">R_Nvim_status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="nf">r_fn</span><span class="p">()</span>
+<span class="w">  </span><span class="kr">else</span>
+<span class="w">    </span><span class="nb">require</span><span class="p">(</span><span class="s2">"toggleterm"</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_feedkeys</span><span class="p">(</span><span class="nv">vim</span><span class="p">.</span><span class="nf">keycode</span><span class="p">(</span><span class="nv">toggleterm_keys</span><span class="p">),</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">end</span>
+<span class="kr">end</span>
+
 <span class="kr">return</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="s2">"R-nvim/R.nvim"</span><span class="p">,</span>
 
@@ -3537,15 +3602,16 @@ structures.</p></td>
 
 <span class="w">  </span><span class="nv">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">-- These support syntax highlighting in the R interpreter</span>
-<span class="w">    </span><span class="nv">Rout_more_colors</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nv">Rout_follow_colorscheme</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Rout_more_colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Rout_follow_colorscheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">    </span><span class="c1">-- config_tmux=false,</span>
-<span class="w">    </span><span class="nv">rconsole_width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">rconsole_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span>
 
-
-<span class="w">    </span><span class="c1">-- by default, :RDSendLine will send the entire block (entire for-loop or entire function, for example). Disabling this sends just one line at a time.</span>
-<span class="w">    </span><span class="nv">parenblock</span><span class="o">=</span><span class="kc">false</span><span class="p">,</span>
-<span class="w">   </span><span class="nv">min_editor_width</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">-- By default, :RDSendLine will send the entire block (entire for-loop or</span>
+<span class="w">    </span><span class="c1">-- entire function, for example). Disabling this sends just one line at</span>
+<span class="w">    </span><span class="c1">-- a time.</span>
+<span class="w">    </span><span class="nv">parenblock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">min_editor_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">view_df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="c1">-- open a dataframe with &lt;localleader&gt;rv in visidata in a new nvim terminal window.</span>
 <span class="w">      </span><span class="c1">-- Note: using tmux as per the docs does not work when on an interactive</span>
@@ -3561,33 +3627,43 @@ structures.</p></td>
 <span class="w">      </span><span class="nv">completion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">    </span><span class="p">},</span>
 
+<span class="w">    </span><span class="nv">disable_cmds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"RDSendParagraph"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">    </span><span class="nv">hook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">       </span><span class="nv">on_filetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
-<span class="w">         </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_set_keymap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gxx"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;Plug&gt;RDSendLine"</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
-<span class="w">         </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_set_keymap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">"v"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gx"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;Plug&gt;RSendSelection"</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
-<span class="w">         </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_set_keymap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">",cd"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;Plug&gt;RDSendChunk"</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
-<span class="w">         </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_set_keymap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;leader&gt;k"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;Plug&gt;RSend rmarkdown::render('%p')&lt;CR&gt;"</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
-<span class="w">         </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;leader&gt;k"</span><span class="p">,</span>
-<span class="w">          </span><span class="kr">function</span><span class="p">()</span>
-<span class="w">           </span><span class="kd">local</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_get_name</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">           </span><span class="nb">require</span><span class="p">(</span><span class="s2">"r.send"</span><span class="p">).</span><span class="nf">cmd</span><span class="p">(</span><span class="s1">'rmarkdown::render("'</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s1">'")'</span><span class="p">)</span>
-<span class="w">          </span><span class="kr">end</span><span class="p">,</span>
-<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Render Rmarkdown"</span><span class="w"> </span><span class="p">})</span>
+<span class="w">      </span><span class="nv">on_filetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">        </span><span class="c1">-- Send to R.nvim when its R session is ready, otherwise fall back to</span>
+<span class="w">        </span><span class="c1">-- the same toggleterm commands used for other filetypes.</span>
 
-<span class="w">        </span><span class="c1">-- In 0.99.4 which is used here for compatibility with older</span>
-<span class="w">        </span><span class="c1">-- R versions, the RDSendLine command sends the entire treesitter block</span>
-<span class="w">        </span><span class="c1">-- (entire function, entire for-loop, etc) rather than just one line.</span>
-<span class="w">        </span><span class="c1">-- This is fixed in 0.99.5, but patching here so we can use it with 0.99.4.</span>
-<span class="w">        </span><span class="c1">-- The behavior is still accessible with the default &lt;localleader&gt;d.</span>
+<span class="w">        </span><span class="c1">-- With parenblock disabled, RDSendLine sends just the current line.</span>
 <span class="w">        </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gxx"</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
-<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_get_current_line</span><span class="p">()</span>
-<span class="w">          </span><span class="nb">require</span><span class="p">(</span><span class="s2">"r.send"</span><span class="p">).</span><span class="nf">cmd</span><span class="p">(</span><span class="nv">line</span><span class="p">)</span>
-<span class="w">          </span><span class="nv">vim</span><span class="p">.</span><span class="nf">cmd</span><span class="p">(</span><span class="s2">"normal! j"</span><span class="p">)</span>
-<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">})</span>
+<span class="w">          </span><span class="nf">r_or_toggleterm</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_feedkeys</span><span class="p">(</span><span class="nv">vim</span><span class="p">.</span><span class="nf">keycode</span><span class="p">(</span><span class="s2">"&lt;Plug&gt;RDSendLine"</span><span class="p">),</span><span class="w"> </span><span class="s2">"m"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="s2">":ToggleTermSendCurrentLine&lt;CR&gt;&lt;CR&gt;"</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send current line to R.nvim or toggleterm"</span><span class="w"> </span><span class="p">})</span>
+
+<span class="w">        </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gx"</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="nf">r_or_toggleterm</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_feedkeys</span><span class="p">(</span><span class="nv">vim</span><span class="p">.</span><span class="nf">keycode</span><span class="p">(</span><span class="s2">"&lt;Plug&gt;RSendSelection"</span><span class="p">),</span><span class="w"> </span><span class="s2">"m"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="s2">":ToggleTermSendVisualSelection&lt;CR&gt;&lt;CR&gt;"</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send selection to R.nvim or toggleterm"</span><span class="w"> </span><span class="p">})</span>
+
+<span class="w">        </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;leader&gt;cd"</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="nf">r_or_toggleterm</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nb">require</span><span class="p">(</span><span class="s2">"r.rmd"</span><span class="p">).</span><span class="nf">send_current_chunk</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">          </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="s2">"/```{r&lt;CR&gt;NjV/```&lt;CR&gt;k&lt;Esc&gt;:ToggleTermSendVisualLines&lt;CR&gt;/```{r&lt;CR&gt;"</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Send RMarkdown chunk to R.nvim or toggleterm"</span><span class="w"> </span><span class="p">})</span>
+
+<span class="w">        </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_set_keymap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;leader&gt;k"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;Plug&gt;RSend rmarkdown::render('%p')&lt;CR&gt;"</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
+<span class="w">        </span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;leader&gt;k"</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">          </span><span class="kd">local</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">vim</span><span class="p">.</span><span class="py">api</span><span class="p">.</span><span class="nf">nvim_buf_get_name</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">          </span><span class="nb">require</span><span class="p">(</span><span class="s2">"r.send"</span><span class="p">).</span><span class="nf">cmd</span><span class="p">(</span><span class="s1">'rmarkdown::render("'</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s1">'")'</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Render Rmarkdown"</span><span class="w"> </span><span class="p">})</span>
+
+<span class="w">        </span><span class="c1">-- Avoid clobbering the punchlist &lt;localleader&gt;pd keymap</span>
+<span class="w">        </span><span class="nb">pcall</span><span class="p">(</span><span class="nv">vim</span><span class="p">.</span><span class="py">keymap</span><span class="p">.</span><span class="py">del</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"v"</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s2">"&lt;LocalLeader&gt;pd"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">})</span>
 <span class="w">      </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nv">lazy</span><span class="o">=</span><span class="kc">false</span>
+<span class="w">  </span><span class="nv">lazy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
