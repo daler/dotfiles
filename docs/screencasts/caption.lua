@@ -114,13 +114,11 @@ local close
 local function float(state, lines, anchor, hl)
   local w = 0
   for _, l in ipairs(lines) do w = math.max(w, vim.fn.strdisplaywidth(l)) end
-  local padded = {}
-  for i, l in ipairs(lines) do padded[i] = '  ' .. l .. '  ' end
   if not (state.buf and vim.api.nvim_buf_is_valid(state.buf)) then
     state.buf = vim.api.nvim_create_buf(false, true)
   end
-  vim.api.nvim_buf_set_lines(state.buf, 0, -1, false, padded)
-  local cfg = place(anchor, w + 4, #padded)
+  vim.api.nvim_buf_set_lines(state.buf, 0, -1, false, lines)
+  local cfg = place(anchor, w, #lines)
   -- Floats belong to a tabpage. If the script moved to another tab (e.g.
   -- ':tab Git'), the existing float is stranded where nobody can see it, and
   -- reconfiguring it silently draws off-screen -- so drop it and reopen here.
@@ -166,17 +164,37 @@ local function log_err(what, err)
   end)
 end
 
+-- Keep the keys against the caption's outer edge, growing toward the editor's
+-- centre so bottom-corner captions still leave room for the keycast.
+local function stack_keys()
+  local cap, keys = M.cap, _G.__CAPSTATE.keys
+  if not (cap.win and keys.win
+      and vim.api.nvim_win_is_valid(cap.win)
+      and vim.api.nvim_win_is_valid(keys.win)) then return end
+  if vim.api.nvim_win_get_tabpage(cap.win) ~= vim.api.nvim_get_current_tabpage()
+      or vim.api.nvim_win_get_tabpage(keys.win) ~= vim.api.nvim_get_current_tabpage() then return end
+  local cfg = vim.api.nvim_win_get_config(cap.win)
+  local north = cfg.anchor:sub(1, 1) == 'N'
+  vim.api.nvim_win_set_config(keys.win, {
+    relative = 'editor', anchor = cfg.anchor, col = cfg.col,
+    row = cfg.row + (north and (cfg.height + 2) or -(cfg.height + 2)),
+  })
+end
+
 -- CAP(text[, anchor]) -- '' clears. Wraps to multiple lines as needed.
 _G.CAP = function(text, anchor)
+  KEYS('')
   if text == nil or text == '' then
     close(M.cap); vim.cmd('redraw'); return ''
   end
   local ok, err = pcall(function()
     local w = cap_width()
     local lines = wrap(text, w)
+    for i, line in ipairs(lines) do lines[i] = '  ' .. line .. '  ' end
     style_hl('CapText', 'CapBorder', 'DiagnosticInfo')
     float(M.cap, lines, anchor or 'NE',
           'Normal:CapText,FloatBorder:CapBorder')
+    stack_keys()
     -- geometry trace: /tmp/caption.log is the ground truth when a caption
     -- looks wrong in the recording
     local cfg = vim.api.nvim_win_get_config(M.cap.win)
@@ -197,23 +215,22 @@ endfunction]]
 
 -- ----------------------------------------------------------------- keycast --
 M.keys = _G.__CAPSTATE.keys
-local ktimer
 
--- KEYS(text[, anchor]) -- transient float showing the keystrokes being sent.
+-- KEYS(text[, anchor]) -- '' clears; the driver clears after each action.
 _G.KEYS = function(text, anchor)
   if text == nil or text == '' then
     close(M.keys); vim.cmd('redraw'); return ''
   end
   local ok, err = pcall(function()
     style_hl('KeysText', 'KeysBorder', 'DiagnosticHint')
-    float(M.keys, wrap(text, cap_width()), anchor or 'SE',
+    local lines = wrap(text, cap_width())
+    for i, line in ipairs(lines) do lines[i] = '  ' .. line .. '  ' end
+    float(M.keys, lines, anchor or 'SE',
           'Normal:KeysText,FloatBorder:KeysBorder')
+    stack_keys()
   end)
   if not ok then log_err('KEYS ERROR', err) end
   vim.cmd('redraw')
-  -- auto-hide so the keycast doesn't linger into the next step
-  if ktimer then pcall(function() ktimer:stop(); ktimer:close() end); ktimer = nil end
-  ktimer = vim.defer_fn(function() close(M.keys); pcall(vim.cmd, 'redraw') end, 1200)
   return ''
 end
 

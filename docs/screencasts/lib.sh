@@ -162,6 +162,15 @@ SAY() {
 NV() {
   local dwell=${2:-0.4} actual extra
   read -r actual extra < <(RECORD_DWELL "$dwell")
+  if [ "$KEYCAST" = 1 ]; then
+    # Keep keys readable before clearing, even when fast recording shortens sleeps.
+    read -r actual extra < <(awk -v actual="$actual" -v extra="$extra" 'BEGIN {
+      desired = actual + extra
+      actual = (actual < 1 ? 1 : actual)
+      extra = (desired > actual ? desired - actual : 0)
+      printf "%.6f %.6f\n", actual, extra
+    }')
+  fi
   MARK "nv:$1" "$extra"
   if [ "$KEYCAST" = 1 ]; then
     RPC "luaeval('KEYS(_A[1], _A[2])', ['$(vq "$1")', '${KEYCAST_POS:-SE}'])" 1 1 \
@@ -169,6 +178,10 @@ NV() {
   fi
   nvim --headless --server "$SOCK" --remote-send "$1" >/dev/null 2>&1 </dev/null || true
   sleep "$actual"
+  # Clear before the settled frame is held by FAST_RECORD's dwell restoration.
+  if [ "$KEYCAST" = 1 ]; then
+    RPC "luaeval('KEYS(\"\")')" 1 1 || true
+  fi
 }
 
 # Print the sleep to use now and the hold timing.py should put back later.

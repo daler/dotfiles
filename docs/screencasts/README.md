@@ -116,6 +116,12 @@ The leader key is `,`, so `<leader>ff` is sent as `NV ',ff'`.
 | `WAIT_TERMINAL_PATTERN 'pat' [timeout] [show]` | Blocks until a terminal buffer has a line matching a Lua pattern (for REPLs). `show` works as for `WAIT_LUA`. |
 
 
+Keystrokes stack below top-corner captions (or above bottom-corner captions),
+sharing the same outer edge. Without a visible caption, keystrokes use their
+usual corner position. Keys clear after each `NV` dwell and whenever `SAY`
+shows or clears a caption. With keycast enabled, `NV` waits at least one second
+before clearing keys, even in fast recording mode.
+
 Tips:
 
 - **Use absolute `source` paths** (`/gifs/...`). The script runs from
