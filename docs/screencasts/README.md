@@ -67,11 +67,13 @@ with `docs/`.
 | `setup/` | Shared fixtures (demo git repos, sample files) used by instruction scripts. |
 | `casts/` | Recorded output, referenced from the docs. |
 
-How it works: `recorder.sh` starts nvim listening on `/tmp/nvim.sock`. Your
-instruction script is a separate process that drives nvim over that socket
-(RPC). Each `SAY`/`NV`/`TYPE` also logs a timestamped *mark*. After recording,
-the marks become asciicast v3 *marker* events inside the cast, so each step can
-be retimed separately.
+
+The way this works is that `recorder.sh` starts nvim listening on
+`/tmp/nvim.sock`. The instruction script is a separate process that drives nvim
+over that socket (RPC). Each `SAY`/`NV`/`TYPE` also logs a timestamped *mark*.
+After recording, the marks become asciicast v3 *marker* events inside the cast,
+so each step can be retimed separately, and in the screencast controls
+shortcuts like `[` and `]` jump between marks.
 
 
 ## Writing an instruction script
@@ -82,12 +84,13 @@ be retimed separately.
 #!/usr/bin/env bash
 set -euo pipefail
 source /gifs/lib.sh                 # absolute paths only -- see below
-source /gifs/setup/demo_repo.sh     # optional: a shared fixture
+source /gifs/setup/demo_repo.sh     # optional: a fixture
 
-MAKE_DEMO_REPO                      # fixture prep goes BEFORE WAIT_NVIM
+MAKE_DEMO_REPO                      # fixture prep (here defined in demo_repo.sh) goes BEFORE WAIT_NVIM
 
 WAIT_NVIM                           # block until nvim is up
-SETUP "cd $DEMO_REPO" 'e scripts/summarize.py'   # silent stage-setting
+
+SETUP "cd $DEMO_REPO" 'e scripts/summarize.py'   # silent stage-setting, but in nvim as opposed to outside
 
 SAY 'telescope is a fuzzy finder; <leader>ff finds files by name' 3.0
 NV ',ff' 1.5
@@ -105,14 +108,15 @@ The leader key is `,`, so `<leader>ff` is sent as `NV ',ff'`.
 | Command | Use |
 |---|---|
 | `WAIT_NVIM` | Must come first after prep. Waits for nvim and checks that the caption overlay loaded. |
-| `SETUP 'ex cmd' ...` | Runs ex commands invisibly: no cmdline text, no keystroke overlay, no mark. Use it for stage plumbing (`:cd`, `:e`, window layout) that isn't part of the demo. |
+| `SETUP 'ex cmd' ...` | Runs ex commands invisibly: no cmdline text, no keystroke overlay, no mark. Use it for stagin (`:cd`, `:e`, window layout) that isn't part of the demo. |
 | `SAY 'text' [secs] [corner]` | Shows a caption for `secs` (default 1.4). Corner is `NE` (default), `NW`, `SE`, or `SW`; move it to keep popups visible. `''` clears the caption. Long text wraps automatically; `\n` forces a line break. |
 | `NV 'keys' [secs]` | Sends keys (vim notation: `<CR>`, `<Esc>`, `<C-r>`), shows them in the keystroke overlay, then waits `secs` (default 0.4). |
 | `TYPE 'text' [secs]` | Types one character at a time, waiting `secs` (default 0.04) after each. |
-| `WAIT_LUA 'lua' [timeout]` | Blocks until the Lua chunk returns true, e.g. `'return #vim.diagnostic.get(0) >= 3'`. Use it for anything async (LSP attach, formatters). Fails the take on timeout (default 15s). |
-| `WAIT_TERMINAL_PATTERN 'pat' [timeout]` | Blocks until a terminal buffer has a line matching a Lua pattern (for REPLs). |
+| `WAIT_LUA 'lua' [timeout] [show]` | Blocks until the Lua chunk returns true, e.g. `'return #vim.diagnostic.get(0) >= 3'`. Use it for anything async (LSP attach, formatters). Fails the take on timeout (default 15s). In the final cast the wait is squeezed to at most `show` seconds (default `WAIT_SHOW`, 0.5). |
+| `WAIT_TERMINAL_PATTERN 'pat' [timeout] [show]` | Blocks until a terminal buffer has a line matching a Lua pattern (for REPLs). `show` works as for `WAIT_LUA`. |
 
-Rules that will bite you:
+
+Tips:
 
 - **Use absolute `source` paths** (`/gifs/...`). The script runs from
   `/dotfiles`, so a relative path fails, `set -e` exits, and nothing drives
@@ -121,7 +125,15 @@ Rules that will bite you:
   quit nvim yourself.
 - **Wait on real state for async things.** Use `WAIT_LUA` or
   `WAIT_TERMINAL_PATTERN` instead of a long dwell or `sleep`. Fast recording
-  (below) shortens dwells, but these waits are never shortened.
+  (below) shortens dwells like `NV 'keys' 1.4` from 1.4 seconds to 0.1 by
+  default, but waiting like with `WAIT_TERMINAL_PATTERN` will wait as long as
+  it needs to even during fast recording. But after recording, each wait is
+  compressed to at most its `show` seconds (frames inside it are
+  fast-forwarded). This way, a REPL or LSP that is slow to start doesn't need
+  a manual timing tweak and the cast comes out consistently, independent of
+  hardware speed. The dwell of the step *before* the wait is still restored in
+  full, as a hold on the settled frame once the wait is over. Waits don't add
+  rows to the timing table.
 - **Use `SAY`/`NV` dwell arguments for pauses.** Literal `sleep` calls and
   `TYPE`'s per-character delay are recorded as-is.
 
@@ -147,21 +159,22 @@ Rules that will bite you:
 `./rebuild-casts.sh` is the normal path. It uses **fast recording** by default
 (`FAST_RECORD=1`): during the take, every `SAY`/`NV` dwell is cut to
 `MIN_DWELL` (0.1s), and the full durations are added back to the cast
-afterwards. A 60-second cast records in a few seconds. Playback still pauses for
-the durations in your script. The time is added as a hold on the settled frame
-at the end of each step. The final `:qa!` dwell is not restored.
+afterwards. A 60-second cast records in a few seconds. Later playback still
+pauses for the durations in your script. The time is added as a hold on the
+settled frame at the end of each step. The final `:qa!` dwell is not restored.
 
 To record one cast by hand, run this from the repository root:
 
 ```bash
 CASTNAME=<name>
 podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-  --name cast --rm -it -e FAST_RECORD=1 dotfiles \
+  --name cast-$CASTNAME --rm -it -e FAST_RECORD=1 dotfiles \
   bash /gifs/recorder.sh /gifs/casts/$CASTNAME.cast /gifs/instructions/${CASTNAME}_instructions.sh
 ```
 
 If you leave out the instruction script argument, you get a plain nvim that you
-drive and quit yourself.
+drive and quit yourself to get the screencast. It will not have the captions
+and keystroke annotations though.
 
 When it finishes, `recorder.sh` prints the segment table (see
 [timing](#adjusting-timing)) and leaves only the `.cast` file.
@@ -176,7 +189,11 @@ When it finishes, `recorder.sh` prints the segment table (see
   `NVIM_ARGS` typo.
 - `WARNING: caption.lua did not load` means `caption.lua` has a syntax error.
   The cast will have no captions.
-- To keep the raw timestamp log for debugging, set `MARKS=/gifs/marks.txt`.
+- To keep the raw timestamp log for debugging, pass `-e KEEP_MARKS=1` (or
+  `KEEP_MARKS=1 ./rebuild-casts.sh`). It is copied to `casts/<name>.marks.txt`
+  and `casts/<name>.t0`, which `timing.py --annotate` picks up by default. The
+  log otherwise lives in a per-take temp dir inside the container, so takes
+  can run in parallel (each container is named `cast-<name>`).
 
 
 ## Previewing
@@ -212,9 +229,14 @@ Dump an editable table with one row per `SAY`/`NV`/`TYPE`:
   6    0.25  nv::qa!<CR>
 ```
 
-Edit the durations, then apply them. Frames inside a segment are scaled
-proportionally, so typing stays evenly spaced. Leave out `--in-place` to write
-to stdout, or use `-o` to write to a different file:
+Edit the durations. Frames inside a segment are scaled proportionally, so
+typing stays evenly spaced. E.g., if the "Search for 'setup'" text doesn't seem
+to stay on screen long enough, change the `1.68` to something higher like
+`2.0`. This will lengthen the dwell time for that text, and will therefore
+extend the total length of the cast, but no other segments will be affected.
+
+Then apply the new timings to the cast. Leave out `--in-place` to write to
+stdout, or use `-o` to write to a different file:
 
 ```bash
 ./timing.py casts/<name>.cast --apply <name>.timing --in-place
@@ -310,6 +332,8 @@ inside the same container, so it sees them too.
 | `KEYCAST` | 1 | 0 hides the keystroke overlay. |
 | `KEYCAST_POS` | `SE` | Keystroke overlay corner. |
 | `VERBOSE` | 1 | Report overlay RPC failures in the log. |
+| `WAIT_SHOW` | 0.5 | Default max seconds a `WAIT_LUA`/`WAIT_TERMINAL_PATTERN` occupies in the final cast. |
+| `KEEP_MARKS` | 0 | 1 keeps the marks log and t0 next to the cast (see [When a take fails](#when-a-take-fails)). |
 
 **Terminal size:** your terminal must be at least `CAST_COLS`x`CAST_ROWS`. Some
 asciinema versions won't record a size larger than the real terminal. Check the
