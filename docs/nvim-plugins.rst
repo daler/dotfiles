@@ -1325,8 +1325,18 @@ terminal use.
 
     .. asciinema:: screencasts/casts/toggleterm.cast
         :preload:
-        :poster: data:text/plain,Press play to send bash, Python, and R code to the same embedded terminal.
-        :caption: **Drive several languages from one terminal split.** Send individual lines and visual selections to Bash, IPython, and R, preserving multiline indentation. In RMarkdown, send a whole chunk and advance to the next with :kbd:`<leader>cd`.
+        :poster: data:text/plain,Press play to open a terminal split and send bash code to it.
+        :caption: **The terminal is just a shell.** Open and hide a terminal split with :kbd:`<leader>t`, hop between it and the text buffer with :kbd:`<leader>q` / :kbd:`<leader>w`, and send the current line with :kbd:`gxx` or a visual selection with :kbd:`gx`.
+
+    .. asciinema:: screencasts/casts/toggleterm2.cast
+        :preload:
+        :poster: data:text/plain,Press play to drive IPython with the same mappings.
+        :caption: **Same keys, any REPL.** Start IPython in the terminal and send a line, then a whole function with its blank line and indentation intact, then call it.
+
+    .. asciinema:: screencasts/casts/toggleterm3.cast
+        :preload:
+        :poster: data:text/plain,Press play to send RMarkdown chunks to R.
+        :caption: **Send RMarkdown chunks.** Start R in the terminal, then use :kbd:`<leader>cd` to send the current chunk and advance to the next one.
 
 .. note::
 

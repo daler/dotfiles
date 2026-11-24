@@ -5,7 +5,7 @@
 #
 # Line numbers matter, because the driver navigates by absolute line
 # (`3GVjj`, `8G`). Keep the layout below in sync with
-# instructions/toggleterm_instructions.sh if you edit these.
+# instructions/toggleterm{,2,3}_instructions.sh if you edit these.
 
 TOGGLETERM_SH_FIXTURE=${TOGGLETERM_SH_FIXTURE:-$HOME/terminal_demo.sh}
 TOGGLETERM_RC_FIXTURE=${TOGGLETERM_RC_FIXTURE:-$HOME/terminal_demo.bashrc}

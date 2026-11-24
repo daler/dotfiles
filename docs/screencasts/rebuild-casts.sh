@@ -53,11 +53,13 @@ function record {
 # record gv
 # record vim-mergetool
 # record toggleterm
+# record toggleterm2
+record toggleterm3
 
 # Not yet recorded
 # record nvim-lspconfig
 # record nvim-lspconfig2
 # record trouble
-record conform
+# record conform
 # record punchlist
 # record vim-table-mode
