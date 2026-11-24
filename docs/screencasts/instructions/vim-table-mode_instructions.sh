@@ -3,7 +3,7 @@
 # README.md and NEXT.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-vim-table-mode --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/vim-table-mode.cast \
 #       /gifs/instructions/vim-table-mode_instructions.sh
 set -euo pipefail

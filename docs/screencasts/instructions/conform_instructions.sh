@@ -4,7 +4,7 @@
 # need a language server, only the formatters from mason.lua/setup.sh).
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-conform --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/conform.cast \
 #       /gifs/instructions/conform_instructions.sh
 set -euo pipefail

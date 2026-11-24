@@ -2,7 +2,7 @@
 # Cast: nvim-tree -- browse files and stage an untracked file. See README.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-nvim-tree --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/nvim-tree.cast \
 #       /gifs/instructions/nvim-tree_instructions.sh
 set -euo pipefail

@@ -2,7 +2,7 @@
 # Cast: which-key -- discover key mappings by prefix. See README.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-which-key --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/which-key.cast \
 #       /gifs/instructions/which-key_instructions.sh
 set -euo pipefail

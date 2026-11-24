@@ -3,7 +3,7 @@
 # The four parts: 1 status window, 2 staging, 3 committing, 4 side-by-side diff.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-vim-fugitive --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/vim-fugitive.cast /gifs/vim-fugitive_instructions.sh
 set -euo pipefail
 

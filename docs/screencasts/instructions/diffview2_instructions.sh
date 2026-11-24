@@ -2,7 +2,7 @@
 # Cast: diffview.nvim, part 2 of 2 -- browse history. See README.md and part 1.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-diffview2 --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/diffview2.cast \
 #       /gifs/instructions/diffview2_instructions.sh
 set -euo pipefail

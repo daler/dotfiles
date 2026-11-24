@@ -3,7 +3,7 @@
 # nvim-lspconfig_instructions.sh for the index of LSP casts.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-trouble --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/trouble.cast \
 #       /gifs/instructions/trouble_instructions.sh
 set -euo pipefail

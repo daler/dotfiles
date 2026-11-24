@@ -2,7 +2,7 @@
 # Cast: aerial -- navigate a file by its code outline. See README.md and NEXT.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-aerial --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/aerial.cast \
 #       /gifs/instructions/aerial_instructions.sh
 set -euo pipefail

@@ -2,7 +2,7 @@
 # Cast: gitsigns, part 3 of 3 -- blame and side-by-side diff. See README.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-gitsigns3 --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/gitsigns3.cast \
 #       /gifs/instructions/gitsigns3_instructions.sh
 set -euo pipefail

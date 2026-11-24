@@ -2,7 +2,7 @@
 # Cast: TreeSJ -- split and join a syntax node. See README.md and NEXT.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-treesj --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/treesj.cast \
 #       /gifs/instructions/treesj_instructions.sh
 set -euo pipefail

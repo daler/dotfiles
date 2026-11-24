@@ -12,7 +12,7 @@
 # (each +1 after the shebang line is inserted above them mid-take).
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-punchlist --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/punchlist.cast \
 #       /gifs/instructions/punchlist_instructions.sh
 set -euo pipefail

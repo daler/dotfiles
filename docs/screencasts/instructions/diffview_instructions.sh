@@ -3,7 +3,7 @@
 # The two parts: 1 working tree/revision diffs, 2 file/repository history.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-diffview --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/diffview.cast \
 #       /gifs/instructions/diffview_instructions.sh
 set -euo pipefail

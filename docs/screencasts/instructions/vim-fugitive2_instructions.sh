@@ -3,7 +3,7 @@
 # the four fugitive casts fit together.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-vim-fugitive2 --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/vim-fugitive2.cast /gifs/vim-fugitive2_instructions.sh
 set -euo pipefail
 source /gifs/lib.sh

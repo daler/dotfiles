@@ -8,7 +8,7 @@
 #   conform          <leader>cf format, and undo it
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-nvim-lspconfig --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/nvim-lspconfig.cast \
 #       /gifs/instructions/nvim-lspconfig_instructions.sh
 set -euo pipefail

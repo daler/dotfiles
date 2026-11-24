@@ -2,7 +2,7 @@
 # Cast: vim-mergetool -- resolve a two-hunk merge conflict. See README.md and NEXT.md.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-vim-mergetool --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/vim-mergetool.cast \
 #       /gifs/instructions/vim-mergetool_instructions.sh
 set -euo pipefail

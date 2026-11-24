@@ -3,7 +3,7 @@
 # The three parts: 1 inspect hunks, 2 stage/undo, 3 blame/side-by-side diff.
 #
 #   podman run -v $PWD/docs/screencasts:/gifs --platform linux/amd64 \
-#     --name cast --rm -it dotfiles \
+#     --name cast-gitsigns --rm -it dotfiles \
 #     bash /gifs/recorder.sh /gifs/casts/gitsigns.cast \
 #       /gifs/instructions/gitsigns_instructions.sh
 set -euo pipefail
