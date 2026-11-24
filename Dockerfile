@@ -93,6 +93,12 @@ RUN ./setup.sh --install-npm
 RUN ./setup.sh --nvim-mason-tools
 RUN ./setup.sh --nvim-treesitter-parsers
 
+
+RUN "$HOME/opt/bin/nvim" --headless \
+   "+lua require('lazy').load({plugins = {'blink.cmp'}})" \
+   "+lua if not vim.wait(120000, function() return require('blink.cmp.fuzzy').implementation_type == 'rust' end, 100) then vim.cmd('cquit 1') end" \
+   +qa
+
 # Not working on --platform=linux/amd64
 # RUN ./setup.sh --install-radian
 
