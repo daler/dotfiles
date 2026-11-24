@@ -7,7 +7,8 @@ KEYCAST=${KEYCAST:-1}          # 1 = show the keys being sent in a corner float
 RPC_ERRLOG=${RPC_ERRLOG:-/tmp/rpc.err}
 VERBOSE=${VERBOSE:-1}          # 1 = report overlay RPC failures on stderr
 CAP_STYLE=${CAP_STYLE:-reverse}   # caption look: 'reverse' (solid block) or 'bold'
-MARKS=${MARKS:-/gifs/marks.txt}   # timeline log consumed by timing.py --annotate
+MARKS=${MARKS:-/tmp/marks.txt}    # timeline log consumed by timing.py --annotate (recorder.sh sets a per-take path)
+WAIT_SHOW=${WAIT_SHOW:-0.5}        # max seconds a WAIT_* occupies in the final cast
 FAST_RECORD=${FAST_RECORD:-0}      # 1 = shorten SAY/NV sleeps; recorder restores them later
 MIN_DWELL=${MIN_DWELL:-0.1}        # sleep used by FAST_RECORD (never lengthens a shorter dwell)
 
@@ -43,14 +44,17 @@ EVAL() {
 }
 
 # Wait until any terminal buffer contains a line matching a Lua pattern.
-# Unlike an NV dwell, this is not shortened by FAST_RECORD, so it can guard
-# commands sent to a REPL whose startup time varies between machines.
+# $1 = pattern, $2 = timeout (default 15), $3 = seconds to show (default
+# $WAIT_SHOW). The wait itself is real (not shortened by FAST_RECORD), so it
+# can guard commands sent to a REPL whose startup time varies between
+# machines; timing.py then compresses it in the cast (see WAIT_SPAN).
 WAIT_TERMINAL_PATTERN() {
-  local pattern=$1 limit=${2:-15} deadline result
+  local pattern=$1 limit=${2:-15} show=${3:-$WAIT_SHOW} deadline result start
+  start=$(date +%s.%N)
   deadline=$((SECONDS + limit))
   while ((SECONDS < deadline)); do
     result=$(EVAL "luaeval('(function(pattern) for _, buf in ipairs(vim.api.nvim_list_bufs()) do if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == \"terminal\" then for _, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do if line:match(pattern) then return \"true\" end end end end return \"false\" end)(_A)', '$(vq "$pattern")')")
-    [ "$result" = true ] && return 0
+    [ "$result" = true ] && { WAIT_SPAN "$start" "$show" "terminal:$pattern"; return 0; }
     sleep 0.1
   done
   echo "terminal did not become ready (pattern: $pattern)" >&2
@@ -65,14 +69,20 @@ vq() { local s=${1//\'/\'\'}; printf '%s' "$s"; }
 #   WAIT_LUA 'return #vim.diagnostic.get(0) >= 3' 30
 #
 # Use this for anything asynchronous whose latency varies (language servers
-# attaching, a formatter finishing). Like WAIT_TERMINAL_PATTERN it is not
-# shortened by FAST_RECORD and does not add a mark to the log, so it doesn't
-# affect the timing of the final cast.
+# attaching, a formatter finishing). $3 = seconds to show (default $WAIT_SHOW).
+# Like WAIT_TERMINAL_PATTERN it is not shortened by FAST_RECORD, and it does not
+# add a marker (segment table rows are unchanged); instead timing.py compresses
+# the waited span to at most $3 seconds, so the final cast doesn't depend on
+# how fast the recording machine was.
 WAIT_LUA() {
-  local chunk=$1 limit=${2:-15} deadline
+  local chunk=$1 limit=${2:-15} show=${3:-$WAIT_SHOW} deadline start
+  start=$(date +%s.%N)
   deadline=$((SECONDS + limit))
   while ((SECONDS < deadline)); do
-    [ "$(EVAL "luaeval('loadstring(_A)() and \"true\" or \"false\"', '$(vq "$chunk")')")" = true ] && return 0
+    if [ "$(EVAL "luaeval('loadstring(_A)() and \"true\" or \"false\"', '$(vq "$chunk")')")" = true ]; then
+      WAIT_SPAN "$start" "$show" "lua:$chunk"
+      return 0
+    fi
     sleep 0.2
   done
   echo "timed out after ${limit}s waiting for: $chunk" >&2
@@ -179,4 +189,14 @@ MARK() {
   else
     printf '%s %s\n' "$(date +%s.%N)" "$1" >> "$MARKS"
   fi
+}
+
+# Log a completed wait: 'epoch.nanos wait:<desc>\tstart=<epoch.nanos>\tshow=N',
+# stamped at the moment the wait ended. timing.py --annotate squeezes the
+# [start, end] span down to at most N seconds and does not turn it into a
+# marker. Tabs/newlines in desc would break the line format, so flatten them.
+WAIT_SPAN() {
+  local desc=${3//$'\t'/ }
+  desc=${desc//$'\n'/ }
+  printf '%s wait:%s\tstart=%s\tshow=%s\n' "$(date +%s.%N)" "$desc" "$1" "$2" >> "$MARKS"
 }

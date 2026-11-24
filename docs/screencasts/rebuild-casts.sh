@@ -9,7 +9,9 @@ function record {
     --platform linux/amd64 \
     -e FAST_RECORD="${FAST_RECORD:-0}" \
     -e MIN_DWELL="${MIN_DWELL:-0.1}" \
-    --name cast \
+    -e KEEP_MARKS="${KEEP_MARKS:-0}" \
+    -e WAIT_SHOW="${WAIT_SHOW:-0.5}" \
+    --name "cast-$1" \
     --rm \
     -it dotfiles \
     bash /gifs/recorder.sh "/gifs/casts/${1}.cast" "/gifs/instructions/${1}_instructions.sh";

@@ -5,13 +5,17 @@ The annotation step uses three files:
 
     telescope.cast       the recording itself (asciicast v3, relative intervals)
     telescope.t0         wall clock (epoch.nanos) when `asciinema rec` started
-    telescope.marks.txt  'epoch.nanos label' per SAY/NV/TYPE step in the driver script
+    telescope.marks.txt  'epoch.nanos label' per SAY/NV/TYPE step in the driver script,
+                         plus 'wait:' lines for each WAIT_* span (see below)
 
 `--annotate` converts telescope.marks.txt + telescope.t0 into native asciicast v3
-marker events inside the cast. recorder.sh keeps the two inputs temporary because
-the embedded markers are all later timing operations need. Those markers make the
-cast navigable (`agg --select marker:3..marker:4`) and retimable
-(`--dump`/`--apply`) without
+marker events inside the cast. It also compresses each WAIT_* span (time spent
+waiting on a REPL, LSP, formatter...) to at most its `show` seconds, so the
+result does not depend on how fast the recording machine was; pass
+--keep-waits to skip that. recorder.sh keeps the two inputs temporary
+(KEEP_MARKS=1 saves them) because the embedded markers are all later timing
+operations need. Those markers make the cast navigable
+(`agg --select marker:3..marker:4`) and retimable (`--dump`/`--apply`) without
 ever looking at the raw escape codes.
 
 Everything else here works off those markers:
@@ -329,13 +333,16 @@ def read_marks(path: str, t0: float, shift: float, duration: float):
     is whole seconds). FAST_RECORD may append a tab-separated ``dwell=N`` field;
     it is returned separately so native marker labels stay human-readable.
     """
-    marks, dwells, dropped = [], [], 0
+    marks, dwells, waits, dropped = [], [], [], 0
     with open(path, encoding="utf-8") as fh:
         for ln in fh:
             ln = ln.rstrip("\n")
             if not ln.strip():
                 continue
             stamp, _, label = ln.partition(" ")
+            if label.startswith("wait:") and "\tstart=" in label:
+                waits.append(parse_wait(path, ln, stamp, label, t0, shift, duration))
+                continue
             dwell = 0.0
             if "\tdwell=" in label:
                 label, dwell_text = label.rsplit("\tdwell=", 1)
@@ -358,7 +365,57 @@ def read_marks(path: str, t0: float, shift: float, duration: float):
             file=sys.stderr,
         )
     ordered = sorted(zip(marks, dwells), key=lambda item: item[0][0])
-    return [mark for mark, _ in ordered], [dwell for _, dwell in ordered]
+    waits = sorted(w for w in waits if w[1] > w[0])
+    return [mark for mark, _ in ordered], [dwell for _, dwell in ordered], waits
+
+
+def parse_wait(path, ln, stamp, label, t0, shift, duration):
+    """Parse a WAIT_SPAN line into cast-relative (start, end, show).
+
+    The span is clipped to the cast; a span entirely outside it collapses to
+    start == end and is discarded by the caller.
+    """
+    fields = dict(f.split("=", 1) for f in label.split("\t")[1:] if "=" in f)
+    try:
+        end = float(stamp) - t0 + shift
+        start = float(fields["start"]) - t0 + shift
+        show = float(fields.get("show", "0.5"))
+    except (KeyError, ValueError):
+        sys.exit(f"{path}: cannot parse wait in {ln!r}")
+    clip = lambda t: max(0.0, min(duration, t))
+    return (clip(start), clip(end), show)
+
+
+def compress_waits(cast: Cast, waits: list[tuple[float, float, float]]) -> float:
+    """Squeeze each (start, end, show) span to at most `show` seconds.
+
+    Frames inside a span are scaled (a REPL booting is fast-forwarded, not cut),
+    and everything after it moves earlier. Spans already shorter than `show`
+    are left alone. Returns the total seconds removed.
+
+    This runs on the raw recording, before --restore-dwells, so the dwell
+    preceding a wait is still restored in full (as a hold on the settled frame
+    after the wait). Spans are applied latest-first so each one's coordinates
+    are still valid when its turn comes.
+    """
+    removed = 0.0
+    for start, end, show in sorted(waits, reverse=True):
+        have = end - start
+        if have <= show:
+            continue
+        scale = show / have
+        cut = have - show
+
+        def remap(t, start=start, end=end, scale=scale, cut=cut):
+            if t <= start:
+                return t
+            if t < end:
+                return start + (t - start) * scale
+            return t - cut
+
+        cast.events = [(remap(t), code, data) for t, code, data in cast.events]
+        removed += cut
+    return removed
 
 
 def main() -> None:
@@ -394,6 +451,11 @@ def main() -> None:
         action="store_true",
         help="restore SAY/NV sleeps shortened by FAST_RECORD (requires --annotate)",
     )
+    p.add_argument(
+        "--keep-waits",
+        action="store_true",
+        help="with --annotate, leave WAIT_* spans at their real recorded length",
+    )
     p.add_argument("-o", "--output", help="write the modified cast here ('-' = stdout)")
     p.add_argument("--in-place", action="store_true", help="overwrite the input cast")
     args = p.parse_args()
@@ -409,9 +471,12 @@ def main() -> None:
                 sys.exit(f"{path}: not found (needed by --annotate)")
         with open(t0_path, encoding="utf-8") as fh:
             t0 = float(fh.read().strip())
-        marks, dwells = read_marks(marks_path, t0, args.shift, cast.duration)
+        marks, dwells, waits = read_marks(marks_path, t0, args.shift, cast.duration)
         cast.strip_markers()
         cast.insert_markers(marks)
+        if waits and not args.keep_waits:
+            removed = compress_waits(cast, waits)
+            print(f"compressed {len(waits)} wait(s), removing {removed:.2f}s", file=sys.stderr)
         if args.restore_dwells:
             restore_dwells(cast, dwells)
             restored = sum(dwells[:-1]) if dwells else 0.0

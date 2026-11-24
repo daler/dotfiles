@@ -11,6 +11,10 @@ DEST=$1
 DRIVER=${2:-}
 BASE=${DEST%.cast}
 WORKDIR=$(mktemp -d)
+# The marks log lives in this take's private temp dir, never on the shared /gifs
+# mount, so parallel takes can't clobber each other. KEEP_MARKS=1 copies it (and
+# t0) next to the cast as <name>.marks.txt / <name>.t0 -- the names timing.py
+# --annotate looks for by default -- for debugging or re-annotating.
 if [ -z "${MARKS:-}" ]; then
   MARKS=$WORKDIR/marks.txt
 fi
@@ -19,6 +23,10 @@ export MARKS
 cleanup() {
   status=$?
   trap - EXIT
+  if [ "${KEEP_MARKS:-0}" = 1 ]; then
+    cp -f "$MARKS" "$BASE.marks.txt" 2>/dev/null || true
+    [ -n "${T0:-}" ] && cp -f "$T0" "$BASE.t0" 2>/dev/null || true
+  fi
   rm -rf "$WORKDIR"
   if [ "$status" -ne 0 ]; then
     rm -f "$DEST"
