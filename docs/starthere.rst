@@ -94,7 +94,7 @@ Do this if you already have your own files.
 
 * Read through :ref:`bash`, :ref:`vim`, and :ref:`tmux` to see how things are set up.
 * ``./setup.sh --vim-diffs`` may be helpful to you if you're updating. See
-  :ref:`working-with-diffs` if you need a refresher for working with diffs.
+  :ref:`working with diffs <working-with-diffs>` if you need a refresher for working with diffs.
 * Use the tool installation commands as-is, but make sure :file:`~/opt/bin` is on your ``$PATH``
 
 .. code-block:: bash
