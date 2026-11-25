@@ -1,6 +1,23 @@
 Changelog
 =========
 
+2026-11-25
+----------
+
+**docs**
+
+Doc for nvim plugins have been overhauled. They now have screenscasts to
+demonstrate functionality. These screenscasts are built using a new system of
+scripting nvim interactions along with annotations for those interactions (in
+``docs/screencasts``).
+
+**nvim**
+
+- Improved tab completion behavior
+- r.nvim and toggleterm play nicer together
+- always enter insert mode when switching to toggleterm
+- better ``gx`` and ``gxx`` behavior when sending python to ipython
+
 2026-11-20
 ----------
 
