@@ -8,16 +8,14 @@ MAKE_CODE_OUTLINE
 WAIT_NVIM
 SETUP "e $CODE_OUTLINE" "normal! gg"
 
-SAY 'flash jumps to visible text while your eyes stay on the destination' 4.0
-SAY 'Press s, then type the first two letters of the target' 3.5
+SAY 'Flash jumps to labeled matches in visible text' 3.0
+SAY "Let's jump to the def outputs() (middle of the screen). Press s ..."
 NV 's' 1.0
-SAY "Let's aim to get to the outputs() method. We can start typing the 'def' part of that line with 'de'..." 2.0
+SAY "Then start typing what you're aiming for (here, 'de')..." 3.0
 TYPE 'de' 0.18
-sleep 2.0
-
-SAY 'Each match gets a one-letter label. Type one to choose the exact destination.' 4.0
-SAY 'In this case, q to jump to the outputs() method.'
+SAY 'Labels will appear, and the next key you press will select one' 3.0
+SAY "Here 'q' selects the outputs() definition we're looking for." 2.5
 NV 'q' 2.5
 
-SAY 'The cursor arrives without counting lines or repeating search commands' 4.0
+SAY 'Jump directly—no line counting needed' 2.5
 NV ':qa!<CR>' 0.5

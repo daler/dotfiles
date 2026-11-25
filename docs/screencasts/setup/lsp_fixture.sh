@@ -6,7 +6,7 @@
 #
 #   stats.py:1   `import os` is unused                       (ruff F401)
 #   report.py:9  mean(samples)    passes a dict, not floats   (pyright)
-#   report.py:10 `totl` is undefined                          (pyright + ruff)
+#   report.py:10 `totl` is undefined                          (ruff F821)
 #
 # `mean` is defined in stats.py and used in both files, so rename/references
 # have something to cross. SAMPLES in report.py is deliberately badly spaced
