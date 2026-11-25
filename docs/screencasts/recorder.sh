@@ -1,5 +1,30 @@
 #!/bin/bash
 
+# Record one take: nvim under `asciinema rec`, driven by an instruction script.
+#
+#   recorder.sh DEST.cast [DRIVER.sh]
+#
+# Runs INSIDE the container (rebuild-casts.sh / parallel-casts.sh invoke it via
+# `podman run -v docs/screencasts:/gifs ...`), so /gifs is this directory and
+# /dotfiles is the repo the nvim config comes from. Not meant to run on the host.
+#
+# Flow:
+#   1. Make a private temp dir for marks/t0/logs and pin the pty size.
+#   2. Start DRIVER in the background; it waits on /tmp/nvim.sock (lib.sh).
+#   3. Foreground: `asciinema rec` nvim with caption.lua loaded into a temp
+#      cast, until the driver sends :qa! (or the failure path below kills it).
+#   4. If the driver failed: write DEST's basename + .log, exit 1.
+#   5. Otherwise: timing.py folds $MARKS into the temp cast as markers and
+#      prints the segment table; only then is it moved over DEST.
+# Trimming to a start marker is NOT done here; the callers do that.
+#
+# Env: NVIM_ARGS, CAST_COLS/CAST_ROWS (default 150x40), KEEP_MARKS=1,
+# FAST_RECORD=1, MARKS; plus anything lib.sh reads, since the driver inherits
+# this environment.
+#
+# DEST is only replaced by a fully recorded and annotated take, so a failed
+# re-take leaves the previous cast intact.
+
 set -euo pipefail
 
 DEST=$1
@@ -11,6 +36,9 @@ DEST=$1
 DRIVER=${2:-}
 BASE=${DEST%.cast}
 WORKDIR=$(mktemp -d)
+# Record here, not to DEST: asciinema --overwrite truncates its output as soon as
+# recording starts, which would destroy the previous cast on a failed take.
+TAKE=$WORKDIR/take.cast
 # The marks log lives in this take's private temp dir, never on the shared /gifs
 # mount, so parallel takes can't clobber each other. KEEP_MARKS=1 copies it (and
 # t0) next to the cast as <name>.marks.txt / <name>.t0 -- the names timing.py
@@ -28,9 +56,6 @@ cleanup() {
     [ -n "${T0:-}" ] && cp -f "$T0" "$BASE.t0" 2>/dev/null || true
   fi
   rm -rf "$WORKDIR"
-  if [ "$status" -ne 0 ]; then
-    rm -f "$DEST"
-  fi
   exit "$status"
 }
 trap cleanup EXIT
@@ -44,13 +69,14 @@ trap cleanup EXIT
 NVIM_ARGS=${NVIM_ARGS:-}
 T0=$WORKDIR/t0
 LOG=$WORKDIR/driver.log
+export RPC_ERRLOG=$WORKDIR/rpc.err
 FAILED=$WORKDIR/driver-failed
 FAILURE_LOG=$BASE.log
 HERE=$(cd "$(dirname "$0")" && pwd)
 
-# The image installs Node in a conda env, but this non-login shell does not
-# source ~/.path. Mason's pyright-langserver uses `env node` in its shebang.
-export PATH="$HOME/miniforge/envs/npm/bin:$HOME/opt/bin:$PATH"
+# This non-login shell doesn't activate conda. Node lives in the npm env;
+# R lives in base and must be visible before Neovim evaluates R.nvim's cond.
+export PATH="$HOME/miniforge/envs/npm/bin:$HOME/opt/bin:$HOME/miniforge/bin:$PATH"
 cd /dotfiles
 rm -f /tmp/nvim.sock "$FAILURE_LOG"
 
@@ -123,12 +149,16 @@ fi
 NVIM_CMD="nvim --listen /tmp/nvim.sock -c 'luafile /gifs/caption.lua'"
 [ -n "$NVIM_ARGS" ] && NVIM_CMD="$NVIM_CMD $NVIM_ARGS"
 echo "recorded command: $NVIM_CMD" >&2
-asciinema rec -f asciicast-v3 --overwrite "${SIZE_ARGS[@]}" "$DEST" -c "$NVIM_CMD"
+asciinema rec -f asciicast-v3 --overwrite "${SIZE_ARGS[@]}" "$TAKE" -c "$NVIM_CMD"
 
 if [ -s "$FAILED" ]; then
   cp "$LOG" "$FAILURE_LOG"
+  if [ -s "$RPC_ERRLOG" ]; then
+    printf '\n--- recent RPC errors ---\n' >> "$FAILURE_LOG"
+    tail -n 100 "$RPC_ERRLOG" >> "$FAILURE_LOG"
+  fi
   echo >&2
-  echo "DRIVER FAILED (exit $(cat "$FAILED")); $DEST is not usable. $FAILURE_LOG says:" >&2
+  echo "DRIVER FAILED (exit $(cat "$FAILED")); $DEST was left untouched. $FAILURE_LOG says:" >&2
   sed 's/^/  /' "$FAILURE_LOG" >&2
   exit 1
 fi
@@ -138,8 +168,11 @@ fi
 # uses short sleeps during the take; restore their configured durations now.
 TIMING_ARGS=()
 [ "${FAST_RECORD:-0}" = 1 ] && TIMING_ARGS+=(--restore-dwells)
-python3 "$HERE/timing.py" "$DEST" --annotate --marks "$MARKS" --t0 "$T0" \
+python3 "$HERE/timing.py" "$TAKE" --annotate --marks "$MARKS" --t0 "$T0" \
   "${TIMING_ARGS[@]}" --in-place --list
+# Cross-filesystem (container /tmp -> /gifs mount), so this is a copy, not an
+# atomic rename; fine since nothing reads DEST concurrently.
+mv -f "$TAKE" "$DEST"
 
 
 # Don't render to gif by default since we're embedding casts into the docs

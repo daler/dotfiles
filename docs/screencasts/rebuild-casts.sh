@@ -15,7 +15,7 @@ function record {
     --rm \
     -it dotfiles \
     bash /gifs/recorder.sh "/gifs/casts/${1}.cast" "/gifs/instructions/${1}_instructions.sh";
-  )
+  ) || return $?
   m=${2:-"0"}
   if [[ $# -ge 3 ]]; then
     ./timing.py --trim-start "marker:$m" --trim-end "marker:$3" --in-place "casts/$1.cast"
@@ -28,16 +28,12 @@ function record {
 #
 # record <name> [start marker to trim to] [end marker to trim to]
 
-# record telescope 0 -1
+# record telescope
 # record telescope2
 # record telescope3
 # record vim-fugitive
 # record vim-fugitive2
-
-# # replays vim-fugitive2 (which patches everything to run at faster
-# # speed), and then trim by the number of markers in that file.
-# record vim-fugitive3 $(grep -E '^NV' instructions/vim-fugitive2_instructions.sh | awk 'END{print NR-1}')
-# #
+# record vim-fugitive3
 # record vim-fugitive4
 # record diffview
 # record diffview2
@@ -54,12 +50,17 @@ function record {
 # record vim-mergetool
 # record toggleterm
 # record toggleterm2
-record toggleterm3
-
-# Not yet recorded
+# record toggleterm3
 # record nvim-lspconfig
 # record nvim-lspconfig2
 # record trouble
 # record conform
 # record punchlist
 # record vim-table-mode
+# record r-nvim
+# record r-nvim2
+# record blink
+# record treesitter
+# record vim-surround
+# record vim-commentary
+# record vis
