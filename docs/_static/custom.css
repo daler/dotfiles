@@ -1,30 +1,29 @@
 div.details p {
-    font-style: italic;
-    font-size: 90%;
-    color: #aaaaaa;
+    font-style: normal;
+    color: #444;
     padding: 5px;
     margin: 5px;
 }
 
 div.details a {
-    color: #aaaaaa;
+    color: #344b80;
 }
 
-div.details code {
-    background: none;
-    color: #aaaaaa;
+/* Inline code should remain distinct from prose, including inside details. */
+div.body code.literal {
+    background: #f0eee8;
+    border: 1px solid #d6d1c7;
+    border-radius: 3px;
+    padding: 0.05em 0.2em;
+    color: #333;
 }
 
 div.highlight {
-    border: 2px black solid;
+    border: 1px solid #ccc;
 }
 
 div.details pre:not(.ap-terminal) {
     background: #fcfcfc;
-}
-
-div.details div.highlight {
-    border: 1px black solid;
 }
 
 summary {
@@ -36,7 +35,7 @@ details.screencasts {
     border: 1px solid #b8bed1;
     border-left: 4px solid #5e6682;
     border-radius: 5px;
-    background: #e2ebff;
+    background: #f7f8fb;
 }
 
 details.screencasts > summary {
@@ -50,25 +49,12 @@ details.screencasts > summary::marker {
     color: #5e6682;
 }
 
-details.screencasts > summary::after {
-    content: "watch ▶";
-    display: inline-block;
-    margin-left: 0.75em;
-    color: #687293;
-    font-size: 0.8em;
-    font-weight: normal;
-}
-
 details.screencasts > summary:hover {
     background: #edf0f8;
 }
 
 details.screencasts[open] > summary {
     border-bottom: 1px solid #d7dae5;
-}
-
-details.screencasts[open] > summary::after {
-    content: "hide ▲";
 }
 
 details.screencasts > div.details {
@@ -127,6 +113,164 @@ div.document {
     width: unset;
 }
 
+/* Pages with an outline use the existing left column as persistent navigation. */
+.has-page-toc div.document {
+    display: flex;
+    align-items: flex-start;
+}
+
+.has-page-toc div.documentwrapper {
+    float: none;
+    flex: 1;
+    min-width: 0;
+    order: 2;
+}
+
+.has-page-toc div.bodywrapper {
+    margin: 0;
+}
+
+.has-page-toc div.sphinxsidebar {
+    float: none;
+    margin-left: 0;
+    flex: 0 0 240px;
+    order: 1;
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+#page-toc summary {
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+#page-toc nav ul {
+    margin: 0;
+    padding-left: 0.8em;
+    list-style: none;
+    margin-left: 0;
+}
+
+#page-toc nav > ul {
+    padding-left: 0;
+}
+
+/* Include the page title; the plugin catalog needs one extra category level. */
+#page-toc[data-depth="3"] nav ul ul ul ul,
+#page-toc[data-depth="4"] nav ul ul ul ul ul {
+    display: none;
+}
+
+#page-toc nav a {
+    display: block;
+    padding: 0.15em 0.3em;
+    border: none;
+    border-left: 3px solid transparent;
+    overflow-wrap: anywhere;
+}
+
+#page-toc nav a:hover,
+#page-toc nav a:focus-visible {
+    background: #edf0f8;
+}
+
+#page-toc a[aria-current="location"] {
+    color: #30384c;
+    background: #edf0f8;
+    border-left-color: #5e6682;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 940px) {
+    .has-page-toc div.document {
+        flex-direction: column;
+    }
+
+    .has-page-toc div.sphinxsidebar {
+        position: static;
+        flex: none;
+        width: 100%;
+        box-sizing: border-box;
+        max-height: none;
+        margin: 0 0 1.5em;
+        padding: 0;
+        background: #f7f8fb;
+        color: #3f4868;
+        border: 1px solid #d7dae5;
+    }
+
+    .has-page-toc div.sphinxsidebar a,
+    .has-page-toc div.sphinxsidebar h1.logo {
+        color: #3f4868;
+    }
+
+    .has-page-toc div.sphinxsidebarwrapper {
+        padding: 1em;
+    }
+
+    #page-toc nav {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
+@media print {
+    .has-page-toc div.sphinxsidebar {
+        display: none;
+    }
+}
+
+/* Keep plugin tables aligned without changing tables on other pages. */
+#nvim-plugins table.docutils {
+    width: 100%;
+}
+
+#nvim-plugins table.docutils td,
+#nvim-plugins table.docutils th {
+    hyphens: manual;
+    text-align: left;
+}
+
+/* Scope both index and category TOCs to this page, not the sidebar. */
+#plugin-list .contents.local {
+    font-size: 0.9em;
+}
+
+/* Keep category headings full-width; lay out individual plugin links in rows. */
+.plugin-toc > ul > li > ul,
+#plugin-list .contents.local:not(.plugin-toc) > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 0.15em 1.5rem;
+    align-items: start;
+}
+
+.plugin-toc > ul > li {
+    margin-bottom: 0.75em;
+}
+
+.plugin-toc > ul > li > p {
+    font-weight: bold;
+}
+
+#plugin-list .contents.local li {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#plugin-list .contents.local ul {
+    padding-left: 1.2em;
+}
+
+/* Override theme paragraph spacing without shrinking nested lists again. */
+div.body #plugin-list .contents.local li > p {
+    margin: 0.15em 0;
+    line-height: 1.35;
+}
+
 /* asciinema-player embeds (see docs/asciinema_ext.py). The player sizes itself
  * from the geometry in the cast header (see CAST_COLS/CAST_ROWS in
  * docs/screencasts/recorder.sh); this just lets it use the full width of the
@@ -170,6 +314,9 @@ div.details figure.screencast-figure > figcaption a {
 
 div.details figure.screencast-figure > figcaption code {
     color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
 .asciinema-embed .ap-player {

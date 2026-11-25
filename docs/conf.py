@@ -61,6 +61,19 @@ html_theme_options = {
     'show_relbars': True,
 }
 
+html_sidebars = {
+    '**': ['about.html', 'searchfield.html', 'page-toc.html', 'navigation.html', 'relations.html', 'donate.html'],
+}
+
+def page_toc_context(app, pagename, templatename, context, doctree):
+    # Sphinx counts the page title too; require at least two section entries.
+    context['has_page_toc'] = app.env.toc_num_entries.get(pagename, 0) > 2
+
+
+def setup(app):
+    app.connect('html-page-context', page_toc_context)
+
+
 # Running `make linkcheck` will ensure links are working. However, some sites
 # are resistant to scraping, so need some tweaks here:
 linkcheck_request_headers = {
