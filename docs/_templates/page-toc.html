@@ -1,0 +1,8 @@
+{% if has_page_toc %}
+<details id="page-toc" data-depth="{{ 4 if pagename == 'nvim-plugins' else 3 }}" open>
+  <summary>On this page</summary>
+  <nav aria-label="On this page">
+    {{ toc }}
+  </nav>
+</details>
+{% endif %}

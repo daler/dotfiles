@@ -1,4 +1,13 @@
 {% extends "!layout.html" %}
+
+{% block body_tag %}<body{% if has_page_toc %} class="has-page-toc"{% endif %}>{% endblock %}
+
+{% block extrahead %}
+{{ super() }}
+{% if has_page_toc %}
+<script src="{{ pathto('_static/page-toc.js', resource=True) }}" defer></script>
+{% endif %}
+{% endblock %}
 {% block footer -%}
 
 <script>
@@ -9,7 +18,7 @@
     if (elem != null) {
         // Get the closest "details" element and open it
         closest = elem.closest("details");
-        closest.open = true;
+        if (closest != null) closest.open = true;
     }
 </script>
 

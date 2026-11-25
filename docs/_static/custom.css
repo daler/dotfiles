@@ -1,34 +1,64 @@
 div.details p {
-    font-style: italic;
-    font-size: 90%;
-    color: #aaaaaa;
+    font-style: normal;
+    color: #444;
     padding: 5px;
     margin: 5px;
 }
 
 div.details a {
-    color: #aaaaaa;
+    color: #344b80;
 }
 
-div.details code {
-    background: none;
-    color: #aaaaaa;
+/* Inline code should remain distinct from prose, including inside details. */
+div.body code.literal {
+    background: #f0eee8;
+    border: 1px solid #d6d1c7;
+    border-radius: 3px;
+    padding: 0.05em 0.2em;
+    color: #333;
 }
 
 div.highlight {
-    border: 2px black solid;
+    border: 1px solid #ccc;
 }
 
-div.details pre {
+div.details pre:not(.ap-terminal) {
     background: #fcfcfc;
-}
-
-div.details div.highlight {
-    border: 1px black solid;
 }
 
 summary {
     font-weight: bold;
+}
+
+details.screencasts {
+    margin: 1.2em 0;
+    border: 1px solid #b8bed1;
+    border-left: 4px solid #5e6682;
+    border-radius: 5px;
+    background: #f7f8fb;
+}
+
+details.screencasts > summary {
+    cursor: pointer;
+    padding: 0.7em 0.85em;
+    color: #3f4868;
+    font-size: 1.1em;
+}
+
+details.screencasts > summary::marker {
+    color: #5e6682;
+}
+
+details.screencasts > summary:hover {
+    background: #edf0f8;
+}
+
+details.screencasts[open] > summary {
+    border-bottom: 1px solid #d7dae5;
+}
+
+details.screencasts > div.details {
+    padding: 0.2em 0.85em 0.6em;
 }
 
 div.note {
@@ -81,4 +111,254 @@ kbd.compound {
 
 div.document {
     width: unset;
+}
+
+/* Pages with an outline use the existing left column as persistent navigation. */
+.has-page-toc div.document {
+    display: flex;
+    align-items: flex-start;
+}
+
+.has-page-toc div.documentwrapper {
+    float: none;
+    flex: 1;
+    min-width: 0;
+    order: 2;
+}
+
+.has-page-toc div.bodywrapper {
+    margin: 0;
+}
+
+.has-page-toc div.sphinxsidebar {
+    float: none;
+    margin-left: 0;
+    flex: 0 0 240px;
+    order: 1;
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+#page-toc summary {
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+#page-toc nav ul {
+    margin: 0;
+    padding-left: 0.8em;
+    list-style: none;
+    margin-left: 0;
+}
+
+#page-toc nav > ul {
+    padding-left: 0;
+}
+
+/* Include the page title; the plugin catalog needs one extra category level. */
+#page-toc[data-depth="3"] nav ul ul ul ul,
+#page-toc[data-depth="4"] nav ul ul ul ul ul {
+    display: none;
+}
+
+#page-toc nav a {
+    display: block;
+    padding: 0.15em 0.3em;
+    border: none;
+    border-left: 3px solid transparent;
+    overflow-wrap: anywhere;
+}
+
+#page-toc nav a:hover,
+#page-toc nav a:focus-visible {
+    background: #edf0f8;
+}
+
+#page-toc a[aria-current="location"] {
+    color: #30384c;
+    background: #edf0f8;
+    border-left-color: #5e6682;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 940px) {
+    .has-page-toc div.document {
+        flex-direction: column;
+    }
+
+    .has-page-toc div.sphinxsidebar {
+        position: static;
+        flex: none;
+        width: 100%;
+        box-sizing: border-box;
+        max-height: none;
+        margin: 0 0 1.5em;
+        padding: 0;
+        background: #f7f8fb;
+        color: #3f4868;
+        border: 1px solid #d7dae5;
+    }
+
+    .has-page-toc div.sphinxsidebar a,
+    .has-page-toc div.sphinxsidebar h1.logo {
+        color: #3f4868;
+    }
+
+    .has-page-toc div.sphinxsidebarwrapper {
+        padding: 1em;
+    }
+
+    #page-toc nav {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
+@media print {
+    .has-page-toc div.sphinxsidebar {
+        display: none;
+    }
+}
+
+/* Keep plugin tables aligned without changing tables on other pages. */
+#nvim-plugins table.docutils {
+    width: 100%;
+}
+
+#nvim-plugins table.docutils td,
+#nvim-plugins table.docutils th {
+    hyphens: manual;
+    text-align: left;
+}
+
+/* Scope both index and category TOCs to this page, not the sidebar. */
+#plugin-list .contents.local {
+    font-size: 0.9em;
+}
+
+/* Keep category headings full-width; lay out individual plugin links in rows. */
+.plugin-toc > ul > li > ul,
+#plugin-list .contents.local:not(.plugin-toc) > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 0.15em 1.5rem;
+    align-items: start;
+}
+
+.plugin-toc > ul > li {
+    margin-bottom: 0.75em;
+}
+
+.plugin-toc > ul > li > p {
+    font-weight: bold;
+}
+
+#plugin-list .contents.local li {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#plugin-list .contents.local ul {
+    padding-left: 1.2em;
+}
+
+/* Override theme paragraph spacing without shrinking nested lists again. */
+div.body #plugin-list .contents.local li > p {
+    margin: 0.15em 0;
+    line-height: 1.35;
+}
+
+/* asciinema-player embeds (see docs/asciinema_ext.py). The player sizes itself
+ * from the geometry in the cast header (see CAST_COLS/CAST_ROWS in
+ * docs/screencasts/recorder.sh); this just lets it use the full width of the
+ * content column instead of being squeezed by alabaster's paragraph margins. */
+.asciinema-embed {
+    margin: 1em 0 1.5em 0;
+    max-width: 100%;
+}
+
+figure.screencast-figure {
+    margin: 1.5em 0 2.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+figure.screencast-figure .asciinema-embed {
+    margin: 0;
+}
+
+figure.screencast-figure > figcaption {
+    background: #f7f9ff;
+    color: #30384c;
+    padding: 0.75em 1em;
+    border-top: 1px solid #ccc;
+    text-align: left;
+    font-style: normal;
+}
+
+div.details figure.screencast-figure > figcaption p {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-size: 0.95em;
+    font-style: normal;
+}
+
+div.details figure.screencast-figure > figcaption a {
+    color: #344b80;
+}
+
+div.details figure.screencast-figure > figcaption code {
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.asciinema-embed .ap-player {
+    /* Player computes its own font size from the terminal geometry; this just
+     * keeps a sane floor/ceiling on small screens. */
+    line-height: 1.2;
+}
+
+/* The recordings contain Nerd Font glyphs (Powerline separators, Codicons,
+ * plane-15 Material Design icons). asciinema-player renders the cast as HTML
+ * text, so those glyphs come from a *browser* font, not from the terminal font
+ * that made the recording -- and the player's default stack (Consolas, Menlo,
+ * monospace) has no private-use coverage at all, which shows up as tofu or as
+ * random per-glyph fallback. So ship the font.
+ *
+ * These woff2 files are subset to just the codepoints used by the committed
+ * casts; regenerate with docs/regenerate-docs-font.sh after re-recording. */
+@font-face {
+    font-family: 'JetBrainsMonoNFM';
+    src: url('fonts/JetBrainsMonoNFM-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    /* Deliberately not `swap`: the player measures a reference character to
+     * derive its cell size, and doing that against a fallback font leaves the
+     * whole grid mis-sized once the real font arrives. */
+    font-display: block;
+}
+
+@font-face {
+    font-family: 'JetBrainsMonoNFM';
+    src: url('fonts/JetBrainsMonoNFM-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+}
+
+.asciinema-embed .ap-terminal {
+    /* !important: the player ships this on .ap-terminal itself, and its
+     * stylesheet may load after ours depending on Sphinx's asset order. */
+    font-family: 'JetBrainsMonoNFM', Menlo, Consolas, monospace !important;
+    /* JetBrains Mono ligates ->, != etc. into a single glyph, which would
+     * collapse two terminal cells into one and shift the line. */
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "calt" 0;
 }

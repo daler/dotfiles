@@ -32,7 +32,8 @@ sys.path.insert(0, ".")
 extensions = [
     "sphinx.ext.autosectionlabel",
     "details_ext",
-    "plugin_metadata_ext"
+    "plugin_metadata_ext",
+    "asciinema_ext"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -59,6 +60,19 @@ html_static_path = ['_static']
 html_theme_options = {
     'show_relbars': True,
 }
+
+html_sidebars = {
+    '**': ['about.html', 'searchfield.html', 'page-toc.html', 'navigation.html', 'relations.html', 'donate.html'],
+}
+
+def page_toc_context(app, pagename, templatename, context, doctree):
+    # Sphinx counts the page title too; require at least two section entries.
+    context['has_page_toc'] = app.env.toc_num_entries.get(pagename, 0) > 2
+
+
+def setup(app):
+    app.connect('html-page-context', page_toc_context)
+
 
 # Running `make linkcheck` will ensure links are working. However, some sites
 # are resistant to scraping, so need some tweaks here:

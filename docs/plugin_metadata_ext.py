@@ -6,6 +6,7 @@ Usage:
     .. plugin-metadata::
        :name: plugin-name
        :file: optional-filename-if-different
+       :noconfig:  (omit the Config dropdown)
 
 This will automatically extract:
 - Date added (first commit with this plugin)
@@ -60,6 +61,7 @@ class PluginMetadataDirective(Directive):
         "name": directives.unchanged_required,
         # Explicitly provide config file
         "file": directives.unchanged,
+        "noconfig": directives.flag,
         # Optional explanation of why deprecated, though should be filled in if
         # the file was removed.
         "deprecation": directives.unchanged,
@@ -96,19 +98,20 @@ class PluginMetadataDirective(Directive):
         # For later CSS styling
         _add_line(".. container:: plugin-metadata")
 
-        if history["added"]:
+        if history["added"] and history["added"]["hash"]:
             _add_line(f"   :Added:")
             _add_line(
                 f"    * {history['added']['date']} "
-                f"{_hash_link(history['added']['hash'])} "
+                f"{_hash_link(history['added']['hash'])}"
                 f"*{history['added']['message']}*"
             )
 
-        if history["changes"]:
-            _add_line("   :Changes:")
-            for change in history["changes"]:
+        changes = [change for change in history["changes"] if change["hash"]]
+        if changes:
+            _add_line("   .. details:: Changes")
+            for change in changes:
                 _add_line(
-                    f"    * {change['date']} "
+                    f"      * {change['date']} "
                     f"{_hash_link(change['hash'])}"
                     f"*{change['message']}*"
                 )
@@ -122,12 +125,11 @@ class PluginMetadataDirective(Directive):
         #         f"*{history['removed']['message']}*",
         #     )
         if deprecation:
-            _add_line("    .. warning::")
-            _add_line("     :DEPRECATED: " + deprecation)
+            _add_line("   **Deprecated:** " + deprecation)
 
         # This is where the nested parsing is useful: we can use the details
         # extension and it'll be parsed correctly
-        if os.path.exists(file_name):
+        if "noconfig" not in self.options and os.path.exists(file_name):
             file_label = file_name.replace("../", "")
             _add_line("   .. details:: Config")
             _add_line(
@@ -135,7 +137,7 @@ class PluginMetadataDirective(Directive):
             )
             _add_line(f"      .. literalinclude:: {file_name}", False)
             _add_line("         :language: lua")
-        else:
+        elif "noconfig" not in self.options and not deprecation:
             print(f"{file_name} does not exist")
 
         # Return the parsed nodes

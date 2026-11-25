@@ -3,9 +3,8 @@
 Nvim plugins
 ============
 
-Plugins are configured in :file:`lua/plugins/*.lua`.
-
-Plugins are configured using `lazy.nvim <https://github.com/folke/lazy.nvim>`_.
+Plugins are configured in :file:`lua/plugins/*.lua` using
+`lazy.nvim <https://github.com/folke/lazy.nvim>`_.
 This supports lazy-loading of plugins to keep a snappy startup time, and only
 load plugins when they're needed. See :ref:`nvim-lua` for my rationale on that.
 
@@ -23,10 +22,20 @@ load plugins when they're needed. See :ref:`nvim-lua` for my rationale on that.
 
     * ``keys``: only load the plugin when using these keymappings. Implies lazy=true.
 
-    * ``config``: run this stuff after the plugin loads. If config = true, just run
-      the default setup for the plugin.
+    * ``event``: load on an event such as ``VeryLazy`` or ``InsertEnter``.
+      Implies lazy=true.
 
-    * ``init``: similar to config, but used for pure-vim plugins
+    * ``config``: run this stuff after the plugin loads. ``config = true`` calls
+      ``require(<main>).setup(opts)``, with the main module inferred by lazy.nvim.
+
+    * ``opts``: options passed to the plugin's setup function; implies
+      ``config = true`` unless a custom config function is supplied.
+
+    * ``init``: runs before the plugin loads, during startup. Useful for setting
+      ``vim.g`` variables that vimscript plugins read when they load.
+
+    * ``cond``: load only when this condition is true. Unlike ``enabled``, a false
+      condition does not uninstall the plugin
 
     If keys are specified, this is the only place they need to be mapped, and they
     will make their way into the which-key menu even if they trigger a lazy-loaded
@@ -43,9 +52,13 @@ load plugins when they're needed. See :ref:`nvim-lua` for my rationale on that.
 
         Or delete the file completely.
 
-.. details:: screencast of lazy.nvim setting up plugins
+.. details:: Screencast
+    :class: screencasts
 
-  .. image:: gifs/lazy_annotated.gif
+    .. figure:: gifs/lazy_annotated.gif
+
+       **Set up plugins with lazy.nvim.** Follow the annotated plugin setup
+       recording to see lazy.nvim managing the Neovim plugin installation.
 
 Because of how frequently nvim changes, each plugin section below has
 a changelog. Since I have reorganized files over the years, the changelogs show
@@ -62,13 +75,17 @@ I've organized the plugins into broad categories:
 
 .. contents:: Plugin list
    :local:
-   :depth: 3
+   :depth: 2
+   :backlinks: none
+   :class: plugin-toc
 
 Git-related
 +++++++++++
 
 .. contents::
    :local:
+   :depth: 1
+   :backlinks: none
 
 The following commands are built-in vim commands when in diff mode, but
 are used heavily when working with git, so here is a reminder:
@@ -84,16 +101,16 @@ are used heavily when working with git, so here is a reminder:
       - description
 
     * - :kbd:`]c`
-      - Go to the next diff
+      - Goes to the next diff
 
     * - :kbd:`[c`
-      - Go to the previous diff
+      - Goes to the previous diff
 
     * - :kbd:`do`
-      - Use the [o]ther file's contents for the current diff
+      - Uses the other file's contents for the current diff. Mnemonic: [o]ther
 
     * - :kbd:`dp`
-      - [P]ut the contents of this diff into the other file
+      - Puts the contents of this diff into the other file. Mnemonic: [p]ut
 
 .. _vimfugitive_ref:
 
@@ -107,8 +124,30 @@ makes it a terminal-only version of GUIs like git-cola, gitkraken, or GitHub
 Desktop.
 
 I use it so much that I have a bash alias for starting this directly from the
-command line: ``gsv`` (mnemonic: git status viewer).
+command line: ``gsv``. Mnemonic: git status viewer.
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-fugitive.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Git status and inline diffs.** Open the status window with ``:Git``, navigate its untracked, unstaged, and staged sections, and expand inline diffs with :kbd:`=`.
+
+    .. asciinema:: screencasts/casts/vim-fugitive2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Build an incremental commit.** Select lines in an inline diff and stage just that selection with :kbd:`-`, then stage a whole file and toggle staged changes back out of the index.
+
+    .. asciinema:: screencasts/casts/vim-fugitive3.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Review and commit.** Continue from the staging demo: inspect the staged diff with :kbd:`=`, open a commit message with :kbd:`cc`, then save and close it to create the commit.
+
+    .. asciinema:: screencasts/casts/vim-fugitive4.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Compare a whole file.** Open a side-by-side diff from the status window with :kbd:`dd` and use :kbd:`do` and :kbd:`dp` to pull or push individual changes between versions.
 
 .. list-table::
     :header-rows: 1
@@ -119,12 +158,12 @@ command line: ``gsv`` (mnemonic: git status viewer).
 
     * - ``:Git``
       - Opens git status interface in a split window showing modified files,
-        staged changes, and recent commits. Navigate with j/k (hint: use `vim -c
-        ":Git"` from command line to jump right into it)
+        staged changes, and recent commits. Navigate with j/k (hint: use ``vim -c
+        ":Git"`` from command line to jump right into it)
 
     * - ``:tab Git``
       - Opens git status interface in a new tab for fullscreen usage. Press
-        :kbd:`:q` to return to previous editing session
+        ``:q`` to return to previous editing session
 
     * - :kbd:`=`
       - Toggles visibility of changes (diff) for the file under cursor. Shows
@@ -161,8 +200,21 @@ diffs across multiple files. It also has a nice interface for browsing previous
 commits. I find this to be nicer for browsing git history when there are
 multiple files per commit.
 
-I have a bash alias for starting this directly from the command line: ``glv``
-(mnemonic: git log viewer).
+I have a bash alias for starting this directly from the command line: ``glv``.
+Mnemonic: git log viewer.
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/diffview.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Compare changes across files.** Use ``:DiffviewOpen`` to compare the working tree with HEAD, move between file diffs with Tab and Shift-Tab, then compare a range covering the last two commits.
+
+    .. asciinema:: screencasts/casts/diffview2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Browse historical changes.** Use ``:DiffviewFileHistory`` with a path to list one file's commits, open a commit's diff, then omit the path to explore repository-wide history.
 
 .. list-table::
     :header-rows: 1
@@ -175,7 +227,7 @@ I have a bash alias for starting this directly from the command line: ``glv``
       - Opens the viewer
 
     * - ``:DiffviewFileHistory``
-      - View diffs for this file throughout git history
+      - Views diffs for this file throughout git history
 
 
 .. plugin-metadata::
@@ -184,8 +236,8 @@ I have a bash alias for starting this directly from the command line: ``glv``
 
 .. _gitsigns_ref:
 
-``gitsigns``
-~~~~~~~~~~~~
+``gitsigns.nvim``
+~~~~~~~~~~~~~~~~~
 
 `gitsigns <https://github.com/lewis6991/gitsigns.nvim>`_ shows a "gutter" along
 the left side of the line numbers, indicating where there were changes in
@@ -196,8 +248,21 @@ with vim-fugitive. I find fugitive to be more useful when making commits across
 multiple files, and gitsigns to be more useful in showing what's changed while
 still editing a file.
 
-Most commands require being in a hunk. Keymappings start with ``h``, mnemonic
-is "hunk" (the term for a block of changes).
+Most commands require being in a hunk. Keymappings use :kbd:`<leader>h`.
+Mnemonic: [h]unk (the term for a block of changes).
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/gitsigns.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Inspect changes in place.** Follow gutter signs with :kbd:`]h` and :kbd:`[h`, preview the current hunk without leaving the file, and select a hunk using the ``ih`` text object.
+
+    .. asciinema:: screencasts/casts/gitsigns2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Stage from the editing buffer.** Stage a hunk, undo that staging operation, then stage only selected lines. Finish by staging the remaining changes in the buffer.
 
 .. list-table::
     :header-rows: 1
@@ -207,31 +272,31 @@ is "hunk" (the term for a block of changes).
       - description
 
     * - :kbd:`[h`
-      - Jump to previous change (hunk) in the file
+      - Jumps to previous change (hunk) in the file
 
     * - :kbd:`]h`
-      - Jump to next change (hunk) in the file
+      - Jumps to next change (hunk) in the file
 
     * - :kbd:`<leader>hp`
-      - Preview hunk: opens floating window showing the diff for the current
-        change. Move away (j/k) to close.
+      - Previews hunk: opens floating window showing the diff for the current
+        change. Move away (j/k) to close
 
     * - :kbd:`<leader>hs`
-      - Stage hunk: marks the current change to be included in next commit. In
+      - Stages hunk: marks the current change to be included in next commit. In
         visual mode, stages only selected lines
 
     * - :kbd:`<leader>hr`
-      - Reset hunk: discards the current change, reverting to what's in git. In
+      - Resets hunk: discards the current change, reverting to what's in git. In
         visual mode, resets only selected lines
 
     * - :kbd:`<leader>hu`
-      - Undo stage hunk: unstages a previously staged hunk
+      - Undoes staging: unstages a previously staged hunk
 
     * - :kbd:`<leader>hS`
-      - Stage entire buffer: marks all changes in the current file for commit
+      - Stages entire buffer: marks all changes in the current file for commit
 
     * - :kbd:`<leader>hR`
-      - Reset entire buffer: discards all changes in the current file
+      - Resets entire buffer: discards all changes in the current file
 
     * - :kbd:`<leader>hb`
       - Shows git blame info for current line in a floating window (who changed
@@ -243,20 +308,28 @@ is "hunk" (the term for a block of changes).
 
 
 Additionally, this supports hunks as text objects using ``ih`` (inside hunk).
-E.g., select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
+For example, select a hunk with :kbd:`vih`, or delete a hunk with :kbd:`dih`.
 
 .. plugin-metadata::
    :name: gitsigns
 
 .. _gv_ref:
 
-``gv``
-~~~~~~
+``gv.vim``
+~~~~~~~~~~
 
-`vim.gv <https://github.com/junegunn/gv.vim>`_ provides an interface to easily
+`gv.vim <https://github.com/junegunn/gv.vim>`_ provides an interface to easily
 view and browse git history.
 
 It's simpler than :ref:`diffview_ref` which can be helpful sometimes.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/gv.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Explore the commit graph.** Open ``:GV`` to browse branches and merge commits, inspect a commit's patch with Enter, then run it on a visual selection to narrow history to a particular block.
 
 .. list-table::
     :header-rows: 1
@@ -265,11 +338,11 @@ It's simpler than :ref:`diffview_ref` which can be helpful sometimes.
     * - command
       - description
 
-    * - :kbd:`:GV` in visual mode
-      - View commits affecting selection
+    * - ``:GV`` in visual mode
+      - Shows commits affecting selection
 
-    * - :kbd:`GV`
-      - Open a commit browser, hit :kbd:`Enter` on a commit to view
+    * - ``:GV``
+      - Opens a commit browser, hit :kbd:`Enter` on a commit to view
 
 .. plugin-metadata::
    :name: gv
@@ -282,11 +355,16 @@ It's simpler than :ref:`diffview_ref` which can be helpful sometimes.
 
 `vim-mergetool <https://github.com/samoshkin/vim-mergetool>`_ makes 3-way merge
 conflicts much easier to deal with by only focusing on what needs to be
-manually edited.
+manually edited, while allowing enough flexibility in configuration to
+reproduce default behaviors.
 
-This makes it MUCH easier to work with 3-way diffs (like what happens in merge
-conflicts), while at the same time allowing enough flexibility in configuration
-to be able to reproduce default behaviors.
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-mergetool.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Resolve conflicts one hunk at a time.** Start the focused merge view, navigate unresolved hunks, accept an incoming change with ``:diffget`` while keeping another local, then save and stop the merge tool.
 
 .. note::
 
@@ -302,16 +380,16 @@ to be able to reproduce default behaviors.
     * - command
       - description
 
-    * - :kbd:`:MergetoolStart`
+    * - ``:MergetoolStart``
       - Starts the tool
 
-    * - :kbd:`:diffget`
+    * - ``:diffget``
       - Pulls "theirs" (that is, assume the remote is correct)
 
     * - :kbd:`do`, :kbd:`dp`
-      - Used as in vim diff mode
+      - Uses vim's built-in diff operations
 
-Save and quit, or use :kbd:`:MergetoolStop`.
+Save and quit, or use ``:MergetoolStop``.
 
 .. plugin-metadata::
    :name: vim-mergetool
@@ -320,13 +398,18 @@ Save and quit, or use :kbd:`:MergetoolStop`.
 LSP-related
 +++++++++++
 
+.. contents::
+   :local:
+   :depth: 1
+   :backlinks: none
+
 The Language Server Protocol lets an editor like neovim communicate with
-a language server. A language server is installed per language (e.g. Python,
-Bash, etc), which knows a LOT about the language, and supports things like:
+a language server. A language server is installed per language (e.g., Python,
+Bash, etc.), which knows a LOT about the language, and supports things like:
 
 - advanced autocomplete
 - advanced highlighting
-- going to definitiions or references (e.g., find where a function is
+- going to definitions or references (e.g., find where a function is
   originally defined, or where it is used)
 - identifying syntax errors directly in the editor
 
@@ -348,23 +431,22 @@ code. You may find you need to add type annotations in some cases.
 
 Because the experience can be hit-or-miss depending on the language you're
 using, and the language servers need to be installed, LSP is disabled by
-default; start it with :kbd:`cl`.
+default; start it with :kbd:`<leader>cl`.
 
 .. note::
 
    These dotfiles use the native LSP configuration API and require nvim 0.12
    or newer.
 
-.. contents::
-   :local:
 
 .. _nvimlspconfig_ref:
 
 ``nvim-lspconfig``
 ~~~~~~~~~~~~~~~~~~
 
-`nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ provides access to
-nvim's Language Server Protocol (LSP).
+`nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ supplies default
+language server configurations. These dotfiles use nvim's native
+``vim.lsp.config`` and ``vim.lsp.enable`` APIs to configure and enable them.
 
 .. note::
 
@@ -374,15 +456,25 @@ nvim's Language Server Protocol (LSP).
 
      ./setup.sh --install-npm  # install nodejs into conda env
 
-These keymaps start with :kbd:`c` (mnemonic: "code"). You need to start the
-language server with :kbd:`cl` to have access to any of these keymaps.
+Start the language server with :kbd:`<leader>cl` to use its features.
+Custom commands use :kbd:`<leader>c` as the prefix. Mnemonic: [c]ode.
+In nvim 0.11+, the `default keymaps
+<https://neovim.io/doc/user/lsp.html#gra>`__ for LSP commands use the built-in
+:kbd:`gr` prefix; the mnemonics below describe only the final key.
 
-In nvim 0.11+, there are `default keymaps
-<https://neovim.io/doc/user/lsp.html#gra>`__ for LSP commands. These use the
-:kbd:`gr` prefix (presumably g for "global", but not sure what the mnemonic is
-for "r"). Otherwise, I'm using :kbd:`<leader>c` as the prefix for custom
-commands; mnemonic is "code".
 
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/nvim-lspconfig.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Start the LSP and read diagnostics.** Attach pyright and ruff to a Python buffer, jump between problems, expand a diagnostic message, toggle inline diagnostic text, and inspect hover documentation.
+
+    .. asciinema:: screencasts/casts/nvim-lspconfig2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Navigate and rename across files.** Jump to a function's definition with :kbd:`Ctrl-]`, list its references with :kbd:`grr`, rename it with :kbd:`grn`, and check both edited files before saving.
 
 .. list-table::
     :header-rows: 1
@@ -403,21 +495,25 @@ commands; mnemonic is "code".
       - Jumps to previous diagnostic (error/warning/hint) in the buffer
     * - :kbd:`]d`
       - Jumps to next diagnostic (error/warning/hint) in the buffer
-    * - :kbd:`grt`
+    * - :kbd:`Ctrl-]`
       - Jumps to where the symbol under cursor is defined (e.g., function
-        definition, class declaration). Mnemonic: [g]o to [r]eference [t]ype
+        definition, class declaration), even in another file. :kbd:`Ctrl-o`
+        jumps back
+    * - :kbd:`grt`
+      - Jumps to the definition of the *type* of the symbol under cursor (e.g.,
+        the class of a variable). Mnemonic: [t]ype
     * - :kbd:`K`
       - Shows hover documentation for the symbol under cursor in a floating
         window (function signature, docstring, type info)
     * - :kbd:`grn`
       - Renames all instances of the symbol under cursor throughout the project.
-        Opens prompt for new name. Mnemonic: [g]o to [r]eference [n]ame
+        Opens prompt for new name. Mnemonic: [n]ame
     * - :kbd:`grr`
       - Opens list of all places where the symbol under cursor is referenced.
-        Select one to jump to it. Mnemonic: [g]o to [r]eferences [r]eferences
+        Select one to jump to it. Mnemonic: [r]eferences
     * - :kbd:`gra`
       - Opens menu of available code actions for current context (quick fixes,
-        refactorings, imports). Mnemonic: [g]o to [r]eference [a]ction
+        refactorings, imports). Mnemonic: [a]ction
 
 .. plugin-metadata::
    :name: nvim-lspconfig
@@ -428,7 +524,7 @@ commands; mnemonic is "code".
 ~~~~~~~~~~~~~~
 
 `mason.nvim <https://github.com/williamboman/mason.nvim>`_ easily installs
-Language Server Protocols, debuggers, linters, and formatters. Use ``:Mason``
+language servers, debuggers, linters, and formatters. Use ``:Mason``
 to open the interface, and hit :kbd:`i` on what you want to install, or
 :kbd:`g?` for more help.
 
@@ -452,17 +548,16 @@ the next time you set up dotfiles.
   --install-npm`` to easily create a conda env with npm and add its bin dir to
   your ``$PATH``.
 
-For Python, try ``pyright``.
+The configured language tools include ``pyright`` and ``ruff`` for Python,
+``lua-language-server`` for Lua (nvim-lspconfig calls this ``lua_ls``),
+``bash-language-server``, ``yaml-language-server``, and
+``ansible-language-server``. For R, :ref:`rnvim_ref` provides its own ``r_ls``,
+so a separate ``r-languageserver`` installation isn't needed for that workflow.
 
-For Lua (working on your nvim configs), use ``lua-language-server``
-(nvim-lspconfig calls this ``lua-ls``).
-
-For Bash, ``bash-language-server``.
-
-For R, you can try ``r-languageserver``, but this needs to be installed within
-the environment you're using R (and R itself must be available). It's not
-that useful if you want to use it in multiple conda environments. It doesn't
-have that many features yet, either.
+On older Linux systems, set ``OLD_GLIBC`` before starting nvim. The configured
+installer skips entries marked ``skip_on_old_glibc`` (currently ``stylua`` and
+``tree-sitter-cli``), whose prebuilt binaries may require newer glibc. Install
+compatible versions yourself; see :ref:`treesitter_ref` for the HPC workflow.
 
 .. list-table::
     :header-rows: 1
@@ -476,7 +571,7 @@ have that many features yet, either.
         U to update
 
     * - :kbd:`i` on an item
-      - Install the selected language server or tool
+      - Installs the selected language server or tool
 
 
 .. plugin-metadata::
@@ -491,11 +586,19 @@ have that many features yet, either.
 diagnostics into a single window. You can use that to navigate the issues found
 in your code.
 
-This only works if you've started the LSP for the buffer with :kbd:`cl` (see :ref:`nvimlspconfig_ref`).
+This only works if you've started the LSP for the buffer with :kbd:`<leader>cl` (see :ref:`nvimlspconfig_ref`).
 
 The alternative is using :kbd:`[d` and :kbd:`]d` to move between diagnostics
 (see :ref:`nvimlspconfig_ref`) but it's nice to get an overview with this
 plugin.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/trouble.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Survey project diagnostics.** Open trouble's bottom panel with :kbd:`<leader>ct`, see problems grouped by file, move through entries, and press Enter to jump to the corresponding source line.
 
 .. list-table::
     :header-rows: 1
@@ -506,22 +609,30 @@ plugin.
     * - :kbd:`<leader>ct`
       - Toggles trouble.nvim diagnostic window at bottom of screen, showing all
         LSP errors/warnings in your project. Navigate with j/k, Enter to jump to
-        issue, q to close (or `<leader>ct` again).
+        issue, q to close (or :kbd:`<leader>ct` again)
 
 .. plugin-metadata::
    :name: trouble
 
 .. _conform_ref:
 
-``conform``
-~~~~~~~~~~~
+``conform.nvim``
+~~~~~~~~~~~~~~~~
 
 `conform <https://github.com/stevearc/conform.nvim>`__ runs style formatters on
 the current buffer.
 
-For example, if ``black`` is avaiable it will run that on the code, but in
+For example, if ``black`` is available it will run that on the code, but in
 a way that the changes can be undone (in contrast to running ``black``
 manually on the file, which overwrites it).
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/conform.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Format Python without leaving the editor.** Run the configured ruff and black formatters with :kbd:`<leader>cf`, then undo and redo the formatting as ordinary buffer edits without writing the file.
 
 .. list-table::
     :header-rows: 1
@@ -531,12 +642,13 @@ manually on the file, which overwrites it).
       - description
 
     * - :kbd:`<leader>cf`
-      - Run configured formatter on buffer (mnemonic: [c]ode [f]ormat)
+      - Runs configured formatter on buffer. Mnemonic: [c]ode [f]ormat
 
 You can install formatters via :ref:`mason_ref`.
 
-For example, for Python I have ``isort`` and ``black``; for Lua, ``stylua``; for
-bash, ``shfmt``. See the config file for how to set this up.
+For example, for Python I have ``ruff`` and ``black``; for Lua, ``stylua``; for
+bash, ``shfmt``. See the config file for the other configured formatters and
+how to set this up.
 
 .. plugin-metadata::
    :name: conform
@@ -564,11 +676,13 @@ git are described above).
 
 .. contents::
    :local:
+   :depth: 1
+   :backlinks: none
 
 .. _telescope_ref:
 
-``telescope``
-~~~~~~~~~~~~~
+``telescope.nvim``
+~~~~~~~~~~~~~~~~~~
 
 `Telescope <https://github.com/nvim-telescope/telescope.nvim>`_ provides
 a floating window with fuzzy-search selection.
@@ -577,6 +691,24 @@ Searching and selecting what, you ask? Pretty much anything you hook it up to.
 
 Type in the text box to filter the list. Hit enter to select (and open the
 selected file in a new buffer). Hit Esc twice to exit.
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/telescope.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Find a file by name.** Open Telescope with :kbd:`<leader>ff`, narrow the current directory's file list by typing ``setup``, move between matches, and press Enter to open a result.
+
+    .. asciinema:: screencasts/casts/telescope2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Search text across files.** Launch live grep with :kbd:`<leader>fg`, search for ``python``, browse matching lines with the arrow keys, and open a hit at its source location.
+
+    .. asciinema:: screencasts/casts/telescope3.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Search the current buffer.** Use :kbd:`<leader>/` to find ``conda``, move through matches while the preview shows their surrounding context, then press Enter to jump to the selected line.
 
 .. list-table::
     :header-rows: 1
@@ -591,8 +723,8 @@ selected file in a new buffer). Hit Esc twice to exit.
         Handy alternative to ``:e``
 
     * - :kbd:`<leader>fg`
-      - Search directory for string. This is like using ripgrep, but in vim.
-        Selecting entry takes you right to the line.
+      - Searches directory for string. This is like using ripgrep, but in vim.
+        Selecting entry takes you right to the line
 
     * - :kbd:`<leader>/`
       - Opens floating window for fuzzy search within current buffer. Type to
@@ -624,13 +756,22 @@ Other useful things you can do with Telescope:
 
 .. _nvimtree_ref:
 
-``nvim-tree``
-~~~~~~~~~~~~~
+``nvim-tree.lua``
+~~~~~~~~~~~~~~~~~
 
 `nvim-tree <https://github.com/nvim-tree/nvim-tree.lua>`__ provides a filesystem tree for browsing.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/nvim-tree.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Browse files and manage staging.** Open the tree with :kbd:`<leader>fb`, expand directories and open files, switch focus between browser and editor, then stage and unstage a file with :kbd:`ga` and :kbd:`gu`.
+
 .. list-table::
     :header-rows: 1
+    :align: left
 
     * - command
       - description
@@ -640,18 +781,18 @@ Other useful things you can do with Telescope:
         Enter to open files/folders, q to close
 
     * - :kbd:`-` (within browser)
-      - Navigate up one directory level
+      - Navigates up one directory level
 
     * - :kbd:`Enter` (within browser)
       - Opens file in editor, expands directory to show contents, or collapses
         open directory
 
     * - :kbd:`ga` (within browser)
-      - Add file to git. Useful when you have fugitive also open, and want to
+      - Adds file to git. Useful when you have fugitive also open, and want to
         add a file from an as-yet-untracked directory
 
     * - :kbd:`gu` (within browser)
-      - Unstage file to git. Useful when you have fugitive also open
+      - Unstages file. Useful when you have fugitive also open
 
 The window-switching shortcuts :kbd:`<leader>w` and :kbd:`<leader>q` (move to
 windows left and right respectively; see :ref:`toggleterm_ref`) also work.
@@ -661,8 +802,8 @@ windows left and right respectively; see :ref:`toggleterm_ref`) also work.
 
 .. _whichkey_ref:
 
-``which-key``
-~~~~~~~~~~~~~
+``which-key.nvim``
+~~~~~~~~~~~~~~~~~~
 
 `which-key <https://github.com/folke/which-key.nvim>`_ displays a popup with
 possible key bindings of the command you started typing. This is wonderful for
@@ -672,8 +813,8 @@ The window will appear 1 second after pressing a key. For example, try pressing
 the leader key (:kbd:`,`) and waiting a second to see all the keys you can
 press after the leader and what the behavior will be.
 
-The length of this delay is configured with ``vim.o.timeoutlen``, e.g.
-``vim.o.timeoutlen=500`` for half a sectond). There is no timeout though for
+The length of this delay is configured with ``vim.o.timeoutlen``, e.g.,
+``vim.o.timeoutlen=500`` for half a second. There is no timeout though for
 registers (``"``) or marks (``'``) or spelling (``z=`` over a word).
 
 You can hit a displayed key to execute the command, or if it's a multi-key
@@ -689,6 +830,14 @@ There is currently no extra configuration. Instead, when a key is mapped
 additional parameter ``desc = "description of mapping"`` is included. This
 allows which-key to show a description. Mappings with no descriptions will
 still be shown.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/which-key.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Discover a mapping interactively.** Press the leader key and pause to see named command groups, follow a prefix into its submenu, use Backspace to return, and dismiss the menu with Escape.
 
 .. code-block:: lua
 
@@ -711,19 +860,19 @@ still be shown.
      - description
 
    * - any
-     - after 1 second, shows a popup menu
+     - Shows a popup menu after 1 second
 
    * - :kbd:`<Backspace>`
      - Goes back a menu
 
    * - :kbd:`z=` (over a word)
-     - Show popup with spelling suggestions, use indicated character to select
+     - Shows popup with spelling suggestions, use indicated character to select
 
    * - :kbd:`'`
-     - Show popup with list of marks
+     - Shows popup with list of marks
 
    * - :kbd:`"`
-     - Show popup with list of registers
+     - Shows popup with list of registers
 
 .. plugin-metadata::
    :name: which-key
@@ -731,13 +880,22 @@ still be shown.
 
 .. _aerial_ref:
 
-``aerial``
-~~~~~~~~~~
+``aerial.nvim``
+~~~~~~~~~~~~~~~
 
 `aerial <https://github.com/stevearc/aerial.nvim>`_ provides a navigation
 sidebar for quickly moving around code (for example, jumping to functions or
-classes or methods). For markdown or ReStructured Text, it acts like a table of
+classes or methods). For markdown or reStructuredText, it acts like a table of
 contents.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/aerial.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Navigate a file by structure.** Open aerial's outline of Python classes, methods, and functions, press Enter to jump to a symbol, then use :kbd:`{` and :kbd:`}` to move between symbols from the main buffer.
+
 
 .. list-table::
     :header-rows: 1
@@ -752,7 +910,7 @@ contents.
         q to close
 
     * - :kbd:`{` and :kbd:`}`
-      - Jump to previous (`{`) or next (`}`) code item in the buffer (function,
+      - Jumps to previous (``{``) or next (``}``) code item in the buffer (function,
         class, snakemake rule, markdown section)
 
 For navigating complex codebases, there are other keys that are automatically
@@ -778,7 +936,15 @@ editing is too disruptive to track position automatically.
 A summary can be shown that can be pasted into LLM agents to direct them right
 to the files and lines of interest.
 
-The keymaps use the ``<localleader>``, by default :kbd:`\`.
+The keymaps use the ``<localleader>``, by default :kbd:`\\`.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/punchlist.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Collect review notes without changing the code.** Attach DISCUSS and FIX notes to lines or selections, watch them follow edits, move a note with cut and paste, then compile the notes into a prompt with file and line references.
 
 .. list-table::
     :header-rows: 1
@@ -788,25 +954,25 @@ The keymaps use the ``<localleader>``, by default :kbd:`\`.
       - description
 
     * - :kbd:`<localleader>pd`
-      - Add a DISCUSS annotation
+      - Adds a DISCUSS annotation
 
     * - :kbd:`<localleader>pf`
-      - Add a FIX annotation
+      - Adds a FIX annotation
 
     * - :kbd:`<localleader>ps`
-      - Show the list of all annotations, ready to copy
+      - Shows the list of all annotations, ready to copy
 
     * - :kbd:`<localleader>px`
-      - Cut an annotation
+      - Cuts an annotation
 
     * - :kbd:`<localleader>pv`
-      - Paste an annotation on current line/selection
+      - Pastes an annotation on current line/selection
 
     * - :kbd:`<localleader>pr`
-      - Re-anchor an annotation
+      - Re-anchors an annotation
 
     * - :kbd:`<localleader>pc`
-      - Clear all annotations in repo (asks for confirmation)
+      - Clears all annotations in repo (asks for confirmation)
 
 .. plugin-metadata::
    :name: punchlist
@@ -817,10 +983,15 @@ Visuals
 
 These plugins add various visual enhancements to nvim.
 
+.. contents::
+   :local:
+   :depth: 1
+   :backlinks: none
+
 .. _bufferline_ref:
 
-``bufferline``
-~~~~~~~~~~~~~~
+``bufferline.nvim``
+~~~~~~~~~~~~~~~~~~~
 
 `bufferline.nvim <https://github.com/akinsho/bufferline.nvim>`_ provides the
 tabs along the top.
@@ -840,8 +1011,8 @@ tabs along the top.
 
 .. _beacon_ref:
 
-``beacon``
-~~~~~~~~~~
+``beacon.nvim``
+~~~~~~~~~~~~~~~
 
 `Beacon <https://github.com/danilamihailov/beacon.nvim>`_ provides an animated
 marker to show where the cursor is.
@@ -854,15 +1025,15 @@ marker to show where the cursor is.
       - description
 
     * - :kbd:`n` or :kbd:`N` after search
-      - Flash beacon at search hit
+      - Flashes beacon at search hit
 
 .. plugin-metadata::
    :name: beacon
 
 .. _lualine_ref:
 
-``lualine``
-~~~~~~~~~~~
+``lualine.nvim``
+~~~~~~~~~~~~~~~~
 
 `lualine <https://github.com/nvim-lualine/lualine.nvim>`_ provides the status line along the bottom.
 
@@ -874,8 +1045,8 @@ can add to it.
 
 .. _indentblankline_ref:
 
-``indent-blankline``
-~~~~~~~~~~~~~~~~~~~~
+``indent-blankline.nvim``
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `indent-blankline <https://github.com/lukas-reineke/indent-blankline.nvim>`_
 shows vertical lines where there is indentation, and highlights one of these
@@ -890,8 +1061,8 @@ may want to play around with the symbol used.
 
 .. _rendermarkdown_ref:
 
-``render-markdown``
-~~~~~~~~~~~~~~~~~~~
+``render-markdown.nvim``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 `render-markdown
 <https://github.com/MeanderingProgrammer/render-markdown.nvim>`__ provides
@@ -921,6 +1092,14 @@ typically heavy on the source code, and the background of code chunks can get
 distracting when entering and exiting insert mode. However, this plugin can be
 useful when reviewing a long RMarkdown file to focus on the narrative text.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/render-markdown.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Switch between reading and editing Markdown.** See rendered headings, links, checkboxes, tables, and code blocks; move onto a line or enter insert mode to reveal the source, and toggle rendering with :kbd:`<leader>rm`.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -929,17 +1108,17 @@ useful when reviewing a long RMarkdown file to focus on the narrative text.
       - description
 
     * - :kbd:`<leader>rm`
-      - Toggles render-markdown on/off for the current markdown file. When on,
-        shows enhanced formatting (bullets, tables, code blocks). When off, shows
-        raw markdown. Mnemonic: [r]ender [m]arkdown
+      - Toggles rendering in RMarkdown buffers by switching the filetype between
+        ``rmarkdown`` and ``markdown`` and disabling or enabling RenderMarkdown.
+        Only mapped in RMarkdown buffers. Mnemonic: [r]ender [m]arkdown
 
 .. plugin-metadata::
    :name: render-markdown
 
 .. _nvimcolorizer_ref:
 
-``nvim-colorizer``
-~~~~~~~~~~~~~~~~~~
+``nvim-colorizer.lua``
+~~~~~~~~~~~~~~~~~~~~~~
 
 `nvim-colorizer <https://github.com/norcalli/nvim-colorizer.lua>`__ is
 a high-performance color highlighter. It converts hex codes to their actual
@@ -952,16 +1131,16 @@ colors.
     * - command
       - description
 
-    * - ``ColorizerToggle``
-      - Toggle colorizing of hex codes
+    * - ``:ColorizerToggle``
+      - Toggles colorizing of hex codes
 
 .. plugin-metadata::
    :name: nvim-colorizer
 
 .. _lush_ref:
 
-``lush``
-~~~~~~~~
+``lush.nvim``
+~~~~~~~~~~~~~
 
 `lush <https://github.com/rktjmp/lush.nvim>`__ is a helper for adjusting colors in a colorscheme.
 
@@ -983,6 +1162,8 @@ super helpful though!
 
 .. contents::
    :local:
+   :depth: 1
+   :backlinks: none
 
 .. _vimcommentary_ref:
 
@@ -991,6 +1172,14 @@ super helpful though!
 
 `vim-commentary <https://github.com/tpope/vim-commentary>`_ lets you easily
 toggle comments on lines or blocks of code.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-commentary.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Toggle comments without changing the code.** Use :kbd:`gcc` for a line and :kbd:`gc` for a visual selection, then repeat to uncomment.
 
 
 .. list-table::
@@ -1001,10 +1190,10 @@ toggle comments on lines or blocks of code.
       - description
 
     * - :kbd:`gc` on a visual selection
-      - toggle comment
+      - Toggles comments
 
     * - :kbd:`gcc` on a single line
-      - toggle comment
+      - Toggles comments
 
 .. plugin-metadata::
    :name: vim-commentary
@@ -1030,15 +1219,15 @@ how to tweak.
       - description
 
     * - :kbd:`j`, :kbd:`k`
-      - Keep holding for increasing vertical scroll speed
+      - Increases vertical scroll speed while held
 
 .. plugin-metadata::
    :name: accelerated-jk
 
 .. _blink_ref:
 
-``blink``
-~~~~~~~~~
+``blink.cmp``
+~~~~~~~~~~~~~
 
 `blink <https://github.com/Saghen/blink.cmp>`__ offers autocomplete.
 
@@ -1048,6 +1237,14 @@ the commands documented here reflect that. I've also disabled the menu popping
 up all the time. There are a lot of ways you can customize this yourself though
 -- see the `blink docs <https://cmp.saghen.dev/>`__.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/blink.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Completion when you ask for it.** Open and navigate suggestions with :kbd:`Tab`, accept with :kbd:`Enter`, and try filesystem and command-line completion.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -1056,27 +1253,27 @@ up all the time. There are a lot of ways you can customize this yourself though
       - description
 
     * - :kbd:`<C-space>`
-      - Open completion menu
+      - Opens completion menu
 
     * - :kbd:`<Tab>` (when typing and the cursor is in a word)
-      - Open completion menu
+      - Opens completion menu
 
     * - :kbd:`<Tab>`, :kbd:`<Shift-Tab>` (in menu)
-      - Next, previous entry
+      - Selects next or previous entry
 
     * - :kbd:`Enter` (when menu visible)
-      - Select entry
+      - Accepts selected entry
 
     * - up/down arrow (in menu)
-      - Next, previous entry
+      - Selects next or previous entry
 
 .. plugin-metadata::
    :name: blink
 
 .. _treesitter_ref:
 
-``treesitter``
-~~~~~~~~~~~~~~
+``nvim-treesitter``
+~~~~~~~~~~~~~~~~~~~
 
 `treesitter <https://github.com/nvim-treesitter/nvim-treesitter>`__ is a parsing
 library that underpins many other plugins.
@@ -1090,6 +1287,14 @@ language (like easily select an entire function, or the body of a for-loop).
 Things have been changing recently in the treesitter-related world. This config
 now uses the ``main`` branch, which requires nvim 0.12+, ``tree-sitter-cli``
 0.26.1+, and a C compiler.
+
+- On a Mac, the compiler may need XCode Command Line Tools to be installed.
+- A fresh Ubuntu installation will need ``sudo apt install build-essential``
+- RHEL/Fedora will need ``sudo dnf install 'Development Tools'`` (and may need
+  the `EPEL repo <https://docs.fedoraproject.org/en-US/epel/>`__ enabled).
+- Alternatively, if you don't have root access, you can install `compiler
+  packages via conda
+  <https://docs.conda.io/projects/conda-build/en/stable/resources/compiler-tools.html>`_.
 
 We have to be a little careful when using this on a system with old glibc, like
 many HPC systems. In such cases, you need to manually compile
@@ -1106,19 +1311,19 @@ Parsers are stored in nvim-treesitter's
 default :file:`~/.local/share/nvim/site/parser` directory. Use
 ``:checkhealth nvim-treesitter`` to check the installed parsers.
 
-- On a Mac, the compiler may need XCode Command Line Tools to be installed.
-- A fresh Ubuntu installation will need ``sudo apt install build-essential``
-- RHEL/Fedora will need ``sudo dnf install 'Development Tools'`` (and may need
-  the `EPEL repo <https://docs.fedoraproject.org/en-US/epel/>`__ enabled).
-- Alternatively, if you don't have root access, you can install `compiler
-  packages via conda
-  <https://docs.conda.io/projects/conda-build/en/stable/resources/compiler-tools.html>`_,
-
 Alternatively, remove parsers from the ``parsers`` table in
 :file:`~/.config/nvim/lua/plugins/treesitter.lua`; removed languages will not
 have treesitter-enabled syntax highlighting. ``:TSInstallConfigured`` warns about
 installed parsers absent from this table, including their paths; it does not
 delete them.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/treesitter.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Select code by syntax structure.** Start with :kbd:`<leader>cs`, expand with :kbd:`Tab`, shrink with :kbd:`Shift-Tab`, and edit the selected code.
 
 .. list-table::
     :header-rows: 1
@@ -1128,30 +1333,51 @@ delete them.
       - description
 
     * - :kbd:`<leader>cs`
-      - Start incremental selection
+      - Starts incremental selection
 
     * - :kbd:`<Tab>` (in incremental selection)
-      - Increase selection by node
+      - Increases selection by node
 
     * - :kbd:`<S-Tab>` (in incremental selection)
-      - Decrease selection by node
+      - Decreases selection by node
 
 .. plugin-metadata::
    :name: treesitter
 
 .. _toggleterm_ref:
 
-``toggleterm``
-~~~~~~~~~~~~~~
+``toggleterm.nvim``
+~~~~~~~~~~~~~~~~~~~
 
 `ToggleTerm <https://github.com/akinsho/toggleterm.nvim>`_ lets you easily
 interact with a terminal within vim.
 
 The greatest benefit of this is that you can send text from a text buffer
-(Python script, RMarkdown file, etc) over to a terminal. This lets you
-reproduce an IDE-like environment purely from the terminal. The following
-commands are custom mappings set in :file:`.config/nvim/init.vim` that affect
-the terminal use.
+(Python script, RMarkdown file, etc) over to a terminal. Because these mappings
+send text to an ordinary terminal rather than managing a particular REPL, the
+workflow is language-agnostic: the same editor commands can drive R, IPython,
+or another interactive program. This lets you reproduce an IDE-like
+environment purely from the terminal. The following commands are custom
+mappings set in :file:`.config/nvim/lua/plugins/toggleterm.lua` that affect the
+terminal use.
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/toggleterm.cast
+        :preload:
+        :poster: npt:5
+        :caption: **The terminal is just a shell.** Open and hide a terminal split with :kbd:`<leader>t`, hop between it and the text buffer with :kbd:`<leader>q` / :kbd:`<leader>w`, and send the current line with :kbd:`gxx` or a visual selection with :kbd:`gx`.
+
+    .. asciinema:: screencasts/casts/toggleterm2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Same keys, any REPL.** Start IPython in the terminal and send a line, then a whole function with its blank line and indentation intact, then call it.
+
+    .. asciinema:: screencasts/casts/toggleterm3.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Send RMarkdown chunks.** Start R in the terminal, then use :kbd:`<leader>cd` to send the current chunk and advance to the next one.
 
 .. note::
 
@@ -1187,32 +1413,38 @@ the terminal use.
       - Switches focus back to the left window (typically the text buffer) and
         enters normal mode for editing
 
+    * - :kbd:`gxx`
+      - Sends the current line under cursor to the terminal and executes it.
+        For Python, preserves indentation and clears IPython's auto-indent
+        before sending; other filetypes use the ordinary current-line send
+
+    * - :kbd:`gx`
+      - Sends the currently selected text (visual mode) to the terminal and
+        executes it. For Python only, uses a single `bracketed paste
+        <https://en.wikipedia.org/wiki/Bracketed-paste>`_ so blank lines and
+        indentation survive rather than being interpreted as end-of-block by
+        IPython. Other filetypes use ``:ToggleTermSendVisualSelection`` to send
+        line by line, trimming whitespace, since other shells and REPLs may not
+        support bracketed paste
+
     * - :kbd:`<leader>cd`
       - Sends the current RMarkdown code chunk to terminal for execution, then
         automatically jumps cursor to the next chunk. Great for interactive data
         analysis
 
-    * - :kbd:`gxx`
-      - Sends the current line under cursor to the terminal and executes it.
-        Useful for running single commands
-
-    * - :kbd:`gx`
-      - Sends the currently selected text (visual mode) to the terminal and
-        executes it. Useful for running multiple lines
-
     * - :kbd:`<leader>k` (in RMarkdown file)
-      - Renders the current RMarkdown file to HTML using `knitr::render()`.
-        Requires knitr installed and R running in terminal
+      - Renders the current RMarkdown file to HTML using ``rmarkdown::render()``.
+        Requires rmarkdown installed and R running in terminal
 
     * - :kbd:`<leader>k` (in Python file)
-      - Runs the current Python script in IPython using `%run` magic command.
+      - Runs the current Python script in IPython using ``%run`` magic command.
         Requires IPython running in terminal
 
 .. plugin-metadata::
    :name: toggleterm
 
 
-.. _vimdiffenhanced:
+.. _vimdiffenhanced_ref:
 
 ``vim-diff-enhanced``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1228,8 +1460,8 @@ diffs are not looking right, try changing the algorithm with this plugin:
     * - command
       - description
 
-    * - :kbd:`:EnhancedDiff <algorithm>`
-      - Configure the diff algorithm to use, see below table
+    * - ``:EnhancedDiff <algorithm>``
+      - Configures the diff algorithm to use, see below table
 
 The following algorithms are available:
 
@@ -1244,7 +1476,7 @@ The following algorithms are available:
       - Default diff algorithm
 
     * - default
-      - alias for `myers`
+      - Alias for ``myers``
 
     * - minimal
       - Like myers, but tries harder to minimize the resulting diff
@@ -1264,9 +1496,9 @@ The following algorithms are available:
 ~~~~~~~~~~~~~~~~~~
 
 `vim-table-mode <https://github.com/dhruvasagar/vim-table-mode>`_ provides
-easy formatting of tables in Markdown and Restructured Text
+easy formatting of tables in Markdown and reStructuredText
 
-Nice Markdown and ReStructured Text tables are a pain to format. This plugin
+Nice Markdown and reStructuredText tables are a pain to format. This plugin
 makes it easy, by auto-padding table cells and adding the header lines as
 needed.
 
@@ -1276,6 +1508,14 @@ needed.
 * On subsequent rows, delimit fields by :kbd:`|` (including a leading and trailing :kbd:`|`)
 * Complete the table with :kbd:`||` on a new line.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-table-mode.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Create and repair Markdown tables.** Type pipe-separated rows that align as you go, turn selected CSV into a table with ``:Tableize``, add a header separator, and repair ragged edits with ``:TableModeRealign``.
+
 .. list-table::
     :header-rows: 1
     :align: left
@@ -1283,17 +1523,17 @@ needed.
     * - command
       - description
 
-    * - :kbd:`:TableModeEnable`
+    * - ``:TableModeEnable``
       - Enables table mode, which makes on-the-fly adjustments to table cells
         as they're edited
 
-    * - :kbd:`:TableModeDisable`
+    * - ``:TableModeDisable``
       - Disables table mode
 
-    * - :kbd:`:Tableize`
-      - Creates a markdown or restructured text table based on TSV or CSV text
+    * - ``:Tableize``
+      - Creates a markdown or reStructuredText table based on TSV or CSV text
 
-    * - :kbd:`TableModeRealign`
+    * - ``:TableModeRealign``
       - Realigns an existing table, adding padding as necessary
 
 .. plugin-metadata::
@@ -1301,8 +1541,8 @@ needed.
 
 .. _flash_ref:
 
-``flash``
-~~~~~~~~~
+``flash.nvim``
+~~~~~~~~~~~~~~
 
 `flash <https://github.com/folke/flash.nvim>`__ lets you jump around in
 a buffer with low mental effort.
@@ -1315,11 +1555,24 @@ jump to that location.
 
 Alternatively, if a treesitter parser is installed for this filetype, you can
 use :kbd:`S` and suffix letters will be shown at different levels of the syntax
-tree. For example inside a for-loop (i.e. don't include the `for`); outside
-a for-loop (including the `for`), an entire function, entire Rmd code chunk,
+tree. For example inside a for-loop (i.e. don't include the ``for``); outside
+a for-loop (including the ``for``), an entire function, entire Rmd code chunk,
 etc. In this mode, which is just for selection, you don't type the two
-characters you're looking for. Instead you just type the letter coresponding to
+characters you're looking for. Instead you just type the letter corresponding to
 level of code that you want to select.
+
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/flash.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Jump to a visible destination.** Press :kbd:`s`, type the start of the target text, then choose a one-letter match label to reach a method without counting lines or repeating searches.
+
+    .. asciinema:: screencasts/casts/flash2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Select syntax nodes and repeat character jumps.** Use :kbd:`S` to label enclosing Treesitter nodes and select an entire class, then use flash-enhanced :kbd:`f` motions to jump between highlighted character matches.
 
 .. list-table::
     :header-rows: 1
@@ -1329,24 +1582,32 @@ level of code that you want to select.
       - description
 
     * - :kbd:`s` in normal mode
-      - jump to match (see details)
+      - Jumps to match (see details)
 
     * - :kbd:`S` in normal mode
-      - select this treesitter node (see details)
+      - Selects this treesitter node (see details)
 
     * - :kbd:`Ctrl-s` when searching
-      - Toggle flash during search
+      - Toggles flash during search
 
 .. plugin-metadata::
    :name: flash
 
-.. _vimsurround:
+.. _vimsurround_ref:
 
 ``vim-surround``
 ~~~~~~~~~~~~~~~~
 
 `vim-surround <https://github.com/tpope/vim-surround>`_ lets you easily change
 surrounding characters.
+
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vim-surround.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Edit the delimiters, not the text inside.** Add quotes around a word, change the surrounding pair, and remove it again.
 
 .. list-table::
     :header-rows: 1
@@ -1356,13 +1617,13 @@ surrounding characters.
       - description
 
     * - :kbd:`cs"'`
-      - change surrounding ``"`` to ``'``
+      - Changes surrounding ``"`` to ``'``
 
     * - :kbd:`csw}`
-      - add ``{`` and ``}`` surrounding word
+      - Adds ``{`` and ``}`` surrounding word
 
     * - :kbd:`csw{`
-      - same, but include a space
+      - Adds surrounding braces with a space inside
 
 .. plugin-metadata::
    :name: vim-surround
@@ -1380,13 +1641,21 @@ block mode, operations (substitutions, sorting) operate on the entire line --
 not just the block, as you might expect. However sometimes you want to edit
 just the visual block selection, for example when editing TSV files.
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/vis.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Limit a substitution to the selected block.** Compare a line-range substitution with ``:B``, changing the group column while leaving identical text in the note column untouched.
+
 .. list-table::
     :header-rows: 1
     :align: left
 
     * - command
       - description
-    * - :kbd:`<C-v>`, then use :kbd:`:B` instead of :kbd:`:`
+    * - :kbd:`<C-v>`, then use ``:B`` instead of :kbd:`:`
       - Operates on visual block selection only
 
 .. plugin-metadata::
@@ -1425,7 +1694,8 @@ general, in combination with the :ref:`rendermarkdown_ref` plugin.
 I've been using it to take daily notes.
 
 
-The mapped commands below use :kbd:`o` ([o]bsidian) as a a prefix.
+The mapped commands below use :kbd:`<leader>o` as a prefix.
+Mnemonic: [o]bsidian.
 
 .. list-table::
     :header-rows: 1
@@ -1435,19 +1705,21 @@ The mapped commands below use :kbd:`o` ([o]bsidian) as a a prefix.
       - description
 
     * - :kbd:`Enter` on any link
-      - Open the link in a browser (if http) or open the file in a new buffer
+      - Opens the link in a browser (if http) or opens the file in a new buffer
 
     * - :kbd:`<leader>od`
-      - [o]bsidian [d]ailies: choose or create a daily note
+      - Chooses or creates a daily note. Mnemonic: [o]bsidian [d]ailies
 
     * - :kbd:`<leader>os`
-      - [o]bsidian [s]search for notes with ripgrep
+      - Searches for notes with ripgrep. Mnemonic: [o]bsidian [s]earch
 
     * - :kbd:`<leader>ot`
-      - [o]bsidian [t]ags finds occurrences of ``#tagname`` across files in directory
+      - Finds occurrences of ``#tagname`` across files in directory.
+        Mnemonic: [o]bsidian [t]ags
 
     * - :kbd:`<leader>on`
-      - [o]bsidian [n]ew link with a word selected will make a link to that new file
+      - Makes a link to a new file with a word selected.
+        Mnemonic: [o]bsidian [n]ew
 
 .. plugin-metadata::
     :name: obsidian
@@ -1479,13 +1751,13 @@ GitHub/GitLab instances. See the config file
 .. code-block:: lua
 
    -- Add the following to ~/.browsher.lua, using your own instance URL
-    return {
-      ["gitlab.private.com"] = {
-        url_template = "%s/-/blob/%s/%s",
-        single_line_format = "#L%d",
-        multi_line_format = "#L%d-%d",
-      },
-    }
+   return {
+     ["gitlab.private.com"] = {
+       url_template = "%s/-/blob/%s/%s",
+       single_line_format = "#L%d",
+       multi_line_format = "#L%d-%d",
+     },
+   }
 
 .. list-table::
    :header-rows: 1
@@ -1494,8 +1766,8 @@ GitHub/GitLab instances. See the config file
    * - command
      - description
 
-   * - ``Browsher``
-     - Store URL on OS clipboard
+   * - ``:Browsher``
+     - Stores URL on OS clipboard
 
 .. plugin-metadata::
    :name: browsher
@@ -1526,7 +1798,7 @@ No additional commands configured.
 
 .. _treesj_ref:
 
-``TreeSJ``
+``treesj``
 ~~~~~~~~~~
 
 `TreeSJ <https://github.com/Wansmer/treesj>`__ uses treesitter to split and
@@ -1546,9 +1818,16 @@ and this:
        a,
        b=True,
        c='default',
-    ):
-        pass
+   ):
+       pass
 
+.. details:: Screencast
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/treesj.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Expand and collapse code structures.** Toggle a function call, list, and dictionary between single-line and multiline layouts with :kbd:`<leader>j`, keeping arguments and key-value pairs together without changing what the code does.
 
 .. list-table::
     :header-rows: 1
@@ -1558,7 +1837,7 @@ and this:
       - description
 
     * - :kbd:`<leader>j`
-      - Toggle split/join
+      - Toggles split/join
 
 .. plugin-metadata::
    :name: treesj
@@ -1582,14 +1861,14 @@ See the docs for the plugin on how to set it up, including a macOS Shortcut.
       - description
 
     * - ``:PasteImgFromPayload`` on a line
-      - Converts the base64 text on the line to an image, saves it, and inserts a link to it.
+      - Converts the base64 text on the line to an image, saves it, and inserts a link to it
 
 .. plugin-metadata::
    :name: pasteimg
 
 .. _rnvim_ref:
 
-``r.nvim``
+``R.nvim``
 ~~~~~~~~~~
 
 `R.nvim <https://github.com/R-nvim/R.nvim/>`__ provides tight integration with
@@ -1620,7 +1899,7 @@ with :ref:`toggleterm_ref`). For example:
   documentation.
 - Tab-completion of functions and arguments within the text buffer, based on
   the running R instance.
-- When sending large amounts of text sent to the R interpreter, lines are
+- When sending large amounts of text to the R interpreter, lines are
   bundled, only reporting a single line confirmation. This avoids cluttering
   the interpreter.
 - Syntax highlighting in the R interpreter
@@ -1632,7 +1911,8 @@ with :ref:`toggleterm_ref`). For example:
 - ``eval=FALSE`` chunks are highlighted as commented text for a visual reminder.
 - **Lots** more...
 
-**Initial setup:**
+Initial setup
+^^^^^^^^^^^^^
 
 .. warning::
 
@@ -1651,27 +1931,29 @@ with :ref:`toggleterm_ref`). For example:
 
 
 1. When running on an HPC, add the line above to your :file:`~/.Rprofile`.
-2. Open an R or Rmd file in nvim. The R.nvim plugin is only enabled for
-   R files. This will trigger its installation with LazyVim. Wait for it to
-   finish installing, then quit.
+2. Activate the environment containing R before starting nvim, then open an
+   R or Rmd file. lazy.nvim installs R.nvim at startup; it is configured with
+   ``lazy = false`` but **does not load at all if R is not on PATH when nvim
+   starts**. Wait for installation to finish, then quit.
 3. Follow the instructions below. Note that when first running ``Ropen`` for
    a version of R, you will see notices at the bottom about installing nvimcom
    and setting up tab completions. This process times out after a set number of
    completions, but picks up where it left off the next time. Depending on the
    size of your R environment, it may take opening an R file a few times before
    all completions are installed. You just won't have tab completions for *all*
-   installed packages  until that process finishes.
+   installed packages until that process finishes.
 
-**Routine usage:**
+Routine usage
+^^^^^^^^^^^^^
 
 There are three major differences compared to using toggleterm.
 
 1. Nvim and R must be running on the same host.
 
-   - E.g., activate the environment *before starting nvim* that you want to
+   - e.g., activate the environment *before starting nvim* that you want to
      use, on the host you want to use.
 
-   - If you're running R on an interactive node, you need to  **run nvim on
+   - If you're running R on an interactive node, you need to **run nvim on
      the interactive node** as well. This is different from using toggleterm,
      where you can start nvim on the login node, start a terminal, and log into
      the interactive node from there.
@@ -1680,14 +1962,14 @@ There are three major differences compared to using toggleterm.
 
    - Don't use ``nvim`` directly to open files.
 
-   - ``Ropen`` starts nvim with with the right env vars set. This ``Ropen``
+   - ``Ropen`` starts nvim with the right env vars set. This ``Ropen``
      function is now included in the updated :file:`.functions` file of these
      dotfiles, so make sure you have that. It also uses the ``install-nvimcom``
      function, also from :file:`.functions`.
 
-3. Use ``\rf`` to start R
+3. Use :kbd:`<localleader>rf` to start R
 
-   - Don't use ``,t``, that's just a plain terminal. We want the plugin to
+   - Don't use :kbd:`<leader>t`, that's just a plain terminal. We want the plugin to
      start R so it can talk to it.
 
 .. details:: What these functions do
@@ -1711,24 +1993,42 @@ There are three major differences compared to using toggleterm.
    - checks the version of R on the path (i.e. from an activated environment)
    - check to see if we already have a compiled sidecar library for this version
    - if not, compiles it with the function ``install-nvimcom``, which:
+
      - pulls the ``nvimcom`` source from the nvim plugin directory
      - compiles it against the R version on the path
      - stores it in :file:`~/R/nvimcom/<X.Y.Z>` (that's the sidecar library)
+
    - sets the ``R_LIBS_USER`` env var to point to the sidecar library for this
      version of R containing the compiled ``nvimcom``
    - With all that set up, then runs ``nvim <filename>`` to open the file.
 
 
-This plugin is **only activated when an R or Rmd file is opened**.
+R.nvim loads at startup when R is on ``PATH``; its editing behavior and
+buffer-local mappings are scoped to R-related filetypes.
 
 R.nvim uses ``<localleader>`` instead of ``<leader>``. This essentially
 allows another whole namespace in which to put shortcuts.
 
 By default ``<localleader>`` is ``\`` (backslash).
 
-Commands that do the same thing as :ref:`toggleterm_ref` (``gx``, ``gxx``,
-``,cd``, ``,k``) have been remapped to match existing toggleterm so you can
-take advantage of existing muscle memory.
+.. details:: Screencasts
+    :class: screencasts
+
+    .. asciinema:: screencasts/casts/r-nvim.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Connect the script to a live R session.** Start R, send lines and selections, and inspect changing objects in the object browser.
+
+    .. asciinema:: screencasts/casts/r-nvim2.cast
+        :preload:
+        :poster: npt:5
+        :caption: **Inspect data and document the results.** Browse the built-in mtcars data frame in VisiData, return to the script, and insert a commented summary below the expression.
+
+Commands that do the same thing as :ref:`toggleterm_ref` (:kbd:`gx`,
+:kbd:`gxx`, :kbd:`<leader>cd`, :kbd:`<leader>k`) have been remapped to match
+existing toggleterm so you can take advantage of existing muscle memory.
+The send mappings (:kbd:`gx`, :kbd:`gxx`, :kbd:`<leader>cd`) fall back to
+toggleterm when the R.nvim session isn't ready; the render mapping does not.
 
 .. list-table::
     :header-rows: 1
@@ -1737,35 +2037,36 @@ take advantage of existing muscle memory.
     * - command
       - description
 
-    * - ``<localleader>rf``
+    * - :kbd:`<localleader>rf`
       - Starts an R session that communicates with nvimcom
 
-    * - ``gxx`` on a line
-      - Send line to R (like :ref:`toggleterm_ref`)
+    * - :kbd:`gxx` on a line
+      - Sends line to R (like :ref:`toggleterm_ref`)
 
-    * - ``gx`` on a selection
-      - Send selection to R (like :ref:`toggleterm_ref`)
+    * - :kbd:`gx` on a selection
+      - Sends selection to R (like :ref:`toggleterm_ref`)
 
-    * - ``<leader>cd``
-      - Send chunk to R (like :ref:`toggleterm_ref`)
+    * - :kbd:`<leader>cd`
+      - Sends chunk to R (like :ref:`toggleterm_ref`)
 
-    * - ``<leader>k``
-      - Render RMarkdown to HTML (like :ref:`toggleterm_ref`)
+    * - :kbd:`<leader>k`
+      - Renders RMarkdown to HTML (like :ref:`toggleterm_ref`)
 
-    * - ``<localleader>ro``
-      - Open R object browser.
+    * - :kbd:`<localleader>ro`
+      - Opens R object browser
 
-    * - ``<localleader>rv`` with the cursor on a dataframe variable
-      - Open a new nvim terminal to view the data frame in visidata. ``q``
-        quits visidata and the terminal.
+    * - :kbd:`<localleader>rv` with the cursor on a dataframe variable
+      - Opens a new nvim terminal to view the data frame in visidata. ``q``
+        quits VisiData; leave terminal mode and use ``:q`` to close the
+        remaining terminal window
 
-    * - ``<localleader>o``
-      - Run the line under the cursor in R, capture the output, and paste it
+    * - :kbd:`<localleader>o`
+      - Runs the line under the cursor in R, captures the output, and pastes it
         under the cursor -- but commented out. Useful for documenting data
-        structures.
+        structures
 
     * - ``:RMapsDesc``
-      - List all the other commands possible. There are a lot.
+      - Lists all the other available commands
 
 
 .. plugin-metadata::
@@ -1781,7 +2082,7 @@ Terminal.app on macOS that does not support true color. See
 :ref:`mac-terminal-colors` for how to fix.
 
 For years I've been using the venerable *zenburn* colorscheme. However, now
-with additional plugins and highlighting mechansims (especially treesitter), it
+with additional plugins and highlighting mechanisms (especially treesitter), it
 became important to be able to configure more than what that colorscheme supported.
 
 `zenburn.nvim <https://github.com/phha/zenburn.nvim>`_ is a reboot of
@@ -1809,11 +2110,15 @@ Changelog for ``zenfade``:
 
 .. plugin-metadata::
    :name: zenfade
+   :file: ../.config/nvim/lua/plugins/colorschemes.lua
+   :noconfig:
 
 Changelog for ``colorscheme``:
 
 .. plugin-metadata::
    :name: colorscheme
+   :file: ../.config/nvim/lua/plugins/colorschemes.lua
+   :noconfig:
 
 Deprecations
 ------------
@@ -1885,16 +2190,15 @@ Deprecated plugins
 Notes on tried plugins
 ----------------------
 
-- nvim-aider, when paired with neo-tree, was nice to use for adding files to the context. But now:
+- ``GeorgesAlkhouri/nvim-aider``, when paired with neo-tree, was nice to use for adding files to the context. But now:
 
   - nvim-aider supports nvim-tree too now
   - aider has gotten better at tab-completion, making it easy to add even deeply-nested files
   - nvim-tree's :kbd:`-` to go up a directory was confusing with neo-tree's "remove from aider context"
-  - It's a better experience to just keep aider running in a different tmux pane/window . . . no need to consume nnvim screen real estate.
+  - It's a better experience to just keep aider running in a different tmux pane or window rather than consume nvim screen real estate.
 
-- vim-matchup was nice to have (esp for Python) but it caused errors when
+- ``andymass/vim-matchup`` was nice to have (esp for Python) but it caused errors when
   trying to edit a buffer where a treesitter parser wasn't installed.
-
 
 - ``jakewvincent/mkdnflow.nvim`` was nice for hitting :kbd:`<CR>` to open
   a linked file and then :kbd:`<BS>` to go back. But I realized I needed to
@@ -1903,9 +2207,11 @@ Notes on tried plugins
   between them). This plugin is also pretty nice for collapsing sections into
   fancy headers. But I didn't consider it sufficiently useful to warrant
   including and configuring it.
+
 - ``lukas-reineke/headlines.nvim`` had nice section headers, and it had
   backgrounds for code blocks. However that ended up having too much visual
   noise for my taste.
+
 - ``nvim-telekasten/telekasten.nvim`` has nice pickers for tags and files and
   making links, but it was too opinionated for forcing the "telekasten" style
   of note-taking.
