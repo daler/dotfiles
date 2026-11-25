@@ -147,6 +147,18 @@ RUN echo "alias AGG=\"agg --renderer=resvg --font-family='JetBrainsMono Nerd Fon
 # For demos with toggleterm and r-nvim, install R and IPython
 RUN source ~/.bashrc && conda install -y r-base ipython -n base
 
+# Now that we have R installed, R.nvim will be enabled and we can now install
+# it -- and wait for the r.nvim server to be up and running. This is done so
+# screencast recording doesn't have to wait for this to happen every time.
+RUN export PATH="$HOME/miniforge/envs/npm/bin:$HOME/opt/bin:$HOME/miniforge/bin:$PATH" \
+    && command -v R \
+    && nvim --headless \
+        "+lua require('lazy').restore({plugins = {'R.nvim'}, wait = true})" \
+        "+lua require('lazy').load({plugins = {'R.nvim'}})" \
+        "+setfiletype r" \
+        "+lua if not vim.wait(180000, function() return vim.g.R_Nvim_status == 3 end, 100) then io.stderr:write('R.nvim warmup timed out (status ' .. tostring(vim.g.R_Nvim_status) .. ')\\n'); vim.cmd('cquit 1') end" \
+        +qa
+
 # SCREENCAST WORKFLOW:
 #
 # tmux split-pane -h -l 100;  tmux split-pane -v -l 30
