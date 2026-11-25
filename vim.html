@@ -10,13 +10,16 @@
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <link rel="stylesheet" type="text/css" href="_static/plugin_metadata.css?v=114a3185" />
+    <link rel="stylesheet" type="text/css" href="_static/asciinema/asciinema-player.css?v=a3bf8c70" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/asciinema/asciinema-player.min.js?v=0f7d70f6"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Nvim plugins" href="nvim-plugins.html" />
     <link rel="prev" title="Bash dotfiles" href="bash.html" />
+
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -24,7 +27,11 @@
   
   
 
-  </head><body>
+
+<script src="_static/page-toc.js" defer></script>
+
+
+  </head><body class="has-page-toc">
   
 
     <div class="document">
@@ -563,11 +570,18 @@ its own file in the <code class="file docutils literal notranslate"><span class=
 </tr>
 </tbody>
 </table>
-<details><summary>Don't like this?</summary><div class="details"><p>See the config for the <a class="reference internal" href="nvim-plugins.html#bufferline-ref"><span class="std std-ref">bufferline</span></a> plugin to change; the
+<details><summary>Don't like this?</summary><div class="details"><p>See the config for the <a class="reference internal" href="nvim-plugins.html#bufferline-ref"><span class="std std-ref">bufferline.nvim</span></a> plugin to change; the
 bufferline is additionally styled using the colorscheme.</p>
 </div></details><details><summary>Screencast of switching buffers</summary><div class="details"><p>This example uses an older version of the bufferline plugin and so the
 styling is a little different, but the shortcuts demonstrated are the same.</p>
+<figure class="align-default" id="id1">
 <img alt="_images/buffers_annotated.gif" src="_images/buffers_annotated.gif" />
+<figcaption>
+<p><span class="caption-text"><strong>Switch between open buffers.</strong> Follow the annotated bufferline demo
+to see keyboard shortcuts move between files while the tab-like buffer
+labels show which file is active.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 </div></details></section>
 <section id="shortcuts">
 <h2>Shortcuts<a class="headerlink" href="#shortcuts" title="Link to this heading">¶</a></h2>
@@ -576,7 +590,7 @@ all the plugin-specific shortcuts.</p>
 <p>You can browse around to see if there’s anything you think might be useful, but
 there’s no need for you to know all these! I happen to use them, and since I’ve
 included them in this config you get them for free.</p>
-<p>The <a class="reference internal" href="nvim-plugins.html#whichkey-ref"><span class="std std-ref">which-key</span></a> plugin will pop up a window showing what keys you can
+<p>The <a class="reference internal" href="nvim-plugins.html#whichkey-ref"><span class="std std-ref">which-key.nvim</span></a> plugin will pop up a window showing what keys you can
 press, so you can use that for exploration as well.</p>
 <table class="docutils align-left">
 <thead>
@@ -757,21 +771,31 @@ text offscreen.</p>
     </form>
     </div>
 </search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<details id="page-toc" data-depth="3" open>
+  <summary>On this page</summary>
+  <nav aria-label="On this page">
+    <ul>
+<li><a class="reference internal" href="#">Vim (neovim) configuration</a><ul>
+<li><a class="reference internal" href="#config-file-location">Config file location</a></li>
+<li><a class="reference internal" href="#leader-key">Leader key</a></li>
+<li><a class="reference internal" href="#opening-multiple-files">Opening multiple files</a></li>
+<li><a class="reference internal" href="#switching-between-open-files">Switching between open files</a></li>
+<li><a class="reference internal" href="#shortcuts">Shortcuts</a></li>
+<li><a class="reference internal" href="#other-behaviors">Other behaviors</a></li>
+<li><a class="reference internal" href="#plugin-documentation">Plugin documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+</details>
+<h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Vim (neovim) configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#config-file-location">Config file location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#leader-key">Leader key</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#opening-multiple-files">Opening multiple files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#switching-between-open-files">Switching between open files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shortcuts">Shortcuts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#other-behaviors">Other behaviors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#plugin-documentation">Plugin documentation</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Vim (neovim) configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nvim-plugins.html">Nvim plugins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
@@ -810,7 +834,7 @@ text offscreen.</p>
     if (elem != null) {
         // Get the closest "details" element and open it
         closest = elem.closest("details");
-        closest.open = true;
+        if (closest != null) closest.open = true;
     }
 </script>
   </body>

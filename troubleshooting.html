@@ -10,13 +10,16 @@
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <link rel="stylesheet" type="text/css" href="_static/plugin_metadata.css?v=114a3185" />
+    <link rel="stylesheet" type="text/css" href="_static/asciinema/asciinema-player.css?v=a3bf8c70" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/asciinema/asciinema-player.min.js?v=0f7d70f6"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Changelog" href="changelog.html" />
     <link rel="prev" title="Why?" href="why.html" />
+
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -24,7 +27,11 @@
   
   
 
-  </head><body>
+
+<script src="_static/page-toc.js" defer></script>
+
+
+  </head><body class="has-page-toc">
   
 
     <div class="document">
@@ -114,7 +121,7 @@ No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
 </pre></div>
 </div>
 <p>This happens because nvim is trying to install the treesitter parsers, but that
-needs a compiler to be available. See <a class="reference internal" href="nvim-plugins.html#treesitter-ref"><span class="std std-ref">treesitter</span></a> for details on how to
+needs a compiler to be available. See <a class="reference internal" href="nvim-plugins.html#treesitter-ref"><span class="std std-ref">nvim-treesitter</span></a> for details on how to
 address this.</p>
 </section>
 </section>
@@ -159,7 +166,24 @@ address this.</p>
     </form>
     </div>
 </search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<details id="page-toc" data-depth="3" open>
+  <summary>On this page</summary>
+  <nav aria-label="On this page">
+    <ul>
+<li><a class="reference internal" href="#">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#updating-nvim-plugins">Updating nvim plugins</a></li>
+<li><a class="reference internal" href="#nvim-has-light-gray-text-colorscheme-looks-broken">nvim has light gray text, colorscheme looks broken</a></li>
+<li><a class="reference internal" href="#comments-don-t-show-up-as-italic">Comments don’t show up as italic</a></li>
+<li><a class="reference internal" href="#can-t-install-conda-packages-from-bioconda">Can’t install conda packages from Bioconda</a></li>
+<li><a class="reference internal" href="#errors-about-not-finding-cc-or-gcc-when-opening-vim">Errors about not finding CC or GCC when opening vim</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+</details>
+<h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
@@ -171,14 +195,7 @@ address this.</p>
 <li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nvim-lua.html">Migrating to Neovim Lua config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#updating-nvim-plugins">Updating nvim plugins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#nvim-has-light-gray-text-colorscheme-looks-broken">nvim has light gray text, colorscheme looks broken</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#comments-don-t-show-up-as-italic">Comments don’t show up as italic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#can-t-install-conda-packages-from-bioconda">Can’t install conda packages from Bioconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#errors-about-not-finding-cc-or-gcc-when-opening-vim">Errors about not finding CC or GCC when opening vim</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
@@ -210,7 +227,7 @@ address this.</p>
     if (elem != null) {
         // Get the closest "details" element and open it
         closest = elem.closest("details");
-        closest.open = true;
+        if (closest != null) closest.open = true;
     }
 </script>
   </body>

@@ -36,7 +36,7 @@ See the :ref:`changelog` for changes.
 Ready? :ref:`starthere`!
 
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 1
     :hidden:
 
     starthere

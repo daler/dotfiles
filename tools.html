@@ -10,13 +10,16 @@
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <link rel="stylesheet" type="text/css" href="_static/plugin_metadata.css?v=114a3185" />
+    <link rel="stylesheet" type="text/css" href="_static/asciinema/asciinema-player.css?v=a3bf8c70" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/asciinema/asciinema-player.min.js?v=0f7d70f6"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Bash dotfiles" href="bash.html" />
     <link rel="prev" title="Start here" href="starthere.html" />
+
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -24,7 +27,11 @@
   
   
 
-  </head><body>
+
+<script src="_static/page-toc.js" defer></script>
+
+
+  </head><body class="has-page-toc">
   
 
     <div class="document">
@@ -336,31 +343,41 @@ an interface for changing directories via fuzzy search.</p>
     </form>
     </div>
 </search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<details id="page-toc" data-depth="3" open>
+  <summary>On this page</summary>
+  <nav aria-label="On this page">
+    <ul>
+<li><a class="reference internal" href="#">Additional tool installations</a><ul>
+<li><a class="reference internal" href="#base-conda-packages">Base conda packages</a></li>
+<li><a class="reference internal" href="#apt-packages"><code class="docutils literal notranslate"><span class="pre">apt</span></code> packages</a></li>
+<li><a class="reference internal" href="#tool-installation">Tool installation</a><ul>
+<li><a class="reference internal" href="#alacritty"><code class="docutils literal notranslate"><span class="pre">alacritty</span></code></a></li>
+<li><a class="reference internal" href="#bat"><code class="docutils literal notranslate"><span class="pre">bat</span></code></a></li>
+<li><a class="reference internal" href="#bfg"><code class="docutils literal notranslate"><span class="pre">bfg</span></code></a></li>
+<li><a class="reference internal" href="#black"><code class="docutils literal notranslate"><span class="pre">black</span></code></a></li>
+<li><a class="reference internal" href="#docker"><code class="docutils literal notranslate"><span class="pre">docker</span></code></a></li>
+<li><a class="reference internal" href="#fd"><code class="docutils literal notranslate"><span class="pre">fd</span></code></a></li>
+<li><a class="reference internal" href="#fzf"><code class="docutils literal notranslate"><span class="pre">fzf</span></code></a></li>
+<li><a class="reference internal" href="#icdiff"><code class="docutils literal notranslate"><span class="pre">icdiff</span></code></a></li>
+<li><a class="reference internal" href="#jq"><code class="docutils literal notranslate"><span class="pre">jq</span></code></a></li>
+<li><a class="reference internal" href="#pyp"><code class="docutils literal notranslate"><span class="pre">pyp</span></code></a></li>
+<li><a class="reference internal" href="#radian"><code class="docutils literal notranslate"><span class="pre">radian</span></code></a></li>
+<li><a class="reference internal" href="#ripgrep-rg"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)</a></li>
+<li><a class="reference internal" href="#visidata-vd"><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)</a></li>
+<li><a class="reference internal" href="#zoxide"><code class="docutils literal notranslate"><span class="pre">zoxide</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+</details>
+<h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Additional tool installations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#base-conda-packages">Base conda packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#apt-packages"><code class="docutils literal notranslate"><span class="pre">apt</span></code> packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tool-installation">Tool installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#alacritty"><code class="docutils literal notranslate"><span class="pre">alacritty</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bat"><code class="docutils literal notranslate"><span class="pre">bat</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bfg"><code class="docutils literal notranslate"><span class="pre">bfg</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#black"><code class="docutils literal notranslate"><span class="pre">black</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker"><code class="docutils literal notranslate"><span class="pre">docker</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fd"><code class="docutils literal notranslate"><span class="pre">fd</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fzf"><code class="docutils literal notranslate"><span class="pre">fzf</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#icdiff"><code class="docutils literal notranslate"><span class="pre">icdiff</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jq"><code class="docutils literal notranslate"><span class="pre">jq</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pyp"><code class="docutils literal notranslate"><span class="pre">pyp</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#radian"><code class="docutils literal notranslate"><span class="pre">radian</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ripgrep-rg"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> (<code class="docutils literal notranslate"><span class="pre">rg</span></code>)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#visidata-vd"><code class="docutils literal notranslate"><span class="pre">visidata</span></code> (<code class="docutils literal notranslate"><span class="pre">vd</span></code>)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#zoxide"><code class="docutils literal notranslate"><span class="pre">zoxide</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Additional tool installations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash.html">Bash dotfiles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vim.html">Vim (neovim) configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nvim-plugins.html">Nvim plugins</a></li>
@@ -401,7 +418,7 @@ an interface for changing directories via fuzzy search.</p>
     if (elem != null) {
         // Get the closest "details" element and open it
         closest = elem.closest("details");
-        closest.open = true;
+        if (closest != null) closest.open = true;
     }
 </script>
   </body>

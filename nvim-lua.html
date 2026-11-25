@@ -10,13 +10,16 @@
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <link rel="stylesheet" type="text/css" href="_static/plugin_metadata.css?v=114a3185" />
+    <link rel="stylesheet" type="text/css" href="_static/asciinema/asciinema-player.css?v=a3bf8c70" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/asciinema/asciinema-player.min.js?v=0f7d70f6"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Why?" href="why.html" />
     <link rel="prev" title="Post-setup tasks" href="post.html" />
+
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -24,7 +27,11 @@
   
   
 
-  </head><body>
+
+<script src="_static/page-toc.js" defer></script>
+
+
+  </head><body class="has-page-toc">
   
 
     <div class="document">
@@ -248,7 +255,23 @@ something like this:</p>
     </form>
     </div>
 </search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<details id="page-toc" data-depth="3" open>
+  <summary>On this page</summary>
+  <nav aria-label="On this page">
+    <ul>
+<li><a class="reference internal" href="#">Migrating to Neovim Lua config</a><ul>
+<li><a class="reference internal" href="#lua">Lua</a></li>
+<li><a class="reference internal" href="#lazy-vim-for-plugins">lazy.vim for plugins</a></li>
+<li><a class="reference internal" href="#creating-keymappings">Creating keymappings</a></li>
+<li><a class="reference internal" href="#how-to-add-configure-plugins">How to add/configure plugins</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+</details>
+<h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="starthere.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Additional tool installations</a></li>
@@ -258,13 +281,7 @@ something like this:</p>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">tmux configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conda.html">conda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="post.html">Post-setup tasks</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Migrating to Neovim Lua config</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lua">Lua</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lazy-vim-for-plugins">lazy.vim for plugins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-keymappings">Creating keymappings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-add-configure-plugins">How to add/configure plugins</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Migrating to Neovim Lua config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="why.html">Why?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
@@ -298,7 +315,7 @@ something like this:</p>
     if (elem != null) {
         // Get the closest "details" element and open it
         closest = elem.closest("details");
-        closest.open = true;
+        if (closest != null) closest.open = true;
     }
 </script>
   </body>

@@ -10,19 +10,24 @@
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <link rel="stylesheet" type="text/css" href="_static/plugin_metadata.css?v=114a3185" />
+    <link rel="stylesheet" type="text/css" href="_static/asciinema/asciinema-player.css?v=a3bf8c70" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/asciinema/asciinema-player.min.js?v=0f7d70f6"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
     <link rel="prev" title="Migrating to Neovim Lua config" href="nvim-lua.html" />
+
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
 
   
   
+
+
 
   </head><body>
   
@@ -187,7 +192,7 @@ I thought it was a good approach.</p>
     if (elem != null) {
         // Get the closest "details" element and open it
         closest = elem.closest("details");
-        closest.open = true;
+        if (closest != null) closest.open = true;
     }
 </script>
   </body>
