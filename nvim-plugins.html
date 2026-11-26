@@ -978,6 +978,7 @@ refactorings, imports). Mnemonic: [a]ction</p></td>
 <li><p>2026-08-29 <a class="reference external" href="https://github.com/daler/dotfiles/commit/5ca103e">5ca103e</a> <em>Nvim 0.12.5 (#75)</em></p></li>
 <li><p>2026-11-20 <a class="reference external" href="https://github.com/daler/dotfiles/commit/2a4e8f7">2a4e8f7</a> <em>improve how lsp servers are managed/configured</em></p></li>
 <li><p>2026-11-22 <a class="reference external" href="https://github.com/daler/dotfiles/commit/0877d12">0877d12</a> <em>add zsh to conform &amp; lsp</em></p></li>
+<li><p>2026-11-25 <a class="reference external" href="https://github.com/daler/dotfiles/commit/89fea08">89fea08</a> <em>nvim: pyright and ruff play nicer</em></p></li>
 </ul>
 </div></details><details><summary>Config</summary><div class="details"><p>This can be found in <code class="file docutils literal notranslate"><span class="pre">.config/nvim/lua/plugins/nvim-lspconfig.lua</span></code>:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- nvim-lspconfig allows convenient configuration of LSP clients</span>
@@ -989,6 +990,18 @@ refactorings, imports). Mnemonic: [a]ction</p></td>
 <span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="nf">config</span><span class="p">(</span><span class="s2">"pyright"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"pyright-langserver"</span><span class="p">,</span><span class="w"> </span><span class="s2">"--stdio"</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="nv">filetypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"python"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nv">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">pyright</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nv">disableOrganizeImports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">-- Let Ruff own import organization.</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nv">analysis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">diagnosticSeverityOverrides</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nv">reportUndefinedVariable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="c1">-- Ruff reports F821.</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="nv">root_markers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="s2">"pyproject.toml"</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">"setup.py"</span><span class="p">,</span>
@@ -1001,6 +1014,10 @@ refactorings, imports). Mnemonic: [a]ction</p></td>
 <span class="w">    </span><span class="p">})</span>
 
 <span class="w">    </span><span class="nv">vim</span><span class="p">.</span><span class="py">lsp</span><span class="p">.</span><span class="nf">config</span><span class="p">(</span><span class="s2">"ruff"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nv">on_attach</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">client</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">-- Keep symbol documentation with Pyright.</span>
+<span class="w">        </span><span class="nv">client</span><span class="p">.</span><span class="py">server_capabilities</span><span class="p">.</span><span class="py">hoverProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="kr">end</span><span class="p">,</span>
 <span class="w">      </span><span class="nv">init_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nv">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nv">lint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">preview</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
