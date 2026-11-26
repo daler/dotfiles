@@ -7,6 +7,18 @@ return {
     vim.lsp.config("pyright", {
       cmd = { "pyright-langserver", "--stdio" },
       filetypes = { "python" },
+      settings = {
+        pyright = {
+          disableOrganizeImports = true, -- Let Ruff own import organization.
+        },
+        python = {
+          analysis = {
+            diagnosticSeverityOverrides = {
+              reportUndefinedVariable = "none", -- Ruff reports F821.
+            },
+          },
+        },
+      },
       root_markers = {
         "pyproject.toml",
         "setup.py",
@@ -19,6 +31,10 @@ return {
     })
 
     vim.lsp.config("ruff", {
+      on_attach = function(client)
+        -- Keep symbol documentation with Pyright.
+        client.server_capabilities.hoverProvider = false
+      end,
       init_options = {
         settings = {
           lint = { preview = true },
